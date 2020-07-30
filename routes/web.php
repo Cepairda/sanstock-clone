@@ -27,6 +27,11 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::resource('/', 'BrandController')->parameters(['' => 'brand']);
         });
 
+        Route::prefix('mysql-backup')->as('mysql-backup.')->group(function () {
+            Route::resource('/', 'MysqlBackupController')->parameters(['' => 'mysql-backup']);
+            Route::get('/download/{name}', 'MysqlBackupController@download')->name('download');
+        });
+
     });
 
 });
