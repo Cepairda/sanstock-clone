@@ -12,6 +12,7 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/admin/resourses/create-or-edit.js') }}"></script>
     <script src="{{ asset('components/AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
     <script>
         $(function () {

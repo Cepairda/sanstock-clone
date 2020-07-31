@@ -12,4 +12,6 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .copyDirectory('node_modules/tinymce/skins', 'public/tinymce/skins')
+    .js('resources/js/admin/resourses/*', 'public/js/admin/resourses')
     .sass('resources/sass/app.scss', 'public/css');
