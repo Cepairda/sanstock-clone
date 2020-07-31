@@ -44,7 +44,11 @@ class DbBackup extends Command
         File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
 
         $filename = 'backup-' . Carbon::now()->format('Y.m.d_H-i-s') . '.gz';
-        $command = 'mysqldump --user=' . env('DB_USERNAME') .' --password=' . env('DB_PASSWORD') . ' --host=' . env('DB_HOST') . ' ' . env('DB_DATABASE') . ' | gzip > ' . $path . '/' . $filename;
+        $command = 'mysqldump' .
+            ' --user=' . env('DB_USERNAME') .
+            ' --password=' . env('DB_PASSWORD') .
+            ' --host=' . env('DB_HOST') . ' ' . env('DB_DATABASE') .
+            ' | gzip > ' . $path . '/' . $filename;
 
         $this->process = Process::fromShellCommandline($command);
     }
