@@ -71,7 +71,9 @@ return [
     'default_namespace' => '',
 
     'custom_fields' => [
-        //
+        'tinymce' => 'App\Forms\Fields\TinymceType',
+        'one-image' => 'App\Forms\Fields\OneImageType',
+        'one-file' => 'App\Forms\Fields\OneFileType',
     ],
 
 ];

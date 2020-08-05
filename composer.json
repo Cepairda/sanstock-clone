@@ -19,6 +19,7 @@
         "laravel/ui": "^2.0",
         "mcamara/laravel-localization": "^1.5",
         "symfony/process": "^5.1",
+        "unisharp/laravel-filemanager": "^2.1",
         "ycs77/laravel-form-builder-bs4": "^1.0"
     },
     "require-dev": {

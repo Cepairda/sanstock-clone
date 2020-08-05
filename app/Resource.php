@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use LaravelLocalization;
+use Illuminate\Support\Str;
 
 class Resource extends Model
 {
@@ -71,6 +72,21 @@ class Resource extends Model
             'data' => request()->data
         ]);
         $this->updateRelations();
+        return $this;
+    }
+
+    public function storeOrUpdateImport($data)
+    {git
+        $this->slug = isset($data['name']) ? Str::slug($data['name']) : null;
+        $this->save();
+
+        ResourceLocalization::updateOrCreate([
+            'resource_id' => $this->id,
+            'locale' => LaravelLocalization::getCurrentLocale()
+        ], [
+            'data' => $data
+        ]);
+
         return $this;
     }
 

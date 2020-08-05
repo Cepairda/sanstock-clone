@@ -11,9 +11,15 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         return view('welcome');
     });
 
+    Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+        \UniSharp\LaravelFilemanager\Lfm::routes();
+    });
+
     Route::prefix('admin')->as('admin.')->namespace('Admin')->group(function () {
 
         Route::get('/', 'DashboardController@index')->name('dashboard.index');
+
+        Route::get('/test', 'ImportController@firstOrCreateBrand')->name('import');
 
         Route::prefix('products')->as('products.')->group(function () {
             Route::resource('/', 'ProductController')->parameters(['' => 'product']);

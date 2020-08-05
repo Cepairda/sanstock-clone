@@ -13,12 +13,16 @@
 
 @section('scripts')
     <script src="{{ asset('js/admin/resourses/create-or-edit.js') }}"></script>
+    <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
     <script src="{{ asset('components/AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
     <script>
         $(function () {
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             });
+
+            $('.lfm-image').filemanager('image');
+            $('.lfm-file').filemanager('file');
         });
     </script>
 @endsection
