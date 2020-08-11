@@ -8,6 +8,7 @@ use App\Brand;
 use App\Characteristic;
 use App\CharacteristicValue;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 /*use App\Product;
 use App\ProductCharacteristicValue;
 use App\ProductData;
@@ -40,59 +41,36 @@ class ImportController extends Controller
         return json_decode($res->getBody(), true);
     }
 
-    public function updateOrCreate($brandRef)
+    public function updateOrCreate($brandRef = null)
     {
-
-        $data = $this->getData('brand/' . $brandRef);
-
-        $brand = $this->firstOrCreateBrand($data['brand']);
-        //$productRefs = Product::select('ref')->whereBrandId($brand->id)->get()->keyBy('ref')->keys();
-        $this->firstOrCreateProducts($data['products'], $productRefs, $data['categories'], $brand->id);
-        //$products = Product::select(['id', 'ref'])->whereBrandId($brand->id)->get()->keyBy('ref');
-        //$this->updateOrCreateCharacteristics($data['characteristics'], $products);
-    }
-
-    public function updateCharacteristics()
-    {
+        //$data = $this->getData('brand/' . $brandRef);
         $data = $this->getData('brand/' . '462a44b3-920c-11e6-8148-00155db18262');
-        $brand = $this->firstOrCreateBrand($data['brand']);
-        $products = Product::select(['id', 'ref'])->whereBrandId($brand->id)->get()->keyBy('ref');
-        $this->updateOrCreateCharacteristics($data['characteristics'], $products);
 
-        return redirect()->back();
+        $brand = $this->firstOrCreateBrand($data['brand']);
+
+        $productRefs = Product::select('data->ref as ref')->joinLocalization()->where('data->brand_id', $brand->id)->get()->keyBy('ref')->keys();
+        $this->firstOrCreateProducts($data['products'], $productRefs, null, $brand->id);
+        $products = Product::select(['id', 'data->ref as ref'])->joinLocalization()->where('data->brand_id', $brand->id)->get()->keyBy('ref');
+        $this->updateOrCreateCharacteristics($data['characteristics'], $products);
     }
+
+
 
     public function firstOrCreateBrand($brand = null)
     {
-        $data = $this->getData('brand/' . '462a44b3-920c-11e6-8148-00155db18262');
-        //echo $data['brand']['ref'];
-        //echo $data['brand']['description'];
         $brandObj = new Brand();
-        $brand = $brandObj->joinLocalization()->where('data->ref', $data['brand']['ref'])->first();
+        $brandFirst = $brandObj->joinLocalization()->where('data->ref', $brand['ref'])->first();
 
-        //print_r($b);
-
-        if (!isset($brand)) {
+        if (!isset($brandFirst)) {
             $data = [
-                'ref' => $data['brand']['ref'],
-                'name' => trim($data['brand']['description'])
+                'ref' => $brand['ref'],
+                'name' => trim($brand['description'])
             ];
 
-            //print_r($data);
-
-            $brand = $brandObj->storeOrUpdateImport($data);
+            $brandFirst = $brandObj->storeOrUpdateImport($data);
         }
 
-        //echo $brand->id;
-
-        $productRefs = Product::select('data->ref as ref')->joinLocalization()->where('data->brand_id', $brand->id)->get()->keyBy('ref')->keys();
-
-        //print_r($productRefs);
-        $this->firstOrCreateProducts($data['products'], $productRefs, null, $brand->id);
-        //return $b;
-        $products = Product::select(['id', 'data->ref as ref'])->joinLocalization()->where('data->brand_id', $brand->id)->get()->keyBy('ref');
-        //print_r($products);
-        $this->updateOrCreateCharacteristics($data['characteristics'], $products);
+        return $brandFirst;
     }
 
     public function firstOrCreateProducts($products, $productRefs, $categories, $brandId)
@@ -121,16 +99,12 @@ class ImportController extends Controller
         $characteristicArray = [];
         $characteristicValueArray = [];
 
-        $i = 0;
+        DB::disableQueryLog();
+        DB::beginTransaction();
 
         foreach ($characteristics as $productRef => $data) {
-            //echo $productRef . ' ' . print_r($data);
-
-            //if ($i == 10) break;
 
             if (isset($products[$productRef])) {
-                //echo $productRef . '<br>';
-
                 ResourceResource::where('resource_id', $products[$productRef]->id)->delete();
 
                 foreach ($data as $characteristic) {
@@ -145,9 +119,8 @@ class ImportController extends Controller
 
                         }
 
-
                         if (!isset($c) && !array_key_exists($characteristicDataName, $characteristicArray)) {
-                           $c = new Characteristic();
+                            $c = new Characteristic();
 
                             $data = [
                                 'name' => $characteristicDataName,
@@ -155,7 +128,14 @@ class ImportController extends Controller
 
                             $c->storeOrUpdateImport($data);
 
-                            echo $characteristicDataName . '<br>';
+                            //echo $characteristicDataName . '<br>';
+
+                            /*
+                             *
+                             * Вот тут ниже не ясно как сохранить locale UK
+                             * Через метод up Resource::storeOrUpdate
+                             *
+                             */
 
                             /*if (!empty($characteristic['description_characteristic_uk']) && !empty($characteristic['value_uk'])) {
                                 $characteristicDataNameUk = mb_ucfirst(trim(mb_ereg_replace('/\s+/', ' ', mb_convert_encoding($characteristic['description_characteristic_uk'], 'UTF-8'))));
@@ -168,39 +148,44 @@ class ImportController extends Controller
                         }
 
                         $cId = ($characteristicArray[$characteristicDataName] = $c->id ?? $characteristicArray[$characteristicDataName]);
-                        //echo $characteristicDataName . ' --- $c->id: ' . $cId. ' | $characteristicArray: ' . $characteristicArray[$characteristicDataName] . '<br>';
-                        //echo $cId . '<br>';
 
 
-                        //$cV = CharacteristicValue::joinData('ru')->whereCharacteristicId($c->id)->whereValue($characteristicValueDataValue)->first();
-                        //$cV = CharacteristicValue::where('data->characteristic_id', $cId)->where('data->value', $characteristicValueDataValue)->joinLocalization()->first();
+                        /*
+                         *
+                         * Ниже если расскоментировать код,
+                         * То импорт вместо 2-3 минут работает 10, и то не всегда работает
+                         * Браузер выбивает ошибку типа - Не могу дождаться ответа
+                         * Хотя смотрю в БД всё появляется вроде
+                         *
+                         */
 
-                        //if (!isset($cV)) {
-                        if ((!isset($characteristicValueArray[$cId][$characteristicValueDataValue]))) {
-                           /* $cV = CharacteristicValue::create([
-                                'characteristic_id' => $c->id
-                            ]);
-                            CharacteristicValueData::create([
-                                'characteristic_value_id' => $cV->id,
-                                'value' => $characteristicValueDataValue,
-                                'locale' => 'ru'
-                            ]);*/
-                            //echo $i . '<br>';
-                            $c = new CharacteristicValue();
 
-                            $data = [
-                                'name' => null,
-                                'characteristic_id' => $cId,
-                                'value' => $characteristicValueDataValue,
-                            ];
+                       /* $cV = CharacteristicValue::where('data->characteristic_id', $cId)->where('data->value', $characteristicValueDataValue)->joinLocalization()->first();
 
-                            $c->storeOrUpdateImport($data);
+                        if (!isset($cV)) {
+                            if ((!isset($characteristicValueArray[$cId][$characteristicValueDataValue]))) {
 
-                            $characteristicValueArray[$cId][$characteristicValueDataValue] = true;
+                                $c = new CharacteristicValue();
+                                $data = [
+                                    'name' => null,
+                                    'characteristic_id' => $cId,
+                                    'value' => $characteristicValueDataValue,
+                                ];
 
-                            usleep(50);
-                        }
+                                $c->storeOrUpdateImport($data);
 
+                                unset($c);
+
+                                $characteristicValueArray[$cId][$characteristicValueDataValue] = true;
+                            }
+                        }*/
+
+
+                        /*
+                         *
+                         *  Аналогично, как сохранять locale
+                         *
+                         */
 
                         /*if (!empty($characteristic['description_characteristic_uk']) && !empty($characteristic['value_uk'])) {
                             $characteristicValueDataValueUk = trim(mb_ereg_replace('/\s+/', ' ', mb_convert_encoding($characteristic['value_uk'], 'UTF-8')));
@@ -218,10 +203,9 @@ class ImportController extends Controller
                         ]);*/
                     }
                 }
-            }
-            $i++;
-        }
-        //print_r($characteristicArray);
 
+            }
+        }
+        DB::commit();
     }
 }

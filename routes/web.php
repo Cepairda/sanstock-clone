@@ -19,7 +19,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::get('/', 'DashboardController@index')->name('dashboard.index');
 
-        Route::get('/test', 'ImportController@firstOrCreateBrand')->name('import');
+        Route::get('/test', 'ImportController@updateOrCreate')->name('import');
 
         Route::prefix('products')->as('products.')->group(function () {
             Route::resource('/', 'ProductController')->parameters(['' => 'product']);

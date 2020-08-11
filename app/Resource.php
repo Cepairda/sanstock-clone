@@ -76,7 +76,7 @@ class Resource extends Model
     }
 
     public function storeOrUpdateImport($data)
-    {git
+    {
         $this->slug = isset($data['name']) ? Str::slug($data['name']) : null;
         $this->save();
 
