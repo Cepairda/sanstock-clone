@@ -12,6 +12,7 @@ class Resource extends Model
     use SoftDeletes;
 
     protected $table = 'resources';
+    protected $request = null;
 
     protected $fillable = [
         'type', 'slug', 'details', 'parent_id'
@@ -56,55 +57,49 @@ class Resource extends Model
         return isset(class_uses($this)['Kalnoy\Nestedset\NodeTrait']) ? true : false;
     }
 
-    public function storeOrUpdate()
+    public function setRequest($data = null)
     {
-        $this->slug = request()->slug;
-        $this->details = request()->details;
-        $this->parent_id = request()->parent_id;
-        $this->save();
-        if ($this->usedNodeTrait()) {
-            $this->fixTree();
-        }
-        ResourceLocalization::updateOrCreate([
-            'resource_id' => $this->id,
-            'locale' => LaravelLocalization::getCurrentLocale()
-        ], [
-            'data' => request()->data
-        ]);
-        $this->updateRelations();
-        return $this;
+        return (isset($data) ? $this->request = $data : ($this->request ?? $this->request = request()->all()));
     }
 
-    public function storeOrUpdateImport($data)
+    public function storeOrUpdate()
     {
-        $this->slug = isset($data['name']) ? Str::slug($data['name']) : null;
+        $this->setRequest();
+        $this->slug = $this->request['slug'] ?? null;
+        $this->details = $this->request['details'] ?? null;
+        $this->parent_id = $this->request['parent_id'] ?? null;
         $this->save();
+
+        if ($this->usedNodeTrait()) {
+
+            $this->fixTree();
+        }
 
         ResourceLocalization::updateOrCreate([
             'resource_id' => $this->id,
             'locale' => LaravelLocalization::getCurrentLocale()
         ], [
-            'data' => $data
+            'data' => $this->request['data'] ?? null
         ]);
 
+        $this->updateRelations();
         return $this;
     }
 
     public function updateRelations()
     {
-        if (isset(request()->relations)) {
-            foreach (request()->relations as $relationType => $relationIds) {
-                ResourceResource::whereRelationType($relationType)->whereResourceId($this->id)->delete();
-                if (isset($relationIds)) {
-                    foreach ($relationIds as $relationId) {
-                        ResourceResource::create([
-                            'resource_id' => $this->id,
-                            'relation_id' => $relationId,
-                            'resource_type' => get_class($this),
-                            'relation_type' => $relationType
-                        ]);
-                    }
-                }
+        foreach ($this->request['relations'] ?? [] as $relationType => $relationIds) {
+
+            ResourceResource::whereRelationType($relationType)->whereResourceId($this->id)->delete();
+
+            foreach ($relationIds ?? [] as $relationId) {
+
+                ResourceResource::create([
+                    'resource_id' => $this->id,
+                    'relation_id' => $relationId,
+                    'resource_type' => get_class($this),
+                    'relation_type' => $relationType
+                ]);
             }
         }
     }

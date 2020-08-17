@@ -3,26 +3,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-//use App\Alias;
 use App\Brand;
 use App\Characteristic;
 use App\CharacteristicValue;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
-/*use App\Product;
-use App\ProductCharacteristicValue;
-use App\ProductData;
-use Ixudra\Curl\Facades\Curl;
-use LaravelLocalization;*/
 
 use App\Product;
-use App\Resource;
-use App\ResourceResource;
 use GuzzleHttp\Client;
+use Illuminate\Support\Str;
+use LaravelLocalization;
 
 class ImportController extends Controller
 {
     private $token = '87cbacd82eca60a44f2abaa6d8dcf2d6a6368fd35e071f7c27d1cc5ca24486ca';
+    protected $data = null;
 
     public function __construct()
     {
@@ -44,168 +38,152 @@ class ImportController extends Controller
     public function updateOrCreate($brandRef = null)
     {
         //$data = $this->getData('brand/' . $brandRef);
-        $data = $this->getData('brand/' . '462a44b3-920c-11e6-8148-00155db18262');
+        $this->data = $this->getData('brand/' . '462a44b3-920c-11e6-8148-00155db18262');
 
-        $brand = $this->firstOrCreateBrand($data['brand']);
+//        dd($this->data['characteristics']);
+        $t['start'] = \Carbon\Carbon::now()->format('H:i:s');
 
-        $productRefs = Product::select('data->ref as ref')->joinLocalization()->where('data->brand_id', $brand->id)->get()->keyBy('ref')->keys();
-        $this->firstOrCreateProducts($data['products'], $productRefs, null, $brand->id);
-        $products = Product::select(['id', 'data->ref as ref'])->joinLocalization()->where('data->brand_id', $brand->id)->get()->keyBy('ref');
-        $this->updateOrCreateCharacteristics($data['characteristics'], $products);
+        $brand = $this->firstOrCreateBrand();
+        $this->firstOrCreateProducts($brand);
+
+        $t['end'] = \Carbon\Carbon::now()->format('H:i:s');
+
+        dd($t);
     }
 
-
-
-    public function firstOrCreateBrand($brand = null)
+    public function firstOrCreateBrand()
     {
-        $brandObj = new Brand();
-        $brandFirst = $brandObj->joinLocalization()->where('data->ref', $brand['ref'])->first();
+        $brand = Brand::where('details->ref', $this->data['brand']['ref'])->first();
 
-        if (!isset($brandFirst)) {
-            $data = [
-                'ref' => $brand['ref'],
-                'name' => trim($brand['description'])
-            ];
+        if (!isset($brand)) {
 
-            $brandFirst = $brandObj->storeOrUpdateImport($data);
+            $brand = new Brand();
+            $name = trim($this->data['brand']['description']);
+
+            $brand->setRequest([
+                'slug' => Str::slug(str_replace('/', '', $name)),
+                'details' => ['ref' => $this->data['brand']['ref']],
+                'data' => ['name' => $name]
+            ]);
+
+            LaravelLocalization::setLocale('ru');
+            $brand->storeOrUpdate();
         }
 
-        return $brandFirst;
+        return $brand;
     }
 
-    public function firstOrCreateProducts($products, $productRefs, $categories, $brandId)
+    public function firstOrCreateProducts($brand = null)
     {
-        foreach ($products as $product) {
-            if (!$productRefs->contains($product['ref'])) {
-                $productDescription = trim($product['description']);
+        foreach ($this->data['products'] as $productRef => $productData) {
 
-                $productObj = new Product();
+            $product = Product::where('details->ref', $productRef)->first();
 
-                $data = [
-                    'brand_id' => $brandId,
-                    'category_id' => null,
-                    'sku' => $product['old_base_code'],
-                    'ref' => $product['ref'],
-                    'name' => $productDescription
-                ];
+            if (!isset($product)) {
 
-                $productObj->storeOrUpdateImport($data);
+                $product = new Product();
+                $name = trim($productData['description']);
+                $categoryName = ($this->data['categories'][$productData['category_ref']]['description'] ?? 'uncategorized');
+                $slug = (Str::slug($categoryName) . '/' . Str::slug($name));
+
+                $product->setRequest([
+                    'slug' => $slug,
+                    'details' => [
+                        'ref' => $productRef,
+                        'sku' => $productData['old_base_code'],
+                        'brand_id' => $brand->id ?? null,
+                        'category_id' => null,
+                    ],
+                    'data' => ['name' => $name]
+                ]);
+
+                LaravelLocalization::setLocale('ru');
+                $product->storeOrUpdate();
             }
+
+            if (isset($this->data['characteristics'][$productRef])) {
+
+                $product->setRequest([
+                    'relations' => [
+                        CharacteristicValue::class => $this->updateOrCreateCharacteristics($this->data['characteristics'][$productRef])
+                    ]
+                ]);
+            }
+
+            $product->updateRelations();
         }
     }
 
-    public function updateOrCreateCharacteristics($characteristics, $products)
+    public function updateOrCreateCharacteristics($characteristics)
     {
-        $characteristicArray = [];
-        $characteristicValueArray = [];
+        $characteristicValueIds = [];
 
-        DB::disableQueryLog();
-        DB::beginTransaction();
+        foreach ($characteristics as $characteristic) {
 
-        foreach ($characteristics as $productRef => $data) {
+            $characteristicDataName = mb_ucfirst(trim(mb_ereg_replace('/\s+/', ' ', mb_convert_encoding($characteristic['description_characteristic'], 'UTF-8'))));
+            $characteristicValueDataValue = trim(mb_ereg_replace('/\s+/', ' ', mb_convert_encoding($characteristic['value'], 'UTF-8')));
 
-            if (isset($products[$productRef])) {
-                ResourceResource::where('resource_id', $products[$productRef]->id)->delete();
+            if (!empty($characteristicDataName) && !empty($characteristicValueDataValue)) {
 
-                foreach ($data as $characteristic) {
-                    $c = null;
+                $c = Characteristic::where('data->name', $characteristicDataName)->joinLocalization('ru')->first();
 
-                    $characteristicDataName = mb_ucfirst(trim(mb_ereg_replace('/\s+/', ' ', mb_convert_encoding($characteristic['description_characteristic'], 'UTF-8'))));
-                    $characteristicValueDataValue = trim(mb_ereg_replace('/\s+/', ' ', mb_convert_encoding($characteristic['value'], 'UTF-8')));
+                if (!isset($c)) {
 
-                    if (!empty($characteristicDataName) && !empty($characteristicValueDataValue)) {
-                        if (!array_key_exists($characteristicDataName, $characteristicArray)) {
-                            $c = Characteristic::where('locale', 'uk')->where('data->name', $characteristicDataName)->joinLocalization()->first();
+                    $c = new Characteristic();
 
-                        }
+                    $c->setRequest([
+                        'data' => ['name' => $characteristicDataName]
+                    ]);
 
-                        if (!isset($c) && !array_key_exists($characteristicDataName, $characteristicArray)) {
-                            $c = new Characteristic();
-
-                            $data = [
-                                'name' => $characteristicDataName,
-                            ];
-
-                            $c->storeOrUpdateImport($data);
-
-                            //echo $characteristicDataName . '<br>';
-
-                            /*
-                             *
-                             * Вот тут ниже не ясно как сохранить locale UK
-                             * Через метод up Resource::storeOrUpdate
-                             *
-                             */
-
-                            /*if (!empty($characteristic['description_characteristic_uk']) && !empty($characteristic['value_uk'])) {
-                                $characteristicDataNameUk = mb_ucfirst(trim(mb_ereg_replace('/\s+/', ' ', mb_convert_encoding($characteristic['description_characteristic_uk'], 'UTF-8'))));
-                                CharacteristicData::create([
-                                    'characteristic_id' => $c->id,
-                                    'name' => $characteristicDataNameUk,
-                                    'locale' => 'uk'
-                                ]);
-                            }*/
-                        }
-
-                        $cId = ($characteristicArray[$characteristicDataName] = $c->id ?? $characteristicArray[$characteristicDataName]);
-
-
-                        /*
-                         *
-                         * Ниже если расскоментировать код,
-                         * То импорт вместо 2-3 минут работает 10, и то не всегда работает
-                         * Браузер выбивает ошибку типа - Не могу дождаться ответа
-                         * Хотя смотрю в БД всё появляется вроде
-                         *
-                         */
-
-
-                       /* $cV = CharacteristicValue::where('data->characteristic_id', $cId)->where('data->value', $characteristicValueDataValue)->joinLocalization()->first();
-
-                        if (!isset($cV)) {
-                            if ((!isset($characteristicValueArray[$cId][$characteristicValueDataValue]))) {
-
-                                $c = new CharacteristicValue();
-                                $data = [
-                                    'name' => null,
-                                    'characteristic_id' => $cId,
-                                    'value' => $characteristicValueDataValue,
-                                ];
-
-                                $c->storeOrUpdateImport($data);
-
-                                unset($c);
-
-                                $characteristicValueArray[$cId][$characteristicValueDataValue] = true;
-                            }
-                        }*/
-
-
-                        /*
-                         *
-                         *  Аналогично, как сохранять locale
-                         *
-                         */
-
-                        /*if (!empty($characteristic['description_characteristic_uk']) && !empty($characteristic['value_uk'])) {
-                            $characteristicValueDataValueUk = trim(mb_ereg_replace('/\s+/', ' ', mb_convert_encoding($characteristic['value_uk'], 'UTF-8')));
-                            CharacteristicValueData::updateOrCreate([
-                                'characteristic_value_id' => $cV->id,
-                                'locale' => 'uk'
-                            ], [
-                                'value' => $characteristicValueDataValueUk,
-                            ]);
-                        }
-
-                        ProductCharacteristicValue::updateOrCreate([
-                            'product_id' => $products[$productRef]->id,
-                            'characteristic_value_id' => $cV->id
-                        ]);*/
-                    }
+                    LaravelLocalization::setLocale('ru');
+                    $c->storeOrUpdate();
                 }
 
+                $characteristicDataNameUk = mb_ucfirst(trim(mb_ereg_replace('/\s+/', ' ', mb_convert_encoding($characteristic['description_characteristic_uk'], 'UTF-8'))));
+
+                if (!empty($characteristicDataNameUk)) {
+
+                    $c->setRequest([
+                        'data' => ['name' => $characteristicDataNameUk]
+                    ]);
+
+                    LaravelLocalization::setLocale('uk');
+                    $c->storeOrUpdate();
+                }
+
+                $cV = CharacteristicValue::where('details->characteristic_id', $c->id)
+                    ->where('data->value', $characteristicValueDataValue)->joinLocalization('ru')->first();
+
+                if (!isset($cV)) {
+
+                    $cV = new CharacteristicValue();
+
+                    $cV->setRequest([
+                        'details' => ['characteristic_id' => $c->id],
+                        'data' => ['value' => $characteristicValueDataValue]
+                    ]);
+
+                    LaravelLocalization::setLocale('ru');
+                    $cV->storeOrUpdate();
+                }
+
+                $characteristicValueDataValueUk = trim(mb_ereg_replace('/\s+/', ' ', mb_convert_encoding($characteristic['value_uk'], 'UTF-8')));
+
+                if (!empty($characteristicValueDataValueUk)) {
+
+                    $cV->setRequest([
+                        'details' => ['characteristic_id' => $c->id],
+                        'data' => ['value' => $characteristicValueDataValueUk]
+                    ]);
+
+                    LaravelLocalization::setLocale('uk');
+                    $cV->storeOrUpdate();
+                }
+
+                array_push($characteristicValueIds, $cV->id);
             }
         }
-        DB::commit();
+
+        return $characteristicValueIds;
     }
 }

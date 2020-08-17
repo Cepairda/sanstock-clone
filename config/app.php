@@ -168,6 +168,7 @@ return [
 
         Barryvdh\Debugbar\ServiceProvider::class,
         Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -232,7 +233,7 @@ return [
 
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
-
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

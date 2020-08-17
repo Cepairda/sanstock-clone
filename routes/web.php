@@ -22,6 +22,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::get('/test', 'ImportController@updateOrCreate')->name('import');
 
         Route::prefix('products')->as('products.')->group(function () {
+            Route::get('/import', 'ProductController@importImages')->name('import');
             Route::resource('/', 'ProductController')->parameters(['' => 'product']);
         });
 
@@ -31,6 +32,10 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::prefix('brands')->as('brands.')->group(function () {
             Route::resource('/', 'BrandController')->parameters(['' => 'brand']);
+        });
+
+        Route::prefix('import-image')->as('import-image.')->group(function () {
+            Route::resource('/', 'ImageController');//->parameters(['' => 'product']);
         });
 
         Route::prefix('mysql-backup')->as('mysql-backup.')->group(function () {
