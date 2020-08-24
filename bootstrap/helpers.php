@@ -21,7 +21,7 @@ if (!function_exists('to_select_options')) {
     }
 }
 
-if (! function_exists('humanFileSize'))
+if (!function_exists('humanFileSize'))
 {
     function humanFileSize($size, $unit = '') {
         if( (!$unit && $size >= 1 << 30) || $unit == 'GB')
@@ -32,4 +32,51 @@ if (! function_exists('humanFileSize'))
             return number_format($size / (1 << 10),2) . ' KB';
         return number_format($size) . ' bytes';
     }
+}
+
+if (!function_exists('img')) {
+    /**
+     * Format text.
+     *
+     * @param  string  $text
+     * @return string
+     */
+
+    function img($data)
+    {
+        $ikey = $data['size'] . '-' . $data['sku'];
+
+        if (Cache::has($ikey) ) {
+            return Cache::get($ikey);
+        }
+
+        if (!empty($data)) {
+            $class = !empty($data['class']) ? ' class="' . implode(' ', $data['class']) . '"' : '';
+            $alt = !empty($data['alt']) ? ' alt="' . $data['alt'] . '"': '';
+            $uri = ' src="' . \App\Classes\ImportImage::getImage($data) . '"';
+
+            $tag = '<img' . $class . $alt . $uri . ' />';
+
+            Cache::put($ikey, $tag, now()->addMinutes(60));
+
+            return $tag;
+        } else {
+            return null;
+        }
+    }
+}
+
+if (!function_exists('xml_img')) {
+    /**
+     * Format text.
+     *
+     * @param  string  $text
+     * @return string
+     */
+
+    function xml_img($data)
+    {
+        return \App\Http\Controllers\ImageController::get_xml_image($data);
+    }
+
 }
