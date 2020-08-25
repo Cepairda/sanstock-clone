@@ -8,13 +8,23 @@
                 <div class="card-header">Dashboard</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
+                    @foreach ($products as $product)
+                        {!! img(['type' => 'product', 'class' => ['ab', 'cd', 'fg'], 'sku' => $product->sku, 'size' => 458, 'alt' => $product->sku]) !!}
+                    @endforeach
+                    <form method="post" action="{{ route('admin.import-image.store') }}">
+                        {{ csrf_field() }}
+                        {{ method_field('POST') }}
+                        <input type="hidden" name="ids[]" value="155" />
+                        <input type="hidden" name="ids[]" value="160" />
+                        <!--input type="hidden" name="ids[]" value="" /-->
+                        <input type="submit" value="Импорт">
+                    </form>
+                        <form method="post" action="{{ route('admin.products.import-price') }}">
+                            {{ csrf_field() }}
+                            {{ method_field('POST') }}
+                            <input type="hidden" name="sku" value="12667" />
+                            <input type="submit" value="Импорт Price">
+                        </form>
                 </div>
             </div>
         </div>

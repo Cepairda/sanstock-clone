@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Storage;
 use File;
@@ -28,7 +30,6 @@ class ImageController extends Controller
      */
     public function index($productsID = null)
     {
-        //
     }
 
     /**
