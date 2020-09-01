@@ -26,6 +26,8 @@ class HomeController extends Controller
     {
         $products = Product::select(['details->sku as sku'])->whereIn('id', [155, 160, 164, 166])->get();
 
+        //$p = Product::joinLocalization('uk')->get();
+        //print_r($p);
 
         return view('home', compact('products'));
     }
