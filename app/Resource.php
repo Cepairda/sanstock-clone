@@ -65,9 +65,22 @@ class Resource extends Model
     public function storeOrUpdate()
     {
         $this->setRequest();
-        $this->slug = $this->request['slug'] ?? null;
+
+        if (isset($this->request['slug'])) {
+            $this->slug = $this->request['slug'];
+        }
+
+        if (isset($this->request['details'])) {
+            $this->details = $this->request['details'];
+        }
+
+        if (isset($this->request['parent_id'])) {
+            $this->parent_id = $this->request['parent_id'];
+        }
+
+        /*$this->slug = $this->request['slug'] ?? null;
         $this->details = $this->request['details'] ?? null;
-        $this->parent_id = $this->request['parent_id'] ?? null;
+        $this->parent_id = $this->request['parent_id'] ?? null;*/
         $this->save();
 
         if ($this->usedNodeTrait()) {

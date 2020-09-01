@@ -15,9 +15,11 @@ class ProductWithDataImport implements WithMultipleSheets
 //        phpinfo(); exit();
         $sheets = [];
         $sheets['main'] = new ProductImport();
+
         foreach (LaravelLocalization::getSupportedLanguagesKeys() as $locale) {
             $sheets[$locale] = new ProductDataImport($locale);
         }
+
         return $sheets;
     }
 }

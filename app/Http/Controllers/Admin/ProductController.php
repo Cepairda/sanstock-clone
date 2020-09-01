@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\ProductWithDataExport;
+use App\Classes\Exports\ProductWithDataExport;
 use App\Http\Controllers\Admin\Resource\isResource;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ImageController;
+use App\Classes\Imports\ProductWithDataImport;
 use App\Product;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -25,13 +26,20 @@ class ProductController extends Controller
         return (new ProductWithDataExport())->download();
     }
 
+    public function import(Request $request)
+    {
+        (new ProductWithDataImport())->import($request->file('products'));
+        return redirect()->back();
+    }
+
     public function importPrice(Request $request)
     {
         try {
             $sku = $request->post('sku');
-            $productSku = !isset($sku)
+            $productSku = !empty($sku)
                 ? Product::select(['details->sku as sku'])->where('details->sku', $sku)->get()->keyBy('sku')->keys()->toArray()
                 : Product::select(['details->sku as sku'])->get()->keyBy('sku')->keys()->toArray();
+
             $client = new Client();
             $res = $client->request('POST', 'https://b2b-sandi.com.ua/api/price-center', [
                 'form_params' => [

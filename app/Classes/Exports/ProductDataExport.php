@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exports;
+namespace App\Classes\Exports;
 
 use App\Product;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -19,27 +19,24 @@ class ProductDataExport implements FromCollection, WithHeadings, WithTitle, With
 
     public function collection()
     {
-//        return ProductData::whereLocale($this->locale)->get();
-        return Product::joinData($this->locale)->get();
+        return Product::joinLocalization($this->locale)->get();
     }
 
     public function map($product): array
     {
         return [
-//            $product->product_id,
-            $product->sku,
-            $product->meta_title,
-            $product->meta_description,
-            $product->name,
-            $product->description,
-            $product->text,
+            $product->details['sku'],
+            $product->data['meta_title'],
+            $product->data['meta_description'],
+            $product->data['name'],
+            $product->data['description'],
+            $product->data['text'],
         ];
     }
 
     public function headings(): array
     {
         return [
-//            'product_id',
             'sku',
             'meta_title',
             'meta_description',

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exports;
+namespace App\Classes\Exports;
 
 use Illuminate\Contracts\Support\Responsable;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -16,9 +16,11 @@ class ProductWithDataExport implements Responsable, WithMultipleSheets
     public function sheets(): array
     {
         $sheets[] = new ProductExport();
+
         foreach (LaravelLocalization::getSupportedLanguagesKeys() as $locale) {
             $sheets[] = new ProductDataExport($locale);
         }
+
         return $sheets;
     }
 }

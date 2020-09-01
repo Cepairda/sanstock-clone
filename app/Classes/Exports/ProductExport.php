@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exports;
+namespace App\Classes\Exports;
 
 use App\Product;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -12,26 +12,24 @@ class ProductExport implements FromCollection, WithHeadings, WithTitle, WithMapp
 {
     public function collection()
     {
-        return Product::joinData('ru')->withCategories()->get();
+        return Product::joinLocalization('ru')->get();
     }
 
     public function map($product): array
     {
         return [
-//            $product->id,
-            $product->sku,
-            $product->category_id,
-            $product->categories->keyBy('id')->keys()->implode('|'),
-            $product->group_id,
-            $product->published,
-            $product->name
+            $product->details['sku'],
+            $product->details['category_id'],
+            $product->details['categories']->keyBy('id')->keys()->implode('|'),
+            $product->details['group_id'],
+            $product->details['published'],
+            $product->data['name']
         ];
     }
 
     public function headings(): array
     {
         return [
-//            'id',
             'sku',
             'category_id',
             'category_ids',
