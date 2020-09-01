@@ -22,6 +22,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['accesses'];
+
     public function getAvatarUrlAttribute()
     {
 //        return $this->attributes['avatar_url'] ?? $this->attributes['avatar_url'] = 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
@@ -31,5 +33,16 @@ class User extends Authenticatable
 //                'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
 //        }
 //        return $this->attributes['avatar_url'];
+    }
+
+    public function getAccessesAttribute()
+    {
+        if (!isset($this->attributes['accesses'])) {
+            $this->attributes['accesses'] = $this->personal_access ?
+                UserAccess::getAccesses($this->id)->keyBy('access_name')->keys() :
+                RoleAccess::getAccesses($this->role_id)->keyBy('access_name')->keys();
+        }
+
+        return $this->attributes['accesses'];
     }
 }

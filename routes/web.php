@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
     Auth::routes();
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index')->middleware(['auth:web', 'checkAccess'])->name('home');
+    //Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/', function () {
         return view('welcome');
@@ -15,7 +16,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
 
-    Route::prefix('admin')->as('admin.')->namespace('Admin')->group(function () {
+    Route::prefix('admin')->as('admin.')->namespace('Admin')->middleware(['checkAccess'])->group(function () {
 
         Route::get('/', 'DashboardController@index')->name('dashboard.index');
 
@@ -23,6 +24,8 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::prefix('products')->as('products.')->group(function () {
             Route::post('/import-price', 'ProductController@importPrice')->name('import-price');
+            Route::get('/export', 'ProductController@export')->name('export');
+            Route::post('/import', 'ProductController@import')->name('import');
             Route::resource('/', 'ProductController')->parameters(['' => 'product']);
         });
 
