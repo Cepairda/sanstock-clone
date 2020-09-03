@@ -6,7 +6,7 @@ use Kalnoy\Nestedset\NodeTrait;
 
 class Category extends Resource
 {
-    use NodeTrait;
+    //use NodeTrait;
 
     public function products()
     {

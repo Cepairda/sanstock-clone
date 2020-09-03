@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Imports;
+namespace App\Classes\Imports;
 
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Concerns\Importable;
@@ -15,9 +15,11 @@ class CategoryWithDataImport implements WithMultipleSheets
         ini_set('memory_limit', '512M');
         $sheets = [];
         $sheets['main'] = new CategoryImport();
-        /*foreach (LaravelLocalization::getSupportedLanguagesKeys() as $locale) {
+
+        foreach (LaravelLocalization::getSupportedLanguagesKeys() as $locale) {
             $sheets[$locale] = new CategoryDataImport($locale);
-        }*/
+        }
+
         return $sheets;
     }
 }

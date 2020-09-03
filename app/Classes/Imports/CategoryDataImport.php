@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Imports;
+namespace App\Classes\Imports;
 
+use App\Category;
 use App\CategoryData;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use LaravelLocalization;
 
 class CategoryDataImport implements ToCollection, WithHeadingRow
 {
@@ -19,20 +21,23 @@ class CategoryDataImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
-            CategoryData::updateOrCreate(
-                [
-                    'category_id' => (int)$row['category_id'],
-                    'locale' => $this->locale
-                ],
-                [
-                    'meta_title' => $row['meta_title'],
-                    'meta_description' => $row['meta_description'],
-                    'h1' => $row['h1'],
-                    'name' => $row['name'],
-                    'description' => $row['description'],
-                    'text' => $row['text'],
-                ]
-            );
+            $category= Category::where('details->category_id', (int)$row['category_id'])->first();
+
+            if (isset($category)) {
+                $category->setRequest([
+                    'data' => [
+                        'meta_title' => $row['meta_title'],
+                        'meta_description' => $row['meta_description'],
+                        'h1' => $row['h1'],
+                        'name' => $row['name'],
+                        'description' => $row['description'],
+                        'text' => $row['text'],
+                    ]
+                ]);
+
+                LaravelLocalization::setLocale($this->locale);
+                $category->storeOrUpdate();
+            }
         }
     }
 }

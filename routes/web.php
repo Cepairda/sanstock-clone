@@ -23,14 +23,18 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::get('/test', 'ImportController@updateOrCreate')->name('import');
 
         Route::prefix('products')->as('products.')->group(function () {
+            Route::resource('/', 'ProductController')->parameters(['' => 'product']);
+
             Route::post('/import-price', 'ProductController@importPrice')->name('import-price');
             Route::get('/export', 'ProductController@export')->name('export');
             Route::post('/import', 'ProductController@import')->name('import');
-            Route::resource('/', 'ProductController')->parameters(['' => 'product']);
         });
 
         Route::prefix('categories')->as('categories.')->group(function () {
-            Route::resource('/', 'CategoryController')->parameters(['' => 'category']);
+            //Route::resource('/', 'CategoryController')->parameters(['' => 'category']);
+
+            Route::get('/export', 'CategoryController@export')->name('export');
+            Route::post('/import', 'CategoryController@import')->name('import');
         });
 
         Route::prefix('brands')->as('brands.')->group(function () {

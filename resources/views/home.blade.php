@@ -25,13 +25,22 @@
                             <input type="hidden" name="sku" value="12667" />
                             <input type="submit" value="Импорт Price">
                         </form>
-                        <a href="{{ route('admin.products.export') }}">Экспорт</a>
+                        <a href="{{ route('admin.products.export') }}">Экспорт товаров</a>
                         <form method="post" enctype="multipart/form-data" action="{{ route('admin.products.import') }}">
                             {{ csrf_field() }}
                             {{ method_field('POST') }}
                             <input type="file" name="products">
                             <hr>
-                            <button class="btn btn-dark legitRipple" type="submit">Загрузить</button>
+                            <button class="btn btn-dark legitRipple" type="submit">Загрузить продукты</button>
+                            <hr>
+                        </form>
+                        <a href="{{ route('admin.categories.export') }}">Экспорт категорий</a>
+                        <form method="post" enctype="multipart/form-data" action="{{ route('admin.categories.import') }}">
+                            {{ csrf_field() }}
+                            {{ method_field('POST') }}
+                            <input type="file" name="categories">
+                            <hr>
+                            <button class="btn btn-dark legitRipple" type="submit">Загрузить категории</button>
                             <hr>
                         </form>
                 </div>
