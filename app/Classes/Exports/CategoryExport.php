@@ -7,8 +7,9 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class CategoryExport implements FromCollection, WithHeadings, WithTitle, WithMapping
+class CategoryExport implements FromCollection, WithHeadings, WithTitle, WithMapping, WithStrictNullComparison
 {
     public function collection()
     {
@@ -18,8 +19,8 @@ class CategoryExport implements FromCollection, WithHeadings, WithTitle, WithMap
     public function map($category): array
     {
         return [
-            $category->details['category_id'],
-            $category->parent_id,
+            $category->resource_id,
+            $category->parent_id ? Category::find($category->parent_id)->resource_id : null,
             $category->details['sort'],
             $category->details['published'],
             $category->details['is_menu_item'],

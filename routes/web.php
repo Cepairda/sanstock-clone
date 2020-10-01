@@ -31,7 +31,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         });
 
         Route::prefix('categories')->as('categories.')->group(function () {
-            //Route::resource('/', 'CategoryController')->parameters(['' => 'category']);
+            Route::resource('/', 'CategoryController')->parameters(['' => 'category']);
 
             Route::get('/export', 'CategoryController@export')->name('export');
             Route::post('/import', 'CategoryController@import')->name('import');

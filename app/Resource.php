@@ -66,6 +66,10 @@ class Resource extends Model
     {
         $this->setRequest();
 
+        if (isset($this->request['resource_id'])) {
+            $this->resource_id = $this->request['resource_id'];
+        }
+
         if (isset($this->request['slug'])) {
             $this->slug = $this->request['slug'];
         }

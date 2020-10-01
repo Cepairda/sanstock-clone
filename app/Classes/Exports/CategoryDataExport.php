@@ -7,8 +7,9 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class CategoryDataExport implements FromCollection, WithHeadings, WithTitle, WithMapping
+class CategoryDataExport implements FromCollection, WithHeadings, WithTitle, WithMapping, WithStrictNullComparison
 {
     protected $locale;
 
@@ -25,7 +26,7 @@ class CategoryDataExport implements FromCollection, WithHeadings, WithTitle, Wit
     public function map($category): array
     {
         return [
-            $category->details['category_id'],
+            $category->resource_id,
             $category->data['meta_title'],
             $category->data['meta_description'],
             $category->data['h1'],

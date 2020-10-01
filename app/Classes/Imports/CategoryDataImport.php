@@ -21,7 +21,7 @@ class CategoryDataImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
-            $category= Category::where('details->category_id', (int)$row['category_id'])->first();
+            $category= Category::where('resource_id', (int)$row['category_id'])->first();
 
             if (isset($category)) {
                 $category->setRequest([
