@@ -23,7 +23,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::get('/test', 'ImportController@updateOrCreate')->name('import');
 
         Route::prefix('products')->as('products.')->group(function () {
-            Route::resource('/', 'ProductController')->parameters(['' => 'product']);
+            Route::resource('/', 'ProductController')->parameters(['' => 'product'])->except(['show']);
 
             Route::post('/import-price', 'ProductController@importPrice')->name('import-price');
             Route::get('/export', 'ProductController@export')->name('export');

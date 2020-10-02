@@ -21,11 +21,21 @@ class ProductForm extends Form
                 'rules' => ['required', 'max:255', 'unique:resources,slug,' . $resource->id],
                 'value' => $resource->slug
             ])
+
             ->add('details[sku]', 'text', [
                 'label' => 'Sku',
                 'rules' => ['required', 'unique:resources,details->sku,' . $resource->id],
                 'value' => $resource->getDetails('sku')
             ])
+
+            ->add('details[published]', 'select', [
+                'label' => 'Опубликовано',
+                'rules' => ['required'],
+                'choices' => ['Нет', 'Да'],
+                'selected' => $resource->getDetails('published'),
+                'empty_value' => ' '
+            ])
+
             ->add('details[price]', 'number', [
                 'label' => 'Price',
                 'rules' => ['required'],
@@ -65,6 +75,19 @@ class ProductForm extends Form
                 'rules' => [],
                 'value' => $resource->getData('text')
             ])
+
+            ->add('data[meta_title]', 'text', [
+                'label' => 'Meta Title',
+                'rules' => [],
+                'value' => $resource->getData('meta_title')
+            ])
+
+            ->add('data[meta_description]', 'textarea', [
+                'label' => 'Meta Description',
+                'rules' => [],
+                'value' => $resource->getData('meta_description')
+            ])
+
             ->add('submit', 'submit', [
                 'label' => 'Сохранить'
             ])

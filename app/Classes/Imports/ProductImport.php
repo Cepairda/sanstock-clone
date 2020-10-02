@@ -4,6 +4,7 @@ namespace App\Classes\Imports;
 
 use App\Alias;
 use App\Category;
+use App\Classes\Slug;
 use App\Product;
 use App\ProductCategory;
 use Illuminate\Support\Collection;
@@ -16,15 +17,18 @@ class ProductImport implements ToCollection, WithHeadingRow
 {
     public function collection(Collection $rows)
     {
+        $categories = Category::all()->pluck('id', 'resource_id');
+
         foreach ($rows as $row) {
             $requestData = [];
             $sku = (int)$row['sku'];
             $categoryId = (int)$row['category_id'];
             $product = Product::where('details->sku', $sku)->first();
+
             if (!isset($product)) {
                 $product = new Product();
                 $requestData['details']['sku'] = $sku;
-                $requestData['slug'] = (Str::slug($row['name']));
+                $requestData['slug'] = (Slug::create(Product::class, $row['name']));
             }
 
             $requestData['details']['published'] = (int)$row['published'];
@@ -32,15 +36,6 @@ class ProductImport implements ToCollection, WithHeadingRow
             $requestData['details']['category_id'] = $categoryId;
 
             $product->setRequest($requestData);
-
-            /*$product->setRequest([
-                'slug' => $slug,
-                'details' => [
-                    'published' => (int)$row['published'],
-                    'group_id' => (int)$row['group_id'],
-                    'category_id' => $categoryId,
-                ],
-            ]);*/
 
             LaravelLocalization::setLocale('ru');
             $product->storeOrUpdate();
@@ -51,9 +46,15 @@ class ProductImport implements ToCollection, WithHeadingRow
                 array_push($categoryIds, $categoryId);
             }
 
+            $categoryIdsReplace = [];//Заменяем ID из файла на реальный ID в БД
+
+            foreach ($categoryIds as $id) {
+                $categoryIdsReplace[] = $categories[$id];
+            }
+
             $product->setRequest([
                 'relations' => [
-                    Category::class => $categoryIds,
+                    Category::class => $categoryIdsReplace,
                 ]
             ]);
 

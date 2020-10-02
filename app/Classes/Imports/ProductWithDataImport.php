@@ -12,7 +12,6 @@ class ProductWithDataImport implements WithMultipleSheets
     public function sheets(): array
     {
         ini_set('memory_limit', '512M');
-//        phpinfo(); exit();
         $sheets = [];
         $sheets['main'] = new ProductImport();
 
