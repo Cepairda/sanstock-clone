@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Resource\Forms;
 
 use App\Category;
+use App\Characteristic;
 use Kris\LaravelFormBuilder\Form;
 
 class CategoryForm extends Form
@@ -27,6 +28,40 @@ class CategoryForm extends Form
                 'disabled' => ['14'],
                 'rules' => [],
                 'empty_value' => 'Родительская категория'
+            ])
+            ->add('details[published]', 'select', [
+                'label' => 'Опубликовано',
+                'rules' => ['required'],
+                'choices' => ['Нет', 'Да'],
+                'selected' => $resource->getDetails('published'),
+                'empty_value' => ' '
+            ])
+            ->add('details[is_menu_item]', 'select', [
+                'label' => 'Пункт меню',
+                'rules' => ['required'],
+                'choices' => ['Нет', 'Да'],
+                'selected' => $resource->getDetails('is_menu_item'),
+                'empty_value' => ' '
+            ])
+            ->add('details[sort]', 'text', [
+                'label' => 'Сортировка',
+                'rules' => ['required'],
+                'value' => $resource->getDetails('sort')
+            ])
+            ->add('data[meta_title]', 'text', [
+                'label' => 'Meta Title',
+                'rules' => ['required'],
+                'value' => $resource->data['meta_title']
+            ])
+            ->add('data[meta_description]', 'text', [
+                'label' => 'Meta Description',
+                'rules' => ['required'],
+                'value' => $resource->data['meta_description']
+            ])
+            ->add('data[h1]', 'text', [
+                'label' => 'H1',
+                'rules' => ['required'],
+                'value' => $resource->data['h1']
             ])
             ->add('data[name]', 'text', [
                 'label' => 'Name',

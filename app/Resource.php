@@ -100,6 +100,7 @@ class Resource extends Model
         ]);
 
         $this->updateRelations();
+
         return $this;
     }
 

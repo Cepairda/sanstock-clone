@@ -12,6 +12,6 @@ class Category extends Resource
     {
         return $this->belongsToMany(Product::class, 'resource_resource',
             'relation_id', 'resource_id')
-            ->where('relation_type', Product::class);
+            ->where('resource_type', Product::class);
     }
 }

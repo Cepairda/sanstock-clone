@@ -33,7 +33,7 @@ class ProductImport implements ToCollection, WithHeadingRow
 
             $requestData['details']['published'] = (int)$row['published'];
             $requestData['details']['group_id'] = (int)$row['group_id'];
-            $requestData['details']['category_id'] = $categoryId;
+            $requestData['details']['category_id'] = isset($categories[$categoryId]) ? $categories[$categoryId] : null;
 
             $product->setRequest($requestData);
 
@@ -49,16 +49,20 @@ class ProductImport implements ToCollection, WithHeadingRow
             $categoryIdsReplace = [];//Заменяем ID из файла на реальный ID в БД
 
             foreach ($categoryIds as $id) {
+                if (isset($categories[$id]))
                 $categoryIdsReplace[] = $categories[$id];
             }
 
-            $product->setRequest([
-                'relations' => [
-                    Category::class => $categoryIdsReplace,
-                ]
-            ]);
+            if (!empty($categoryIdsReplace)) {
+                $product->setRequest([
+                    'relations' => [
+                        Category::class => $categoryIdsReplace,
+                    ]
+                ]);
 
-            $product->updateRelations();
+                $product->updateRelations();
+            }
+
             /*ProductCategory::storeOrUpdate($product->id, $categoryIds);*/
         }
     }
