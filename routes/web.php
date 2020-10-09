@@ -22,12 +22,8 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::get('/test', 'ImportController@updateOrCreate')->name('import');
 
-        Route::prefix('products')->as('products.')->group(function () {
-            Route::resource('/', 'ProductController')->parameters(['' => 'product'])->except(['show']);
-
-            Route::post('/import-price', 'ProductController@importPrice')->name('import-price');
-            Route::get('/export', 'ProductController@export')->name('export');
-            Route::post('/import', 'ProductController@import')->name('import');
+        Route::prefix('brands')->as('brands.')->group(function () {
+            Route::resource('/', 'BrandController')->parameters(['' => 'brand']);
         });
 
         Route::prefix('categories')->as('categories.')->group(function () {
@@ -37,8 +33,33 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::post('/import', 'CategoryController@import')->name('import');
         });
 
-        Route::prefix('brands')->as('brands.')->group(function () {
-            Route::resource('/', 'BrandController')->parameters(['' => 'brand']);
+        Route::prefix('products')->as('products.')->group(function () {
+            Route::resource('/', 'ProductController')->parameters(['' => 'product'])->except(['show']);
+
+            Route::post('/import-price', 'ProductController@importPrice')->name('import-price');
+            Route::get('/export', 'ProductController@export')->name('export');
+            Route::post('/import', 'ProductController@import')->name('import');
+        });
+
+        Route::prefix('characteristics')->as('characteristics.')->group(function () {
+            Route::resource('/', 'CharacteristicController')->parameters(['' => 'characteristic'])->except(['show']);
+        });
+
+        Route::prefix('sale-points')->as('sale-points.')->group(function () {
+            Route::resource('/', 'SalePointController')->parameters(['' => 'sale-point'])->except(['show']);
+        });
+
+        Route::prefix('users')->as('users.')->group(function () {
+            Route::resource('/', 'UserController')->parameters(['' => 'user'])->except(['show']);
+
+            Route::get('/{id}/accesses', 'UserController@accesses')->name('accesses');
+            Route::post('/{id}/accesses/update', 'UserController@updateAccesses')->name('accesses.update');
+        });
+
+        Route::prefix('roles')->as('roles.')->group(function () {
+            Route::resource('/', 'RoleController');
+            Route::get('/{id}/accesses', 'RoleController@accesses')->name('accesses');
+            Route::post('/{id}/accesses/update', 'RoleController@updateAccesses')->name('accesses.update');
         });
 
         Route::prefix('import-image')->as('import-image.')->group(function () {

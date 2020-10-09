@@ -49,6 +49,22 @@
                     </ul>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.users.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-users"></i>
+                        <p>
+                            Пользователи
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="nav-icon fas fa-unlock"></i>
+                        <p>
+                            Роли
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('admin.mysql-backup.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-sync"></i>
                         <p>
@@ -73,11 +89,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="../widgets.html" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                    <a href="{{ route('admin.characteristics.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-cogs"></i>
                         <p>
-                            Widgets
-                            <span class="right badge badge-danger">New</span>
+                            Характеристики
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.sale-points.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-shopping-cart"></i>
+                        <p>
+                            Точки продаж
                         </p>
                     </a>
                 </li>

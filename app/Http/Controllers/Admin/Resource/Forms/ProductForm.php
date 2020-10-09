@@ -92,10 +92,11 @@ class ProductForm extends Form
                 'label' => 'Сохранить'
             ])
             ->formOptions = [
-            'method' => ($resource->id ? 'PUT' : 'POST'),
-            'url' => ($resource->id ?
-                action([$controllerClass, 'update'], $resource->id) :
-                action([$controllerClass, 'store']))
-        ];
+                'method' => ($resource->id ? 'PUT' : 'POST'),
+                'url' => ($resource->id
+                    ? action([$controllerClass, 'update'], $resource->id)
+                    : action([$controllerClass, 'store'])
+                )
+            ];
     }
 }
