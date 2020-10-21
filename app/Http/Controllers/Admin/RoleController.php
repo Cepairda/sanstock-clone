@@ -39,10 +39,15 @@ class RoleController extends Controller
         return $this->storeOrUpdate($request);
     }
 
-    public function edit($id)
+    public function edit($id, FormBuilder $formBuilder)
     {
-        $data['role'] = Role::findOrFail($id);
-        return view('admin.roles.createOrEdit', $data);
+        $role = Role::findOrFail($id);
+
+        $form = $formBuilder->create(RoleForm::class, [
+            'model' => $role,
+        ]);
+
+        return view('admin.resources.create-or-edit', compact('form'));
     }
 
     public function update(Request $request, $id)
@@ -53,13 +58,15 @@ class RoleController extends Controller
     public function destroy(Request $request, $id)
     {
         $result = Role::deleteById($request->all(), $id);
-        return response()->json(['result' => $result], 200);
+
+        return redirect(action([get_class($this), 'index']));
     }
 
     public function storeOrUpdate($request, $id = null)
     {
         $data = $request->all();
         $validator = Validator::make($data, $this->rules($id));
+
         if ($validator->fails()) {
             $response = [
                 'result' => false,
@@ -75,7 +82,9 @@ class RoleController extends Controller
             }
             $response['result'] = true;
         }
-        return response()->json($response, 200);
+
+        //return response()->json($response, 200);
+        return redirect(action([get_class($this), 'index']));
     }
 
     public function rules($id = null)
@@ -90,23 +99,26 @@ class RoleController extends Controller
 
     public function accesses($id)
     {
+        $roleAccesses = RoleAccess::all();
+        $userAccesses = UserAccess::all();
+
         $data['role'] = Role::findOrFail($id);
         $data['routes'] = Route::getRoutes();
         $data['accesses'] = Access::all()->keyBy('name');
         $data['available_accesses'] = RoleAccess::getAccesses($id)->keyBy('access_name')->keys();
-        $roleAccesses = RoleAccess::all();
         $data['roles'] = Role::getByIds($roleAccesses->keyBy('role_id')->keys())->keyBy('id');
         $data['grouped_role_accesses'] = $roleAccesses->groupBy('access_name');
-        $userAccesses = UserAccess::all();
         $data['users'] = User::getByIds($userAccesses->keyBy('user_id')->keys())->keyBy('id');
         $data['grouped_user_accesses'] = $userAccesses->groupBy('access_name');
+
         return view('admin.roles.accesses', $data);
     }
 
     public function updateAccesses(Request $request, $id)
     {
         RoleAccess::updateById($id, $request->input('accesses'));
-        return response()->json(['result' => true], 200);
+
+        return redirect(action([get_class($this), 'accesses']));
     }
 
 }

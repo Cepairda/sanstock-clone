@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -44,5 +45,31 @@ class User extends Authenticatable
         }
 
         return $this->attributes['accesses'];
+    }
+
+    public static function getByIds($ids)
+    {
+        return self::whereIn('id', $ids)->get();
+    }
+
+    public static function storeOrUpdate($data, $id)
+    {
+        $password = isset($data['password']) ? Hash::make($data['password']) : $data['old_password'];
+        $storeOrUpdateData = [
+            'email' => $data['email'],
+            'password' => $password,
+            'role_id' => $data['role_id'],
+            'surname' => $data['surname'],
+            'name' => $data['name'],
+            'patronymic' => $data['patronymic'],
+        ];
+
+        if (isset($id)) {
+            self::where('id', $id)->update($storeOrUpdateData);
+        } else {
+            self::create($storeOrUpdateData);
+        }
+
+        return true;
     }
 }
