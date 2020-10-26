@@ -97,6 +97,22 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.blog-categories.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-list"></i>
+                        <p>
+                            Категории блога
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.blog-posts.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-list"></i>
+                        <p>
+                            Статьи блога
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('admin.sale-points.index') }}" class="nav-link">
                         <i class="nav-icon fa fa-shopping-cart"></i>
                         <p>
