@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Characteristic;
+use App\Classes\Slug;
 use Illuminate\Http\Request;
 use App\Product;
 
@@ -24,11 +27,35 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products = Product::select(['details->sku as sku'])->whereIn('id', [155, 160, 164, 166])->get();
+        //$products = Product::select(['details->sku as sku'])->whereIn('id', [155, 160, 164, 166])->get();
 
         //$p = Product::joinLocalization('uk')->get();
         //print_r($p);
 
-        return view('home', compact('products'));
+        //echo Slug::create();
+
+        //return view('home', compact('products'));
+
+        $category = Category::where('id', 11)->with('products')->first();
+
+        //dd($category[0]->products);
+
+        $characteristicsIds = [];
+
+        foreach ($category->products as $product) {
+            echo $product->details['sku'] . '<br>';
+            //dd($product->characteristics);
+
+            foreach ($product->characteristics as $characteristic) {
+                $characteristicsIds[$characteristic->details['characteristic_id']] = $characteristic->details['characteristic_id'];
+                echo '---' . $characteristic->details['characteristic_id'] . '<br>';
+            }
+        }
+
+        $characteristics = Characteristic::joinLocalization()->whereIn('id', $characteristicsIds)->get();
+
+        foreach ($characteristics as $characteristic) {
+            echo $characteristic->data['name'] . '<br>';
+        }
     }
 }

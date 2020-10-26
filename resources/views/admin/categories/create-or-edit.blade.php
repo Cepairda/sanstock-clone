@@ -61,7 +61,9 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
-                         ligula placerat mi, quis posuere purus ligula eu lectus. Donec nunc tellus, elementum sit amet ultricies at, posuere nec nunc. Nunc euismod pellentesque diam.
+                         @foreach($characteristics as $characteristic)
+                             <input type="checkbox">
+                        @endforeach
                     </div>
                 </div>
             </div>
