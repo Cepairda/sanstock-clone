@@ -19,7 +19,7 @@ class RoleForm extends Form
             ])
             ->add('description', 'textarea', [
                 'label' => 'Description',
-                'rules' => [],
+                'rules' => ['required'],
                 'value' => $role->description,
             ])
 

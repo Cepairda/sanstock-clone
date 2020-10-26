@@ -14,7 +14,7 @@ class BrandForm extends Form
         $this
             ->add('slug', 'text', [
                 'label' => 'Slug',
-                'rules' => ['required', 'max:255', 'unique:resources,slug,' . $resource->id],
+                'rules' => ['required', 'max:5', 'unique:resources,slug,' . $resource->id],
                 'value' => $resource->slug,
             ])
             ->add('data[name]', 'text', [

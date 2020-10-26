@@ -1,26 +1,25 @@
 @extends('layouts.admin')
-@section('meta_title', 'Roles')
-@section('body_id', 'rolesIndex')
-@section('body_class', 'roles')
 
 @section('content')
 
-    <div class="page-header">
-        <div class="page-header-content header-elements-md-inline">
-            <div class="page-title d-flex">
-                <h4>Роли пользователей</h4>
-            </div>
-        </div>
-    </div>
+    @php($controllerClass = get_class(request()->route()->controller))
 
     <div class="content pt-0">
         <div class="card">
 
-            <div class="card-header header-elements-inline flex-wrap bg-light">
+            <div class="card-header">
                 {{ $roles->links() }}
-                <div class="ml-auto">
-                    <a href="{{ route('admin.roles.create') }}" class="btn btn-sm btn-success">Добавить</a>
+
+                <h3 class="card-title">
+                    {{ Str::before(class_basename($controllerClass), 'Controller') }}
+                </h3>
+                <div class="card-tools">
+                    <a href="{{ action([$controllerClass, 'create']) }}"
+                        class="text-success d-inline-block px-3">
+                        <span class="far fa-plus-square"></span> Добавить
+                    </a>
                 </div>
+
             </div>
 
             <div class="table-responsive">
@@ -48,31 +47,26 @@
                             </td>
                             <td class="text-center" nowrap>
 
-                                @if(auth()->user()->accesses->contains('roles.edit'))
-                                    <a href="{{ route('admin.roles.edit', $role->id) }}" class="btn btn-warning btn-sm"
-                                       data-toggle="tooltip" data-placement="top" title="Редактировать">
-                                        <i class="icon-pencil"></i>
+                                @if(auth()->user()->accesses->contains('admin.roles.edit'))
+                                    <a href="{{ route('admin.roles.edit', $role->id) }}"
+                                        class="btn btn-warning text-white">
+                                        <span class="far fa-edit"></span>
                                     </a>
                                 @endif
 
-                                @if(auth()->user()->accesses->contains('roles.accesses'))
-                                    <a href="{{ route('admin.roles.accesses', $role->id) }}" class="btn btn-info btn-sm"
-                                       data-toggle="tooltip" data-placement="top" title="Разрешения">
-                                        <span class="icon-cogs"></span>
+                                @if(auth()->user()->accesses->contains('admin.roles.accesses'))
+                                    <a href="{{ route('admin.roles.accesses', $role->id) }}"
+                                        class="btn btn-info text-white">
+                                        <span class="fa fa-cogs"></span>
                                     </a>
                                 @endif
 
-                                @if(auth()->user()->accesses->contains('roles.destroy') && !in_array($role->id, [1, 2]))
-                                    <a href="#" class="btn btn-danger btn-sm ajaxActionPrompt" title="Удалить"
-                                       data-toggle="tooltip" data-target="#rolesDestroy{{ $role->id }}"
-                                       data-prompt-text="Введите ID новой роли для пользователей этой группы:"
-                                       data-prompt-default-value="1" data-placement="top" data-item-key="new_role_id">
-                                        <span class="icon-bin"></span>
+                                @if(auth()->user()->accesses->contains('admin.roles.destroy') && !in_array($role->id, [1, 2]))
+                                    <a href="{{ route('admin.roles.destroy', $role->id) }}"
+                                        class="btn btn-danger ajaxActionPrompt">
+                                        <span class="fa fa-trash-alt"></span>
                                     </a>
-                                    <button type="button" class="d-none ajaxAction" id="rolesDestroy{{ $role->id }}"
-                                            data-success="removeRow ajaxActionErrorAlert" data-_method="DELETE"
-                                            data-error-alert-text="Ошибка!"
-                                            data-url="{{ route('admin.roles.destroy', $role->id) }}">DELETE</button>
+
                                 @endif
 
                             </td>

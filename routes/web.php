@@ -16,7 +16,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
 
-    Route::prefix('admin')->as('admin.')->namespace('Admin')->group(function () {
+    Route::prefix('admin')->as('admin.')->middleware('checkAccess')->namespace('Admin')->group(function () {
 
         Route::get('/', 'DashboardController@index')->name('dashboard.index');
 
@@ -57,7 +57,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         });
 
         Route::prefix('roles')->as('roles.')->group(function () {
-            Route::resource('/', 'RoleController');
+            Route::resource('/', 'RoleController')->parameters(['' => 'role']);
             Route::get('/{id}/accesses', 'RoleController@accesses')->name('accesses');
             Route::post('/{id}/accesses/update', 'RoleController@updateAccesses')->name('accesses.update');
         });

@@ -56,26 +56,25 @@
                             </td>
                             <td class="text-center" nowrap>
 
-                                @if(auth()->user()->accesses->contains('users.edit'))
+                                @if(auth()->user()->accesses->contains('admin.users.edit'))
                                     <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning text-white"
                                        data-toggle="tooltip" data-placement="top" title="Редактировать">
                                         <i class="far fa-edit"></i>
                                     </a>
                                 @endif
 
-                                @if(auth()->user()->accesses->contains('users.accesses'))
+                                @if(auth()->user()->accesses->contains('admin.users.accesses'))
                                     <a href="{{ route('admin.users.accesses', $user->id) }}" class="btn btn-info text-white"
                                        data-toggle="tooltip" data-placement="top" title="Разрешения">
                                         <span class="fas fa-cogs"></span>
                                     </a>
                                 @endif
 
-                                @if(auth()->user()->accesses->contains('users.destroy') && $user->id != auth()->user()->id)
-                                    <a href="#" class="btn btn-danger text-white ajaxActionConfirm" title="Удалить"
-                                       data-toggle="tooltip" data-placement="top"
-                                       data-confirm-text="Вы уверены, что хотите удалить пользователя: \n({{ $user->email }} [ID: {{ $user->id }}])?"
-                                       data-target="#usersDestroy{{ $user->id }}">
-                                        <span class="icon-bin"></span>
+                                @if(auth()->user()->accesses->contains('admin.users.destroy') && $user->id != auth()->user()->id)
+                                    <a href="#" class="btn btn-danger text-white" title="Удалить"
+
+                                 >
+                                        <span class="fa fa-trash-alt"></span>
                                     </a>
                                     <button type="button" class="d-none ajaxAction" id="usersDestroy{{ $user->id }}"
                                             data-success="removeRow ajaxActionErrorAlert"
