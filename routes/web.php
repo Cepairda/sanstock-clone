@@ -82,6 +82,10 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::prefix('blog-posts')->as('blog-posts.')->group(function () {
             Route::resource('/', 'BlogPostController')->parameters(['' => 'blog-post']);
         });
+
+        Route::prefix('pages')->as('pages.')->group(function () {
+            Route::resource('/', 'PageController')->parameters(['' => 'page']);
+        });
     });
 
 });
