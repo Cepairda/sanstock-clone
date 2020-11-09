@@ -45,6 +45,10 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::resource('/', 'CharacteristicController')->parameters(['' => 'characteristic'])->except(['show']);
         });
 
+        Route::prefix('characteristic-groups')->as('characteristic-groups.')->group(function () {
+            Route::resource('/', 'CharacteristicGroupController')->parameters(['' => 'characteristic-group'])->except(['show']);
+        });
+
         Route::prefix('sale-points')->as('sale-points.')->group(function () {
             Route::resource('/', 'SalePointController')->parameters(['' => 'sale-point'])->except(['show']);
         });
