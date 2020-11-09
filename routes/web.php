@@ -75,6 +75,13 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::get('/download/{name}', 'MysqlBackupController@download')->name('download');
         });
 
+        Route::prefix('blog-categories')->as('blog-categories.')->group(function () {
+            Route::resource('/', 'BlogCategoryController')->parameters(['' => 'blog-category']);
+        });
+
+        Route::prefix('blog-posts')->as('blog-posts.')->group(function () {
+            Route::resource('/', 'BlogPostController')->parameters(['' => 'blog-post']);
+        });
     });
 
 });

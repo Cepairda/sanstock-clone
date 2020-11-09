@@ -22,7 +22,6 @@ class RoleForm extends Form
                 'rules' => ['required'],
                 'value' => $role->description,
             ])
-
             ->add('submit', 'submit', [
                 'label' => 'Сохранить'
             ])
