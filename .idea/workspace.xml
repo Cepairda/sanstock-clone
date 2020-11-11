@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc9ee6c6-8260-40d6-9df5-8fd0e411d012" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/characteristic-groups/createOrEdit.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/characteristic-groups/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/smart-filters/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/smart-filters/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CharacteristicGroupController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CharacteristicGroupController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Resource/Forms/CharacteristicGroupForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Resource/Forms/CharacteristicGroupForm.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +152,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Http/Controllers/Admin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/resources/characteristic-groups" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -163,11 +161,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/admin/resources/characteristic-groups" />
+      <recent name="$PROJECT_DIR$/app/Http/Controllers/Admin/Resource/Forms" />
       <recent name="$PROJECT_DIR$/app/Http/Controllers/Admin" />
       <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$/resources/views" />
-      <recent name="$PROJECT_DIR$/resources/views/characteristic-groups" />
-      <recent name="$PROJECT_DIR$/app/Http/Controllers/Admin/Resource/Forms" />
     </key>
   </component>
   <component name="RunManager">
@@ -188,7 +186,7 @@
       <workItem from="1601466149031" duration="5716000" />
       <workItem from="1603087625891" duration="50248000" />
       <workItem from="1604407126924" duration="11155000" />
-      <workItem from="1604916430746" duration="1552000" />
+      <workItem from="1604916430746" duration="12883000" />
     </task>
     <servers />
   </component>

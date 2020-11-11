@@ -33,7 +33,7 @@ class CharacteristicGroupForm extends Form
                 'empty_value' => ' '
             ]);
 
-            foreach ($characteristics as $characteristic) {
+            /*foreach ($characteristics as $characteristic) {
                 $this
                     ->add('details[characteristics][' . $characteristic->id .'][use]', 'checkbox', [
                         'label' => $characteristic->getData('name'),
@@ -55,7 +55,22 @@ class CharacteristicGroupForm extends Form
                         'rules' => ['required'],
                         'value' => $characteristic->id,
                     ]);
+            }*/
+
+
+            foreach ($characteristics as $characteristic) {
+                $this->add('details[characteristics][' . $characteristic->id .']', 'form', [
+                    'class' => 'App\Http\Controllers\Admin\Resource\Forms\SubCharacteristicGroupForm',
+                    //'class' => $this->formBuilder->create('App\Http\Controllers\Admin\Resource\Forms\SubCharacteristicGroupForm'),
+                    'formOptions' => [],
+                    'data' => [
+                        'characteristic' => $characteristic,
+                        'resource' => $resource
+                    ],
+                     'label' => $characteristic->getData('name')
+                ]);
             }
+
 
             $this->add('submit', 'submit', [
                 'label' => 'Сохранить'
