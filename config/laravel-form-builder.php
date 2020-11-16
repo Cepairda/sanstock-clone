@@ -74,6 +74,7 @@ return [
         'tinymce' => 'App\Forms\Fields\TinymceType',
         'one-image' => 'App\Forms\Fields\OneImageType',
         'one-file' => 'App\Forms\Fields\OneFileType',
+        'select' => 'App\Forms\Fields\SelectType',
     ],
 
 ];

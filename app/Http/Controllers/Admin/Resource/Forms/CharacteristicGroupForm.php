@@ -14,23 +14,24 @@ class CharacteristicGroupForm extends Form
         $characteristics = Characteristic::joinLocalization()->get();
         $categories = Category::joinLocalization()->with('ancestors')->get()->toFlatTree();
         $categoryChoices = to_select_options($categories);
-        //$categoryIds = $resource->categories()->get()->keyBy('id')->keys();
+        $categoryIds = $resource->categories()->get()->keyBy('id')->keys();
         $controllerClass = get_class(request()->route()->controller);
 
         $this
-            ->add('details[published]', 'select', [
-                'label' => 'Опубликовано',
-                'rules' => ['required'],
-                'choices' => ['Нет', 'Да'],
-                'selected' => $resource->getDetails('published'),
-                'empty_value' => ' '
+            ->add('data[name]', 'text', [
+                'label' => 'Название',
+                'value' => $resource->getData('name'),
             ])
-            ->add('details[category_id]', 'select', [
-                'label' => 'Основная категория',
-                'rules' => ['required'],
+            ->add('relations[App\Category]', 'choice', [
+                'multiple' => true,
+                'label' => 'Категории',
                 'choices' => $categoryChoices,
-                'selected' => $resource->getDetails('category_id'),
-                'empty_value' => ' '
+                'selected' => $categoryIds,
+                'disabled' => [4],
+                'option_attributes' => [8 => [ 'disabled' => 'disabled', 'style' => 'border: 1px solid red;' ]],
+                'attr' => [
+                    'class' => 'select2bs4 form-control',
+                ],
             ]);
 
             /*foreach ($characteristics as $characteristic) {
