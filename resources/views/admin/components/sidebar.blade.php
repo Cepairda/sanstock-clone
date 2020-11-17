@@ -97,6 +97,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.characteristic-groups.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-cogs"></i>
+                        <p>
+                            Группы Характеристик
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('admin.blog-categories.index') }}" class="nav-link">
                         <i class="nav-icon fa fa-list"></i>
                         <p>

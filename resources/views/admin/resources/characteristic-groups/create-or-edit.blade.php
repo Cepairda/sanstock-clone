@@ -17,9 +17,7 @@
     <script src="{{ asset('components/AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
     <script>
         $(function () {
-            $('.select2bs4').select2({
-                theme: 'bootstrap4'
-            });
+            $('.select2bs4').select2();
 
             $('.lfm-image').filemanager('image');
             $('.lfm-file').filemanager('file');
@@ -47,7 +45,42 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    {!! form($form) !!}
+
+                    {!! form_start($form) !!}
+                    {!! form_row($form->{'data[name]'}) !!}
+                    {!! form_row($form->{'relations[App\Category]'}) !!}
+                    {!! form_row($form->submit) !!}
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Название</th>
+                                <th class="text-center">Использовать</th>
+                                <th class="text-center">Фильтр</th>
+                                <th class="text-center">Сортировка</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($form->getData('characteristics') as $characteristics)
+                                    <tr>
+                                        <td>
+                                            {{ $characteristics->id }}
+                                            {!! form_row(($form->{"details[characteristics][$characteristics->id]"})->id)  !!}
+                                        </td>
+                                        <td>{{ $characteristics->data['name'] }}</td>
+                                        <td>{!! form_row(($form->{"details[characteristics][$characteristics->id]"})->use) !!}</td>
+                                        <td>{!! form_row(($form->{"details[characteristics][$characteristics->id]"})->filter) !!}</td>
+                                        <td>{!! form_row(($form->{"details[characteristics][$characteristics->id]"})->sort) !!}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {!! form_row($form->submit) !!}
+                    {!! form_end($form) !!}
                 </div>
             </div>
         </div>
