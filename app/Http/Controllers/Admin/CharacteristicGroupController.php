@@ -17,7 +17,8 @@ class CharacteristicGroupController extends Controller
 
     public function index()
     {
-        $resources = $this->resource->joinLocalization();
+        $resources = $this->resource->joinLocalization()->withCategories();
+        
         if ($this->resource->usedNodeTrait()) {
             $resources = $resources->with('ancestors')->get()->toFlatTree();
         } else {

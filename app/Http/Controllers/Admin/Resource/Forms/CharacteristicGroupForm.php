@@ -11,67 +11,51 @@ class CharacteristicGroupForm extends Form
     public function buildForm()
     {
         $resource = $this->getModel();
-        $characteristics = Characteristic::joinLocalization()->get();
+        $characteristics = Characteristic::joinLocalization()->where('details->published', 1)->get();
+        $this->data['characteristics'] = $characteristics;
         $categories = Category::joinLocalization()->with('ancestors')->get()->toFlatTree();
         $categoryChoices = to_select_options($categories);
-        //$categoryIds = $resource->categories()->get()->keyBy('id')->keys();
+        $categoryIds = $resource->categories()->get()->keyBy('id')->keys();
+        $categoriesDisabledIds = Category::join('resource_resource', function ($query) use ($resource) {
+            $query->on('resource_resource.relation_id', 'resources.id')
+                ->where('resource_resource.resource_id', '!=', $resource->id);
+        })
+        ->get()->keyBy('id')->toArray();
+
+        foreach ($categoriesDisabledIds as &$categoriesDisabledId) {
+            $categoriesDisabledId = ['disabled' => 'disabled'];
+        }
+
         $controllerClass = get_class(request()->route()->controller);
 
         $this
-            ->add('details[published]', 'select', [
-                'label' => 'Опубликовано',
-                'rules' => ['required'],
-                'choices' => ['Нет', 'Да'],
-                'selected' => $resource->getDetails('published'),
-                'empty_value' => ' '
+            ->add('data[name]', 'text', [
+                'label' => 'Название',
+                'value' => $resource->getData('name'),
             ])
-            ->add('details[category_id]', 'select', [
-                'label' => 'Основная категория',
-                'rules' => ['required'],
+            ->add('relations[App\Category]', 'choice', [
+                'multiple' => true,
+                'label' => 'Категории',
                 'choices' => $categoryChoices,
-                'selected' => $resource->getDetails('category_id'),
-                'empty_value' => ' '
+                'selected' => $categoryIds,
+                'option_attributes' => $categoriesDisabledIds,
+                'attr' => [
+                    'class' => 'select2bs4 form-control',
+                ],
             ]);
-
-            /*foreach ($characteristics as $characteristic) {
-                $this
-                    ->add('details[characteristics][' . $characteristic->id .'][use]', 'checkbox', [
-                        'label' => $characteristic->getData('name'),
-                        //'rules' => ['required'],
-                        'checked' => $resource->getDetails('characteristics')[$characteristic->id]['use'] ?? null
-                    ])
-                    ->add('details[characteristics][' . $characteristic->id .'][filter]', 'checkbox', [
-                        'label' => $characteristic->getData('name'),
-                        //'rules' => ['required'],
-                        'checked' => $resource->getDetails('characteristics')[$characteristic->id]['filter'] ?? null
-                    ])
-                    ->add('details[characteristics][' . $characteristic->id .'][sort]', 'text', [
-                        'label' => $characteristic->getData('name'),
-                        //'rules' => ['required'],
-                        'value' => $resource->getDetails('characteristics')[$characteristic->id]['sort'] ?? null
-                    ])
-                    ->add('details[characteristics][' . $characteristic->id .'][id]', 'hidden', [
-                        'label' => 'Name',
-                        'rules' => ['required'],
-                        'value' => $characteristic->id,
-                    ]);
-            }*/
-
-
+        
             foreach ($characteristics as $characteristic) {
                 $this->add('details[characteristics][' . $characteristic->id .']', 'form', [
                     'class' => 'App\Http\Controllers\Admin\Resource\Forms\SubCharacteristicGroupForm',
-                    //'class' => $this->formBuilder->create('App\Http\Controllers\Admin\Resource\Forms\SubCharacteristicGroupForm'),
                     'formOptions' => [],
                     'data' => [
                         'characteristic' => $characteristic,
                         'resource' => $resource
                     ],
-                     'label' => $characteristic->getData('name')
+                     'label' => false
                 ]);
             }
-
-
+            
             $this->add('submit', 'submit', [
                 'label' => 'Сохранить'
             ])
