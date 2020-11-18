@@ -1,0 +1,204 @@
+.button {
+	position: relative;
+	display: inline-block;
+	width: auto;
+	max-width: 100%;
+	border: 1px solid;
+	border-radius: 3px;
+	padding: 16px 40px;
+	font-size: 12px;
+	line-height: 1.5;
+	font-family: "Libre Franklin", Helvetica, Arial, sans-serif;
+	font-weight: 400;
+	letter-spacing: .06em;
+	transition: .33s all ease;
+	white-space: normal;
+	cursor: pointer;
+	text-align: center;
+
+	@media (min-width: 992px) {
+			padding: 20px 54px;
+			font-size: 16px;
+			line-height: 1.5
+	}
+}
+
+
+* + .button {
+	margin-top: 25px;
+	@media (min-width: 768px) {
+		margin-top: 35px;
+	}
+}
+
+span.button {
+	cursor: default;
+}
+
+.page .button-default {
+	color: #222;
+	background-color: transparent;
+	border-color: #888;
+}
+
+.page .button-default:hover, .page .button-default:focus, .page .button-default:active, .page .button-default:hover {
+	color: #fff;
+	background-color: #222;
+	border-color: #222;
+}
+
+.page .button-gray-base {
+	color: #000;
+	background-color: #f5f5f5;
+	border-color: #f5f5f5;
+}
+
+.page .button-gray-base:hover, .page .button-gray-base:focus, .page .button-gray-base:active, .page .button-gray-base:hover {
+	color: #fff;
+	background-color: #000;
+	border-color: #000;
+}
+
+.page .button-primary {
+	color: #fff;
+	background-color: #000;
+	border-color: #000;
+}
+
+.page .button-primary:hover, .page .button-primary:focus, .page .button-primary:active, .page .button-primary:hover {
+	color: #fff;
+	background-color: #888;
+	border-color: #888;
+}
+
+.page .button-gray-light-outline {
+	color: #000;
+	background-color: transparent;
+	border-color: #e0e0e2;
+}
+
+.page .button-gray-light-outline:hover, .page .button-gray-light-outline:focus, .page .button-gray-light-outline:active, .page .button-gray-light-outline:hover {
+	color: #fff;
+	background-color: #000;
+	border-color: #000;
+}
+
+.page .button-gray-light-outline .icon {
+	color: #888;
+}
+
+.page span.button-gray-light-outline {
+	color: #000;
+	background-color: transparent;
+	border-color: #e0e0e2;
+}
+
+.page span.button-gray-light-outline:hover, .page span.button-gray-light-outline:focus, .page span.button-gray-light-outline:active, .page span.button-gray-light-outline:hover {
+	color: #000;
+	background-color: transparent;
+	border-color: #e0e0e2;
+}
+
+.button-xs {
+	padding: 5px 25px;
+	font-size: 12px;
+	line-height: 22px;
+}
+
+.button-sm {
+	padding: 6px 25px;
+	font-size: 13px;
+	line-height: 24px;
+}
+
+.button-lg {
+	padding: 18px 45px;
+	font-size: 16px;
+	line-height: 24px;
+}
+
+@media (min-width: 1200px) {
+	.button-lg {
+		padding-left: 60px;
+		padding-right: 60px;
+	}
+}
+
+.button-xl {
+	padding: 20px 50px;
+	font-size: 18px;
+	line-height: 28px;
+}
+
+@media (min-width: 1200px) {
+	.button-xl {
+		padding-left: 75px;
+		padding-right: 75px;
+	}
+}
+
+.button-circle {
+	border-radius: 35px;
+}
+
+.button-square {
+	border-radius: 0;
+}
+
+.button-round-2 {
+	border-radius: 8px;
+}
+
+.button-link {
+	border: 0;
+	padding: 0;
+	text-transform: uppercase;
+}
+
+.button-link, .button-link:active, .button-link:focus {
+	color: #000;
+}
+
+.button-link:hover {
+	color: #888;
+}
+
+.button-link:after {
+	display: inline-block;
+	padding-left: 8px;
+	content: '\e944';
+	font-family: 'Linearicons';
+}
+
+.page .button.button-icon .icon {
+	position: relative;
+	top: -2px;
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 1.85em;
+	line-height: 0;
+}
+
+.page .button.button-icon-left .icon {
+	padding-right: 11px;
+}
+
+.page .button.button-icon-right {
+	-webkit-flex-direction: row-reverse;
+	-ms-flex-direction: row-reverse;
+	flex-direction: row-reverse;
+}
+
+.page .button.button-icon-right .icon {
+	padding-left: 11px;
+}
+
+.button-block {
+	display: block;
+	width: 100%;
+}
+
+.btn-primary:active:hover {
+	background-color: #000;
+	border-color: #000;
+}

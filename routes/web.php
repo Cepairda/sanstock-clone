@@ -8,9 +8,9 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
     //Route::get('/home', 'HomeController@index')->middleware(['auth:web', 'checkAccess'])->name('home');
     Route::get('/home', 'HomeController@index')->name('home');
 
-    Route::get('/', function () {
-        return view('welcome');
-    });
+    Route::get('/', function () {return view('site.home.index');})->name('/');
+    Route::get('/category', function () {return view('site.categories.show');})->name('category');
+    Route::get('/product', function () {return view('site.products.show');})->name('product');
 
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
