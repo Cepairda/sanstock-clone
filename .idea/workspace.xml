@@ -20,241 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc9ee6c6-8260-40d6-9df5-8fd0e411d012" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/fonts/site/FontAwesome.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/site/Linearicons.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/site/fontawesome-webfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/site/fontawesome-webfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/site/fontawesome-webfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/site/fontawesome-webfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/site/fontawesome-webfont.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/site/app.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/site/plugins/rd-navbar.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/site/script.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/site/template/core.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/site/template/script.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/_common.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/_variables.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/components/_breadcrumbs.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/components/_buttons.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/components/_footer.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/components/_header.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/components/_product.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/page/home.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/plugins/rd-navbar.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/template/components.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/template/custom_styles.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/template/fonts.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/template/helpers.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/template/modules.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/template/plugins.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_alerts.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_badges.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_breadcrumbs.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_button-groups.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_buttons.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_carousel.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_close.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_code.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_component-animations.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_dropdowns.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_forms.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_glyphicons.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_grid.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_input-groups.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_jumbotron.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_labels.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_list-group.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_media.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_mixins.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_modals.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_navbar.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_navs.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_normalize.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_pager.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_pagination.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_panels.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_popovers.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_print.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_progress-bars.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_responsive-embed.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_responsive-utilities.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_scaffolding.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_tables.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_theme.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_thumbnails.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_tooltip.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_type.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_utilities.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_variables.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/_wells.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/bootstrap.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_alerts.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_background-variant.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_border-radius.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_buttons.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_center-block.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_clearfix.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_forms.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_gradients.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_grid-framework.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_grid.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_hide-text.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_image.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_labels.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_list-group.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_nav-divider.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_nav-vertical-align.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_opacity.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_pagination.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_panels.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_progress-bar.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_reset-filter.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_reset-text.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_resize.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_responsive-visibility.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_size.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_tab-focus.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_table-row.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_text-emphasis.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_text-overflow.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/bootstrap/mixins/_vendor-prefixes.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/_includes.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/_mixins.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/_reset.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/_variables-custom.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_blurb.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_boxes.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_breadcrumbs.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_buttons.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_comments.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_custom-modal.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_dividers.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_events.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_forms.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_icons.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_layouts.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_links.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_lists.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_pagination-custom.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_panel-custom.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_parallax-header.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_posts.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_preloader.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_pricing-table.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_profile.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_quotes.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_shop.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_snackbars.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_tables.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_thumbnails.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_timeline.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/components/_tooltip.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/fonts/_font-awesome.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/fonts/_linearicons.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/fonts/_mdi.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/helpers/_backgrounds.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/helpers/_groups.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/helpers/_offsets.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/helpers/_sections.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/helpers/_text-alignment.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/helpers/_text-styling.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/helpers/_utilities-custom.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/helpers/_visibility-responsive.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/helpers/_wrappers.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/mixins/_buttons.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/mixins/_flex-grid-framework.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/mixins/_functions.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/mixins/_gradients.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/mixins/_groups.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/mixins/_mixins.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/mixins/_range-spacing.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/mixins/_unit-utilities.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/mixins/_utilities.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/mixins/_vendors.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/mixins/_visibility-utilities.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/modules/_flex-grid.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/modules/_unit-responsive.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_animate.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_bootstrap-material-datetimepicker.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_countdown.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_counter.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_flickr.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_isotope.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_jplayer.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_jquery-circle-progress.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_jquery.fs.stepper.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_owl-carousel.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_page-loaders.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_photoswipe.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_progress-bars.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_rd-audio.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_rd-calendar.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_rd-google-map.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_rd-navbar.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_rd-parallax.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_rd-range.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_rd-search.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_rd-video.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_select2.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_slick.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_swiper.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_tabs.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_timecircles.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_twitter-timeline.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/_ui-to-top.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/rd-navbar_includes/_rd-navbar-components.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/rd-navbar_includes/_rd-navbar-fixed.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/rd-navbar_includes/_rd-navbar-fullwidth.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/rd-navbar_includes/_rd-navbar-mixins.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/rd-navbar_includes/_rd-navbar-sidebar.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/custom-styles/plugins/rd-navbar_includes/_rd-navbar-static.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/site/test/style.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/layouts/site.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/site/categories/show.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/site/components/breadcrumbs.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/site/components/footer.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/site/components/header.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/site/components/post.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/site/components/product.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/site/home/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/site/products/carousel.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/site/products/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/admin/resourses/create-or-edit.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/admin/resourses/create-or-edit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/content/dark/content.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/content/dark/content.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/content/dark/content.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/content/dark/content.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/content/default/content.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/content/default/content.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/content/default/content.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/content/default/content.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/content/document/content.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/content/document/content.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/content/document/content.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/content/document/content.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/content/writer/content.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/content/writer/content.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/content/writer/content.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/content/writer/content.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/content.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/content.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/content.inline.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/content.inline.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/content.inline.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/content.inline.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/content.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/content.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/content.mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/content.mobile.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/content.mobile.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/content.mobile.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/skin.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/skin.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/skin.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/skin.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/skin.mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/skin.mobile.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/skin.mobile.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide-dark/skin.mobile.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/content.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/content.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/content.inline.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/content.inline.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/content.inline.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/content.inline.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/content.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/content.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/content.mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/content.mobile.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/content.mobile.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/content.mobile.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/skin.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/skin.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/skin.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/skin.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/skin.mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/skin.mobile.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/skin.mobile.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/tinymce/skins/ui/oxide/skin.mobile.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.mix.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -415,7 +182,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../q-tap.com.ua.local" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../b2b-sandi.com.ua.local" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -489,11 +256,11 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="430" y="139" width="524" height="478" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.768@0.0.1366.768" timestamp="1603275898730" />
-    <state x="648" y="169" width="424" height="505" key="FileChooserDialogImpl" timestamp="1605594657407">
+    <state x="648" y="169" width="424" height="505" key="FileChooserDialogImpl" timestamp="1605698107736">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="125" width="424" height="505" key="FileChooserDialogImpl/0.0.1366.768@0.0.1366.768" timestamp="1603110449495" />
-    <state x="648" y="169" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1605594657407" />
+    <state x="648" y="169" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1605698107736" />
     <state x="293" y="0" width="770" height="762" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1603201478972">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
