@@ -86,6 +86,10 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::prefix('pages')->as('pages.')->group(function () {
             Route::resource('/', 'PageController')->parameters(['' => 'page']);
         });
+
+        Route::prefix('smart-filters')->as('smart-filters.')->group(function () {
+            Route::resource('/', 'SmartFilterController')->parameters(['' => 'category']);
+        });
     });
 
 });
