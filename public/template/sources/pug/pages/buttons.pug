@@ -1,0 +1,37 @@
+extends  ../_skeleton
+
+//- Includes
+include ../elements/_ui-breadcrumbs
+
+block variables
+  - var activeIndex = 4
+  - var pageName = 'Buttons'
+
+block page
+  // Page header
+  include ../sections/_header-inverse
+
+  +breadcrumbs({
+    path: [[menu[activeIndex].title, menu[activeIndex].link], [pageName]]
+  })
+
+  // Buttons
+  section.section-lg.bg-white.text-center
+    .shell
+      .group-lg
+        .button.button-primary See Features
+        .button.button-gray-base Buy template
+        .button.button-gray-light-outline Buy template!
+        .button.button-link Read More
+  ='\n'
+
+  // Buttons
+  section.section-lg.bg-primary.text-center
+    .shell
+      .group-lg
+        .button.button-gray-light-outline View now!
+  ='\n'
+
+  // Page Footer
+  include ../sections/_footer-corporate
+

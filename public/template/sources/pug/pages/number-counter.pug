@@ -1,0 +1,78 @@
+extends  ../_skeleton
+
+//- Includes
+include ../elements/_ui-breadcrumbs
+
+block variables
+  - var activeIndex = 4
+  - var pageName = 'Number Counter'
+
+block page
+  // Page header
+  include ../sections/_header-inverse
+
+  +breadcrumbs({
+    path: [[menu[activeIndex].title, menu[activeIndex].link], [pageName]]
+  })
+
+  section.section-lg.bg-white.text-center
+    .shell
+      .range.range-sm-center.range-50
+        .cell-sm-6.cell-md-4.cell-lg-3
+          // Box counter
+          article.box-counter
+            .box-counter__icon.linear-icon-users2
+            .box-counter__wrap
+              .counter 4578
+            p.box-counter__title Current Clients
+
+        .cell-sm-6.cell-md-4.cell-lg-3
+          // Box counter
+          article.box-counter
+            .box-counter__icon.linear-icon-group-work
+            .box-counter__wrap
+              .counter 4578
+            p.box-counter__title Virtual Clients
+  ='\n'
+
+  section.section-lg.bg-white
+    .section-lg.bg-primary.text-center
+      .shell
+        .range.range-sm-center.range-50
+          .cell-sm-6.cell-md-3
+            // Box counter
+            article.box-counter
+              .box-counter__icon.linear-icon-coffee-cup
+              .box-counter__wrap
+                .counter 1000
+              p.box-counter__title Coffee Cups
+
+          .cell-sm-6.cell-md-3
+            // Box counter
+            article.box-counter
+              .box-counter__icon.linear-icon-cube
+              .box-counter__wrap
+                .counter 74
+              p.box-counter__title Projects Done
+
+          .cell-sm-6.cell-md-3
+            // Box counter
+            article.box-counter
+              .box-counter__icon.linear-icon-chevrons-expand-horizontal
+              .box-counter__wrap
+                .counter 5
+                span bln+
+              p.box-counter__title Lines of Code Written
+
+          .cell-sm-6.cell-md-3
+            // Box counter
+            article.box-counter
+              .box-counter__icon.linear-icon-mustache-glasses
+              .box-counter__wrap
+                .counter 147
+              p.box-counter__title Happy Customers
+
+  ='\n'
+
+  // Page Footer
+  include ../sections/_footer-corporate

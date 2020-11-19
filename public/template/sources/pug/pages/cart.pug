@@ -1,0 +1,87 @@
+extends  ../_skeleton
+
+//- Includes
+include ../elements/_ui-breadcrumbs
+include ../elements/_ui-shop-grid
+include ../elements/_ui-tag-list
+
+block variables
+  - var activeIndex = 1
+  - var pageName = 'Cart'
+
+block page
+  // Page header
+  include ../sections/_header-inverse
+
+  +breadcrumbs({
+      path: [[menu[activeIndex].title, menu[activeIndex].link], [pageName]]
+  })
+
+  section.section-md.bg-white
+    .shell
+      .table-responsive
+        table.table-cart
+          thead
+            tr
+              th(colspan=2) Product
+              th Price
+              th Quantity
+              th Total
+          tbody
+            tr
+              td.table-cart-remove-item
+                span.icon.icon-sm.linear-icon-cross2.icon-gray-4
+              td(style='min-width: 330px')
+                .unit.unit-horizontal.unit-spacing-md.unit-middle
+                  .unit__left
+                    +jpg('italian-furniture-contemporary-allumen-fixed-or-extendable-glass-top-table-by-sedit-2-141x188')
+                  .unit__body
+                    h6: a.thumbnail-classic-title(href='single-product.html') Italian furniture contemporary…
+              td
+                .product-price
+                  span 45
+              td
+                input.form-input(type="number" data-zeros="true" value="1" min="1" max="20")
+              td
+                .product-price
+                  span 45
+            tr
+              td.table-cart-remove-item
+                span.icon.icon-sm.linear-icon-cross2.icon-gray-4
+              td(style='min-width: 330px')
+                .unit.unit-horizontal.unit-spacing-md.unit-middle
+                  .unit__left
+                    +jpg('emma-chairs-and-table-for-kitchen-141x188')
+                  .unit__body
+                    h6: a.thumbnail-classic-title(href='single-product.html') Italian emma chairs…
+              td
+                .product-price
+                  span 45
+              td
+                input.form-input(type="number" data-zeros="true" value="1" min="1" max="20")
+              td
+                .product-price
+                  span 45
+      .range.range-50.text-center
+        .cell-sm-8.text-sm-left
+          .group-xs
+            .form-wrap.form-wrap_icon.linear-icon-tag
+              input.form-input(type="text" name="name" placeholder='Enter Code')
+            button(type='submit').button.button-gray-base Apply coupon
+        .cell-sm-4.text-sm-right
+            button(type='submit').button.button-gray-light-outline Update card
+        .cell-xs-12
+          hr
+        .cell-xs-12
+          .text-sm-right
+              dl.list-terms-minimal
+                dt Subtotal
+                dd $90
+              dl.heading-5.list-terms-minimal
+                dt Total
+                dd $90
+              a(href='checkout.html').button.button-primary  Proceed to Checkout
+
+
+  // Page Footer
+  include ../sections/_footer-corporate

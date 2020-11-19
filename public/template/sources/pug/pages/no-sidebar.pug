@@ -1,0 +1,29 @@
+extends  ../_skeleton
+
+//- Includes
+include ../elements/_ui-breadcrumbs
+include ../elements/_ui-tag-list
+include ../elements/_ui-list-inline-icon
+include ../elements/_ui-slider-blog
+include ../elements/_ui-pagination-classic
+
+block variables
+  - var activeIndex = 3
+  - var pageName = 'No Sidebar'
+
+block page
+  // Page header
+  include ../sections/_header-inverse
+
+  +breadcrumbs({
+      path: [[menu[activeIndex].title, menu[activeIndex].link], [pageName]]
+  })
+
+  section.bg-white.section-md
+    .shell
+      .range.range-xs-center
+        .cell-md-7.cell-lg-8.section-divided__main
+          include ../sections/_section-classic-blog-main
+            
+  // Page Footer
+  include ../sections/_footer-corporate

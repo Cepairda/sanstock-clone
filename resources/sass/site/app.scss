@@ -1,0 +1,37 @@
+//@import 'test/bootstrap/bootstrap';
+//@import 'test/style';
+
+// variables
+@import 'variables';
+
+// bootstrap (v4.5.3)
+@import '~bootstrap/scss/bootstrap';
+
+
+
+// template (buy)
+@import
+	'template/custom_styles',
+	'template/components',
+	'template/helpers',
+	'template/modules',
+	'template/plugins',
+	'template/fonts';
+
+// plugins
+@import
+	'plugins/rd-navbar',
+	'~owl.carousel/src/scss/owl.carousel';
+
+@import 'common';
+
+// components
+@import
+	'components/buttons',
+	'components/header',
+	'components/footer',
+	'components/breadcrumbs',
+	'components/product';
+
+// page
+@import 'page/home';

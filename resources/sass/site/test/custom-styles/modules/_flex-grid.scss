@@ -1,0 +1,300 @@
+/*
+*
+* Flex Grid system
+* --------------------------------------------------
+*/
+
+// Base Grid Styles
+// --------------------------------------------------
+
+.shell,
+.shell-wide {
+  @include make-shell($cell-spacing);
+}
+
+.shell,
+.shell-wide {
+  min-width: $shell-width;
+  max-width: $shell-xs-width;
+
+  @media (min-width: $screen-sm-min) {
+    max-width: $shell-sm-width;
+  }
+
+  @media (min-width: $screen-md-min) {
+    max-width: $shell-md-width;
+  }
+
+  @media (min-width: $screen-lg-min) {
+    max-width: $shell-lg-width;
+  }
+}
+
+.shell-wide {
+  @media (min-width: $screen-lg-min) {
+    max-width: $shell-xl-width;
+  }
+}
+
+.shell-fluid {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  //max-width: 2560px;
+}
+
+.shell-flex {
+  .range > [class*='cell'] {
+    @include display-flex;
+    @include flex-direction(row);
+    @include flex-wrap(wrap);
+  }
+
+  .cell__inner {
+    @include display-flex;
+    @include flex-direction(column);
+    @include align-items(flex-start);
+    @include justify-content(center);
+    padding: 35px 25px;
+    width: 100%;
+
+    > * {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+
+  .firefox & {
+    .range > [class*='cell'] {
+      overflow: hidden;
+    }
+  }
+
+  .rd-google-map {
+    @include display-flex;
+    @include align-self(stretch);
+    @include flex-grow(1);
+    @media (max-width: $screen-xs-max) {
+      min-height: 300px;
+      height: auto;
+    }
+
+    @media (min-width: $screen-sm-min) {
+      height: 0;
+      padding-bottom: 100%;
+    }
+  }
+
+  @media (min-width: $screen-md-min) {
+    .cell__inner {
+      padding: 45px 35px;
+    }
+  }
+
+  @media (min-width: $screen-xl-min) {
+    .cell__inner {
+      padding: 152px 15.625%;
+    }
+
+    .cell-sm-8,
+    .cell-md-8,
+    .cell-lg-8,
+    .cell-xl-8 {
+      .cell__inner {
+        padding-left: 12.5%;
+        padding-right: 12.5%;
+      }
+    }
+  }
+}
+
+@media (min-width: $screen-lg-min) {
+  .shell-fluid-inset-lg-50 {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+}
+
+.range {
+  @include make-range($cell-spacing);
+
+  > .range {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  &-center {
+    @include justify-content(center);
+  }
+
+  &-left {
+    @include justify-content(flex-start);
+  }
+
+  &-right {
+    @include justify-content(flex-end);
+  }
+
+  &-justify {
+    @include justify-content(space-between);
+  }
+
+  &-around {
+    @include justify-content(space-around);
+  }
+
+  &-top {
+    @include align-items(flex-start);
+  }
+
+  &-reverse {
+    @include flex-direction(row-reverse);
+  }
+
+  &-middle {
+    @include align-items(center);
+  }
+
+  &-bottom {
+    @include align-items(flex-end);
+  }
+}
+
+.range-spacer {
+  @include flex-basis(100%);
+}
+
+[class*="cell-"] {
+  @include make-cell-spacing($cell-spacing);
+}
+
+// Create IE 9 and below degradation styles
+html.lt-ie-10 * + .range,
+* + .range {
+  margin-top: 25px;
+}
+
+@media (min-width: $screen-sm-min) {
+  html.lt-ie-10 * + .range,
+  * + .range {
+    margin-top: $range-ws;
+  }
+}
+
+html.lt-ie-10 * + [class*='cell-'],
+* + [class*='cell-'],
+html.lt-ie-10 * + .range-sm,
+* + .range-sm {
+  margin-top: $range-ws-sm;
+}
+
+html.lt-ie-10 * + .range-lg,
+* + .range-lg {
+  margin-top: $range-ws-lg;
+}
+
+html.lt-ie-10 .range-condensed,
+.range-condensed {
+  margin-left: 0;
+  margin-right: 0;
+
+  > [class*='cell'] {
+    padding-left: 0;
+    padding-right: 0;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: $screen-lg-min) {
+  html .page .range-lg-condensed {
+    margin-left: 0;
+    margin-right: 0;
+
+    > [class*='cell'] {
+      padding-left: 0;
+      padding-right: 0;
+      margin-top: 0;
+    }
+  }
+}
+
+@media (min-width: $screen-lg-min) {
+  .shell {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+}
+
+@media (min-width: $screen-xl-min) {
+  .range:not(.range-condensed) {
+    margin-left: -25px;
+    margin-right: -25px;
+
+    > [class*='cell'] {
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+  }
+}
+
+.range:not(.range-condensed).range-horizontal-10 {
+  margin-left: -5px;
+  margin-right: -5px;
+  > [class*='cell'] {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+html.lt-ie-10 .range-narrow,
+.range-narrow {
+  @include make-range($cell-spacing-narrow);
+
+  > [class*='cell'] {
+    @include make-cell-spacing($cell-spacing-narrow);
+  }
+
+  > * + [class*='cell'] {
+    @include make-cell-spacing($cell-spacing-narrow);
+  }
+}
+
+// Flex Grid Styles
+// --------------------------------------------------
+
+.range {
+  @include display-flex();
+  @include flex(0 1 auto);
+  @include flex-direction(row);
+  @include flex-wrap(wrap);
+
+  > .range {
+    @include flex-basis(100%);
+  }
+}
+
+.range-vertical {
+  @include flex-direction(column);
+}
+
+.range > [class*='cell'] {
+  @include flex(0 0 auto);
+  @include flex-basis(100%);
+}
+
+@each $resolution, $alias in (0 : xs, $screen-sm-min : sm, $screen-md-min : md, $screen-lg-min : lg, $screen-xl-min : xl) {
+  @media (min-width: $resolution) {
+    * + [class*='cell-#{$alias}-'] {
+      margin-top: 0;
+    }
+
+    @include make-grid-system($alias, $cell-count);
+  }
+}
+
+html.lt-ie-10 {
+  .range > {
+    @include make-fallback($cell-count);
+  }
+}

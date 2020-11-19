@@ -1,0 +1,38 @@
+extends  ../_skeleton
+
+//- Includes
+include ../elements/_ui-breadcrumbs
+include ../elements/_ui-rd-parallax
+
+block variables
+  - var activeIndex = 2
+  - var pageName = '404 page'
+
+block page
+  // Page header
+  include ../sections/_header-inverse
+
+  +breadcrumbs({
+      path: [[menu[activeIndex].title, menu[activeIndex].link], [pageName]]
+  })
+
+  section.text-center
+    +rd-parallax({
+        "backgroundSpeed": "0.35",
+        "attrType": "media",
+        "src": "images/bg-image-3.jpg",
+        "htmlSpeed": "0.1",
+        "class": 'parallax-header rd-parallax-light'
+    })
+      .parallax-header__inner: .parallax-header__content
+        .shell
+          .range.range-xs-center
+            .cell-sm-10.cell-lg-8
+              h2 Page Not Found
+              p The page requested couldn't be found - this could be due to a spelling error in the URL or a removed page.
+              a(href='index.html').button.button-gray-base Go back
+  ='\n'
+
+  // Page Footer
+  include ../sections/_footer-corporate
+
