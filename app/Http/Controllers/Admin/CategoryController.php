@@ -33,14 +33,24 @@ class CategoryController
         return redirect()->back();
     }
 
-    public function edit($id)
+    public function index()
+    {
+        $resources = $this->resource->joinLocalization();
+        if ($this->resource->usedNodeTrait()) {
+            $resources = $resources->with('ancestors')->get()->toFlatTree();
+        } else {
+            $resources = $resources->paginate(50);
+        }
+
+        return view('admin.resources.categories.index', compact('resources'));
+    }
+
+    /*public function edit($id)
     {
         $this->resource = $this->resource->joinLocalization()->find($id);
         $form = $this->getForm();
 
         $category = Category::where('id', 4)->with('products')->first();
-
-        //dd($category);
         $characteristicsIds = [];
 
         foreach ($category->products as $product) {
@@ -59,17 +69,16 @@ class CategoryController
         //dd($productIds);
         $characteristicValueIds = ResourceResource::whereIn('resource_id', $productIds)->where('relation_type', 'App\CharacteristicValue')->get()->keyBy('relation_id')->keys();
         //dd($characteristicValueIds);
-        /*$characteristicValues = CharacteristicValue::whereCharacteristicIsFilter($characteristicIds)
-            ->whereIn('id', $characteristicValueIds)->orderBy('value')->orderBy('id')->paginate(10);*/
+        //$characteristicValues = CharacteristicValue::whereCharacteristicIsFilter($characteristicIds)
+        //    ->whereIn('id', $characteristicValueIds)->orderBy('value')->orderBy('id')->paginate(10);
 
         $characteristicValues = CharacteristicValue::joinLocalization()
             ->whereIn('id', $characteristicValueIds)->orderBy('data->value')->orderBy('id')->get();
 
-        //dd($characteristicValues);
 
         foreach ($characteristicValues as $characteristicValue) {
             //echo $characteristicValue->getData('value') . '<br>';
         }
         return view('admin.categories.create-or-edit', compact('form', 'characteristics'));
-    }
+    }*/
 }
