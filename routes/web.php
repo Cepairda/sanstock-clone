@@ -11,6 +11,13 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
     Route::get('/', function () {return view('site.home.index');})->name('/');
     Route::get('/category', function () {return view('site.categories.show');})->name('category');
     Route::get('/product', function () {return view('site.products.show');})->name('product');
+    Route::get('/contacts', function () {return view('site.pages.contacts');})->name('contacts');
+    Route::get('/documents', function () {return view('site.pages.documents');})->name('documents');
+    Route::get('/documents/certificates', function () {return view('site.pages.certificates');})->name('certificates');
+    Route::get('/blog', function () {return view('site.blog.index');})->name('blog');
+    Route::get('/blog/article', function () {return view('site.blog.article');})->name('article');
+
+
 
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
