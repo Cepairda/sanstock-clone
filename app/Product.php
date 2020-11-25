@@ -2,8 +2,14 @@
 
 namespace App;
 
-class Product extends Resource
+use App\ModelTraits\WithData;
+use Illuminate\Database\Eloquent\Model;
+use LaravelLocalization;
+
+class Product extends Model
 {
+    use WithData;
+
     public function scopeWithCategories($query, $joinLocalization = true)
     {
         return $query->with(['categories' => function ($query) use ($joinLocalization) {

@@ -14,10 +14,10 @@
             <li><a href="#">Bedroom</a></li>
         </ul>--}}
         <h6 class="product-title">
-            <a href="#">Lidz (2861) 107 (12 32 015F-8) Кухня U Нерж.</a>
+            <a href="#">{{ $product->name }}</a>
         </h6>
         <p class="product-price">
-            <span>1832</span>
+            <span>{{ $product->price }}</span>
         </p>
         <a class="button-gray-base button button-icon button-icon-left" href="#">
             <span>Где купить</span>

@@ -84,7 +84,7 @@
         </div>
     </section>
 
-    @include('site.products.carousel', ['title' => 'Новинки'])
+    @include('site.products.carousel', ['title' => 'Новинки', 'products' => $home_product])
 
     <section class="home-bn-info section-lg" style=" padding-top: 135px;  padding-bottom: 135px;background-image: url({{ asset('images/site/home-slider/slide-3.jpg') }}); background-position: center;">
         <div class="container">
