@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Resource\Forms;
 
 use App\Category;
+use App\Brand;
 use Kris\LaravelFormBuilder\Form;
 
 class ProductForm extends Form
@@ -10,6 +11,7 @@ class ProductForm extends Form
     public function buildForm()
     {
         $resource = $this->getModel();
+        $brandChoices = Brand::joinLocalization()->get()->pluck('data.name', 'id')->toArray();
         $categories = Category::joinLocalization()->with('ancestors')->get()->toFlatTree();
         $categoryChoices = to_select_options($categories);
         $categoryIds = $resource->categories()->get()->keyBy('id')->keys();
@@ -22,10 +24,26 @@ class ProductForm extends Form
                 'value' => $resource->slug
             ])
 
+            ->add('details[brand_id]', 'select', [
+                'label' => 'Brand',
+                'rules' => ['required'],
+                'choices' => $brandChoices,
+                'selected' => $resource->getDetails('brand_id'),
+                'empty_value' => ' '
+            ])
+
             ->add('details[sku]', 'text', [
                 'label' => 'Sku',
                 'rules' => ['required', 'unique:resources,details->sku,' . $resource->id],
-                'value' => $resource->getDetails('sku')
+                'value' => $resource->getDetails('sku'),
+                'attr' => ['disabled' => true],
+            ])
+
+            ->add('details[ref]', 'text', [
+                'label' => 'Ref',
+                'rules' => ['required', 'unique:resources,details->ref,' . $resource->id],
+                'value' => $resource->getDetails('ref'),
+                'attr' => ['disabled' => true],
             ])
 
             ->add('details[published]', 'select', [
