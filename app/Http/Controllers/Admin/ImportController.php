@@ -143,7 +143,12 @@ class ImportController extends Controller
                 if (!empty($characteristicDataNameUk)) {
 
                     $c->setRequest([
-                        'data' => ['name' => $characteristicDataNameUk]
+                        'details' => [
+                            'is_filter' => 1,
+                            'published' => 1,
+                            'sort' => 0
+                        ],
+                        'data' => ['name' => $characteristicDataNameUk],
                     ]);
 
                     LaravelLocalization::setLocale('uk');
