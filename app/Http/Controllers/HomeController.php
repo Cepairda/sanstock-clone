@@ -27,14 +27,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //$products = Product::select(['details->sku as sku'])->whereIn('id', [155, 160, 164, 166])->get();
+        $products = Product::select(['details->sku as sku'])->whereIn('id', [155, 160, 164, 166])->get();
 
         //$p = Product::joinLocalization('uk')->get();
         //print_r($p);
 
         //echo Slug::create();
 
-        //return view('home', compact('products'));
+        return view('home', compact('products'));
 
         $category = Category::where('id', 11)->with('products')->first();
 
@@ -42,7 +42,7 @@ class HomeController extends Controller
 
         $characteristicsIds = [];
 
-        foreach ($category->products as $product) {
+        /*foreach ($category->products as $product) {
             echo $product->details['sku'] . '<br>';
             //dd($product->characteristics);
 
@@ -56,6 +56,6 @@ class HomeController extends Controller
 
         foreach ($characteristics as $characteristic) {
             echo $characteristic->data['name'] . '<br>';
-        }
+        }*/
     }
 }
