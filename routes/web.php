@@ -99,14 +99,15 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::get('/', 'DashboardController@index')->name('dashboard.index');
 
-        Route::get('/test', 'ImportController@updateOrCreate')->name('import');
+        Route::get('/import', 'ImportController@updateOrCreate')->name('import');
+        Route::get('/import-export', 'ImportExportController@index')->name('import-export');
 
         Route::prefix('brands')->as('brands.')->group(function () {
             Route::resource('/', 'BrandController')->parameters(['' => 'brand']);
         });
 
         Route::prefix('categories')->as('categories.')->group(function () {
-            Route::resource('/', 'CategoryController')->parameters(['' => 'category']);
+            Route::resource('/', 'CategoryController')->parameters(['' => 'category'])->except(['show']);
 
             Route::get('/export', 'CategoryController@export')->name('export');
             Route::post('/import', 'CategoryController@import')->name('import');
@@ -171,4 +172,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         });
     });
 
+    Route::namespace('Site')->group(function () {
+        Route::get('/{slug}', 'ResourceController@getResource')->where('slug', '.*');
+    });
 });
