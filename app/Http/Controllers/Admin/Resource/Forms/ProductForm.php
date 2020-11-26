@@ -23,7 +23,6 @@ class ProductForm extends Form
                 'rules' => ['required', 'max:255', 'unique:resources,slug,' . $resource->id],
                 'value' => $resource->slug
             ])
-
             ->add('details[brand_id]', 'select', [
                 'label' => 'Brand',
                 'rules' => ['required'],
@@ -31,21 +30,18 @@ class ProductForm extends Form
                 'selected' => $resource->getDetails('brand_id'),
                 'empty_value' => ' '
             ])
-
             ->add('details[sku]', 'text', [
                 'label' => 'Sku',
                 'rules' => ['required', 'unique:resources,details->sku,' . $resource->id],
                 'value' => $resource->getDetails('sku'),
                 'attr' => ['disabled' => true],
             ])
-
             ->add('details[ref]', 'text', [
                 'label' => 'Ref',
                 'rules' => ['required', 'unique:resources,details->ref,' . $resource->id],
                 'value' => $resource->getDetails('ref'),
                 'attr' => ['disabled' => true],
             ])
-
             ->add('details[published]', 'select', [
                 'label' => 'Опубликовано',
                 'rules' => ['required'],
@@ -53,13 +49,11 @@ class ProductForm extends Form
                 'selected' => $resource->getDetails('published'),
                 'empty_value' => ' '
             ])
-
             ->add('details[price]', 'number', [
                 'label' => 'Price',
                 'rules' => ['required'],
                 'value' => $resource->getDetails('price'),
             ])
-
             ->add('details[category_id]', 'select', [
                 'label' => 'Основная категория',
                 'rules' => ['required'],
@@ -67,7 +61,6 @@ class ProductForm extends Form
                 'selected' => $resource->getDetails('category_id'),
                 'empty_value' => ' '
             ])
-
             ->add('relations[App\Category]', 'choice', [
                 'multiple' => true,
                 'label' => 'Категории',
@@ -77,7 +70,6 @@ class ProductForm extends Form
                     'class' => 'select2bs4 form-control',
                 ],
             ])
-
             ->add('data[name]', 'text', [
                 'label' => 'Name',
                 'rules' => ['required'],
@@ -93,19 +85,16 @@ class ProductForm extends Form
                 'rules' => [],
                 'value' => $resource->getData('text')
             ])
-
             ->add('data[meta_title]', 'text', [
                 'label' => 'Meta Title',
                 'rules' => [],
                 'value' => $resource->getData('meta_title')
             ])
-
             ->add('data[meta_description]', 'textarea', [
                 'label' => 'Meta Description',
                 'rules' => [],
                 'value' => $resource->getData('meta_description')
             ])
-
             ->add('submit', 'submit', [
                 'label' => 'Сохранить'
             ])
