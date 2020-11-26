@@ -4,6 +4,16 @@ namespace App;
 
 class Product extends Resource
 {
+    protected $appends = ['main_image', 'additional_image'];
+
+    public function getMainImageAttribute(){
+
+    }
+
+    public function getAdditionalImageAttribute(){
+
+    }
+
     public function scopeWithCategories($query, $joinLocalization = true)
     {
         return $query->with(['categories' => function ($query) use ($joinLocalization) {

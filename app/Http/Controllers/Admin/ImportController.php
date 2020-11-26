@@ -37,7 +37,7 @@ class ImportController extends Controller
 
     public function updateOrCreate($brandRef = null)
     {
-        //$this->data = $this->getData('brand/' . 'a0ca0cab-c450-11e7-82f5-00155dacf604');
+        $this->data = $this->getData('brand/' . 'a0ca0cab-c450-11e7-82f5-00155dacf604');
         $this->data = $this->getData('brand/' . '462a44b3-920c-11e6-8148-00155db18262');
 
         $t['start'] = \Carbon\Carbon::now()->format('H:i:s');
