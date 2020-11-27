@@ -44,6 +44,10 @@
                             <hr>
                         </form>
                 </div>
+                <div class="card-body">
+                    @php($categories = App\Category::joinLocalization()->with('ancestors')->get()->toTree())
+                    <ul>{!! view('site.components.categories', ['categories' => $categories]) !!}</ul>
+                </div>
             </div>
         </div>
     </div>

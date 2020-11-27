@@ -3,6 +3,8 @@
 @section('content')
 
     @include('site.components.breadcrumbs')
+  
+    {{ dd($product) }}
 
     <section class="section-sm bg-white">
         <div class="container">
@@ -40,11 +42,11 @@
                 </div>
                 <div class="col-sm-6 col-md-7">
                     <div class="product-single">
-                        <h4>Lidz (2861) 107 (12 32 015F-8) Кухня U Нерж.</h4>
+                        <h4>{{ $product->getData('name') }}</h4>
                         <p class="product-price"><span>45.00</span></p>
                         <p class="product-text">Смеситель для кухни Lidz 12 32 015F-8 изготовлен из нержавеющей стали. Благодаря никелированной брашированной поверхности имеет оригинальный внешний вид. Выполнен в современном сдержанном стиле. Такой смеситель не только удобен и практичен, но и идеально дополнит интерьер кухни.</p>
                         <div class="mt-5" style="display: flex; align-items: center;">
-                            <button class="button button-primary button-icon" type="submit"><span>Где купить</span></button>
+                            <button class="button button-primary button-icon" type="submit"><span>{{ __('Where buy') }}</span></button>
                             <span class="icon icon-md linear-icon-heart ml-4" data-toggle="tooltip" data-original-title="Add to Wishlist" style="display: block; height: 100%;font-size: 35px; line-height: 1.5; cursor: pointer"></span>
                         </div>
                         <ul class="product-meta mt-5">
@@ -196,6 +198,6 @@
         <div class="divider"></div>
     </div>
 
-    @include('site.product.carousel', ['title' => 'Также вас могут заинтересовать'])
+    {{-- @include('site.product.carousel', ['title' => 'Также вас могут заинтересовать']) --}}
 
 @endsection

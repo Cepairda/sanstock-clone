@@ -2,13 +2,19 @@
 
 namespace App;
 
-use App\ModelTraits\WithData;
-use Illuminate\Database\Eloquent\Model;
 use LaravelLocalization;
 
-class Product extends Model
+class Product extends Resource
 {
-    use WithData;
+    protected $appends = ['main_image', 'additional_image'];
+
+    public function getMainImageAttribute(){
+
+    }
+
+    public function getAdditionalImageAttribute(){
+
+    }
 
     public function scopeWithCategories($query, $joinLocalization = true)
     {

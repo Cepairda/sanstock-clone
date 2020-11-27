@@ -87,8 +87,8 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         });
     });
 
-    Route::namespace('Site')->group(function () {
+    Route::as('site.')->namespace('Site')->group(function () {
         Route::get('/', 'HomeController@index')->name('/');
-        Route::get('/{slug}', 'ResourceController@getResource')->where('slug', '.*');
+        Route::get('/{slug}', 'ResourceController@getResource')->where('slug', '.*')->name('slug');
     });
 });
