@@ -7,6 +7,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
     Auth::routes();
     //Route::get('/home', 'HomeController@index')->middleware(['auth:web', 'checkAccess'])->name('home');
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/filter', 'HomeController@filter')->name('filter');
 
     Route::get('/', function () {return view('site.home.index');})->name('/');
     Route::get('/category', function () {return view('site.categories.show');})->name('category');

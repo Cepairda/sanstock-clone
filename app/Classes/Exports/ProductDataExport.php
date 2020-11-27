@@ -25,12 +25,12 @@ class ProductDataExport implements FromCollection, WithHeadings, WithTitle, With
     public function map($product): array
     {
         return [
-            $product->details['sku'] ?? null,
-            $product->data['meta_title'] ?? null,
-            $product->data['meta_description'] ?? null,
-            $product->data['name'] ?? null,
-            $product->data['description'] ?? null,
-            $product->data['text'] ?? null,
+            $product->getDetails('sku'),
+            $product->getData('meta_title'),
+            $product->getData('meta_description'),
+            $product->getData('name'),
+            $product->getData('description'),
+            $product->getData('text'),
         ];
     }
 

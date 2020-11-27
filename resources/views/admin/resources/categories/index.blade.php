@@ -9,7 +9,7 @@
 
     @php($controllerClass = get_class(request()->route()->controller))
     @php($resourceClass = get_class($resources))
-    
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -62,7 +62,8 @@
                                         @if($resourceClass == 'Kalnoy\Nestedset\Collection')
                                             <th></th>
                                         @endif
-                                        <th class="sorting_asc">ID</th>
+                                        <th class="sorting_asc">ID(Excel файл)</th>
+                                        <th class="sorting_asc">ID(В БД)</th>
                                         <th class="sorting">Дата создания</th>
                                         <th class="sorting">Дата редактирования</th>
                                         <th class="sorting">Дата удаления</th>
@@ -82,6 +83,7 @@
                                                     @endfor
                                                 </td>
                                             @endif
+                                            <td>{{ $resource->r_id }}</td>
                                             <td>{{ $resource->id }}</td>
                                             <td>{{ $resource->created_at->format('d.m.Y') }}</td>
                                             <td>{{ $resource->updated_at->format('d.m.Y') }}</td>

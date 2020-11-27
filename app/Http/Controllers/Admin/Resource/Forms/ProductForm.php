@@ -34,13 +34,13 @@ class ProductForm extends Form
                 'label' => 'Sku',
                 'rules' => ['required', 'unique:resources,details->sku,' . $resource->id],
                 'value' => $resource->getDetails('sku'),
-                'attr' => ['disabled' => true],
+                //'attr' => ['disabled' => true],
             ])
             ->add('details[ref]', 'text', [
                 'label' => 'Ref',
                 'rules' => ['required', 'unique:resources,details->ref,' . $resource->id],
                 'value' => $resource->getDetails('ref'),
-                'attr' => ['disabled' => true],
+                //'attr' => ['disabled' => true],
             ])
             ->add('details[published]', 'select', [
                 'label' => 'Опубликовано',
