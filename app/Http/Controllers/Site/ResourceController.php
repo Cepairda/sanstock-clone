@@ -12,13 +12,13 @@ class ResourceController extends Controller
     public function getResource($slug)
     {
         $resource = Resource::withoutGlobalScopes()
-            ->joinLocalization()
             ->where('slug', $slug)
             ->where('deleted_at', null)
             ->firstOrFail();
-        $viewPath = Str::lower(class_basename($resource->type));
-        $resource = $resource->type::find($resource->id);
+        $type = Str::lower(class_basename($resource->type));
+        
+        $resource = $resource->type::joinLocalization()->whereId($resource->id)->first();
 
-        return view('site.' . $viewPath . '.show', compact('resource'));
+        return view('site.' . $type . '.show', [$type => $resource] );
     }
 }

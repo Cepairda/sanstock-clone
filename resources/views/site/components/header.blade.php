@@ -37,7 +37,7 @@
                                 </button>
                                 <!-- RD Navbar Brand-->
                                 <div class="rd-navbar-brand">
-                                    <a class="brand-name" href="{{ route('/') }}">
+                                    <a class="brand-name" href="{{ route('site./') }}">
                                         <img src="{{ asset('images/site/logo-150x150.jpg') }}" alt="" width="50"/>
                                     </a>
                                 </div>

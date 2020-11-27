@@ -2,6 +2,8 @@
 
 namespace App;
 
+use LaravelLocalization;
+
 class Product extends Resource
 {
     protected $appends = ['main_image', 'additional_image'];
