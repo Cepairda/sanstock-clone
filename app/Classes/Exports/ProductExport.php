@@ -18,12 +18,11 @@ class ProductExport implements FromCollection, WithHeadings, WithTitle, WithMapp
     public function map($product): array
     {
         return [
-            $product->details['sku'],
-            $product->details['category_id'],
-            $product->details['categories']->keyBy('id')->keys()->implode('|'),
-            $product->details['group_id'],
-            $product->details['published'],
-            $product->data['name']
+            $product->details['sku'] ?? null,
+            $product->details['category_id'] ?? null,
+            null,//$product->details['categories']->keyBy('id')->keys()->implode('|'),
+            $product->details['published'] ?? null,
+            $product->data['name'] ?? null,
         ];
     }
 
@@ -33,7 +32,6 @@ class ProductExport implements FromCollection, WithHeadings, WithTitle, WithMapp
             'sku',
             'category_id',
             'category_ids',
-            'group_id',
             'published',
             'name'
         ];

@@ -51,32 +51,32 @@ class CategoryForm extends Form
             ->add('data[meta_title]', 'text', [
                 'label' => 'Meta Title',
                 'rules' => ['required'],
-                'value' => $resource->data['meta_title']
+                'value' => $resource->getData('meta_title')
             ])
             ->add('data[meta_description]', 'text', [
                 'label' => 'Meta Description',
                 'rules' => ['required'],
-                'value' => $resource->data['meta_description']
+                'value' => $resource->getData('meta_description')
             ])
             ->add('data[h1]', 'text', [
                 'label' => 'H1',
                 'rules' => ['required'],
-                'value' => $resource->data['h1']
+                'value' => $resource->getData('h1')
             ])
             ->add('data[name]', 'text', [
                 'label' => 'Name',
                 'rules' => ['required'],
-                'value' => $resource->data['name']
+                'value' => $resource->getData('name')
             ])
             ->add('data[description]', 'textarea', [
                 'label' => 'Description',
                 'rules' => [],
-                'value' => $resource->data['description']
+                'value' => $resource->getData('description')
             ])
             ->add('data[text]', 'textarea', [
                 'label' => 'Text',
                 'rules' => [],
-                'value' => $resource->data['text']
+                'value' => $resource->getData('text')
             ])
             ->add('submit', 'submit', [
                 'label' => 'Сохранить'
