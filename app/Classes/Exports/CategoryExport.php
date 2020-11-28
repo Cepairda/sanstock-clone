@@ -19,13 +19,13 @@ class CategoryExport implements FromCollection, WithHeadings, WithTitle, WithMap
     public function map($category): array
     {
         return [
-            $category->resource_id,
-            $category->parent_id ? Category::find($category->parent_id)->resource_id : null,
-            $category->details['sort'],
-            $category->details['published'],
-            $category->details['is_menu_item'],
+            $category->virtual_id,
+            $category->parent_id ? Category::find($category->parent_id)->virtual_id : null,
+            $category->getDetails('sort'),
+            $category->getDetails('published'),
+            $category->getDetails('is_menu_item'),
             $category->slug,
-            $category->data['name']
+            $category->getData('name'),
         ];
     }
 
@@ -37,7 +37,7 @@ class CategoryExport implements FromCollection, WithHeadings, WithTitle, WithMap
             'sort',
             'published',
             'is_menu_item',
-            'alias',
+            'slug',
             'name'
         ];
     }

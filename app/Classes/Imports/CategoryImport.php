@@ -22,15 +22,15 @@ class CategoryImport implements ToCollection, WithHeadingRow
     public function storeOrUpdate($data)
     {
         foreach ($data as $id => $row) {
-            $category = Category::where('resource_id', $id)->first();
+            $category = Category::where('virtual_id', $id)->first();
 
             if (!isset($category)) {
                 $category = new Category();
-                $requestData['resource_id'] = $id;
+                $requestData['virtual_id'] = $id;
                 $url = str_replace('/', '-', $row['name']);
                 $requestData['slug'] = $row['alias'] ?? Str::slug($url);
             } else {
-                $requestData['resource_id'] = $category->resource_id;
+                $requestData['virtual_id'] = $category->virtual_id;
                 $requestData['slug'] = $category->slug;
             }
 
@@ -49,8 +49,8 @@ class CategoryImport implements ToCollection, WithHeadingRow
             $parentId = $row['parent_id'];
 
             if (!empty($parentId)) {
-                $parentCategory = Category::where('resource_id', $parentId)->first();
-                Category::where('resource_id', $id)->update(['parent_id' => $parentCategory->id]);
+                $parentCategory = Category::where('virtual_id', $parentId)->first();
+                Category::where('virtual_id', $id)->update(['parent_id' => $parentCategory->id]);
             }
         }
 
