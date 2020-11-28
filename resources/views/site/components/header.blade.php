@@ -38,7 +38,7 @@
                                 <!-- RD Navbar Brand-->
                                 <div class="rd-navbar-brand">
                                     <a class="brand-name" href="{{ route('site./') }}">
-                                        <img src="{{ asset('images/site/logo-150x150.jpg') }}" alt="" width="50"/>
+                                        <img src="{{ asset('images/site/logo.svg') }}" alt="50" width="50"/>
                                     </a>
                                 </div>
                             </div>
@@ -76,7 +76,16 @@
                                 <div class="rd-navbar-search_collapsable">
                                     <ul class="rd-navbar-nav">
                                         <li>
-                                            <a href="#">Для ванной комнаты</a>
+                                            <a href="#">Для душа</a>
+                                            <ul class="rd-navbar-dropdown">
+                                                <li><a href="#">Смесители для душа</a></li>
+                                                <li><a href="#">Душевая система</a></li>
+                                                <li><a href="#">Душевая стойка</a></li>
+                                                <li><a href="#">Душевые двери в нишу</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">Для ванной</a>
                                             <ul class="rd-navbar-dropdown">
                                                 <li><a href="#">Home Default</a></li>
                                                 <li><a href="#">Home Business</a></li>
@@ -101,6 +110,29 @@
                                         <li>
                                             <a href="#">Для кухни</a>
                                             <ul class="rd-navbar-dropdown">
+                                                <li><a href="#">Home Default</a></li>
+                                                <li><a href="#">Home Business</a></li>
+                                                <li><a href="#">Home Commercial</a></li>
+                                                <li>
+                                                    <a href="#">Headers</a>
+                                                    <ul class="rd-navbar-dropdown">
+                                                        <li><a href="#">Header Default</a></li>
+                                                        <li><a href="#">Header Creative</a></li>
+                                                        <li><a href="#">Header Transparent</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="#">Footers</a>
+                                                    <ul class="rd-navbar-dropdown">
+                                                        <li><a href="#">Footer Corporate</a></li>
+                                                        <li><a href="#">Footer Minimal</a></li>
+                                                        <li><a href="#">Footer Modern</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">Для туалета</a>
+                                            <ul class="rd-navbar-dropdown">
                                                 <li><a href="#">Catalog List</a></li>
                                                 <li><a href="#">Catalog Grid</a></li>
                                                 <li><a href="#">Single Product</a></li>
@@ -109,10 +141,24 @@
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="#">Керамика</a>
+                                            <a href="#">Аксессуары для ванной</a>
+                                            <ul class="rd-navbar-dropdown">
+                                                <li><a href="#">Catalog List</a></li>
+                                                <li><a href="#">Catalog Grid</a></li>
+                                                <li><a href="#">Single Product</a></li>
+                                                <li><a href="#">Cart</a></li>
+                                                <li><a href="#">Checkout</a></li>
+                                            </ul>
                                         </li>
                                         <li>
-                                            <a href="#">Аксессуары</a>
+                                            <a href="#">Комплектующие и Зачасти</a>
+                                            <ul class="rd-navbar-dropdown">
+                                                <li><a href="#">Catalog List</a></li>
+                                                <li><a href="#">Catalog Grid</a></li>
+                                                <li><a href="#">Single Product</a></li>
+                                                <li><a href="#">Cart</a></li>
+                                                <li><a href="#">Checkout</a></li>
+                                            </ul>
                                         </li>
                                     </ul>
                                 </div>

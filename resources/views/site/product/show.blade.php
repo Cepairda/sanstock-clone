@@ -4,7 +4,7 @@
 
     @include('site.components.breadcrumbs')
   
-    {{ dd($product) }}
+    {{ dd($product->chararacteristics[0]->getData('value')) }}
 
     <section class="section-sm bg-white">
         <div class="container">

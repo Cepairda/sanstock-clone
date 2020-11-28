@@ -19,6 +19,6 @@ class ResourceController extends Controller
         
         $resource = $resource->type::joinLocalization()->whereId($resource->id)->first();
 
-        return view('site.' . $type . '.show', [$type => $resource] );
+        return view('site.' . $type . '.show', [$type => $resource] ); //compact('resource')
     }
 }
