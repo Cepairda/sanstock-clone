@@ -21,9 +21,9 @@ class CategoryForm extends Form
                 'rules' => ['required', 'max:255', 'unique:resources,slug,' . $resource->id],
                 'value' => $resource->slug
             ])
-            ->add('resource_id', 'number', [
+            ->add('virtual_id', 'number', [
                 'label' => 'ID(Excel файл)',
-                'rules' => ['required', 'max:255', 'unique:resources,resource_id,' . $resource->id],
+                'rules' => ['required', 'max:255', 'unique:resources,virtual_id,' . $resource->id],
                 'value' => $resource->r_id
             ])
             ->add('parent_id', 'select', [

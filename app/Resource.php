@@ -66,8 +66,8 @@ class Resource extends Model
     {
         $this->setRequest();
 
-        if (isset($this->request['resource_id'])) {
-            $this->resource_id = $this->request['resource_id'];
+        if (isset($this->request['virtual_id'])) {
+            $this->virtual_id = $this->request['virtual_id'];
         }
 
         if (isset($this->request['slug'])) {
