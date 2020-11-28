@@ -86,7 +86,7 @@
 
     {{-- @include('site.product.carousel', ['title' => 'Новинки', 'products' => $home_product]) --}}
 
-    <section class="home-bn-info section-lg" style=" padding-top: 135px;  padding-bottom: 135px;background-image: url({{ asset('images/site/home-slider/slide-3.jpg') }}); background-position: center;">
+    <section class="home-bn-info section-lg" style=" padding-top: 225px;  padding-bottom: 225px;background-image: url({{ asset('images/site/home-slider/slide-3.jpg') }}); background-position: center;">
         <div class="container">
             <div class="row justify-content-end">
                 <div class="col-6 text-center">
