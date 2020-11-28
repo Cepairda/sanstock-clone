@@ -23,6 +23,13 @@ class Product extends Resource
         }]);
     }
 
+    public function scopeWithCharacteristicValue($query, $joinLocalization = true)
+    {
+        return $query->with(['characteristics' => function ($query) use ($joinLocalization) {
+            if ($joinLocalization) return $query->select('*')->joinLocalization()->withCharacteristic();
+        }]);
+    }
+
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'resource_resource',

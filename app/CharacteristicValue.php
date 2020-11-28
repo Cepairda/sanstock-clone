@@ -4,6 +4,11 @@ namespace App;
 
 class CharacteristicValue extends Resource
 {
+    public function getCharacteristicIdAttribute()
+    {
+        return $this->getDetails('characteristic_id');
+    }
+
     public function scopeWhereCharacteristicIsFilter($query, $characteristicIds = null)
     {
         if (isset($characteristicIds)) {
@@ -16,5 +21,17 @@ class CharacteristicValue extends Resource
                     ->where('characteristics.details->is_filter', '1');
             });
         }
+    }
+
+    public function scopeWithCharacteristic($query, $joinLocalization = true)
+    {
+        return $query->with(['characteristic' => function ($query) use ($joinLocalization) {
+            if ($joinLocalization) return $query->select('*')->joinLocalization();
+        }]);
+    }
+
+    public function characteristic()
+    {
+        return $this->belongsTo('App\Characteristic', 'characteristic_id', 'id');
     }
 }
