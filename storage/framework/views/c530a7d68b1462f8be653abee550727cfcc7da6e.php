@@ -61,8 +61,7 @@
                                             <input class="form-input" id="rd-navbar-search-form-input" type="text"
                                                    name="s"
                                                    autocomplete="off">
-                                            <label class="form-label" for="rd-navbar-search-form-input">Enter
-                                                keyword</label>
+                                            <label class="form-label" for="rd-navbar-search-form-input"><?php echo e(__('Enter keyword')); ?></label>
                                             <div class="rd-search-results-live" id="rd-search-results-live"></div>
                                         </div>
                                         <button class="rd-search__submit" type="submit"></button>
@@ -170,4 +169,5 @@
             </div>
         </div>
     </div>
-</header><?php /**PATH C:\OpenServer\domains\lidz.com.ua.local\resources\views/site/components/header.blade.php ENDPATH**/ ?>
+</header>
+<?php /**PATH C:\OpenServer\domains\lidz.com.ua.local\resources\views/site/components/header.blade.php ENDPATH**/ ?>

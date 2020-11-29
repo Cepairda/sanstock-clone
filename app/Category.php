@@ -22,11 +22,4 @@ class Category extends Resource
             'relation_id', 'resource_id')
             ->where('resource_type', CharacteristicGroup::class);
     }
-
-    public function products()
-    {
-        return $this->belongsToMany(Product::class, 'resource_resource',
-            'relation_id', 'resource_id')
-            ->where('resource_type', Product::class);
-    }
 }

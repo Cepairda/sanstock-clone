@@ -20,12 +20,22 @@ class ResourceController extends Controller
 
         switch ($type) {
             case 'product':
-                $resource = $resource->type::joinLocalization()->withCharacteristics()->whereId($resource->id)->first();
+                $data = [
+                    'product' => $resource->type::joinLocalization()->withCharacteristics()->whereId($resource->id)->first()
+                ];
+                break;
+            case 'category':
+                $data = [
+                    'category' => $category = $resource->type::joinLocalization()->whereId($resource->id)->first(),
+                    'products' => Product::joinLocalization()->whereExistsCategoryIds($category->id)->paginate()
+                ];
                 break;
             default:
-                $resource = $resource->type::joinLocalization()->whereId($resource->id)->first();
+                $data = [
+                    'resource' => $resource->type::joinLocalization()->whereId($resource->id)->first()
+                ];
         }
 
-        return view('site.' . $type . '.show', [$type => $resource] );
+        return view('site.' . $type . '.show', $data);
     }
 }
