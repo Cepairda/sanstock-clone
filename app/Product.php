@@ -16,6 +16,26 @@ class Product extends Resource
 
     }
 
+    public function getNameAttribute()
+    {
+        return $this->attributes['name'] ?? $this->attributes['name'] = $this->getData('name');
+    }
+
+    public function getSkuAttribute()
+    {
+        return $this->attributes['sku'] ?? $this->attributes['sku'] = $this->getDetails('sku');
+    }
+
+    public function getDescriptionAttribute()
+    {
+        return $this->attributes['description'] ?? $this->attributes['description'] = $this->getData('description');
+    }
+
+    public function getPriceAttribute()
+    {
+        return $this->attributes['price'] ?? $this->attributes['price'] = $this->getDetails('price');
+    }
+
     public function getRelatedAttribute()
     {
         return $this->attributes['related'] ?? $this->attributes['related'] =
@@ -44,18 +64,8 @@ class Product extends Resource
             ->where('relation_type', Category::class);
     }
 
-//    public function scopeWithCharacteristics($query)
-//    {
-//        return $query->with(['characteristics' => function($query) {
-//            return $query->joinLocalization('ru');
-//        }]);
-//    }
-
     public function characteristics()
     {
-//        return $this->hasMany(ResourceResource::class, 'resource_id', 'id')
-//            ->where('relation_type', CharacteristicValue::class)
-//            ->join('', '', '');
         return $this->belongsToMany(CharacteristicValue::class, 'resource_resource',
             'resource_id', 'relation_id')
             ->where('relation_type', CharacteristicValue::class);

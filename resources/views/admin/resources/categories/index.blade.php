@@ -103,6 +103,10 @@
                                                 @endisset
                                             </td>
                                             <td nowrap>
+                                                <a href="{{ url($resource->slug) }}" target="_blank"
+                                                   class="btn btn-success text-white">
+                                                    <span class="far fa-eye"></span>
+                                                </a>
                                                 <a href="{{ action([$controllerClass, 'edit'], $resource->id) }}"
                                                    class="btn btn-warning text-white">
                                                     <span class="far fa-edit"></span>

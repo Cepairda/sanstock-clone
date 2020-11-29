@@ -46,47 +46,54 @@
 {{--            </div>--}}
 {{--        </div>--}}
 {{--    </section>--}}
-    <section>
-        <!-- RD Google Map-->
-        <div class="rd-google-map rd-google-map__model" data-zoom="15" data-y="40.643180" data-x="-73.9874068" data-styles="[{&quot;featureType&quot;:&quot;water&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#e9e9e9&quot;},{&quot;lightness&quot;:17}]},{&quot;featureType&quot;:&quot;landscape&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#f5f5f5&quot;},{&quot;lightness&quot;:20}]},{&quot;featureType&quot;:&quot;road.highway&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#ffffff&quot;},{&quot;lightness&quot;:17}]},{&quot;featureType&quot;:&quot;road.highway&quot;,&quot;elementType&quot;:&quot;geometry.stroke&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#ffffff&quot;},{&quot;lightness&quot;:29},{&quot;weight&quot;:0.2}]},{&quot;featureType&quot;:&quot;road.arterial&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#ffffff&quot;},{&quot;lightness&quot;:18}]},{&quot;featureType&quot;:&quot;road.local&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#ffffff&quot;},{&quot;lightness&quot;:16}]},{&quot;featureType&quot;:&quot;poi&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#f5f5f5&quot;},{&quot;lightness&quot;:21}]},{&quot;featureType&quot;:&quot;poi.park&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#dedede&quot;},{&quot;lightness&quot;:21}]},{&quot;elementType&quot;:&quot;labels.text.stroke&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;on&quot;},{&quot;color&quot;:&quot;#ffffff&quot;},{&quot;lightness&quot;:16}]},{&quot;elementType&quot;:&quot;labels.text.fill&quot;,&quot;stylers&quot;:[{&quot;saturation&quot;:36},{&quot;color&quot;:&quot;#333333&quot;},{&quot;lightness&quot;:40}]},{&quot;elementType&quot;:&quot;labels.icon&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;off&quot;}]},{&quot;featureType&quot;:&quot;transit&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#f2f2f2&quot;},{&quot;lightness&quot;:19}]},{&quot;featureType&quot;:&quot;administrative&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#fefefe&quot;},{&quot;lightness&quot;:20}]},{&quot;featureType&quot;:&quot;administrative&quot;,&quot;elementType&quot;:&quot;geometry.stroke&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#fefefe&quot;},{&quot;lightness&quot;:17},{&quot;weight&quot;:1.2}]}]">
-            <ul class="map_locations">
-                <li data-y="40.643180" data-x="-73.9874068">
-                    <dl>
-                        <dt>Address:</dt>
-                        <dd>4578 Marmora Road, Glasgow, D04 89GR</dd>
-                    </dl>
-                    <dl>
-                        <dt>Phones:</dt>
-                        <dd><a href="callto:#">(800) 123-0045</a>; <a href="callto:#">(800) 123-0046</a>
-                        </dd>
-                    </dl>
-                    <dl>
-                        <dt>We are open:</dt>
-                        <dd>Mn-Fr: 10 am-8 pm</dd>
-                    </dl>
-                </li>
-            </ul>
-        </div>
-    </section>
+
+
+{{--    <section>--}}
+{{--        <!-- RD Google Map-->--}}
+{{--        <div class="rd-google-map rd-google-map__model" data-zoom="15" data-y="40.643180" data-x="-73.9874068" data-styles="[{&quot;featureType&quot;:&quot;water&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#e9e9e9&quot;},{&quot;lightness&quot;:17}]},{&quot;featureType&quot;:&quot;landscape&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#f5f5f5&quot;},{&quot;lightness&quot;:20}]},{&quot;featureType&quot;:&quot;road.highway&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#ffffff&quot;},{&quot;lightness&quot;:17}]},{&quot;featureType&quot;:&quot;road.highway&quot;,&quot;elementType&quot;:&quot;geometry.stroke&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#ffffff&quot;},{&quot;lightness&quot;:29},{&quot;weight&quot;:0.2}]},{&quot;featureType&quot;:&quot;road.arterial&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#ffffff&quot;},{&quot;lightness&quot;:18}]},{&quot;featureType&quot;:&quot;road.local&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#ffffff&quot;},{&quot;lightness&quot;:16}]},{&quot;featureType&quot;:&quot;poi&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#f5f5f5&quot;},{&quot;lightness&quot;:21}]},{&quot;featureType&quot;:&quot;poi.park&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#dedede&quot;},{&quot;lightness&quot;:21}]},{&quot;elementType&quot;:&quot;labels.text.stroke&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;on&quot;},{&quot;color&quot;:&quot;#ffffff&quot;},{&quot;lightness&quot;:16}]},{&quot;elementType&quot;:&quot;labels.text.fill&quot;,&quot;stylers&quot;:[{&quot;saturation&quot;:36},{&quot;color&quot;:&quot;#333333&quot;},{&quot;lightness&quot;:40}]},{&quot;elementType&quot;:&quot;labels.icon&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;off&quot;}]},{&quot;featureType&quot;:&quot;transit&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#f2f2f2&quot;},{&quot;lightness&quot;:19}]},{&quot;featureType&quot;:&quot;administrative&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#fefefe&quot;},{&quot;lightness&quot;:20}]},{&quot;featureType&quot;:&quot;administrative&quot;,&quot;elementType&quot;:&quot;geometry.stroke&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#fefefe&quot;},{&quot;lightness&quot;:17},{&quot;weight&quot;:1.2}]}]">--}}
+{{--            <ul class="map_locations">--}}
+{{--                <li data-y="40.643180" data-x="-73.9874068">--}}
+{{--                    <dl>--}}
+{{--                        <dt>Address:</dt>--}}
+{{--                        <dd>4578 Marmora Road, Glasgow, D04 89GR</dd>--}}
+{{--                    </dl>--}}
+{{--                    <dl>--}}
+{{--                        <dt>Phones:</dt>--}}
+{{--                        <dd><a href="callto:#">(800) 123-0045</a>; <a href="callto:#">(800) 123-0046</a>--}}
+{{--                        </dd>--}}
+{{--                    </dl>--}}
+{{--                    <dl>--}}
+{{--                        <dt>We are open:</dt>--}}
+{{--                        <dd>Mn-Fr: 10 am-8 pm</dd>--}}
+{{--                    </dl>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--        </div>--}}
+{{--    </section>--}}
+
+
     <section class="section-md bg-white">
         <div class="shell">
             <div class="range range-50">
+
                 <div class="cell-sm-5 cell-md-4">
-                    <h3>Contacts</h3>
+                    <h3>{{ __('Contacts') }}</h3>
                     <ul class="list-xs contact-info">
                         <li>
                             <dl class="list-terms-minimal">
-                                <dt>Address</dt>
-                                <dd>4578 Marmora Road, Glasgow, D04 89GR</dd>
+                                <dt>{{ __('Address') }}</dt>
+                                <dd>Вулиця Шевченка, 327, корп. 2-2, Харків, Харківська область, 61000</dd>
                             </dl>
                         </li>
                         <li>
                             <dl class="list-terms-minimal">
-                                <dt>Phones</dt>
+                                <dt>{{ __('Phone') }}</dt>
                                 <dd>
                                     <ul class="list-semicolon">
-                                        <li><a href="callto:#">(800) 123-0045</a></li>
-                                        <li><a href="callto:#">(800) 123-0045</a></li>
+                                        <li><a href="callto:#">0-800-212-008</a></li>
+                                        <li><a href="callto:#">+380 (97) 917-94-94</a></li>
+                                        <li><a href="callto:#">+380 (95) 917-94-94</a></li>
+                                        <li><a href="callto:#">+380 (93) 917-94-94</a></li>
                                     </ul>
                                 </dd>
                             </dl>
@@ -94,13 +101,13 @@
                         <li>
                             <dl class="list-terms-minimal">
                                 <dt>E-mail</dt>
-                                <dd><a href="mailto:#">info@demolink.org</a></dd>
+                                <dd><a href="mailto:#">info@lidz.ua</a></dd>
                             </dl>
                         </li>
                         <li>
                             <dl class="list-terms-minimal">
-                                <dt>We are open</dt>
-                                <dd>Mn-Fr: 10 am-8 pm</dd>
+                                <dt>{{ __('We are open') }}</dt>
+                                <dd>Пн-Пт: 9:00 - 18:00</dd>
                             </dl>
                         </li>
                         <li>
@@ -115,27 +122,28 @@
                         </li>
                     </ul>
                 </div>
+
                 <div class="cell-sm-7 cell-md-8">
-                    <h3>Get in Touch</h3>
+                    <h3>{{ __('Get in Touch') }}</h3>
                     <!-- RD Mailform-->
                     <form class="rd-mailform rd-mailform_style-1" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
                         <div class="form-wrap">
                             <input class="form-input" id="contact-name" type="text" name="name" data-constraints="@Required">
-                            <label class="form-label" for="contact-name">Your name</label>
+                            <label class="form-label" for="contact-name">{{ __('Name') }}</label>
                         </div>
                         <div class="form-wrap">
                             <input class="form-input" id="contact-email" type="email" name="email" data-constraints="@Email @Required">
-                            <label class="form-label" for="contact-email">Your e-mail</label>
+                            <label class="form-label" for="contact-email">E-mail</label>
                         </div>
                         <div class="form-wrap">
                             <input class="form-input" id="contact-phone" type="text" name="phone" data-constraints="@Numeric">
-                            <label class="form-label" for="contact-phone">Your phone</label>
+                            <label class="form-label" for="contact-phone">{{ __('Phone') }}</label>
                         </div>
                         <div class="form-wrap">
                             <textarea class="form-input" id="contact-message" name="message" data-constraints="@Required"></textarea>
-                            <label class="form-label" for="contact-message">Your message</label>
+                            <label class="form-label" for="contact-message">{{ __('Message') }}</label>
                         </div>
-                        <button class="button button-primary" type="submit">Send</button>
+                        <button class="button button-primary" type="submit">{{ __('Send') }}</button>
                     </form>
                 </div>
             </div>
