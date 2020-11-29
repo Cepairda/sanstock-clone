@@ -7,9 +7,12 @@
         </div>
     </div>
     <div class="product-caption">
-        <h6 class="product-title">
+        <ul class="product-categories">
+            <li><a href="#">{{ $product->category ?? 'Ctegory' }}</a></li>
+        </ul>
+        <div class="product-title">
             <a href="#">{{ $product->name ?? ' Смеситель для раковины LIDZ (CRM) 90 00 077 00' }}</a>
-        </h6>
+        </div>
         <p class="product-price">
             <span>{{ $product->price ?? '1 832'}}</span>
         </p>
