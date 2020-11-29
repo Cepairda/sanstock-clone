@@ -50,9 +50,9 @@
 
                 @foreach($categories as $category)
 
-                    <div class="col-4 popular-category">
+                    <div class="col-4 popular-category cat-{{ $category->id }}">
                         <a class="popular-category__inner" href="{{ route('site.slug', $category->slug) }}">
-                            <img class="popular-category__inner--image" src="{{ asset('images/site/home-popular-category/branded_packaging.png') }}" alt="{!! $category->getData('name') !!}">
+                            <img class="popular-category__inner--image" src="{{ asset('images/site/home-popular-category/' . $category->id . '.png') }}" alt="{!! $category->getData('name') !!}">
                             <p class="popular-category__inner--name" style="font-size: 20px;">{!! $category->getData('name') !!}</p>
                         </a>
                     </div>
