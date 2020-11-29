@@ -83,7 +83,7 @@
                                                     @endfor
                                                 </td>
                                             @endif
-                                            <td>{{ $resource->r_id }}</td>
+                                            <td>{{ $resource->virtual_id }}</td>
                                             <td>{{ $resource->id }}</td>
                                             <td>{{ $resource->created_at->format('d.m.Y') }}</td>
                                             <td>{{ $resource->updated_at->format('d.m.Y') }}</td>

@@ -84,6 +84,7 @@
                         </ul>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -107,22 +108,12 @@
                     <h5>Additional Information</h5>
                         <table class="table-product-info">
                             <tbody>
-                            <tr>
-                                <td>Brand</td>
-                                <td>My italian</td>
-                            </tr>
-                            <tr>
-                                <td>Manufacturer</td>
-                                <td>Italy</td>
-                            </tr>
-                            <tr>
-                                <td>Features</td>
-                                <td>Energy Star Compliant, Handmade, UL Listed</td>
-                            </tr>
-                            <tr>
-                                <td>Waterproof</td>
-                                <td>yes</td>
-                            </tr>
+                            @foreach ($product->characteristics as $characteristic)
+                                    <tr>
+                                        <td>{{ $characteristic->name }}</td>
+                                        <td>{{ $characteristic->value }}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

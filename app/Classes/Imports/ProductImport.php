@@ -17,6 +17,7 @@ class ProductImport implements ToCollection, WithHeadingRow
 {
     public function collection(Collection $rows)
     {
+        ini_set('max_execution_time', 900);
         $categories = Category::all()->pluck('id', 'virtual_id');
 
         foreach ($rows as $row) {
