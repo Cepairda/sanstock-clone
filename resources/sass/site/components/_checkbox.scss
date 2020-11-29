@@ -1,11 +1,10 @@
 /*checkbox*/
 .form-group.form-check.custom-checkbox {
-    padding-left: 40px;
+    padding-left: 0;
 }
 
 .custom-checkbox {
     margin-bottom: 15px;
-
 
     .custom-control-label::before {
         border-radius: 2px;
@@ -46,11 +45,14 @@
 }
 
 .custom-control-label {
-    line-height: 1.9;
+    width: 100%;
+    padding-left: 40px;
+    line-height: 26px;
+    cursor: pointer;
 
     &::before {
         top: 0;
-        left: -40px;
+        left: 0;
         height: 26px;
         width: 26px;
         background-color: transparent;
@@ -58,7 +60,7 @@
 
     &::after {
         top: 0;
-        left: -40px;
+        left: 0;
         height: 26px;
         width: 26px;
     }
