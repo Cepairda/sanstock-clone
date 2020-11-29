@@ -44,18 +44,8 @@ class Product extends Resource
             ->where('relation_type', Category::class);
     }
 
-//    public function scopeWithCharacteristics($query)
-//    {
-//        return $query->with(['characteristics' => function($query) {
-//            return $query->joinLocalization('ru');
-//        }]);
-//    }
-
     public function characteristics()
     {
-//        return $this->hasMany(ResourceResource::class, 'resource_id', 'id')
-//            ->where('relation_type', CharacteristicValue::class)
-//            ->join('', '', '');
         return $this->belongsToMany(CharacteristicValue::class, 'resource_resource',
             'resource_id', 'relation_id')
             ->where('relation_type', CharacteristicValue::class);
