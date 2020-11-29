@@ -49,7 +49,7 @@
                 @php($categories = $categories ?? \App\Category::joinLocalization()->get()->toTree())
 
                 @foreach($categories as $category)
-                    
+
                     <div class="col-4 popular-category cat-{{ $category->id }}">
                         <a class="popular-category__inner" href="{{ route('site.resource', $category->slug) }}">
                             <img class="popular-category__inner--image" src="{{ asset('images/site/home-popular-category/' . $category->id . '.png') }}" alt="{!! $category->getData('name') !!}">

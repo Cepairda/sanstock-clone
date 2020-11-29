@@ -66,6 +66,28 @@ if (!function_exists('img')) {
     }
 }
 
+if (!function_exists('temp_img')) {
+    /**
+     * Format text.
+     *
+     * @param  string  $text
+     * @return string
+     */
+
+    function temp_img($url)
+    {
+
+        if ( !@getimagesize($url) ) {
+
+            return '<img style="height: 100%; width: 100%; opacity: 0.1;" src="/images/site/default.jpg" />';
+
+        }
+
+        return '<img src="' . $url . '" />';
+
+    }
+}
+
 if (!function_exists('xml_img')) {
     /**
      * Format text.
