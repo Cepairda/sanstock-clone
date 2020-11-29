@@ -1,5 +1,14 @@
 
 <?php $__env->startSection('body_class', 'product'); ?>
+
+<?php $__env->startSection('breadcrumbs'); ?>
+    <?php $__currentLoopData = $product->category->ancestors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ancestor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <li><a href="<?php echo e(route('site.resource', $ancestor->slug)); ?>"><?php echo e($ancestor->name); ?></a></li>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    <li><a href="<?php echo e(route('site.resource', $product->category->slug)); ?>"><?php echo e($product->category->name); ?></a></li>
+    <li class="active"><?php echo e($product->name); ?></li>
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
 
     <?php echo $__env->make('site.components.breadcrumbs', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
