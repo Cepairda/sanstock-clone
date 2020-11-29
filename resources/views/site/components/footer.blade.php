@@ -16,7 +16,7 @@
 
                     @foreach($categories as $category)
                         <li>
-                            <a href="{{ route('site.slug', $category->slug) }}">{!! $category->getData('name') !!}</a>
+                            <a href="{{ route('site.resource', $category->slug) }}">{!! $category->getData('name') !!}</a>
                         </li>
                     @endforeach
                 </ul>
