@@ -2,7 +2,9 @@
 @section('body_class', 'category')
 @section('content')
 
-    @include('site.components.breadcrumbs')
+{{-- dd($category) --}}
+
+    @include('site.components.breadcrumbs', ['title' => $category->getData('name')])
 
     <section class="section-md bg-white">
         <div class="shell">
@@ -25,7 +27,7 @@
                             </div>
                         </div>
                         <div class="range range-xs-center range-70">
-                            @foreach($category->products as $product)
+                            @foreach($products as $product)
                                 <div class="cell-sm-6 cell-lg-4">
                                     @include('site.components.product')
                                 </div>
@@ -35,15 +37,16 @@
                     <!-- Pagination-->
                     <section class="section-sm">
                         <!-- Classic Pagination-->
-                        <nav>
-                            <ul class="pagination-classic">
-                                <li class="active"><span>1</span></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a class="icon linear-icon-arrow-right" href="#"></a></li>
-                            </ul>
-                        </nav>
+                        {!! $products->links() !!}
+{{--                        <nav>--}}
+{{--                            <ul class="pagination-classic">--}}
+{{--                                <li class="active"><span>1</span></li>--}}
+{{--                                <li><a href="#">2</a></li>--}}
+{{--                                <li><a href="#">3</a></li>--}}
+{{--                                <li><a href="#">4</a></li>--}}
+{{--                                <li><a class="icon linear-icon-arrow-right" href="#"></a></li>--}}
+{{--                            </ul>--}}
+{{--                        </nav>--}}
                     </section>
                 </div>
 

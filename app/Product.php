@@ -43,6 +43,17 @@ class Product extends Resource
                 whereType(self::class)->where('id', '!=', $this->id)->inRandomOrder()->take(4)->get();
     }
 
+    public function scopeWhereExistsCategoryIds($query, $categoryIds)
+    {
+        $categoryIds = (is_object($categoryIds) || is_array($categoryIds)) ? $categoryIds : [$categoryIds];
+        return $query->whereExists(function ($query) use ($categoryIds) {
+            return $query->select('resource_resource.resource_id')->from('resource_resource')
+                ->whereRelationType(Category::class)->whereResourceType(self::class)
+                ->whereRaw('resource_resource.resource_id = resources.id')
+                ->whereIn('resource_resource.relation_id', $categoryIds);
+        });
+    }
+
     public function scopeWithCategories($query, $joinLocalization = true)
     {
         return $query->with(['categories' => function ($query) use ($joinLocalization) {
