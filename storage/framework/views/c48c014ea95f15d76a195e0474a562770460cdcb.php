@@ -3,11 +3,7 @@
 <?php $__env->startSection('content'); ?>
 
     <?php echo $__env->make('site.components.breadcrumbs', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-  
-
-    <?php echo e($product->characteristics); ?>
-
-
+    
     <section class="section-sm bg-white">
         <div class="container">
             <div class="row">
@@ -111,22 +107,12 @@
                             <h5>Additional Information</h5>
                             <table class="table-product-info">
                                 <tbody>
-                                <tr>
-                                    <td>Brand</td>
-                                    <td>My italian</td>
-                                </tr>
-                                <tr>
-                                    <td>Manufacturer</td>
-                                    <td>Italy</td>
-                                </tr>
-                                <tr>
-                                    <td>Features</td>
-                                    <td>Energy Star Compliant, Handmade, UL Listed</td>
-                                </tr>
-                                <tr>
-                                    <td>Waterproof</td>
-                                    <td>yes</td>
-                                </tr>
+                                <?php $__currentLoopData = $product->characteristics; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $characteristic): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <tr>
+                                        <td><?php echo e($characteristic->name); ?></td>
+                                        <td><?php echo e($characteristic->value); ?></td>
+                                    </tr>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                             </table>
                         </div>

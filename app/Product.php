@@ -30,6 +30,13 @@ class Product extends Resource
         }]);
     }
 
+    public function scopeWithCharacteristics($query, $joinLocalization = true)
+    {
+        return $query->with(['characteristics' => function ($query) use ($joinLocalization) {
+            if ($joinLocalization) return $query->select('*')->joinLocalization()->withCharacteristic();
+        }]);
+    }
+
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'resource_resource',
@@ -51,6 +58,6 @@ class Product extends Resource
 //            ->join('', '', '');
         return $this->belongsToMany(CharacteristicValue::class, 'resource_resource',
             'resource_id', 'relation_id')
-            ->where('relation_type', CharacteristicValue::class)->joinLocalization('ru');
+            ->where('relation_type', CharacteristicValue::class);
     }
 }
