@@ -5,12 +5,14 @@
             <p class="breadcrumbs-custom__title"><?php echo e('Нет заголовка' ?? $someVariable); ?></p>
 
             <ul class="breadcrumbs-custom__path">
-
                 <li><a href="/"><?php echo e(__('Home')); ?></a></li>
+                <?php echo $__env->yieldContent('breadcrumbs'); ?>
 
-                <li><a href="#"><?php echo e('Пусто' ?? $someVariable); ?></a></li>
 
-                <li class="active"><?php echo e('Пусто' ?? $someVariable); ?></li>
+
+
+
+
 
             </ul>
         </div>

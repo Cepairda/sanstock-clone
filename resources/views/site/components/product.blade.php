@@ -11,10 +11,13 @@
         </div>
     </div>
     <div class="product-caption">
-        <h6 class="product-title">
-{{--            {{ dd(route('site.resource', $product->slug)) }}--}}
+        {{-- <ul class="product-categories">
+            <li><a href="#">{{ $product->category ?? 'Ctegory' }}</a></li>
+        </ul> --}}
+        <div class="product-title">
+        {{-- {{ dd(route('site.resource', $product->slug)) }}--}}
             <a href="{{ route('site.resource', $product->slug) }}">{{ $product->name }}</a>
-        </h6>
+        </div>
         <p class="product-price">
             <span>{{ $product->price}}</span>
         </p>

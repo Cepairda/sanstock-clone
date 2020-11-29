@@ -1,5 +1,14 @@
 @extends('layouts.site')
 @section('body_class', 'product')
+
+@section('breadcrumbs')
+    @foreach($product->category->ancestors as $ancestor)
+        <li><a href="{{ route('site.resource', $ancestor->slug) }}">{{ $ancestor->name }}</a></li>
+    @endforeach
+    <li><a href="{{ route('site.resource', $product->category->slug) }}">{{ $product->category->name }}</a></li>
+    <li class="active">{{ $product->name }}</li>
+@endsection
+
 @section('content')
 
     @include('site.components.breadcrumbs')
