@@ -9,6 +9,9 @@ window.Popper = require('popper.js').default;
 // jquery
 window.$ = window.jQuery = require('jquery');
 
+//bootstrap
+require('bootstrap');
+
 // template
 require('./template/core.min.js');
 require('./template/script');

@@ -7,4 +7,5 @@ $(document).ready(function () {
         navElement: 'div',
         navText: ['<span class=" linear-icon-chevron-left"></span>', '<span class="linear-icon-chevron-right"></span>']
     });
+
 });

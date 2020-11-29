@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAdditionalFieldToUsersTable extends Migration
+class RenameResourceIdInResourceTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddAdditionalFieldToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('resource', function (Blueprint $table) {
+        Schema::table('resources', function (Blueprint $table) {
             $table->renameColumn('resource_id', 'virtual_id');
         });
     }
@@ -25,7 +25,7 @@ class AddAdditionalFieldToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('resource', function (Blueprint $table) {
+        Schema::table('resources', function (Blueprint $table) {
             $table->renameColumn('virtual_id', 'resource_id');
         });
     }

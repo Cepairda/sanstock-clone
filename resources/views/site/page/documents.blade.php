@@ -10,18 +10,18 @@
                 <h2 class="col-12 text-center" style="padding-bottom: 70px">Документация</h2>
                 <div class="col-4 text-center">
                     <a href="#">
-                        <img src="" alt="">
+                        <img src="{{ asset('images/site/Catalog.png') }}" alt="">
                         <span>Общий каталог продукции</span>
                     </a>
                 </div>
                 <div class="col-4 text-center">
                     <a href="#">
-                        <img src="" alt="">
+                        <img src="{{ asset('images/site/Catalog.png') }}" alt="">
                         <span>Гарантийный талон</span>
                     </a></div>
                 <div class="col-4 text-center">
                     <a href="#">
-                        <img src="" alt="">
+                        <img src="{{ asset('images/site/Catalog.png') }}" alt="">
                         <span>Сертефикаты</span>
                     </a>
                 </div>

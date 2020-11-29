@@ -14,13 +14,13 @@
             <li><a href="#">Bedroom</a></li>
         </ul>--}}
         <h6 class="product-title">
-            <a href="#">{{ $product->name }}</a>
+            <a href="#">{{ $product->name ?? '' }}</a>
         </h6>
         <p class="product-price">
-            <span>{{ $product->price }}</span>
+            <span>{{ $product->price ?? ''}}</span>
         </p>
         <a class="button-gray-base button button-icon button-icon-left" href="#">
-            <span>Где купить</span>
+            <span>{{ __('Where buy')}}</span>
         </a>
     </div>
 </div>

@@ -11,7 +11,6 @@
 
 // template (buy)
 @import
-	'template/custom_styles',
 	'template/components',
 	'template/helpers',
 	'template/modules',
@@ -31,7 +30,8 @@
 	'components/header',
 	'components/footer',
 	'components/breadcrumbs',
-	'components/product';
+	'components/product',
+	'components/tabs';
 
 // page
 @import 'page/home';
