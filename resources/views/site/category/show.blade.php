@@ -1,5 +1,13 @@
 @extends('layouts.site')
 @section('body_class', 'category')
+
+@section('breadcrumbs')
+    @foreach($category->ancestors as $ancestor)
+        <li><a href="{{ route('site.resource', $ancestor->slug) }}">{{ $ancestor->name }}</a></li>
+    @endforeach
+    <li class="active">{{ $category->name }}</li>
+@endsection
+
 @section('content')
 
 {{-- dd($category) --}}
@@ -38,15 +46,15 @@
                     <section class="section-sm">
                         <!-- Classic Pagination-->
                         {!! $products->links() !!}
-{{--                        <nav>--}}
-{{--                            <ul class="pagination-classic">--}}
-{{--                                <li class="active"><span>1</span></li>--}}
-{{--                                <li><a href="#">2</a></li>--}}
-{{--                                <li><a href="#">3</a></li>--}}
-{{--                                <li><a href="#">4</a></li>--}}
-{{--                                <li><a class="icon linear-icon-arrow-right" href="#"></a></li>--}}
-{{--                            </ul>--}}
-{{--                        </nav>--}}
+                        {{--                        <nav>--}}
+                        {{--                            <ul class="pagination-classic">--}}
+                        {{--                                <li class="active"><span>1</span></li>--}}
+                        {{--                                <li><a href="#">2</a></li>--}}
+                        {{--                                <li><a href="#">3</a></li>--}}
+                        {{--                                <li><a href="#">4</a></li>--}}
+                        {{--                                <li><a class="icon linear-icon-arrow-right" href="#"></a></li>--}}
+                        {{--                            </ul>--}}
+                        {{--                        </nav>--}}
                     </section>
                 </div>
 

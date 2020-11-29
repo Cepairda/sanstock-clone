@@ -26,7 +26,7 @@ class ResourceController extends Controller
                 break;
             case 'category':
                 $data = [
-                    'category' => $category = $resource->type::joinLocalization()->whereId($resource->id)->first(),
+                    'category' => $category = $resource->type::joinLocalization()->withAncestors()->whereId($resource->id)->first(),
                     'products' => Product::joinLocalization()->whereExistsCategoryIds($category->id)->paginate()
                 ];
                 break;
