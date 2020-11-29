@@ -35,16 +35,22 @@ class ProductImport implements ToCollection, WithHeadingRow
 
             if (empty($slug)) {
                 $category = Category::find($categoryId);
-                $slugName = (Slug::create(Product::class, $row['name']));
+                $slugName = Slug::create(Product::class, $row['name']);
 
                 $slug = $category
                     ? $category->slug . '/' . $slugName
                     : $slugName;
+            } else {
+                $slug = Slug::create(Product::class, $row['slug']);
             }
 
             $requestData['slug'] = $slug;
             $requestData['details']['published'] = (int)$row['published'];
             $requestData['details']['category_id'] = isset($categories[$categoryId]) ? $categories[$categoryId] : null;
+            $requestData['details']['sku'] = $sku;
+            $requestData['details']['ref'] = $product->getDetails('ref');
+            $requestData['details']['brand_id'] = $product->getDetails('brand_id');
+            $requestData['details']['price'] = $product->getDetails('price');
 
             $product->setRequest($requestData);
 
