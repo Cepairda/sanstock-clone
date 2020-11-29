@@ -14536,8 +14536,7 @@ html .page .group-bottom > *, html .page .group-bottom > *:first-child {
   padding-top: 0;
 }
 
-.section-divided__main > *:last-child,
-.section-divided__aside > *:last-child {
+.section-divided__main > *:last-child {
   padding-bottom: 0;
 }
 
@@ -36099,7 +36098,7 @@ h6 + .rating-list {
 }
 /*checkbox*/
 .form-group.form-check.custom-checkbox {
-  padding-left: 40px;
+  padding-left: 0;
 }
 
 .custom-checkbox {
@@ -36134,18 +36133,21 @@ h6 + .rating-list {
 }
 
 .custom-control-label {
-  line-height: 1.9;
+  width: 100%;
+  padding-left: 40px;
+  line-height: 26px;
+  cursor: pointer;
 }
 .custom-control-label::before {
   top: 0;
-  left: -40px;
+  left: 0;
   height: 26px;
   width: 26px;
   background-color: transparent;
 }
 .custom-control-label::after {
   top: 0;
-  left: -40px;
+  left: 0;
   height: 26px;
   width: 26px;
 }
@@ -36222,4 +36224,8 @@ h6 + .rating-list {
   font-size: 30px;
   line-height: 1;
   color: #000;
+}
+
+.section-divided__aside [class*=section]:last-child {
+  border-bottom: 1px solid #ececee;
 }
