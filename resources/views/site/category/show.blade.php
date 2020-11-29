@@ -47,7 +47,7 @@
                     </section>
                 </div>
 
-                <div class="cell-md-3 section-divided__aside section__aside-left">
+                <form class="cell-md-3 section-divided__aside section__aside-left" action="">
                     <!-- Categories-->
                     <section class="section-sm">
                         <h5>Назначение</h5>
@@ -130,8 +130,7 @@
                         </div>
                         <a class="button button-gray-light-outline" href="#">Filter</a>
                     </section>
-                </div>
-
+                </form>
             </div>
         </div>
     </section>
