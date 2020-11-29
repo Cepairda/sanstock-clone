@@ -25,18 +25,18 @@
             <div class="col-sm-6 col-md-5 col-lg-3">
                 <h5>{{ __('Information') }}</h5>
                 <ul class="list-sm">
-                    <li><a href="#">{{ __('For user') }}</a></li>
-                    <li><a href="#">{{ __('Sitemap') }}</a></li>
-                    <li><a href="#">{{ __('Blog') }}</a></li>
-                    <li><a href="#">{{ __('Contacts') }}</a></li>
+                    <li><a href="/for-user">{{ __('For user') }}</a></li>
+                    <li><a href="/sitemap">{{ __('Sitemap') }}</a></li>
+                    <li><a href="/blog">{{ __('Blog') }}</a></li>
+                    <li><a href="/contacts">{{ __('Contacts') }}</a></li>
                 </ul>
             </div>
 
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <h5>{{ __('About us') }}</h5>
                 <ul class="list-sm">
-                    <li><a href="#">{{ __('About us') }}</a></li>
-                    <li><a href="#">{{ __('Documentation') }}</a></li>
+                    <li><a href="/about-us">{{ __('About us') }}</a></li>
+                    <li><a href="/documentation">{{ __('Documentation') }}</a></li>
                     <li><p style="font-size: 20px; color: #000">{{ __('Get in Touch') }}</ps></li>
                     <li><a style="font-size: 20px; color: #000" href="mail:0800212008">0800 212 008</a></li>
                 </ul>

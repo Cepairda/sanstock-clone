@@ -10,7 +10,9 @@
 
 @section('content')
 
-    @include('site.components.breadcrumbs')
+{{-- dd($category) --}}
+
+    @include('site.components.breadcrumbs', ['title' => $category->getData('name')])
 
     <section class="section-md bg-white">
         <div class="shell">
