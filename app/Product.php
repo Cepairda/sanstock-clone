@@ -21,6 +21,11 @@ class Product extends Resource
         return $this->attributes['name'] ?? $this->attributes['name'] = $this->getData('name');
     }
 
+    public function getSkuAttribute()
+    {
+        return $this->attributes['sku'] ?? $this->attributes['sku'] = $this->getDetails('sku');
+    }
+
     public function getDescriptionAttribute()
     {
         return $this->attributes['description'] ?? $this->attributes['description'] = $this->getData('description');
