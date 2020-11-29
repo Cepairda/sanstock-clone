@@ -22,6 +22,9 @@ class CategoryImport implements ToCollection, WithHeadingRow
     public function storeOrUpdate($data)
     {
         foreach ($data as $id => $row) {
+            if (empty($id))
+                break;
+
             $category = Category::where('virtual_id', $id)->first();
 
             if (!isset($category)) {

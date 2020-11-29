@@ -67,27 +67,67 @@
                         </nav>
                     </section>
                 </div>
+
                 <div class="cell-md-3 section-divided__aside section__aside-left">
                     <!-- Categories-->
                     <section class="section-sm">
-                        <h5>Categories</h5>
+                        <h5>Назначение</h5>
                         <ul class="small list">
-                            <li><a href="#">Kitchen</a></li>
-                            <li><a href="#">Office</a></li>
-                            <li><a href="#">Bedroom</a></li>
-                            <li><a href="#">Living Room</a></li>
+                            <li>
+                                <div class="form-group form-check custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="exampleCheck1">
+                                    <label class="custom-control-label" for="exampleCheck1">Для умывальника <span>(48)</span></label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group form-check custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="exampleCheck2">
+                                    <label class="custom-control-label" for="exampleCheck2">Для душа <span>(34)</span></label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group form-check custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="exampleCheck3">
+                                    <label class="custom-control-label" for="exampleCheck3">Для ванны <span>(24)</span></label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group form-check custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="exampleCheck4">
+                                    <label class="custom-control-label" for="exampleCheck4">Для биде <span>(15)</span></label>
+                                </div>
+                            </li>
                         </ul>
                     </section>
 
                     <!-- Filter color-->
                     <section class="section-sm">
-                        <h5>Filter By Color</h5>
+                        <h5>Цвет</h5>
                         <ul class="small list">
-                            <li><a href="#">Black (9)</a></li>
-                            <li><a href="#">Blue (3)</a></li>
-                            <li><a href="#">Brown (5)</a></li>
-                            <li><a href="#">Gray (7)</a></li>
-                            <li><a href="#">White (6)</a></li>
+                            <li>
+                                <div class="form-group form-check custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="exampleCheck5">
+                                    <label class="custom-control-label" for="exampleCheck5">Хромированный <span>(48)</span></label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group form-check custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="exampleCheck6">
+                                    <label class="custom-control-label" for="exampleCheck6">Белый <span>(34)</span></label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group form-check custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="exampleCheck7">
+                                    <label class="custom-control-label" for="exampleCheck7">Серый <span>(24)</span></label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group form-check custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="exampleCheck8">
+                                    <label class="custom-control-label" for="exampleCheck8">Антрацит <span>(15)</span></label>
+                                </div>
+                            </li>
                         </ul>
                     </section>
 
@@ -100,8 +140,8 @@
                             <div class="rd-range" data-min="10" data-max="500" data-start="[75, 244]" data-step="1" data-tooltip="true" data-min-diff="10" data-input=".rd-range-input-value-1" data-input-2=".rd-range-input-value-2"></div>
                         </div><a class="button button-gray-light-outline" href="#">Filter</a>
                     </section>
-
                 </div>
+                
             </div>
         </div>
     </section>
