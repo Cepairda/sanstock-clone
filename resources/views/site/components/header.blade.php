@@ -61,8 +61,7 @@
                                             <input class="form-input" id="rd-navbar-search-form-input" type="text"
                                                    name="s"
                                                    autocomplete="off">
-                                            <label class="form-label" for="rd-navbar-search-form-input">Enter
-                                                keyword</label>
+                                            <label class="form-label" for="rd-navbar-search-form-input">{{ __('Enter keyword') }}</label>
                                             <div class="rd-search-results-live" id="rd-search-results-live"></div>
                                         </div>
                                         <button class="rd-search__submit" type="submit"></button>
