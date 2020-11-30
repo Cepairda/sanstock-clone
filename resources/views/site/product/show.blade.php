@@ -78,8 +78,19 @@
                     <div class="product-single">
                         <h4>{{ $product->getData('name') ?? 'Lorem ipsum dolor sit amet.' }}</h4>
                         <br>
-                        <p class="product-code"><span>Код товара:</span> {{ $product->details['sku'] }}</p>
-                        <p class="product-text">Смесителя Lidz изготовлены из нержавеющей стали. Благодаря никелированной брашированной поверхности имеют оригинальный внешний вид. Выполнены в современном сдержанном стиле. Такие смесителф не только удобны и практичны, но и идеально дополнит интерьер.</p>
+                        <p class="product-code" style="font-style: italic;"><span>Код товара:</span> {{ $product->details['sku'] }}</p>
+
+                        <p class="product-text">
+                            @foreach ($product->characteristics as $characteristic)
+
+                                @if ( ( strlen($characteristic->value) > 300) && !empty($characteristic) )
+
+                                    {{ trim($characteristic->value) }}
+
+                                @endif
+
+                            @endforeach
+                        </p>
                         <p class="product-price"><span>{{ $product->getDetails('price') }}</span></p>
                         <div class="mt-5" style="display: flex; align-items: center;">
                             <button class="button button-primary button-icon" type="submit"><span>{{ __('Where buy') }}</span></button>
@@ -143,11 +154,11 @@
                     <h5>Additional Information</h5>
                         <table class="table-product-info">
                             <tbody>
-                            @foreach ($product->characteristics as $characteristic)
+                                @foreach ($product->characteristics as $characteristic)
                                     <tr>
-                                        <td>{{ $characteristic->name }}</td>
-                                        <td>{{ $characteristic->value }}</td>
-                                    </tr>
+                                            <td>{{ $characteristic->name }}</td>
+                                            <td>{{ $characteristic->value }}</td>
+                                        </tr>
                                 @endforeach
                             </tbody>
                         </table>
