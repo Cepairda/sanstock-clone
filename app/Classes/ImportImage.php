@@ -97,7 +97,7 @@ class ImportImage
         return  asset(self::$params['defaultImg']);
     }
 
-    public static function getImage($data)
+    private static function getImage($data)
     {
 
 
