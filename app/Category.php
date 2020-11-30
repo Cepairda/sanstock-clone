@@ -39,4 +39,11 @@ class Category extends Resource
             return $query->joinLocalization();
         }]);
     }
+
+    public function scopeWithDescendants($query)
+    {
+        return $query->with(['descendants' => function ($query) {
+            return $query->joinLocalization();
+        }]);
+    }
 }
