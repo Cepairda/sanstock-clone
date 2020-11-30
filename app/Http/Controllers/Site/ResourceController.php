@@ -21,7 +21,11 @@ class ResourceController extends Controller
         switch ($type) {
             case 'product':
                 $data = [
-                    'product' => $resource->type::joinLocalization()->withCharacteristics()->whereId($resource->id)->first()
+                    'product' => $resource->type::joinLocalization()
+                        ->withCharacteristics()
+                        ->whereId($resource->id)
+                        ->where('details->published', 1)
+                        ->first(),
                 ];
                 break;
             case 'category':
