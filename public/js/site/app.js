@@ -41477,6 +41477,8 @@ __webpack_require__(/*! ./script */ "./resources/js/site/script.js");
 
     if (!cookies) {
       document.cookie = 'favorites' + "=" + sku + "; path=/; expires=" + date.toUTCString();
+      favorite.classList.add('selected');
+      document.querySelector('.header-favorites-count').textContent = 1;
     } else {
       var _favorites = getCookie('favorites'),
           favoritesMass = _favorites.split(','),
@@ -41505,7 +41507,7 @@ __webpack_require__(/*! ./script */ "./resources/js/site/script.js");
 
   window.addEventListener('load', function () {
     var favorites = getCookie('favorites'),
-        favoritesMass = favorites.split(','),
+        favoritesMass = favorites === '' ? '' : favorites.split(','),
         leng = favoritesMass.length;
     favoriteLink.textContent = leng;
 

@@ -10,12 +10,15 @@
 
 @section('content')
 
-{{-- dd($category) --}}
+{{--  {{ dd($category->ancestors) }}--}}
 
     @include('site.components.breadcrumbs', ['title' => $category->getData('name')])
 
-    <section class="section-md bg-white">
-        <div class="shell">
+    @if( $category->ancestors->isNotEmpty() )
+
+        <section class="section-md bg-white">
+
+            <div class="shell">
             <div class="range range-60 range-md-reverse">
                 <div class="cell-md-9 section-divided__main section-divided__main-left">
                     <div class="section-sm">
@@ -132,9 +135,64 @@
                         </div>
                         <a class="button button-gray-light-outline" href="#">Filter</a>
                     </section>
+
                 </form>
+
             </div>
         </div>
-    </section>
+
+        </section>
+
+    @else
+
+        <section class="section-md bg-white">
+
+            <div class="shell">
+
+                <div class="range range-60 range-md-reverse">
+
+                    <div class="section-sm">
+
+                        <div class="range range-center range-70">
+
+                            @foreach($category->descendants as $category)
+
+                                <div class="cell-sm-6 cell-lg-4">
+
+                                    <div class="product product-grid">
+
+                                        <div class="product-img-wrap w-100" style="padding: 30px;">
+
+                                            <img alt="" src="http://lidz.loc.ua/storage/product/1000-21650.jpg">
+
+                                        </div>
+
+                                        <div class="product-caption">
+
+                                            <div class="product-title">
+
+                                                <a href="{{ route('site.resource', $category->slug) }}">SUBCATEGORY NAME HERE</a>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            @endforeach
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    @endif
 
 @endsection

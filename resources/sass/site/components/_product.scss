@@ -30,6 +30,7 @@
 	margin-top: 15px;
 }
 
+/* icon heart */
 .product-img-wrap {
 	position: relative;
 	max-width: 400px;
@@ -52,6 +53,10 @@
 
 .linear-icon-heart.selected {
 	color: #000;
+}
+
+.favorites .product-img-wrap .icon::before {
+	content: "\E92A";
 }
 
 .product-label-wrap {

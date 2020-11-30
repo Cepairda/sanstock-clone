@@ -29,6 +29,8 @@ $(document).ready(function () {
 
             if(!cookies){
                 document.cookie = 'favorites' + "=" + sku + "; path=/; expires=" + date.toUTCString();
+                favorite.classList.add('selected');
+                document.querySelector('.header-favorites-count').textContent = 1;
             } else {
                 let favorites = getCookie('favorites'),
                     favoritesMass = favorites.split(','),
@@ -54,7 +56,7 @@ $(document).ready(function () {
     }
     window.addEventListener('load', () => {
         let favorites = getCookie('favorites'),
-            favoritesMass = favorites.split(','),
+            favoritesMass = favorites === '' ? '' : favorites.split(','),
             leng = favoritesMass.length;
         favoriteLink.textContent = leng;
 
