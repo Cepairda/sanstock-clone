@@ -46,9 +46,9 @@ if (!function_exists('img')) {
     {
         $ikey = $data['size'] . '-' . $data['sku'];
 
-        if (Cache::has($ikey) ) {
-            return Cache::get($ikey);
-        }
+//        if (Cache::has($ikey) ) {
+//            return Cache::get($ikey);
+//        }
 
         if (!empty($data)) {
             $class = !empty($data['class']) ? ' class="' . implode(' ', $data['class']) . '"' : '';
@@ -76,7 +76,10 @@ if (!function_exists('xml_img')) {
 
     function xml_img($data)
     {
-        return \App\Http\Controllers\ImageController::get_xml_image($data);
+//        return \App\Http\Controllers\ImageController::get_xml_image($data);
+
+        return \App\Classes\ImportImage::getXmlImage($data);
+
     }
 
 }

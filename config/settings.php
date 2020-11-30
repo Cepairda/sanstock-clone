@@ -8,8 +8,8 @@ return [
             'size' => 1000,
         ],
         'preview' => [
-            'size' => ['1000', '458', '237'],
-            'format' => ['png', 'webp'],
+            'size' => ['1000', /*'458', '237'*/],
+            'format' => ['jpg', /*'png', 'webp'*/],
         ]
     ],
 ];
