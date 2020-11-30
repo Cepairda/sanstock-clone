@@ -11,29 +11,23 @@
 
 @section('content')
 
-    @include('site.components.breadcrumbs')
-
-    {{-- dd($product) --}}
+    @include('site.components.breadcrumbs', ['title' => $product->getData('name')])
 
     <section class="section-sm bg-white">
         <div class="container">
             <div class="row">
-
                 <div class="col-sm-6 col-md-5">
+
                     <!-- Slick Carousel-->
-
                     <div class="slick-slider carousel-parent" data-arrows="false" data-loop="false" data-dots="false" data-swipe="true" data-items="1" data-child="#child-carousel" data-for="#child-carousel" data-photo-swipe-gallery="gallery">
-
                         <div class="item">
                             <a class="img-thumbnail-variant-2"
                                href="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"
                                data-photo-swipe-item=""
                                data-size="2000x2000">
-
                                 <figure>
                                     <img src="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="535" height="535"/>
                                 </figure>
-
                                 <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div></a>
                         </div>
 
@@ -53,7 +47,6 @@
                         @endforeach
 
                     </div>
-
                     <div class="slick-slider" id="child-carousel" data-for=".carousel-parent" data-arrows="false" data-loop="false" data-dots="false" data-swipe="true" data-items="3" data-xs-items="4" data-sm-items="4" data-md-items="4" data-lg-items="5" data-slide-to-scroll="1">
 
                         <div class="item">
@@ -76,30 +69,25 @@
 
                 <div class="col-sm-6 col-md-7">
                     <div class="product-single">
-                        <h4>{{ $product->getData('name') ?? 'Lorem ipsum dolor sit amet.' }}</h4>
+                        <h4 class="product-single__title">{{ $product->getData('name') ?? 'Lorem ipsum dolor sit amet.' }}</h4>
+                        <p class="product-single__sku">Код товара:<span>{{ $product->details['sku'] }}</span></p>
+                        <p class="product-single__description">{{ $product->description }}</p>
 
-
-
-
-                        <br>
-                        <p class="product-code" style="font-style: italic;"><span>Код товара:</span> {{ $product->details['sku'] }}</p>
-                        <p class="product-text">{{ $product->description }}</p>
 {{--                        <p class="product-text">--}}
 {{--                            @foreach ($product->characteristics as $characteristic)--}}
-
 {{--                                @if ( ( strlen($characteristic->value) > 300) && !empty($characteristic) )--}}
-
 {{--                                    {{ trim($characteristic->value) }}--}}
-
 {{--                                @endif--}}
-
 {{--                            @endforeach--}}
 {{--                        </p>--}}
-
+                        
                         <p class="product-price"><span>{{ $product->getDetails('price') }}</span></p>
                         <div class="mt-5" style="display: flex; align-items: center;">
-                            <button class="button button-primary button-icon" type="submit"><span>{{ __('Where buy') }}</span></button>
-                            <span class="icon icon-md linear-icon-heart ml-4" data-toggle="tooltip" data-original-title="Add to Wishlist" style="display: block; height: 100%;font-size: 35px; line-height: 1.5; cursor: pointer"></span>
+                            <button class="button button-primary button-icon" type="submit">
+                                <span>{{ __('Where buy') }}</span></button>
+                            <span class="icon icon-md linear-icon-heart ml-4" data-toggle="tooltip"
+                                  data-original-title="Add to Wishlist"
+                                  style="display: block; height: 100%;font-size: 35px; line-height: 1.5; cursor: pointer"></span>
                         </div>
                         <ul class="product-meta mt-5">
                             <li>
@@ -150,13 +138,13 @@
                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Описание</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Характеристики</a>
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Технические характеристики</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Lorem ipsum dolor sit amet.</div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <h5>Additional Information</h5>
+                    <h5>Характеристики</h5>
                         <table class="table-product-info">
                             <tbody>
                                 @foreach ($product->characteristics as $characteristic)
@@ -165,14 +153,14 @@
                                             <td>{{ $characteristic->value }}</td>
                                         </tr>
                                 @endforeach
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
 
     <!-- Divider-->
     <div class="shell">

@@ -9,17 +9,20 @@
         </div>
     </div>
     <div class="product-caption">
-        {{-- <ul class="product-categories">
-            <li><a href="#">{{ $product->category ?? 'Ctegory' }}</a></li>
-        </ul> --}}
+        {{--<ul class="product-categories">
+            <li><a href="#">{{ $product->category }}</a></li>
+        </ul>--}}
         <div class="product-title">
-        {{-- {{ dd(route('site.resource', $product->slug)) }}--}}
             <a href="{{ route('site.resource', $product->slug) }}">{{ $product->name }}</a>
         </div>
         <p class="product-price">
-            <span>{{ $product->price}}</span>
+            @if($product->price)
+                <span>{{ $product->price}}</span>
+            @else
+                Нет цены
+            @endif
         </p>
-        <a class="button-gray-base button button-icon button-icon-left" href="#">
+        <a class="button-gray-base button button-icon button-icon-left" href="{{ route('site.resource', $product->slug) }}">
             <span>{{ __('Where buy')}}</span>
         </a>
     </div>

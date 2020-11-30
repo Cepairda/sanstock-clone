@@ -2,7 +2,7 @@
     <div class="shell">
         <div class="breadcrumbs-custom__inner">
 
-            <p class="breadcrumbs-custom__title">{{ 'Нет заголовка' ?? $someVariable }}</p>
+            <p class="breadcrumbs-custom__title">{{ $title ?? '' }}</p>
 
             <ul class="breadcrumbs-custom__path">
                 <li><a href="/">{{ __('Home') }}</a></li>

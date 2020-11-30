@@ -25,7 +25,7 @@
                                 <!--Select 2-->
                                 <select class="form-input select-filter" data-placeholder="Default sorting"
                                         data-minimum-results-for-search="Infinity">
-                                    <option>Default sorting</option>
+                                    <option>По названию</option>
                                     <option value="2">Sort by popularity</option>
                                     <option value="3">Sort by average rating</option>
                                     <option value="4">Sort by newness</option>
@@ -46,15 +46,6 @@
                     <section class="section-sm">
                         <!-- Classic Pagination-->
                         {!! $products->links() !!}
-                        {{--                        <nav>--}}
-                        {{--                            <ul class="pagination-classic">--}}
-                        {{--                                <li class="active"><span>1</span></li>--}}
-                        {{--                                <li><a href="#">2</a></li>--}}
-                        {{--                                <li><a href="#">3</a></li>--}}
-                        {{--                                <li><a href="#">4</a></li>--}}
-                        {{--                                <li><a class="icon linear-icon-arrow-right" href="#"></a></li>--}}
-                        {{--                            </ul>--}}
-                        {{--                        </nav>--}}
                     </section>
                 </div>
 
