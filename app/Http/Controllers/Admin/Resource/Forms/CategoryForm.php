@@ -50,17 +50,14 @@ class CategoryForm extends Form
             ])
             ->add('details[sort]', 'text', [
                 'label' => 'Сортировка',
-                'rules' => ['required'],
                 'value' => $resource->getDetails('sort')
             ])
             ->add('data[meta_title]', 'text', [
                 'label' => 'Meta Title',
-                'rules' => ['required'],
                 'value' => $resource->getData('meta_title')
             ])
             ->add('data[meta_description]', 'text', [
                 'label' => 'Meta Description',
-                'rules' => ['required'],
                 'value' => $resource->getData('meta_description')
             ])
             ->add('data[h1]', 'text', [
@@ -75,12 +72,10 @@ class CategoryForm extends Form
             ])
             ->add('data[description]', 'textarea', [
                 'label' => 'Description',
-                'rules' => [],
                 'value' => $resource->getData('description')
             ])
             ->add('data[text]', 'textarea', [
                 'label' => 'Text',
-                'rules' => [],
                 'value' => $resource->getData('text')
             ])
             ->add('submit', 'submit', [
