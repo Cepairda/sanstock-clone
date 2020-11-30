@@ -22,7 +22,8 @@
                     <div class="slick-slider carousel-parent" data-arrows="false" data-loop="false" data-dots="false" data-swipe="true" data-items="1" data-child="#child-carousel" data-for="#child-carousel" data-photo-swipe-gallery="gallery">
                         <div class="item">
                             <a class="img-thumbnail-variant-2"
-                               href="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"
+{{--                               href="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"--}}
+                               href="{{ xml_img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name]) }}"
                                data-photo-swipe-item=""
                                data-size="2000x2000">
                                 <figure>
@@ -80,7 +81,7 @@
 {{--                                @endif--}}
 {{--                            @endforeach--}}
 {{--                        </p>--}}
-                        
+
                         <p class="product-price"><span>{{ $product->getDetails('price') }}</span></p>
                         <div class="mt-5" style="display: flex; align-items: center;">
                             <button class="button button-primary button-icon" type="submit">

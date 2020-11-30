@@ -16,7 +16,10 @@ class ImportImage
     private const FORMAT_IMG_ORIGINAL = ['jpg', 'png', 'webp'];
     private static $formatImg;
 
-    private static $params = [];
+    public static $params = [
+        'defaultImg' => '/image/site/default.jpg'
+    ];
+
     private static $init = false;
 
     private static function init()
@@ -65,13 +68,13 @@ class ImportImage
         }
     }
 
-    private static function getXmlImage($data) {
+    public static function getXmlImage($data) {
 
         $data['format'] = 'webp';
 
         $s = Storage::disk('public');
 
-        $filePath = '/' . $data['type'] . '/' . $data['size'] . '-' . $data['name'] . '.' . $data['format'];
+        $filePath = '/' . $data['type'] . '/' . $data['size'] . '-' . $data['sku'] . '.' . $data['format'];
 
         if ($data['type'] == 'product') {
             if ($s->exists($filePath)) {
@@ -94,13 +97,16 @@ class ImportImage
         return  asset(self::$params['defaultImg']);
     }
 
-    private static function getImage($data)
+    public static function getImage($data)
     {
+
+
         if (session()->exists('images_format')) {
             $data['format'] = session('images_format');
         } else {
             $agent = new Agent();
-            $imagesFormat = ($agent->is('iPhone') || $agent->is('OS X')) ? self::$formatImg['png'] : self::$formatImg['webp'];
+//            $imagesFormat = ($agent->is('iPhone') || $agent->is('OS X')) ? self::$formatImg['png'] : self::$formatImg['webp'];
+            $imagesFormat = ($agent->is('iPhone') || $agent->is('OS X')) ? self::$formatImg['jpg'] : self::$formatImg['jpg'];
             $data['format'] = $imagesFormat;
 
             session(['images_format' => $imagesFormat]);
@@ -115,7 +121,7 @@ class ImportImage
                 return asset('/storage' . $filePath);
             } else {
                 //self::create($data);
-                return asset(self::$params['defaultImg']);
+                return asset('/images/site/default.jpg');
             }
         }
 
@@ -125,12 +131,11 @@ class ImportImage
             } else {
                 $data['original'] = $data['name'] . '.' .  self::$formatImg['jpg'];
                 //self::create($data);
-
-                return asset(self::$params['defaultImg']);
+                return asset('/images/site/default.jpg');
             }
         }
 
-        return  asset(self::$params['defaultImg']);
+        return  asset('/images/site/default.jpg');
     }
 
     private static function downloadMainImage($product)

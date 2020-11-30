@@ -23303,7 +23303,7 @@ html[class*=ie] .dtp-hand, html[class*=ie] .dtp-hour-hand {
 @font-face {
   font-family: "Inter";
   src: url(../../fonts/site/Inter/Inter-ExtraLight.ttf) format("truetype");
-  font-weight: 300;
+  font-weight: 200;
   font-style: normal;
 }
 @font-face {
@@ -23316,6 +23316,12 @@ html[class*=ie] .dtp-hand, html[class*=ie] .dtp-hour-hand {
   font-family: "Inter";
   src: url(../../fonts/site/Inter/Inter-Regular.ttf) format("truetype");
   font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Inter";
+  src: url(../../fonts/site/Inter/Inter-Bold.ttf) format("truetype");
+  font-weight: 700;
   font-style: normal;
 }
 /*
@@ -35167,9 +35173,34 @@ span.button {
   border-color: #000;
 }
 
-.header-topline__wrap {
+.header-topline {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: 12px;
+}
+.header-topline__languages {
   display: flex;
   justify-content: flex-end;
+}
+.header-topline__languages a {
+  font-weight: 700;
+}
+.header-topline__languages span {
+  font-weight: 400;
+}
+.header-topline__languages .lang-item {
+  text-transform: uppercase;
+}
+.header-topline__languages .lang-item:first-child {
+  position: relative;
+  margin-right: 12px;
+}
+.header-topline__languages .lang-item:first-child::after {
+  content: "/";
+  position: absolute;
+  top: 0;
+  right: -8px;
+  font-weight: 400;
 }
 
 .pre-footer-corporate,
