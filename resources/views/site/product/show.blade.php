@@ -12,48 +12,90 @@
 @section('content')
 
     @include('site.components.breadcrumbs')
-  
+
     {{-- dd($product) --}}
 
     <section class="section-sm bg-white">
         <div class="container">
             <div class="row">
+
                 <div class="col-sm-6 col-md-5">
                     <!-- Slick Carousel-->
+
                     <div class="slick-slider carousel-parent" data-arrows="false" data-loop="false" data-dots="false" data-swipe="true" data-items="1" data-child="#child-carousel" data-for="#child-carousel" data-photo-swipe-gallery="gallery">
+
                         <div class="item">
                             <a class="img-thumbnail-variant-2"
-                               href="{{ asset('images/site/21689.jpg') }}"
+                               href="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"
                                data-photo-swipe-item=""
                                data-size="2000x2000">
+
                                 <figure>
-                                    <img src="{{ asset('images/site/21689.jpg') }}" alt="" width="535" height="535"/>
+                                    <img src="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="535" height="535"/>
                                 </figure>
+
                                 <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div></a>
                         </div>
-                        <div class="item">
-                            <a class="img-thumbnail-variant-2"
-                               href="{{ asset('images/site/21689.jpg') }}"
-                               data-photo-swipe-item=""
-                               data-size="2000x2000">
-                                <figure>
-                                    <img src="{{ asset('images/site/21689_1.jpg') }}" alt="" width="535" height="535"/>
-                                </figure>
-                                <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div></a>
-                        </div>
+
+                        @foreach(temp_additional($product->sku) as $uri)
+
+                            <div class="item">
+                                <a class="img-thumbnail-variant-2"
+                                   href="{{ $uri }}"
+                                   data-photo-swipe-item=""
+                                   data-size="2000x2000">
+                                    <figure>
+                                        <img src="{{ $uri }}" alt="" width="535" height="535"/>
+                                    </figure>
+                                    <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div></a>
+                            </div>
+
+                        @endforeach
+
                     </div>
+
                     <div class="slick-slider" id="child-carousel" data-for=".carousel-parent" data-arrows="false" data-loop="false" data-dots="false" data-swipe="true" data-items="3" data-xs-items="4" data-sm-items="4" data-md-items="4" data-lg-items="5" data-slide-to-scroll="1">
-                        <div class="item"><img src="{{ asset('images/site/21689.jpg') }}" alt="" width="89" height="89"/>
+
+                        <div class="item">
+                            <img src="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="89" height="89"/>
                         </div>
-                        <div class="item"><img src="{{ asset('images/site/21689_1.jpg') }}" alt="" width="89" height="89"/>
-                        </div>
+
+                        @foreach(temp_additional($product->sku) as $uri)
+
+                            <div class="item">
+
+                                <img src="{{ $uri }}" alt="" width="89" height="89"/>
+
+                            </div>
+
+                        @endforeach
+
                     </div>
+
                 </div>
+
                 <div class="col-sm-6 col-md-7">
                     <div class="product-single">
                         <h4>{{ $product->getData('name') ?? 'Lorem ipsum dolor sit amet.' }}</h4>
-                        <p class="product-code"><span>Код товара:</span>9615</p>   
+
+
+
+
+                        <br>
+                        <p class="product-code" style="font-style: italic;"><span>Код товара:</span> {{ $product->details['sku'] }}</p>
                         <p class="product-text">{{ $product->description }}</p>
+{{--                        <p class="product-text">--}}
+{{--                            @foreach ($product->characteristics as $characteristic)--}}
+
+{{--                                @if ( ( strlen($characteristic->value) > 300) && !empty($characteristic) )--}}
+
+{{--                                    {{ trim($characteristic->value) }}--}}
+
+{{--                                @endif--}}
+
+{{--                            @endforeach--}}
+{{--                        </p>--}}
+
                         <p class="product-price"><span>{{ $product->getDetails('price') }}</span></p>
                         <div class="mt-5" style="display: flex; align-items: center;">
                             <button class="button button-primary button-icon" type="submit"><span>{{ __('Where buy') }}</span></button>
@@ -63,7 +105,7 @@
                             <li>
                                 <dl class="list-terms-minimal">
                                     <dt>SKU</dt>
-                                    <dd>256</dd>
+                                    <dd>{{ $product->details['sku'] }}</dd>
                                 </dl>
                             </li>
                             <li>
@@ -117,11 +159,11 @@
                     <h5>Additional Information</h5>
                         <table class="table-product-info">
                             <tbody>
-                            @foreach ($product->characteristics as $characteristic)
+                                @foreach ($product->characteristics as $characteristic)
                                     <tr>
-                                        <td>{{ $characteristic->name }}</td>
-                                        <td>{{ $characteristic->value }}</td>
-                                    </tr>
+                                            <td>{{ $characteristic->name }}</td>
+                                            <td>{{ $characteristic->value }}</td>
+                                        </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -131,7 +173,7 @@
         </div>
     </section>
 
-    
+
     <!-- Divider-->
     <div class="shell">
         <div class="divider"></div>
