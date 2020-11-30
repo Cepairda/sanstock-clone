@@ -25,18 +25,18 @@
             <div class="col-sm-6 col-md-5 col-lg-3">
                 <h5><?php echo e(__('Information')); ?></h5>
                 <ul class="list-sm">
-                    <li><a href="#"><?php echo e(__('For user')); ?></a></li>
-                    <li><a href="#"><?php echo e(__('Sitemap')); ?></a></li>
-                    <li><a href="#"><?php echo e(__('Blog')); ?></a></li>
-                    <li><a href="#"><?php echo e(__('Contacts')); ?></a></li>
+                    <li><a href="/for-user"><?php echo e(__('For user')); ?></a></li>
+                    <li><a href="/sitemap"><?php echo e(__('Sitemap')); ?></a></li>
+                    <li><a href="/blog"><?php echo e(__('Blog')); ?></a></li>
+                    <li><a href="/contacts"><?php echo e(__('Contacts')); ?></a></li>
                 </ul>
             </div>
 
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <h5><?php echo e(__('About us')); ?></h5>
                 <ul class="list-sm">
-                    <li><a href="#"><?php echo e(__('About us')); ?></a></li>
-                    <li><a href="#"><?php echo e(__('Documentation')); ?></a></li>
+                    <li><a href="/about-us"><?php echo e(__('About us')); ?></a></li>
+                    <li><a href="/documentation"><?php echo e(__('Documentation')); ?></a></li>
                     <li><p style="font-size: 20px; color: #000"><?php echo e(__('Get in Touch')); ?></ps></li>
                     <li><a style="font-size: 20px; color: #000" href="mail:0800212008">0800 212 008</a></li>
                 </ul>

@@ -28,7 +28,9 @@ class Product extends Resource
 
     public function getDescriptionAttribute()
     {
-        return $this->attributes['description'] ?? $this->attributes['description'] = $this->getData('description');
+        return $this->attributes['description'] ?? $this->attributes['description'] =
+                $this->getData('description') ??
+                $this->characteristics->where('name', (LaravelLocalization::getCurrentLocale() == 'ru' ? 'Описание' : 'Опис'))->first()->value;
     }
 
     public function getPriceAttribute()

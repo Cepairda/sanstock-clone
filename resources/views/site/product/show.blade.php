@@ -53,7 +53,7 @@
                     <div class="product-single">
                         <h4>{{ $product->getData('name') ?? 'Lorem ipsum dolor sit amet.' }}</h4>
                         <p class="product-code"><span>Код товара:</span>9615</p>   
-                        <p class="product-text">Смесителя Lidz изготовлены из нержавеющей стали. Благодаря никелированной брашированной поверхности имеют оригинальный внешний вид. Выполнены в современном сдержанном стиле. Такие смесителф не только удобны и практичны, но и идеально дополнит интерьер.</p>
+                        <p class="product-text">{{ $product->description }}</p>
                         <p class="product-price"><span>{{ $product->getDetails('price') }}</span></p>
                         <div class="mt-5" style="display: flex; align-items: center;">
                             <button class="button button-primary button-icon" type="submit"><span>{{ __('Where buy') }}</span></button>
