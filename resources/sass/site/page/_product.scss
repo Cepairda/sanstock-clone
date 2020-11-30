@@ -1,7 +1,35 @@
-.product-text {
-	font-size: 14px;
-	line-height: 24px;
+#child-carousel .slick-slide {
+	border: 1px solid #dee2e6;
 }
+
+.product-single {
+	&__title {
+		font-size: 38px;
+		font-weight: 400;
+		line-height: 1.2;
+		letter-spacing: 0;
+	}
+	&__sku {
+		padding-top: 25px;
+		font-size: 24px;
+		font-weight: 300;
+		//color: #333;
+		span {
+			margin-left: 16px;
+			font-weight: 400;
+			color: #000;
+		}
+	}
+	&__description {
+		padding-top: 50px;
+		margin-top: 0;
+		font-size: 20px;
+		font-weight: 300;
+		line-height: 1.6;
+		color: #000;
+	}
+}
+
 
 .product-meta {
 	font-size: 12px;

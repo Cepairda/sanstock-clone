@@ -5,8 +5,8 @@
         <div class="row">
 
             <div class="col-sm-6 col-md-10 col-lg-3">
-                <img src="{{ asset('images/site/logo-150x150.jpg') }}" alt="" width="125">
-                <p style="font-size: 14px">{!! __('footer desc') !!}</p>
+                <img src="{{ asset('images/site/logo.svg') }}" alt="" width="125">
+                <p style="padding-top: 35px;font-size: 14px">{!! __('footer desc') !!}</p>
             </div>
 
             <div class="col-sm-6 col-md-3 col-lg-3">

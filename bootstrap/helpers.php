@@ -80,3 +80,85 @@ if (!function_exists('xml_img')) {
     }
 
 }
+
+if (!function_exists('temp_img')) {
+    /**
+     * Format text.
+     *
+     * @param  string  $text
+     * @return string
+     */
+
+    function temp_img($url)
+    {
+
+        if ( !@getimagesize($url) ) {
+
+            return '<img style="height: 100%; width: 100%; opacity: 0.1;" src="/images/site/default.jpg" />';
+
+        }
+
+        return '<img src="' . $url . '" />';
+
+    }
+}
+
+if (!function_exists('temp_xml_img')) {
+    /**
+     * Format text.
+     *
+     * @param  string  $text
+     * @return string
+     */
+
+    function temp_xml_img($url)
+    {
+
+        if ( !@getimagesize($url) ) {
+
+            return '/images/site/default.jpg';
+
+        }
+
+        return $url;
+
+    }
+}
+
+if (!function_exists('temp_additional')) {
+    /**
+     * Format text.
+     *
+     * @param  string  $text
+     * @return string
+     */
+
+    function temp_additional($sku)
+    {
+
+        $data = [];
+
+        $s = Storage::disk('public');
+
+        $additional_path = 'storage/product/' . $sku . '/';
+
+        if (file_exists($additional_path)) {
+
+            foreach (['-1', '-2', '-3', '_1', '_2', '_3',] as $sufix) {
+
+                $file_path = 'product/' . $sku . '/' . $sku . $sufix . '.jpg';
+
+                if ($s->exists($file_path)) {
+
+                    $data[] = asset('/storage/' . $file_path);
+
+                }
+
+            }
+
+        }
+
+        return $data;
+
+    }
+}

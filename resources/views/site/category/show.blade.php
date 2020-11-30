@@ -1,5 +1,13 @@
 @extends('layouts.site')
 @section('body_class', 'category')
+
+@section('breadcrumbs')
+    @foreach($category->ancestors as $ancestor)
+        <li><a href="{{ route('site.resource', $ancestor->slug) }}">{{ $ancestor->name }}</a></li>
+    @endforeach
+    <li class="active">{{ $category->name }}</li>
+@endsection
+
 @section('content')
 
 {{-- dd($category) --}}

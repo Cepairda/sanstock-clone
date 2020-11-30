@@ -28,7 +28,9 @@ class Product extends Resource
 
     public function getDescriptionAttribute()
     {
-        return $this->attributes['description'] ?? $this->attributes['description'] = $this->getData('description');
+        return $this->attributes['description'] ?? $this->attributes['description'] =
+                $this->getData('description') ??
+                $this->characteristics->where('name', (LaravelLocalization::getCurrentLocale() == 'ru' ? 'Описание' : 'Опис'))->first()->value;
     }
 
     public function getPriceAttribute()
@@ -80,5 +82,11 @@ class Product extends Resource
         return $this->belongsToMany(CharacteristicValue::class, 'resource_resource',
             'resource_id', 'relation_id')
             ->where('relation_type', CharacteristicValue::class);
+    }
+
+    public function getCategoryAttribute()
+    {
+        return $this->attributes['category'] ?? $this->attributes['category'] =
+                Category::whereId($this->getDetails('category_id'))->joinLocalization()->withAncestors()->first();
     }
 }
