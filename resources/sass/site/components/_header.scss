@@ -1,6 +1,26 @@
 .header-topline {
-	&__wrap {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	font-size: 12px;
+	&__languages {
 		display: flex;
 		justify-content: flex-end;
+		a {font-weight: 700}
+		span {font-weight: 400}
+		.lang-item {
+			text-transform: uppercase;
+			&:first-child {
+				position: relative;
+				margin-right: 12px;
+
+				&::after {
+					content: '/';
+					position: absolute;
+					top: 0;
+					right: -8px;
+					font-weight: 400;
+				}
+			}
+		}
 	}
 }
