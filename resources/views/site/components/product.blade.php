@@ -1,11 +1,10 @@
 <div class="product product-grid">
     <div class="product-img-wrap w-100" style="padding: 15px;">
-
-        {!! temp_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') !!}
-
+        <a href="{{ route('site.resource', $product->slug) }}">
+            {!! temp_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') !!}
+        </a>
         <div class="product-icon-wrap">
-            <span class="icon icon-md linear-icon-heart" data-toggle="tooltip"
-                  data-original-title="Add to Wishlist"></span>
+            <span class="icon icon-md linear-icon-heart" data-add="favorite" data-sku="{{$product->getDetails('sku')}}"></span>
         </div>
     </div>
     <div class="product-caption">

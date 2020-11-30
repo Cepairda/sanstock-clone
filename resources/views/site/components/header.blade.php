@@ -58,9 +58,10 @@
                                         <button class="rd-navbar-search__toggle rd-navbar-fixed--hidden"
                                                 data-rd-navbar-toggle=".rd-navbar-search-wrap"></button>
                                     </li>
-                                    <li class="rd-navbar-nav-wrap__shop"><a
-                                                class="icon icon-md linear-icon-heart link-primary"
-                                                href="#"></a></li>
+                                    <li class="rd-navbar-nav-wrap__shop">
+                                        <a class="icon icon-md linear-icon-heart link-primary" href="#"></a>
+                                        <span class="header-favorites-count">0</span>
+                                    </li>
                                 </ul>
                                 <!-- RD Search-->
                                 <div class="rd-navbar-search rd-navbar-search_toggled rd-navbar-search_not-collapsable">

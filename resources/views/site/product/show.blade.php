@@ -85,8 +85,7 @@
                         <div class="mt-5" style="display: flex; align-items: center;">
                             <button class="button button-primary button-icon" type="submit">
                                 <span>{{ __('Where buy') }}</span></button>
-                            <span class="icon icon-md linear-icon-heart ml-4" data-toggle="tooltip"
-                                  data-original-title="Add to Wishlist"
+                            <span class="icon icon-md linear-icon-heart ml-4" data-add="favorite" data-sku="{{$product->getDetails('sku')}}"
                                   style="display: block; height: 100%;font-size: 35px; line-height: 1.5; cursor: pointer"></span>
                         </div>
                         <ul class="product-meta mt-5">

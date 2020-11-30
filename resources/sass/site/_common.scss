@@ -550,3 +550,14 @@ code,
 		}
 	}
 }
+
+//bootstrap tabe
+.nav-link {
+	border: none !important;
+	background-color: transparent !important;
+	color: #888 !important;
+	&.active {
+		font-weight: 400 !important;
+		color: #000 !important;
+	}
+}

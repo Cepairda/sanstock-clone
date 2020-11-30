@@ -41459,7 +41459,63 @@ __webpack_require__(/*! ./script */ "./resources/js/site/script.js");
     navElement: 'div',
     navText: ['<span class=" linear-icon-chevron-left"></span>', '<span class="linear-icon-chevron-right"></span>']
   });
-});
+}); //favorites
+
+(function () {
+  function getCookie(name) {
+    var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
+
+  var favoriteLink = document.querySelector('.header-favorites-count'),
+      favorites = document.querySelectorAll('[data-add="favorite"]'),
+      addRemoveFavorite = function addRemoveFavorite(favorite) {
+    var date = new Date(),
+        sku = favorite.dataset.sku,
+        cookies = getCookie('favorites');
+    date.setDate(date.getDate() + 365);
+
+    if (!cookies) {
+      document.cookie = 'favorites' + "=" + sku + "; path=/; expires=" + date.toUTCString();
+    } else {
+      var _favorites = getCookie('favorites'),
+          favoritesMass = _favorites.split(','),
+          indexSku = favoritesMass.indexOf(sku);
+
+      if (indexSku < 0) {
+        favoritesMass.push(sku);
+        favorite.classList.add('selected');
+      } else {
+        favoritesMass.splice(indexSku, 1);
+        favorite.classList.remove('selected');
+      }
+
+      document.querySelector('.header-favorites-count').textContent = favoritesMass.length;
+      document.cookie = 'favorites' + "=" + favoritesMass.join(',') + "; path=/; expires=" + date.toUTCString();
+    }
+  };
+
+  if (favorites.length) {
+    document.addEventListener('click', function (e) {
+      var t = e.target,
+          favorite = t.closest('[data-add="favorite"]');
+      favorite && addRemoveFavorite(favorite);
+    }, false);
+  }
+
+  window.addEventListener('load', function () {
+    var favorites = getCookie('favorites'),
+        favoritesMass = favorites.split(','),
+        leng = favoritesMass.length;
+    favoriteLink.textContent = leng;
+
+    if (leng) {
+      favoritesMass.forEach(function (sku) {
+        document.querySelector("[data-add=\"favorite\"][data-sku=\"".concat(sku, "\"]")) && document.querySelector("[data-add=\"favorite\"][data-sku=\"".concat(sku, "\"]")).classList.add('selected');
+      });
+    }
+  }, false);
+})();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),

@@ -21,4 +21,4 @@ require('./plugins/rd-navbar');
 window.owlCarousel = require('owl.carousel');
 
 //custom script
-require('./script')
+require('./script');

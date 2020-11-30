@@ -42,4 +42,16 @@ class ResourceController extends Controller
 
         return view('site.' . $type . '.show', $data);
     }
+
+  public function favorites()
+  {
+    $cookie = !empty($_COOKIE['favorites']) ? $_COOKIE['favorites'] : null;
+
+    $data['products'] = collect();
+        if (isset($cookie)) {
+          $favorites = explode(',', $cookie);
+          $data['products'] = Product::joinLocalization()->whereIn('details->sku', $favorites)->paginate(12);
+        }
+    return view('site.product.favorites', $data);
+  }
 }

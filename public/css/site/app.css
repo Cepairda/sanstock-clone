@@ -34970,6 +34970,16 @@ code,
   margin-left: 7px;
 }
 
+.nav-link {
+  border: none !important;
+  background-color: transparent !important;
+  color: #888 !important;
+}
+.nav-link.active {
+  font-weight: 400 !important;
+  color: #000 !important;
+}
+
 .button {
   position: relative;
   display: inline-block;
@@ -35201,6 +35211,23 @@ span.button {
   top: 0;
   right: -8px;
   font-weight: 400;
+}
+
+.header-favorites-count {
+  position: absolute;
+  top: -10px;
+  right: -12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  min-width: 18px;
+  height: 16px;
+  border-radius: 50px;
+  font-size: 12px;
+  line-height: 1;
+  background-color: #000;
+  color: #fff;
 }
 
 .pre-footer-corporate,
@@ -35478,6 +35505,9 @@ span.button {
   top: 5px;
   right: 5px;
 }
+.product-grid .product-icon-wrap .icon.selected {
+  color: #000;
+}
 
 .desktop .product-grid .product-icon-wrap > *,
 .desktop .product-grid .product-label-wrap {
@@ -35502,6 +35532,10 @@ span.button {
 }
 .product-img-wrap .icon:hover {
   color: #888;
+}
+
+.linear-icon-heart.selected {
+  color: #000;
 }
 
 .product-label-wrap {
