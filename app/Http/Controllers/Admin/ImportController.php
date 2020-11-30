@@ -92,6 +92,7 @@ class ImportController extends Controller
                         'sku' => $productData['old_base_code'],
                         'brand_id' => $brand->id ?? null,
                         'category_id' => null,
+                        'published' => 0,
                     ],
                     'data' => ['name' => $name]
                 ]);
