@@ -35188,6 +35188,9 @@ span.button {
 .header-topline__languages span {
   font-weight: 400;
 }
+.header-topline__languages .lang-item {
+  text-transform: uppercase;
+}
 .header-topline__languages .lang-item:first-child {
   position: relative;
   margin-right: 12px;
