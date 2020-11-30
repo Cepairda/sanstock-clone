@@ -119,14 +119,18 @@
 }
 
 .product-price {
-	font-size: 24px;
-	color: #000;
-	font-weight: 300;
+	font-size: 18px;
+	font-weight: 400;
 
+	span {
+		font-size: 32px;
+		color: #000;
 
-	span:before {
-		content: "$";
-		display: inline-block;
+		&::after {
+			content: "₴";
+			display: inline-block;
+			margin-left: 4px;
+		}
 	}
 
 	&.sale-price span {
