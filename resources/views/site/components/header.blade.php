@@ -3,8 +3,17 @@
     <div class="header-topline">
         <div class="container">
             <div class="row">
-                <div class="col-12 header-topline__wrap" style="padding-top: 15px; padding-bottom: 15px;font-size: 12px">
-                    <div><a href="#">UA</a> / <span>RU</span></div>
+                <div class="col-12 header-topline__languages">
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        @if(LaravelLocalization::getCurrentLocale() == $localeCode)
+                            <span class="lang-item">{{ strtoupper($localeCode) }}</span>
+                        @else
+                            <a class="lang-item"
+                               href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, []) }}">
+                                {{ strtoupper($localeCode) }}
+                            </a>
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </div>
