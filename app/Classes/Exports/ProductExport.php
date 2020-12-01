@@ -2,6 +2,7 @@
 
 namespace App\Classes\Exports;
 
+use App\Category;
 use App\Product;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -18,12 +19,12 @@ class ProductExport implements FromCollection, WithHeadings, WithTitle, WithMapp
     public function map($product): array
     {
         return [
-            $product->details['sku'],
-            $product->details['category_id'],
-            $product->details['categories']->keyBy('id')->keys()->implode('|'),
-            $product->details['group_id'],
-            $product->details['published'],
-            $product->data['name']
+            $product->getDetails('sku'),
+            Category::find($product->getDetails('category_id'))->virtual_id ?? null,
+            $product->categories->keyBy('virtual_id')->keys()->implode('|'),
+            $product->getDetails('published'),
+            $product->getData('name'),
+            $product->slug,
         ];
     }
 
@@ -33,9 +34,9 @@ class ProductExport implements FromCollection, WithHeadings, WithTitle, WithMapp
             'sku',
             'category_id',
             'category_ids',
-            'group_id',
             'published',
-            'name'
+            'name',
+            'slug',
         ];
     }
 

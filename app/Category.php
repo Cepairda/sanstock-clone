@@ -8,6 +8,16 @@ class Category extends Resource
 {
     use NodeTrait;
 
+    public function getNameAttribute()
+    {
+        return $this->attributes['name'] ?? $this->attributes['name'] = $this->getData('name');
+    }
+
+    public function getDescriptionAttribute()
+    {
+        return $this->attributes['description'] ?? $this->attributes['description'] = $this->getData('description');
+    }
+
     public function scopeWithCharacteristicGroup($query, $withCharacteristicGroupCharacteristic = true)
     {
         return $query->with(['characteristic_group' => function ($query) use ($withCharacteristicGroupCharacteristic) {
@@ -23,10 +33,17 @@ class Category extends Resource
             ->where('resource_type', CharacteristicGroup::class);
     }
 
-    public function products()
+    public function scopeWithAncestors($query)
     {
-        return $this->belongsToMany(Product::class, 'resource_resource',
-            'relation_id', 'resource_id')
-            ->where('resource_type', Product::class);
+        return $query->with(['ancestors' => function ($query) {
+            return $query->joinLocalization();
+        }]);
+    }
+
+    public function scopeWithDescendants($query)
+    {
+        return $query->with(['descendants' => function ($query) {
+            return $query->joinLocalization();
+        }]);
     }
 }

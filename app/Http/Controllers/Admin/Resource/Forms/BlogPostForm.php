@@ -24,7 +24,7 @@ class BlogPostForm extends Form
             ->add('data[img]', 'one-image', [
                 'label' => 'Image',
                 'rules' => [],
-                'value' => $resource->data['img']
+                'value' => $resource->getData('img')
             ])
             ->add('details[published]', 'select', [
                 'label' => 'Опубликовано',
@@ -55,7 +55,6 @@ class BlogPostForm extends Form
                 'rules' => [],
                 'value' => $resource->getData('meta_title')
             ])
-
             ->add('data[meta_description]', 'textarea', [
                 'label' => 'Meta Description',
                 'rules' => [],
@@ -76,7 +75,6 @@ class BlogPostForm extends Form
                 'rules' => [],
                 'value' => $resource->getData('text')
             ])
-
             ->add('submit', 'submit', [
                 'label' => 'Сохранить'
             ])

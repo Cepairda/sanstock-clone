@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Classes\ImportImage as ImportImg;
-use App\Product;
+use Illuminate\Console\Command;
 
 class ImportImage extends Command
 {
@@ -23,25 +22,6 @@ class ImportImage extends Command
     protected $description = 'Import image from B2B';
 
     /**
-     * The process for Backup.
-     *
-     * @var string
-     */
-    protected $products;
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->products = Product::select(['details->sku as sku'])->get();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
@@ -49,9 +29,9 @@ class ImportImage extends Command
     public function handle()
     {
         try {
-            ImportImg::import($this->products);
+            ImportImg::addToQueue();
 
-            $this->info('The import image has been proceed successfully.');
+            $this->info('Images have been successfully added to the queue');
         } catch (\Exception $exception) {
             $this->error('Something went wrong.' . $exception->getMessage());
         }

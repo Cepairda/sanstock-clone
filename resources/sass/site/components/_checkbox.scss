@@ -1,0 +1,72 @@
+/*checkbox*/
+.form-group.form-check.custom-checkbox {
+    padding-left: 0;
+}
+
+.custom-checkbox {
+    margin-bottom: 15px;
+
+    .custom-control-label::before {
+        border-radius: 2px;
+    }
+
+    .custom-control-input:disabled:checked ~ .custom-control-label::before {
+        background-color: rgba(255, 255, 255, .5)
+    }
+
+}
+
+.custom-control-input {
+    &:checked ~ .custom-control-label::before {
+        border-color: #000;
+        background-color: #000;
+    }
+    &:focus:not(:checked) ~ .custom-control-label::before {
+        border-color: #9d9d9c;
+    }
+    &:focus ~ .custom-control-label::before {
+        box-shadow: none;
+    }
+
+
+
+&:not(:disabled):active ~ .custom-control-label::before {
+    background-color: #000;
+    border-color: #000;
+}
+
+&:disabled ~ .custom-control-label {
+    color: transparent;
+}
+
+&:disabled ~ .custom-control-label::before {
+    background-color: transparent;
+}
+}
+
+.custom-control-label {
+    width: 100%;
+    padding-left: 40px;
+    line-height: 26px;
+    cursor: pointer;
+
+    &::before {
+        top: 0;
+        left: 0;
+        height: 26px;
+        width: 26px;
+        background-color: transparent;
+    }
+
+    &::after {
+        top: 0;
+        left: 0;
+        height: 26px;
+        width: 26px;
+    }
+
+    &:disabled + label {
+        color: #d4d3d3 !important;
+        cursor: default;
+    }
+}

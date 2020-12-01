@@ -44,7 +44,6 @@ class CategoryController
 
         return view('admin.resources.categories.index', compact('resources'));
     }
-
     /*public function edit($id)
     {
         $this->resource = $this->resource->joinLocalization()->find($id);

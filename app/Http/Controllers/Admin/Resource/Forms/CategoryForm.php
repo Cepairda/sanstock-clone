@@ -21,6 +21,11 @@ class CategoryForm extends Form
                 'rules' => ['required', 'max:255', 'unique:resources,slug,' . $resource->id],
                 'value' => $resource->slug
             ])
+            ->add('virtual_id', 'number', [
+                'label' => 'ID(Excel файл)',
+                'rules' => ['required', 'max:255', 'unique:resources,virtual_id,' . $resource->id],
+                'value' => $resource->r_id
+            ])
             ->add('parent_id', 'select', [
                 'label' => 'Категория',
                 'choices' => $categoryChoices,
@@ -45,38 +50,33 @@ class CategoryForm extends Form
             ])
             ->add('details[sort]', 'text', [
                 'label' => 'Сортировка',
-                'rules' => ['required'],
                 'value' => $resource->getDetails('sort')
             ])
             ->add('data[meta_title]', 'text', [
                 'label' => 'Meta Title',
-                'rules' => ['required'],
-                'value' => $resource->data['meta_title']
+                'value' => $resource->getData('meta_title')
             ])
             ->add('data[meta_description]', 'text', [
                 'label' => 'Meta Description',
-                'rules' => ['required'],
-                'value' => $resource->data['meta_description']
+                'value' => $resource->getData('meta_description')
             ])
             ->add('data[h1]', 'text', [
                 'label' => 'H1',
                 'rules' => ['required'],
-                'value' => $resource->data['h1']
+                'value' => $resource->getData('h1')
             ])
             ->add('data[name]', 'text', [
                 'label' => 'Name',
                 'rules' => ['required'],
-                'value' => $resource->data['name']
+                'value' => $resource->getData('name')
             ])
             ->add('data[description]', 'textarea', [
                 'label' => 'Description',
-                'rules' => [],
-                'value' => $resource->data['description']
+                'value' => $resource->getData('description')
             ])
             ->add('data[text]', 'textarea', [
                 'label' => 'Text',
-                'rules' => [],
-                'value' => $resource->data['text']
+                'value' => $resource->getData('text')
             ])
             ->add('submit', 'submit', [
                 'label' => 'Сохранить'

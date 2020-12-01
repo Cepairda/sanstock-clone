@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Characteristic;
+use App\CharacteristicValue;
 use App\Classes\Slug;
 use Illuminate\Http\Request;
 use App\Product;
@@ -57,5 +58,23 @@ class HomeController extends Controller
         foreach ($characteristics as $characteristic) {
             echo $characteristic->data['name'] . '<br>';
         }*/
+    }
+
+    public function filter()
+    {
+        $characteristics = Characteristic::joinLocalization()->get();
+        $characteristicsValue = CharacteristicValue::joinLocalization()->get();
+
+        $valuesForView = [];
+
+        foreach ($characteristicsValue as $value) {
+            if (!isset($valuesForView[$value->getDetails('characteristic_id')])) {
+                $valuesForView[$value->attribute_id] = [];
+            }
+
+            $valuesForView[$value->getDetails('characteristic_id')][] = $value;
+        }
+
+        return view('filter', compact('characteristics', 'valuesForView'));
     }
 }

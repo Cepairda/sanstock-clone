@@ -3,8 +3,17 @@
     <div class="header-topline">
         <div class="container">
             <div class="row">
-                <div class="col-12 header-topline__wrap" style="padding-top: 15px; padding-bottom: 15px;font-size: 12px">
-                    <div><a href="#">UA</a> / <span>RU</span></div>
+                <div class="col-12 header-topline__languages">
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        @if(LaravelLocalization::getCurrentLocale() == $localeCode)
+                            <span class="lang-item">{{ $localeCode == 'uk' ? 'ua' : $localeCode }}</span>
+                        @else
+                            <a class="lang-item"
+                               href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, []) }}">
+                                {{ $localeCode == 'uk' ? 'ua' : $localeCode }}
+                            </a>
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -37,21 +46,22 @@
                                 </button>
                                 <!-- RD Navbar Brand-->
                                 <div class="rd-navbar-brand">
-                                    <a class="brand-name" href="{{ route('/') }}">
-                                        <img src="{{ asset('images/site/logo-150x150.jpg') }}" alt="" width="50"/>
+                                    <a class="brand-name" href="{{ route('site./') }}">
+                                        <img src="{{ asset('images/site/logo.svg') }}" alt="50" width="50"/>
                                     </a>
                                 </div>
                             </div>
                             <!-- RD Navbar Nav-->
-                            <div class="rd-navbar-nav-wrap rd-navbar-search_not-collapsable" style="position:relative; justify-content: center">
-                                <ul class="rd-navbar-items-list rd-navbar-search_collapsable" style="position: absolute; right: 0;">
+                            <div class="rd-navbar-nav-wrap rd-navbar-search_not-collapsable">
+                                <ul class="rd-navbar-items-list rd-navbar-search_collapsable">
                                     <li>
                                         <button class="rd-navbar-search__toggle rd-navbar-fixed--hidden"
                                                 data-rd-navbar-toggle=".rd-navbar-search-wrap"></button>
                                     </li>
-                                    <li class="rd-navbar-nav-wrap__shop"><a
-                                                class="icon icon-md linear-icon-heart link-primary"
-                                                href="#"></a></li>
+                                    <li class="rd-navbar-nav-wrap__shop">
+                                        <a class="icon icon-md linear-icon-heart link-primary" href="{{ route('site.favorites') }}"></a>
+                                        <span class="header-favorites-count">0</span>
+                                    </li>
                                 </ul>
                                 <!-- RD Search-->
                                 <div class="rd-navbar-search rd-navbar-search_toggled rd-navbar-search_not-collapsable">
@@ -61,8 +71,7 @@
                                             <input class="form-input" id="rd-navbar-search-form-input" type="text"
                                                    name="s"
                                                    autocomplete="off">
-                                            <label class="form-label" for="rd-navbar-search-form-input">Enter
-                                                keyword</label>
+                                            <label class="form-label" for="rd-navbar-search-form-input">{{ __('Enter keyword') }}</label>
                                             <div class="rd-search-results-live" id="rd-search-results-live"></div>
                                         </div>
                                         <button class="rd-search__submit" type="submit"></button>
@@ -74,47 +83,7 @@
                                     </div>
                                 </div>
                                 <div class="rd-navbar-search_collapsable">
-                                    <ul class="rd-navbar-nav">
-                                        <li>
-                                            <a href="#">Для ванной комнаты</a>
-                                            <ul class="rd-navbar-dropdown">
-                                                <li><a href="#">Home Default</a></li>
-                                                <li><a href="#">Home Business</a></li>
-                                                <li><a href="#">Home Commercial</a></li>
-                                                <li>
-                                                    <a href="#">Headers</a>
-                                                    <ul class="rd-navbar-dropdown">
-                                                        <li><a href="#">Header Default</a></li>
-                                                        <li><a href="#">Header Creative</a></li>
-                                                        <li><a href="#">Header Transparent</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">Footers</a>
-                                                    <ul class="rd-navbar-dropdown">
-                                                        <li><a href="#">Footer Corporate</a></li>
-                                                        <li><a href="#">Footer Minimal</a></li>
-                                                        <li><a href="#">Footer Modern</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">Для кухни</a>
-                                            <ul class="rd-navbar-dropdown">
-                                                <li><a href="#">Catalog List</a></li>
-                                                <li><a href="#">Catalog Grid</a></li>
-                                                <li><a href="#">Single Product</a></li>
-                                                <li><a href="#">Cart</a></li>
-                                                <li><a href="#">Checkout</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">Керамика</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Аксессуары</a>
-                                        </li>
-                                    </ul>
+                                    @include('site.components.categories', ['ul_class' => 'rd-navbar-nav'])
                                 </div>
                             </div>
                         </div>

@@ -129,6 +129,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.pages.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-list"></i>
+                        <p>
+                            Страницы
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('admin.sale-points.index') }}" class="nav-link">
                         <i class="nav-icon fa fa-shopping-cart"></i>
                         <p>

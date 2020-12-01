@@ -18,7 +18,6 @@ class PageForm extends Form
                 'rules' => ['required', 'max:255', 'unique:resources,slug,' . $resource->id],
                 'value' => $resource->slug
             ])
-
             ->add('details[published]', 'select', [
                 'label' => 'Опубликовано',
                 'rules' => ['required'],

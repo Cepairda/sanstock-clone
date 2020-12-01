@@ -26,13 +26,13 @@ class CategoryDataExport implements FromCollection, WithHeadings, WithTitle, Wit
     public function map($category): array
     {
         return [
-            $category->resource_id,
-            $category->data['meta_title'],
-            $category->data['meta_description'],
-            $category->data['h1'],
-            $category->data['name'],
-            $category->data['description'],
-            $category->data['text']
+            $category->virtual_id,
+            $category->getData('meta_title'),
+            $category->getData('meta_description'),
+            $category->getData('h1'),
+            $category->getData('name'),
+            $category->getData('description'),
+            $category->getData('text'),
         ];
     }
 
@@ -45,7 +45,7 @@ class CategoryDataExport implements FromCollection, WithHeadings, WithTitle, Wit
             'h1',
             'name',
             'description',
-            'text'
+            'text',
         ];
     }
 

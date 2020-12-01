@@ -45,15 +45,15 @@ class ImageController extends Controller
          * <input type="hidden" name="ids[]" value="160" /-->
          *
          */
-        $ids = $request->post('ids') ?? [];
+        $ids = $request->post('ids') ?? null;
 
-        $products = empty($ids)
+        /*$products = empty($ids)
             ? Product::select(['details->sku as sku'])->get()
-            : Product::select(['details->sku as sku'])->whereIn('id', $ids)->get();
+            : Product::select(['details->sku as sku'])->whereIn('id', $ids)->get();*/
 
-        if ($products->isNotEmpty()) {
-            ImportImage::import($products);
-        }
+        //if ($products->isNotEmpty()) {
+            ImportImage::addToQueue($ids);
+        //}
     }
 
     /**

@@ -20,28 +20,18 @@ class BrandForm extends Form
             ->add('data[name]', 'text', [
                 'label' => 'Name',
                 'rules' => ['required'],
-                'value' => $resource->data['name']
+                'value' => $resource->getData('name')
             ])
             ->add('data[description]', 'textarea', [
                 'label' => 'Description',
                 'rules' => [],
-                'value' => $resource->data['description'],
+                'value' => $resource->getData('description'),
                 'attr' => ['class' => 'form-control tinymce'],
             ])
             ->add('data[text]', 'tinymce', [
                 'label' => 'Text',
                 'rules' => [],
-                'value' => $resource->data['text']
-            ])
-            ->add('data[img]', 'one-image', [
-                'label' => 'Image',
-                'rules' => [],
-                'value' => $resource->data['img']
-            ])
-            ->add('data[file]', 'one-file', [
-                'label' => 'Image',
-                'rules' => [],
-                //'value' => $resource->data['file']
+                'value' => $resource->getData('text')
             ])
             ->add('submit', 'submit', [
                 'label' => 'Сохранить'
