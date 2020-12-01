@@ -86,3 +86,20 @@
 		}
 	}
 }
+.home-bn-info {
+	background-position: center;
+	background-size: calc(100% + 200px);
+	background-repeat: no-repeat;
+	@media (min-width: 576px) {
+		background-size: 100%;
+	}
+	&__title {
+		font-size: 32px;
+		line-height: 1.2;
+		color: #000;
+		font-weight: 100;
+		@media (min-width: 992px) {
+			font-size: 64px;
+		}
+	}
+}

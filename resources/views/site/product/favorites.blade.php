@@ -2,14 +2,14 @@
 @section('body_class', 'favorites')
 
 @section('breadcrumbs')
-    <li class="active">Избранное</li>
+    <li class="active">{{ __('Favorites') }}</li>
 @endsection
 
 @section('content')
 
-    @include('site.components.breadcrumbs', ['title' => 'Избранное'])
+    @include('site.components.breadcrumbs', ['title' => __('Favorites')])
 
-    <section class="section-lg">
+    <section class="section-sm">
 
         <div class="container">
             <div class="row">
@@ -17,8 +17,8 @@
                     <div class="col-12">
 
                         <div class="filter-shop-box">
-                            <p class="heading-4">Мой список желаний</p>
-                            <div class="form-wrap">
+                            <p class="heading-4">{{ __('My wishlist') }}</p>
+                            {{-- <div class="form-wrap">
                                 <!--Select 2-->
                                 <select class="form-input select-filter" data-placeholder="Default sorting"
                                         data-minimum-results-for-search="Infinity">
@@ -29,7 +29,7 @@
                                     <option value="5">Sort by price: low to high</option>
                                     <option value="6">Sort by price: high to low</option>
                                 </select>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -38,9 +38,13 @@
                             @include('site.components.product')
                         </div>
                     @endforeach
+                    <!-- Pagination-->
+                    <div class="col-12 d-flex justify-content-center py-5">
+                        {!! $products->links() !!}
+                    </section>
                 @else
                     <div class="col-12 mt-5">
-                        <p class="heading-4">Нет избранных товаров</p>
+                        <p class="heading-4">{{ __('No selected products') }}</p>
                     </div>
                 @endif
             </div>
