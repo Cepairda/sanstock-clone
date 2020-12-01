@@ -35632,9 +35632,11 @@ span.button {
   color: #000;
 }
 .product-price span::after {
-  content: "\20B4";
+  content: "\433\440\43D.";
   display: inline-block;
   margin-left: 4px;
+  font-size: 18px;
+  color: #888;
 }
 .product-price.sale-price span {
   padding: 0 3px;
@@ -35985,6 +35987,28 @@ span.button {
   font-size: 30px;
   line-height: 1;
   color: #000;
+}
+
+.home-bn-info {
+  background-position: center;
+  background-size: calc(100% + 200px);
+  background-repeat: no-repeat;
+}
+@media (min-width: 576px) {
+  .home-bn-info {
+    background-size: 100%;
+  }
+}
+.home-bn-info__title {
+  font-size: 32px;
+  line-height: 1.2;
+  color: #000;
+  font-weight: 100;
+}
+@media (min-width: 992px) {
+  .home-bn-info__title {
+    font-size: 64px;
+  }
 }
 
 .section-divided__aside [class*=section]:last-child {
