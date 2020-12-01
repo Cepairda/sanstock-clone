@@ -1,21 +1,25 @@
-[2020-11-29 21:33:38] local.ERROR: Route [site.slug] not defined. (View: C:\OpenServer\domains\lidz.com.ua.local\resources\views\site\components\footer.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Route [site.slug] not defined. (View: C:\\OpenServer\\domains\\lidz.com.ua.local\esources\\views\\site\\components\\footer.blade.php) at C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\UrlGenerator.php:420)
+[2020-11-29 21:33:38] local.ERROR: Route [site.slug] not defined. (View: C:\OpenServer\domains\lidz.com.ua.local\resources\views\site\components\footer.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Route [site.slug] not defined. (View: C:\\OpenServer\\domains\\lidz.com.ua.local\
+esources\\views\\site\\components\\footer.blade.php) at C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\UrlGenerator.php:420)
 [stacktrace]
 #0 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\helpers.php(768): Illuminate\\Routing\\UrlGenerator->route()
-#1 C:\\OpenServer\\domains\\lidz.com.ua.local\esources\\views/site/components/footer.blade.php(19): route()
+#1 C:\\OpenServer\\domains\\lidz.com.ua.local\
+esources\\views/site/components/footer.blade.php(19): route()
 #2 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('C:\\\\OpenServer\\\\d...')
 #3 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #4 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
 #5 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(139): Facade\\Ignition\\Views\\Engines\\CompilerEngine->get()
 #6 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(122): Illuminate\\View\\View->getContents()
 #7 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(91): Illuminate\\View\\View->renderContents()
-#8 C:\\OpenServer\\domains\\lidz.com.ua.local\esources\\views/layouts/site.blade.php(22): Illuminate\\View\\View->render()
+#8 C:\\OpenServer\\domains\\lidz.com.ua.local\
+esources\\views/layouts/site.blade.php(22): Illuminate\\View\\View->render()
 #9 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('C:\\\\OpenServer\\\\d...')
 #10 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #11 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
 #12 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(139): Facade\\Ignition\\Views\\Engines\\CompilerEngine->get()
 #13 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(122): Illuminate\\View\\View->getContents()
 #14 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(91): Illuminate\\View\\View->renderContents()
-#15 C:\\OpenServer\\domains\\lidz.com.ua.local\esources\\views/site/category/show.blade.php(141): Illuminate\\View\\View->render()
+#15 C:\\OpenServer\\domains\\lidz.com.ua.local\
+esources\\views/site/category/show.blade.php(141): Illuminate\\View\\View->render()
 #16 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('C:\\\\OpenServer\\\\d...')
 #17 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #18 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -137,25 +141,29 @@
 #64 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #65 C:\\OpenServer\\domains\\lidz.com.ua.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #66 {main}
-"} 
-[2020-11-29 21:34:00] local.ERROR: Route [site.slug] not defined. (View: C:\OpenServer\domains\lidz.com.ua.local\resources\views\site\components\footer.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Route [site.slug] not defined. (View: C:\\OpenServer\\domains\\lidz.com.ua.local\esources\\views\\site\\components\\footer.blade.php) at C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\UrlGenerator.php:420)
+"}
+[2020-11-29 21:34:00] local.ERROR: Route [site.slug] not defined. (View: C:\OpenServer\domains\lidz.com.ua.local\resources\views\site\components\footer.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Route [site.slug] not defined. (View: C:\\OpenServer\\domains\\lidz.com.ua.local\
+esources\\views\\site\\components\\footer.blade.php) at C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\UrlGenerator.php:420)
 [stacktrace]
 #0 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\helpers.php(768): Illuminate\\Routing\\UrlGenerator->route()
-#1 C:\\OpenServer\\domains\\lidz.com.ua.local\esources\\views/site/components/footer.blade.php(19): route()
+#1 C:\\OpenServer\\domains\\lidz.com.ua.local\
+esources\\views/site/components/footer.blade.php(19): route()
 #2 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('C:\\\\OpenServer\\\\d...')
 #3 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #4 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
 #5 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(139): Facade\\Ignition\\Views\\Engines\\CompilerEngine->get()
 #6 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(122): Illuminate\\View\\View->getContents()
 #7 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(91): Illuminate\\View\\View->renderContents()
-#8 C:\\OpenServer\\domains\\lidz.com.ua.local\esources\\views/layouts/site.blade.php(22): Illuminate\\View\\View->render()
+#8 C:\\OpenServer\\domains\\lidz.com.ua.local\
+esources\\views/layouts/site.blade.php(22): Illuminate\\View\\View->render()
 #9 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('C:\\\\OpenServer\\\\d...')
 #10 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #11 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
 #12 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(139): Facade\\Ignition\\Views\\Engines\\CompilerEngine->get()
 #13 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(122): Illuminate\\View\\View->getContents()
 #14 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(91): Illuminate\\View\\View->renderContents()
-#15 C:\\OpenServer\\domains\\lidz.com.ua.local\esources\\views/site/category/show.blade.php(141): Illuminate\\View\\View->render()
+#15 C:\\OpenServer\\domains\\lidz.com.ua.local\
+esources\\views/site/category/show.blade.php(141): Illuminate\\View\\View->render()
 #16 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('C:\\\\OpenServer\\\\d...')
 #17 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #18 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -277,18 +285,21 @@
 #64 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #65 C:\\OpenServer\\domains\\lidz.com.ua.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #66 {main}
-"} 
-[2020-11-29 18:21:03] local.ERROR: Route [/] not defined. (View: W:\domains\lidz.local\resources\views\site\components\breadcrumbs.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Route [/] not defined. (View: W:\\domains\\lidz.local\esources\\views\\site\\components\\breadcrumbs.blade.php) at W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\UrlGenerator.php:420)
+"}
+[2020-11-29 18:21:03] local.ERROR: Route [/] not defined. (View: W:\domains\lidz.local\resources\views\site\components\breadcrumbs.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Route [/] not defined. (View: W:\\domains\\lidz.local\
+esources\\views\\site\\components\\breadcrumbs.blade.php) at W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\UrlGenerator.php:420)
 [stacktrace]
 #0 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\helpers.php(768): Illuminate\\Routing\\UrlGenerator->route()
-#1 W:\\domains\\lidz.local\esources\\views/site/components/breadcrumbs.blade.php(6): route()
+#1 W:\\domains\\lidz.local\
+esources\\views/site/components/breadcrumbs.blade.php(6): route()
 #2 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #3 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #4 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
 #5 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(139): Facade\\Ignition\\Views\\Engines\\CompilerEngine->get()
 #6 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(122): Illuminate\\View\\View->getContents()
 #7 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(91): Illuminate\\View\\View->renderContents()
-#8 W:\\domains\\lidz.local\esources\\views/site/category/show.blade.php(7): Illuminate\\View\\View->render()
+#8 W:\\domains\\lidz.local\
+esources\\views/site/category/show.blade.php(7): Illuminate\\View\\View->render()
 #9 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #10 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #11 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -403,18 +414,21 @@
 #57 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #58 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #59 {main}
-"} 
-[2020-11-29 18:21:36] local.ERROR: Route [/] not defined. (View: W:\domains\lidz.local\resources\views\site\components\breadcrumbs.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Route [/] not defined. (View: W:\\domains\\lidz.local\esources\\views\\site\\components\\breadcrumbs.blade.php) at W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\UrlGenerator.php:420)
+"}
+[2020-11-29 18:21:36] local.ERROR: Route [/] not defined. (View: W:\domains\lidz.local\resources\views\site\components\breadcrumbs.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Route [/] not defined. (View: W:\\domains\\lidz.local\
+esources\\views\\site\\components\\breadcrumbs.blade.php) at W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\UrlGenerator.php:420)
 [stacktrace]
 #0 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\helpers.php(768): Illuminate\\Routing\\UrlGenerator->route()
-#1 W:\\domains\\lidz.local\esources\\views/site/components/breadcrumbs.blade.php(6): route()
+#1 W:\\domains\\lidz.local\
+esources\\views/site/components/breadcrumbs.blade.php(6): route()
 #2 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #3 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #4 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
 #5 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(139): Facade\\Ignition\\Views\\Engines\\CompilerEngine->get()
 #6 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(122): Illuminate\\View\\View->getContents()
 #7 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(91): Illuminate\\View\\View->renderContents()
-#8 W:\\domains\\lidz.local\esources\\views/site/category/show.blade.php(7): Illuminate\\View\\View->render()
+#8 W:\\domains\\lidz.local\
+esources\\views/site/category/show.blade.php(7): Illuminate\\View\\View->render()
 #9 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #10 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #11 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -529,17 +543,21 @@
 #57 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #58 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #59 {main}
-"} 
-[2020-11-29 21:57:47] local.ERROR: Trying to get property 'isNotEmpty' of non-object (View: W:\domains\lidz.local\resources\views\site\components\product.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Trying to get property 'isNotEmpty' of non-object (View: W:\\domains\\lidz.local\esources\\views\\site\\components\\product.blade.php) at W:\\domains\\lidz.local\esources\\views/site/components/product.blade.php:17)
+"}
+[2020-11-29 21:57:47] local.ERROR: Trying to get property 'isNotEmpty' of non-object (View: W:\domains\lidz.local\resources\views\site\components\product.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Trying to get property 'isNotEmpty' of non-object (View: W:\\domains\\lidz.local\
+esources\\views\\site\\components\\product.blade.php) at W:\\domains\\lidz.local\
+esources\\views/site/components/product.blade.php:17)
 [stacktrace]
-#0 W:\\domains\\lidz.local\esources\\views/site/components/product.blade.php(17): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
+#0 W:\\domains\\lidz.local\
+esources\\views/site/components/product.blade.php(17): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
 #1 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #2 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #3 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
 #4 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(139): Facade\\Ignition\\Views\\Engines\\CompilerEngine->get()
 #5 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(122): Illuminate\\View\\View->getContents()
 #6 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(91): Illuminate\\View\\View->renderContents()
-#7 W:\\domains\\lidz.local\esources\\views/site/category/show.blade.php(32): Illuminate\\View\\View->render()
+#7 W:\\domains\\lidz.local\
+esources\\views/site/category/show.blade.php(32): Illuminate\\View\\View->render()
 #8 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #9 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #10 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -653,17 +671,21 @@
 #56 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #57 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #58 {main}
-"} 
-[2020-11-29 21:57:56] local.ERROR: Trying to get property 'isNotEmpty' of non-object (View: W:\domains\lidz.local\resources\views\site\components\product.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Trying to get property 'isNotEmpty' of non-object (View: W:\\domains\\lidz.local\esources\\views\\site\\components\\product.blade.php) at W:\\domains\\lidz.local\esources\\views/site/components/product.blade.php:17)
+"}
+[2020-11-29 21:57:56] local.ERROR: Trying to get property 'isNotEmpty' of non-object (View: W:\domains\lidz.local\resources\views\site\components\product.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Trying to get property 'isNotEmpty' of non-object (View: W:\\domains\\lidz.local\
+esources\\views\\site\\components\\product.blade.php) at W:\\domains\\lidz.local\
+esources\\views/site/components/product.blade.php:17)
 [stacktrace]
-#0 W:\\domains\\lidz.local\esources\\views/site/components/product.blade.php(17): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
+#0 W:\\domains\\lidz.local\
+esources\\views/site/components/product.blade.php(17): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
 #1 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #2 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #3 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
 #4 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(139): Facade\\Ignition\\Views\\Engines\\CompilerEngine->get()
 #5 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(122): Illuminate\\View\\View->getContents()
 #6 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(91): Illuminate\\View\\View->renderContents()
-#7 W:\\domains\\lidz.local\esources\\views/site/category/show.blade.php(32): Illuminate\\View\\View->render()
+#7 W:\\domains\\lidz.local\
+esources\\views/site/category/show.blade.php(32): Illuminate\\View\\View->render()
 #8 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #9 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #10 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -777,17 +799,21 @@
 #56 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #57 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #58 {main}
-"} 
-[2020-11-29 21:57:58] local.ERROR: Trying to get property 'isNotEmpty' of non-object (View: W:\domains\lidz.local\resources\views\site\components\product.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Trying to get property 'isNotEmpty' of non-object (View: W:\\domains\\lidz.local\esources\\views\\site\\components\\product.blade.php) at W:\\domains\\lidz.local\esources\\views/site/components/product.blade.php:17)
+"}
+[2020-11-29 21:57:58] local.ERROR: Trying to get property 'isNotEmpty' of non-object (View: W:\domains\lidz.local\resources\views\site\components\product.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Trying to get property 'isNotEmpty' of non-object (View: W:\\domains\\lidz.local\
+esources\\views\\site\\components\\product.blade.php) at W:\\domains\\lidz.local\
+esources\\views/site/components/product.blade.php:17)
 [stacktrace]
-#0 W:\\domains\\lidz.local\esources\\views/site/components/product.blade.php(17): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
+#0 W:\\domains\\lidz.local\
+esources\\views/site/components/product.blade.php(17): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
 #1 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #2 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #3 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
 #4 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(139): Facade\\Ignition\\Views\\Engines\\CompilerEngine->get()
 #5 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(122): Illuminate\\View\\View->getContents()
 #6 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(91): Illuminate\\View\\View->renderContents()
-#7 W:\\domains\\lidz.local\esources\\views/site/category/show.blade.php(32): Illuminate\\View\\View->render()
+#7 W:\\domains\\lidz.local\
+esources\\views/site/category/show.blade.php(32): Illuminate\\View\\View->render()
 #8 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #9 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #10 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -901,15 +927,18 @@
 #56 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #57 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #58 {main}
-"} 
-[2020-11-29 21:59:52] local.ERROR: syntax error, unexpected ':', expecting '(' (View: W:\domains\lidz.local\resources\views\site\components\product.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): syntax error, unexpected ':', expecting '(' (View: W:\\domains\\lidz.local\esources\\views\\site\\components\\product.blade.php) at W:\\domains\\lidz.local\esources\\views/site/components/product.blade.php:17)
+"}
+[2020-11-29 21:59:52] local.ERROR: syntax error, unexpected ':', expecting '(' (View: W:\domains\lidz.local\resources\views\site\components\product.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): syntax error, unexpected ':', expecting '(' (View: W:\\domains\\lidz.local\
+esources\\views\\site\\components\\product.blade.php) at W:\\domains\\lidz.local\
+esources\\views/site/components/product.blade.php:17)
 [stacktrace]
 #0 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #1 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
 #2 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(139): Facade\\Ignition\\Views\\Engines\\CompilerEngine->get()
 #3 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(122): Illuminate\\View\\View->getContents()
 #4 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(91): Illuminate\\View\\View->renderContents()
-#5 W:\\domains\\lidz.local\esources\\views/site/category/show.blade.php(32): Illuminate\\View\\View->render()
+#5 W:\\domains\\lidz.local\
+esources\\views/site/category/show.blade.php(32): Illuminate\\View\\View->render()
 #6 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #7 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #8 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -1021,7 +1050,7 @@
 #54 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #55 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #56 {main}
-"} 
+"}
 [2020-11-30 00:23:08] production.ERROR: No application encryption key has been specified. {"exception":"[object] (RuntimeException(code: 0): No application encryption key has been specified. at W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Encryption\\EncryptionServiceProvider.php:80)
 [stacktrace]
 #0 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\helpers.php(433): Illuminate\\Encryption\\EncryptionServiceProvider->Illuminate\\Encryption\\{closure}()
@@ -1067,7 +1096,7 @@
 #40 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #41 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #42 {main}
-"} 
+"}
 [2020-11-30 00:23:08] production.ERROR: No application encryption key has been specified. {"exception":"[object] (RuntimeException(code: 0): No application encryption key has been specified. at W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Encryption\\EncryptionServiceProvider.php:80)
 [stacktrace]
 #0 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\helpers.php(433): Illuminate\\Encryption\\EncryptionServiceProvider->Illuminate\\Encryption\\{closure}()
@@ -1090,7 +1119,7 @@
 #17 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(178): Illuminate\\Foundation\\Http\\Kernel->terminateMiddleware()
 #18 W:\\domains\\lidz.local\\public\\index.php(60): Illuminate\\Foundation\\Http\\Kernel->terminate()
 #19 {main}
-"} 
+"}
 [2020-11-30 00:37:33] production.ERROR: No application encryption key has been specified. {"exception":"[object] (RuntimeException(code: 0): No application encryption key has been specified. at W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Encryption\\EncryptionServiceProvider.php:80)
 [stacktrace]
 #0 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\helpers.php(433): Illuminate\\Encryption\\EncryptionServiceProvider->Illuminate\\Encryption\\{closure}()
@@ -1136,7 +1165,7 @@
 #40 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #41 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #42 {main}
-"} 
+"}
 [2020-11-30 00:37:33] production.ERROR: No application encryption key has been specified. {"exception":"[object] (RuntimeException(code: 0): No application encryption key has been specified. at W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Encryption\\EncryptionServiceProvider.php:80)
 [stacktrace]
 #0 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\helpers.php(433): Illuminate\\Encryption\\EncryptionServiceProvider->Illuminate\\Encryption\\{closure}()
@@ -1159,10 +1188,13 @@
 #17 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(178): Illuminate\\Foundation\\Http\\Kernel->terminateMiddleware()
 #18 W:\\domains\\lidz.local\\public\\index.php(60): Illuminate\\Foundation\\Http\\Kernel->terminate()
 #19 {main}
-"} 
-[2020-11-30 09:05:16] local.ERROR: Trying to get property 'category' of non-object (View: W:\domains\lidz.local\resources\views\site\product\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Trying to get property 'category' of non-object (View: W:\\domains\\lidz.local\esources\\views\\site\\product\\show.blade.php) at W:\\domains\\lidz.local\esources\\views/site/product/show.blade.php:5)
+"}
+[2020-11-30 09:05:16] local.ERROR: Trying to get property 'category' of non-object (View: W:\domains\lidz.local\resources\views\site\product\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Trying to get property 'category' of non-object (View: W:\\domains\\lidz.local\
+esources\\views\\site\\product\\show.blade.php) at W:\\domains\\lidz.local\
+esources\\views/site/product/show.blade.php:5)
 [stacktrace]
-#0 W:\\domains\\lidz.local\esources\\views/site/product/show.blade.php(5): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
+#0 W:\\domains\\lidz.local\
+esources\\views/site/product/show.blade.php(5): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
 #1 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #2 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #3 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -1269,10 +1301,13 @@
 #49 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #50 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #51 {main}
-"} 
-[2020-11-30 09:05:21] local.ERROR: Trying to get property 'category' of non-object (View: W:\domains\lidz.local\resources\views\site\product\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Trying to get property 'category' of non-object (View: W:\\domains\\lidz.local\esources\\views\\site\\product\\show.blade.php) at W:\\domains\\lidz.local\esources\\views/site/product/show.blade.php:5)
+"}
+[2020-11-30 09:05:21] local.ERROR: Trying to get property 'category' of non-object (View: W:\domains\lidz.local\resources\views\site\product\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Trying to get property 'category' of non-object (View: W:\\domains\\lidz.local\
+esources\\views\\site\\product\\show.blade.php) at W:\\domains\\lidz.local\
+esources\\views/site/product/show.blade.php:5)
 [stacktrace]
-#0 W:\\domains\\lidz.local\esources\\views/site/product/show.blade.php(5): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
+#0 W:\\domains\\lidz.local\
+esources\\views/site/product/show.blade.php(5): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
 #1 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #2 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #3 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -1379,10 +1414,13 @@
 #49 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #50 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #51 {main}
-"} 
-[2020-11-30 09:05:42] local.ERROR: Trying to get property 'category' of non-object (View: W:\domains\lidz.local\resources\views\site\product\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Trying to get property 'category' of non-object (View: W:\\domains\\lidz.local\esources\\views\\site\\product\\show.blade.php) at W:\\domains\\lidz.local\esources\\views/site/product/show.blade.php:5)
+"}
+[2020-11-30 09:05:42] local.ERROR: Trying to get property 'category' of non-object (View: W:\domains\lidz.local\resources\views\site\product\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Trying to get property 'category' of non-object (View: W:\\domains\\lidz.local\
+esources\\views\\site\\product\\show.blade.php) at W:\\domains\\lidz.local\
+esources\\views/site/product/show.blade.php:5)
 [stacktrace]
-#0 W:\\domains\\lidz.local\esources\\views/site/product/show.blade.php(5): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
+#0 W:\\domains\\lidz.local\
+esources\\views/site/product/show.blade.php(5): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
 #1 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #2 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #3 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -1489,14 +1527,17 @@
 #49 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #50 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #51 {main}
-"} 
+"}
 [2020-11-30 09:48:42] local.ERROR: Maximum execution time of 60 seconds exceeded {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Maximum execution time of 60 seconds exceeded at W:\\domains\\lidz.local\\bootstrap\\helpers.php:95)
 [stacktrace]
 #0 {main}
-"} 
-[2020-11-30 14:33:17] local.ERROR: Trying to get property 'category' of non-object (View: W:\domains\lidz.local\resources\views\site\product\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Trying to get property 'category' of non-object (View: W:\\domains\\lidz.local\esources\\views\\site\\product\\show.blade.php) at W:\\domains\\lidz.local\esources\\views/site/product/show.blade.php:5)
+"}
+[2020-11-30 14:33:17] local.ERROR: Trying to get property 'category' of non-object (View: W:\domains\lidz.local\resources\views\site\product\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Trying to get property 'category' of non-object (View: W:\\domains\\lidz.local\
+esources\\views\\site\\product\\show.blade.php) at W:\\domains\\lidz.local\
+esources\\views/site/product/show.blade.php:5)
 [stacktrace]
-#0 W:\\domains\\lidz.local\esources\\views/site/product/show.blade.php(5): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
+#0 W:\\domains\\lidz.local\
+esources\\views/site/product/show.blade.php(5): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
 #1 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #2 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #3 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -1603,7 +1644,7 @@
 #49 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #50 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #51 {main}
-"} 
+"}
 [2020-11-30 15:26:26] local.ERROR: syntax error, unexpected 'return' (T_RETURN) {"exception":"[object] (ParseError(code: 0): syntax error, unexpected 'return' (T_RETURN) at W:\\domains\\lidz.local\\app\\Http\\Controllers\\Site\\ResourceController.php:58)
 [stacktrace]
 #0 W:\\domains\\lidz.local\\vendor\\composer\\ClassLoader.php(322): Composer\\Autoload\\includeFile()
@@ -1643,7 +1684,7 @@
 #34 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #35 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #36 {main}
-"} 
+"}
 [2020-11-30 15:26:26] local.ERROR: syntax error, unexpected 'return' (T_RETURN) {"exception":"[object] (ParseError(code: 0): syntax error, unexpected 'return' (T_RETURN) at W:\\domains\\lidz.local\\app\\Http\\Controllers\\Site\\ResourceController.php:58)
 [stacktrace]
 #0 W:\\domains\\lidz.local\\vendor\\composer\\ClassLoader.php(322): Composer\\Autoload\\includeFile()
@@ -1675,7 +1716,7 @@
 #26 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #27 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #28 {main}
-"} 
+"}
 [2020-11-30 15:35:52] local.ERROR: Call to undefined method App\Product::withData() {"exception":"[object] (BadMethodCallException(code: 0): Call to undefined method App\\Product::withData() at W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\ForwardsCalls.php:50)
 [stacktrace]
 #0 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\ForwardsCalls.php(36): Illuminate\\Database\\Eloquent\\Model::throwBadMethodCallException()
@@ -1728,7 +1769,7 @@
 #47 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #48 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #49 {main}
-"} 
+"}
 [2020-11-30 19:09:38] local.ERROR: Too few arguments to function Illuminate\Database\Eloquent\Builder::where(), 0 passed in W:\domains\lidz.local\app\Http\Controllers\Site\ResourceController.php on line 54 and at least 1 expected {"exception":"[object] (ArgumentCountError(code: 0): Too few arguments to function Illuminate\\Database\\Eloquent\\Builder::where(), 0 passed in W:\\domains\\lidz.local\\app\\Http\\Controllers\\Site\\ResourceController.php on line 54 and at least 1 expected at W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Builder.php:225)
 [stacktrace]
 #0 W:\\domains\\lidz.local\\app\\Http\\Controllers\\Site\\ResourceController.php(54): Illuminate\\Database\\Eloquent\\Builder->where()
@@ -1778,7 +1819,7 @@
 #44 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #45 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #46 {main}
-"} 
+"}
 [2020-11-30 19:11:06] local.ERROR: syntax error, unexpected 'get' (T_STRING) {"exception":"[object] (ParseError(code: 0): syntax error, unexpected 'get' (T_STRING) at W:\\domains\\lidz.local\\app\\Http\\Controllers\\Site\\ResourceController.php:54)
 [stacktrace]
 #0 W:\\domains\\lidz.local\\vendor\\composer\\ClassLoader.php(322): Composer\\Autoload\\includeFile()
@@ -1818,7 +1859,7 @@
 #34 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #35 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #36 {main}
-"} 
+"}
 [2020-11-30 19:11:06] local.ERROR: syntax error, unexpected 'get' (T_STRING) {"exception":"[object] (ParseError(code: 0): syntax error, unexpected 'get' (T_STRING) at W:\\domains\\lidz.local\\app\\Http\\Controllers\\Site\\ResourceController.php:54)
 [stacktrace]
 #0 W:\\domains\\lidz.local\\vendor\\composer\\ClassLoader.php(322): Composer\\Autoload\\includeFile()
@@ -1850,7 +1891,7 @@
 #26 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #27 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #28 {main}
-"} 
+"}
 [2020-11-30 19:13:28] local.ERROR: Argument 1 passed to Illuminate\Database\Query\Builder::cleanBindings() must be of the type array, int given, called in W:\domains\lidz.local\vendor\laravel\framework\src\Illuminate\Database\Query\Builder.php on line 919 {"exception":"[object] (TypeError(code: 0): Argument 1 passed to Illuminate\\Database\\Query\\Builder::cleanBindings() must be of the type array, int given, called in W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Query\\Builder.php on line 919 at W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Query\\Builder.php:3023)
 [stacktrace]
 #0 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Query\\Builder.php(919): Illuminate\\Database\\Query\\Builder->cleanBindings()
@@ -1903,10 +1944,13 @@
 #47 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #48 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #49 {main}
-"} 
-[2020-11-30 19:47:01] local.ERROR: Undefined variable: product (View: W:\domains\lidz.local\resources\views\site\product\favorites.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable: product (View: W:\\domains\\lidz.local\esources\\views\\site\\product\\favorites.blade.php) at W:\\domains\\lidz.local\esources\\views/site/product/favorites.blade.php:10)
+"}
+[2020-11-30 19:47:01] local.ERROR: Undefined variable: product (View: W:\domains\lidz.local\resources\views\site\product\favorites.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable: product (View: W:\\domains\\lidz.local\
+esources\\views\\site\\product\\favorites.blade.php) at W:\\domains\\lidz.local\
+esources\\views/site/product/favorites.blade.php:10)
 [stacktrace]
-#0 W:\\domains\\lidz.local\esources\\views/site/product/favorites.blade.php(10): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
+#0 W:\\domains\\lidz.local\
+esources\\views/site/product/favorites.blade.php(10): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
 #1 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #2 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #3 W:\\domains\\lidz.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -2013,8 +2057,10 @@
 #49 W:\\domains\\lidz.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #50 W:\\domains\\lidz.local\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #51 {main}
-"} 
-[2020-12-01 09:40:07] local.ERROR: syntax error, unexpected ')' (View: W:\domains\lidz\resources\views\site\category\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): syntax error, unexpected ')' (View: W:\\domains\\lidz\esources\\views\\site\\category\\show.blade.php) at W:\\domains\\lidz\esources\\views/site/category/show.blade.php:21)
+"}
+[2020-12-01 09:40:07] local.ERROR: syntax error, unexpected ')' (View: W:\domains\lidz\resources\views\site\category\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): syntax error, unexpected ')' (View: W:\\domains\\lidz\
+esources\\views\\site\\category\\show.blade.php) at W:\\domains\\lidz\
+esources\\views/site/category/show.blade.php:21)
 [stacktrace]
 #0 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #1 W:\\domains\\lidz\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -2119,10 +2165,13 @@
 #47 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #48 W:\\domains\\lidz\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #49 {main}
-"} 
-[2020-12-01 09:42:28] local.ERROR: Trying to get property 'category' of non-object (View: W:\domains\lidz\resources\views\site\product\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Trying to get property 'category' of non-object (View: W:\\domains\\lidz\esources\\views\\site\\product\\show.blade.php) at W:\\domains\\lidz\esources\\views/site/product/show.blade.php:5)
+"}
+[2020-12-01 09:42:28] local.ERROR: Trying to get property 'category' of non-object (View: W:\domains\lidz\resources\views\site\product\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Trying to get property 'category' of non-object (View: W:\\domains\\lidz\
+esources\\views\\site\\product\\show.blade.php) at W:\\domains\\lidz\
+esources\\views/site/product/show.blade.php:5)
 [stacktrace]
-#0 W:\\domains\\lidz\esources\\views/site/product/show.blade.php(5): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
+#0 W:\\domains\\lidz\
+esources\\views/site/product/show.blade.php(5): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
 #1 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #2 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #3 W:\\domains\\lidz\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -2229,10 +2278,12 @@
 #49 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #50 W:\\domains\\lidz\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #51 {main}
-"} 
-[2020-12-01 09:52:19] local.ERROR: Method Illuminate\Database\Eloquent\Collection::links does not exist. (View: W:\domains\lidz\resources\views\site\category\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Method Illuminate\\Database\\Eloquent\\Collection::links does not exist. (View: W:\\domains\\lidz\esources\\views\\site\\category\\show.blade.php) at W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\Macroable.php:103)
+"}
+[2020-12-01 09:52:19] local.ERROR: Method Illuminate\Database\Eloquent\Collection::links does not exist. (View: W:\domains\lidz\resources\views\site\category\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Method Illuminate\\Database\\Eloquent\\Collection::links does not exist. (View: W:\\domains\\lidz\
+esources\\views\\site\\category\\show.blade.php) at W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\Macroable.php:103)
 [stacktrace]
-#0 W:\\domains\\lidz\esources\\views/site/category/show.blade.php(53): Illuminate\\Support\\Collection->__call()
+#0 W:\\domains\\lidz\
+esources\\views/site/category/show.blade.php(53): Illuminate\\Support\\Collection->__call()
 #1 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #2 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #3 W:\\domains\\lidz\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -2339,10 +2390,12 @@
 #49 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #50 W:\\domains\\lidz\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #51 {main}
-"} 
-[2020-12-01 09:52:28] local.ERROR: Method Illuminate\Database\Eloquent\Collection::links does not exist. (View: W:\domains\lidz\resources\views\site\category\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Method Illuminate\\Database\\Eloquent\\Collection::links does not exist. (View: W:\\domains\\lidz\esources\\views\\site\\category\\show.blade.php) at W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\Macroable.php:103)
+"}
+[2020-12-01 09:52:28] local.ERROR: Method Illuminate\Database\Eloquent\Collection::links does not exist. (View: W:\domains\lidz\resources\views\site\category\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Method Illuminate\\Database\\Eloquent\\Collection::links does not exist. (View: W:\\domains\\lidz\
+esources\\views\\site\\category\\show.blade.php) at W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\Macroable.php:103)
 [stacktrace]
-#0 W:\\domains\\lidz\esources\\views/site/category/show.blade.php(53): Illuminate\\Support\\Collection->__call()
+#0 W:\\domains\\lidz\
+esources\\views/site/category/show.blade.php(53): Illuminate\\Support\\Collection->__call()
 #1 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #2 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #3 W:\\domains\\lidz\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -2449,12 +2502,14 @@
 #49 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #50 W:\\domains\\lidz\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #51 {main}
-"} 
-[2020-12-01 10:16:07] local.ERROR: Method Illuminate\Database\Eloquent\Collection::coutn does not exist. (View: W:\domains\lidz\resources\views\site\category\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Method Illuminate\\Database\\Eloquent\\Collection::coutn does not exist. (View: W:\\domains\\lidz\esources\\views\\site\\category\\show.blade.php) at W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\Macroable.php:103)
+"}
+[2020-12-01 10:16:07] local.ERROR: Method Illuminate\Database\Eloquent\Collection::coutn does not exist. (View: W:\domains\lidz\resources\views\site\category\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Method Illuminate\\Database\\Eloquent\\Collection::coutn does not exist. (View: W:\\domains\\lidz\
+esources\\views\\site\\category\\show.blade.php) at W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\Macroable.php:103)
 [stacktrace]
 #0 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\ForwardsCalls.php(23): Illuminate\\Support\\Collection->__call()
 #1 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\Pagination\\AbstractPaginator.php(714): Illuminate\\Pagination\\AbstractPaginator->forwardCallTo()
-#2 W:\\domains\\lidz\esources\\views/site/category/show.blade.php(26): Illuminate\\Pagination\\AbstractPaginator->__call()
+#2 W:\\domains\\lidz\
+esources\\views/site/category/show.blade.php(26): Illuminate\\Pagination\\AbstractPaginator->__call()
 #3 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('W:\\\\domains\\\\lidz...')
 #4 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #5 W:\\domains\\lidz\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -2563,7 +2618,7 @@
 #51 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #52 W:\\domains\\lidz\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle()
 #53 {main}
-"} 
+"}
 [2020-12-01 10:21:32] local.ERROR: There are no commands defined in the "imahe" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"imahe\" namespace. at W:\\domains\\lidz\\vendor\\symfony\\console\\Application.php:574)
 [stacktrace]
 #0 W:\\domains\\lidz\\vendor\\symfony\\console\\Application.php(625): Symfony\\Component\\Console\\Application->findNamespace()
@@ -2573,7 +2628,7 @@
 #4 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(129): Illuminate\\Console\\Application->run()
 #5 W:\\domains\\lidz\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
 #6 {main}
-"} 
+"}
 [2020-12-01 10:21:39] local.ERROR: There are no commands defined in the "image" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"image\" namespace. at W:\\domains\\lidz\\vendor\\symfony\\console\\Application.php:574)
 [stacktrace]
 #0 W:\\domains\\lidz\\vendor\\symfony\\console\\Application.php(625): Symfony\\Component\\Console\\Application->findNamespace()
@@ -2583,10 +2638,13 @@
 #4 W:\\domains\\lidz\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(129): Illuminate\\Console\\Application->run()
 #5 W:\\domains\\lidz\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
 #6 {main}
-"} 
-[2020-12-01 20:00:38] local.ERROR: Undefined variable: product (View: C:\OpenServer\domains\lidz.com.ua.local\resources\views\site\category\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable: product (View: C:\\OpenServer\\domains\\lidz.com.ua.local\esources\\views\\site\\category\\show.blade.php) at C:\\OpenServer\\domains\\lidz.com.ua.local\esources\\views/site/category/show.blade.php:36)
+"}
+[2020-12-01 20:00:38] local.ERROR: Undefined variable: product (View: C:\OpenServer\domains\lidz.com.ua.local\resources\views\site\category\show.blade.php) {"exception":"[object] (Facade\\Ignition\\Exceptions\\ViewException(code: 0): Undefined variable: product (View: C:\\OpenServer\\domains\\lidz.com.ua.local\
+esources\\views\\site\\category\\show.blade.php) at C:\\OpenServer\\domains\\lidz.com.ua.local\
+esources\\views/site/category/show.blade.php:36)
 [stacktrace]
-#0 C:\\OpenServer\\domains\\lidz.com.ua.local\esources\\views/site/category/show.blade.php(36): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
+#0 C:\\OpenServer\\domains\\lidz.com.ua.local\
+esources\\views/site/category/show.blade.php(36): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError()
 #1 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(41): include('C:\\\\OpenServer\\\\d...')
 #2 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(57): Illuminate\\View\\Engines\\PhpEngine->evaluatePath()
 #3 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php(37): Illuminate\\View\\Engines\\CompilerEngine->get()
@@ -2693,4 +2751,4 @@
 #49 C:\\OpenServer\\domains\\lidz.com.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(109): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
 #50 C:\\OpenServer\\domains\\lidz.com.ua.local\\public\\index.php(63): Illuminate\\Foundation\\Http\\Kernel->handle()
 #51 {main}
-"} 
+"}
