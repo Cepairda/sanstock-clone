@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\Resource;
+use App\ResourceResource;
+use App\Characteristic;
+use App\CharacteristicValue;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Request;
 
 class ResourceController extends Controller
 {
@@ -25,14 +29,78 @@ class ResourceController extends Controller
                         ->withCharacteristics()
                         ->whereId($resource->id)
                         ->where('details->published', 1)
+                        ->withCategory()
                         ->first(),
                 ];
                 break;
             case 'category':
                 $data = [
+
                     'category' => $category = $resource->type::joinLocalization()->withAncestors()->whereId($resource->id)->first(),
-                    'products' => Product::joinLocalization()->whereExistsCategoryIds($category->id)->paginate()
+                    'products' => Product::joinLocalization()->where('details->published', true)->whereExistsCategoryIds($category->id)->paginate()
+
                 ];
+
+                $products = Product::joinLocalization()->whereExistsCategoryIds($category->id)->get()->keyBy('id')->keys();
+                $characteristics = isset($category->characteristic_group[0])
+                    ? $category->characteristic_group[0]->getDetails('characteristics')
+                    : null;
+
+                $characteristicIds = null;
+
+                if (isset($characteristics)) {
+                    $characteristicIds = [];
+
+
+                    foreach ($characteristics as $id => $characteristic) {
+                        if (isset($characteristic['filter']))
+                            $characteristicIds[] = $id;
+                    }
+                }
+
+                $characteristicValueIds = ResourceResource::whereIn('resource_id', $products)
+                    ->where('relation_type', 'App\CharacteristicValue')
+                    ->get()
+                    ->keyBy('relation_id')
+                    ->keys();
+                $characteristicsValue = CharacteristicValue::joinLocalization()
+                    ->whereCharacteristicIsFilter($characteristicIds)
+                    ->whereIn('id', $characteristicValueIds)->get();
+
+                $valuesForView = [];
+
+                foreach ($characteristicsValue as $value) {
+                    if (!isset($valuesForView[$value->getDetails('characteristic_id')])) {
+                        $valuesForView[$value->attribute_id] = [];
+                    }
+
+                    $valuesForView[$value->getDetails('characteristic_id')][] = $value;
+                }
+
+                $characteristicsIds = array_keys($valuesForView);
+                $data['characteristics'] = Characteristic::joinLocalization()->whereIn('id', $characteristicsIds)->get();
+                $data['valuesForView'] = $valuesForView;
+
+                $products = Product::whereIn('id', $products);
+
+                if (Request::has('filter')) {
+                    $filters = Request::input('filter');
+                    $characteristicsV = $filters;
+
+                    foreach ($characteristicsV as $characteristicId => $filters) {
+                        $fids = $filters;
+
+                        $alias = 'rr' . $characteristicId;
+
+                        $products->join('resource_resource as ' . $alias, function($q) use ($alias, $fids) {
+                            $q->on('resources.id', '=', $alias . '.resource_id')
+                                ->whereIn($alias . '.relation_id', $fids);
+                        });
+                    }
+
+                    $data['products'] = $products->paginate();
+                }
+
                 break;
             default:
                 $data = [
