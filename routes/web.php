@@ -103,6 +103,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
     Route::as('site.')->namespace('Site')->group(function () {
         Route::get('/', 'HomeController@index')->name('/');
+        Route::get('search', 'ProductController@search')->name('products.search');
         Route::get('/favorites', 'ResourceController@Favorites')->name('favorites');
         Route::get('/{slug}', 'ResourceController@getResource')->where('slug', '.*')->name('resource');
     });

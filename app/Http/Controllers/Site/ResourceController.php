@@ -35,8 +35,10 @@ class ResourceController extends Controller
                 break;
             case 'category':
                 $data = [
+
                     'category' => $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->first(),
-                    'products' => Product::joinLocalization()->whereExistsCategoryIds($category->id)->paginate()
+                    'products' => Product::joinLocalization()->where('details->published', 1)->whereExistsCategoryIds($category->id)->paginate()
+
                 ];
 
                 $products = Product::joinLocalization()->whereExistsCategoryIds($category->id)->get()->keyBy('id')->keys();
@@ -90,7 +92,7 @@ class ResourceController extends Controller
 
                         $alias = 'rr' . $characteristicId;
 
-                        $products->join('resource_resource as ' . $alias, function($q) use ($alias, $fids) {
+                        $products->join('resource_resource as ' . $alias, function ($q) use ($alias, $fids) {
                             $q->on('resources.id', '=', $alias . '.resource_id')
                                 ->whereIn($alias . '.relation_id', $fids);
                         });
@@ -109,15 +111,15 @@ class ResourceController extends Controller
         return view('site.' . $type . '.show', $data);
     }
 
-  public function favorites()
-  {
-    $cookie = !empty($_COOKIE['favorites']) ? $_COOKIE['favorites'] : null;
+    public function favorites()
+    {
+        $cookie = !empty($_COOKIE['favorites']) ? $_COOKIE['favorites'] : null;
 
-    $data['products'] = collect();
+        $data['products'] = collect();
         if (isset($cookie)) {
-          $favorites = explode(',', $cookie);
-          $data['products'] = Product::joinLocalization()->whereIn('details->sku', $favorites)->paginate(12);
+            $favorites = explode(',', $cookie);
+            $data['products'] = Product::joinLocalization()->whereIn('details->sku', $favorites)->paginate(12);
         }
-    return view('site.product.favorites', $data);
-  }
+        return view('site.product.favorites', $data);
+    }
 }

@@ -41517,6 +41517,10 @@ __webpack_require__(/*! ./script */ "./resources/js/site/script.js");
       });
     }
   }, false);
+})(); //liveSearch
+
+
+(function () {//let
 })();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 

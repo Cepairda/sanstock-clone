@@ -15,6 +15,13 @@
     "Address string": "ул. Шевченка, 327, корп. 2-2, Харков, Харковская область, 61000",
     "We are open": "Время работы",
 
+    "Showing": "Отображено",
+    "of": "из",
+    "Sort by name low to high": "По названию А-Я",
+    "Sort by name high to low": "По названию Я-А",
+    "Sort by price low to high": "Сначала дешевле",
+    "Sort by price high to low": "Сначала дороже",
+
     "Where buy": "Где купить",
     "Enter keyword": "Введите поисковы запрос",
     "Show more": "Подробнее",
