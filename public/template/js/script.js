@@ -1470,7 +1470,6 @@ $document.ready(function () {
    * @description Enables PhotoSwipe Gallery plugin
    */
   if (plugins.photoSwipeGallery.length && !isNoviBuilder) {
-
     // init image click event
     $document.delegate("[data-photo-swipe-item]", "click", function (event) {
       event.preventDefault();
@@ -1494,6 +1493,8 @@ $document.ready(function () {
           src = $item.attr('href'),
           size = $item.attr('data-size').split('x'),
           pswdItem;
+
+          console.log(src);
 
         if ($item.is(':visible')) {
 

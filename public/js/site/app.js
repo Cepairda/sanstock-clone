@@ -43208,6 +43208,7 @@ $document.ready(function () {
             src = $item.attr('href'),
             size = $item.attr('data-size').split('x'),
             pswdItem;
+        console.log(src);
 
         if ($item.is(':visible')) {
           // if we have this image the first time
@@ -43242,13 +43243,7 @@ $document.ready(function () {
             w: $el.width()
           };
         }
-      }; // open the photoswipe gallery
-      //console.log(`pswpElement ${pswpElement}`);
-      //console.log(`PhotoSwipeUI_Default ${PhotoSwipeUI_Default}`);
-      //console.log(`pswpItems ${pswpItems}`);
-      //console.log(`options ${options}`);
-      //pswp = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, pswpItems, options);
-      //pswp.init();
+      };
     });
   }
   /**

@@ -18,7 +18,8 @@ class CharacteristicGroupForm extends Form
         $categoryIds = $resource->categories()->get()->keyBy('id')->keys();
         $categoriesDisabledIds = Category::join('resource_resource', function ($query) use ($resource) {
             $query->on('resource_resource.relation_id', 'resources.id')
-                ->where('resource_resource.resource_id', '!=', $resource->id);
+                ->where('resource_resource.resource_id', '!=', $resource->id)
+                ->where('resource_type', get_class($resource));
         })
         ->get()->keyBy('id')->toArray();
 
@@ -43,7 +44,7 @@ class CharacteristicGroupForm extends Form
                     'class' => 'select2bs4 form-control',
                 ],
             ]);
-        
+
             foreach ($characteristics as $characteristic) {
                 $this->add('details[characteristics][' . $characteristic->id .']', 'form', [
                     'class' => 'App\Http\Controllers\Admin\Resource\Forms\SubCharacteristicGroupForm',
@@ -55,7 +56,7 @@ class CharacteristicGroupForm extends Form
                      'label' => false
                 ]);
             }
-            
+
             $this->add('submit', 'submit', [
                 'label' => 'Сохранить'
             ])
