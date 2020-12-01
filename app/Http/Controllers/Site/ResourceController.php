@@ -36,8 +36,8 @@ class ResourceController extends Controller
             case 'category':
                 $data = [
 
-                    'category' => $category = $resource->type::joinLocalization()->withAncestors()->whereId($resource->id)->first(),
-                    'products' => Product::joinLocalization()->where('details->published', true)->whereExistsCategoryIds($category->id)->paginate()
+                    'category' => $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->first(),
+                    'products' => Product::joinLocalization()->where('details->published', 1)->whereExistsCategoryIds($category->id)->paginate()
 
                 ];
 
