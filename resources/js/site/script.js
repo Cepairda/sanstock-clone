@@ -18,7 +18,6 @@ $(document).ready(function () {
         ));
         return matches ? decodeURIComponent(matches[1]) : undefined;
     }
-
     let favoriteLink = document.querySelector('.header-favorites-count'),
         favorites = document.querySelectorAll('[data-add="favorite"]'),
         addRemoveFavorite = favorite => {
@@ -68,3 +67,7 @@ $(document).ready(function () {
     }, false);
 }());
 
+//liveSearch
+(function (){
+    //let
+}());
