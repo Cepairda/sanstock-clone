@@ -53,10 +53,7 @@
                 5. Смесители для кухонной мойки - 21
                 6. Смесители для раковины - 13--}}
 
-                @php($categoryId = [11, 8, 20, 5, 21, 13])
-                @php($categories = $categories ?? \App\Category::joinLocalization()->get()->toTree())
-
-                @foreach($categories as $category)
+                @foreach(\App\Category::joinLocalization()->whereIn('virtual_id', [11, 8, 20, 5, 21, 13])->get() as $category)
 
                     <div class="col-md-6 col-lg-4 popular-category cat-{{ $category->id }}">
                         <a class="popular-category__inner" href="{{ route('site.resource', $category->slug) }}">
