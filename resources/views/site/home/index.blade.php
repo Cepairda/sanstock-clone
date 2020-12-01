@@ -44,7 +44,7 @@
         <div class="container">
             <div class="row">
 
-                <h4 class="col-12 text-center">Популярные категории</h4>
+                <h4 class="col-12 text-center">{{ __('Popular categories') }}</h4>
 
                 {{--1. Смесители для ванной - 11
                 2. Душевая система - 8
