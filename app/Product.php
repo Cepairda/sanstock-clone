@@ -18,12 +18,12 @@ class Product extends Resource
 
     public function getNameAttribute()
     {
-        return $this->attributes['name'] ?? $this->attributes['name'] = $this->getData('name');
+        return $this->getData('name');
     }
 
     public function getSkuAttribute()
     {
-        return $this->attributes['sku'] ?? $this->attributes['sku'] = $this->getDetails('sku');
+        return $this->getDetails('sku');
     }
 
     public function getDescriptionAttribute()
@@ -35,7 +35,7 @@ class Product extends Resource
 
     public function getPriceAttribute()
     {
-        return $this->attributes['price'] ?? $this->attributes['price'] = $this->getDetails('price');
+        return $this->getDetails('price');
     }
 
     public function getRelatedAttribute()

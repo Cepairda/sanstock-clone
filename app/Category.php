@@ -10,12 +10,12 @@ class Category extends Resource
 
     public function getNameAttribute()
     {
-        return $this->attributes['name'] ?? $this->attributes['name'] = $this->getData('name');
+        return $this->getData('name');
     }
 
     public function getDescriptionAttribute()
     {
-        return $this->attributes['description'] ?? $this->attributes['description'] = $this->getData('description');
+        return $this->getData('description');
     }
 
     public function scopeWithCharacteristicGroup($query, $withCharacteristicGroupCharacteristic = true)

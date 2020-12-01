@@ -102,6 +102,11 @@ class ResourceController extends Controller
                 }
 
                 break;
+            case 'page':
+                $data = [
+                    'page' => $resource->type::joinLocalization()->whereId($resource->id)->first()
+                ];
+                break;
             default:
                 $data = [
                     'resource' => $resource->type::joinLocalization()->whereId($resource->id)->first()
