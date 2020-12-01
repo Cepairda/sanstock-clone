@@ -25,12 +25,13 @@ class ResourceController extends Controller
                         ->withCharacteristics()
                         ->whereId($resource->id)
                         ->where('details->published', 1)
+                        ->withCategory()
                         ->first(),
                 ];
                 break;
             case 'category':
                 $data = [
-                    'category' => $category = $resource->type::joinLocalization()->withAncestors()->whereId($resource->id)->first(),
+                    'category' => $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->first(),
                     'products' => Product::joinLocalization()->whereExistsCategoryIds($category->id)->paginate()
                 ];
                 break;

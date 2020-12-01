@@ -5,11 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use LaravelLocalization;
-use Illuminate\Support\Str;
+use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 
 class Resource extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasJsonRelationships;
 
     protected $table = 'resources';
     protected $request = null;
