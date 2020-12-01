@@ -52,15 +52,16 @@
                                 </div>
                             </div>
                             <!-- RD Navbar Nav-->
-                            <div class="rd-navbar-nav-wrap rd-navbar-search_not-collapsable" style="position:relative; justify-content: center">
-                                <ul class="rd-navbar-items-list rd-navbar-search_collapsable" style="position: absolute; right: 0;">
+                            <div class="rd-navbar-nav-wrap rd-navbar-search_not-collapsable">
+                                <ul class="rd-navbar-items-list rd-navbar-search_collapsable">
                                     <li>
                                         <button class="rd-navbar-search__toggle rd-navbar-fixed--hidden"
                                                 data-rd-navbar-toggle=".rd-navbar-search-wrap"></button>
                                     </li>
-                                    <li class="rd-navbar-nav-wrap__shop"><a
-                                                class="icon icon-md linear-icon-heart link-primary"
-                                                href="#"></a></li>
+                                    <li class="rd-navbar-nav-wrap__shop">
+                                        <a class="icon icon-md linear-icon-heart link-primary" href="{{ route('site.favorites') }}"></a>
+                                        <span class="header-favorites-count">0</span>
+                                    </li>
                                 </ul>
                                 <!-- RD Search-->
                                 <div class="rd-navbar-search rd-navbar-search_toggled rd-navbar-search_not-collapsable">

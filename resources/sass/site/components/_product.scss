@@ -14,6 +14,10 @@
 	position: absolute;
 	top: 5px;
 	right: 5px;
+
+	.icon.selected {
+		color: #000;
+	}
 }
 
 .desktop .product-grid .product-icon-wrap > *,
@@ -26,6 +30,7 @@
 	margin-top: 15px;
 }
 
+/* icon heart */
 .product-img-wrap {
 	position: relative;
 	max-width: 400px;
@@ -38,12 +43,20 @@
 		justify-content: center;
 		color: #c7c7c7;
 		cursor: pointer;
-	}
 
-	.icon:hover {
-		color: $gray-dark;
-	}
 
+		&:hover {
+			color: $gray-dark;
+		}
+	}
+}
+
+.linear-icon-heart.selected {
+	color: #000;
+}
+
+.favorites .product-img-wrap .icon::before {
+	content: "\E92A";
 }
 
 .product-label-wrap {

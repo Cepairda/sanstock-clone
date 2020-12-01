@@ -34577,7 +34577,6 @@ h1, h2, h3, h4, h5, h6, .heading-1, .heading-2, .heading-3, .heading-4, .heading
   font-family: inherit;
   font-weight: 200;
   color: #000;
-  letter-spacing: 0.1em;
 }
 
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, .heading-1 a, .heading-2 a, .heading-3 a, .heading-4 a, .heading-5 a, .heading-6 a {
@@ -34685,7 +34684,6 @@ h4,
   h4,
 .heading-4 {
     font-size: 30px;
-    line-height: 1.43333;
   }
 }
 h5,
@@ -34970,6 +34968,16 @@ code,
   margin-left: 7px;
 }
 
+.nav-link {
+  border: none !important;
+  background-color: transparent !important;
+  color: #888 !important;
+}
+.nav-link.active {
+  font-weight: 400 !important;
+  color: #000 !important;
+}
+
 .button {
   position: relative;
   display: inline-block;
@@ -35201,6 +35209,43 @@ span.button {
   top: 0;
   right: -8px;
   font-weight: 400;
+}
+
+@media (min-width: 768px) {
+  .rd-navbar-nav-wrap.rd-navbar-search_not-collapsable {
+    padding-right: 85px;
+  }
+}
+
+@media (min-width: 768px) {
+  .rd-navbar-nav-wrap.rd-navbar-search_not-collapsable {
+    position: relative;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .rd-navbar-items-list.rd-navbar-search_collapsable {
+    position: absolute;
+    right: 0;
+  }
+}
+
+.header-favorites-count {
+  position: absolute;
+  top: -8px;
+  right: -5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 3px;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 50px;
+  font-size: 10px;
+  line-height: 1;
+  background-color: #ec485c;
+  color: #fff;
 }
 
 .pre-footer-corporate,
@@ -35478,6 +35523,9 @@ span.button {
   top: 5px;
   right: 5px;
 }
+.product-grid .product-icon-wrap .icon.selected {
+  color: #000;
+}
 
 .desktop .product-grid .product-icon-wrap > *,
 .desktop .product-grid .product-label-wrap {
@@ -35488,6 +35536,7 @@ span.button {
   margin-top: 15px;
 }
 
+/* icon heart */
 .product-img-wrap {
   position: relative;
   max-width: 400px;
@@ -35502,6 +35551,14 @@ span.button {
 }
 .product-img-wrap .icon:hover {
   color: #888;
+}
+
+.linear-icon-heart.selected {
+  color: #000;
+}
+
+.favorites .product-img-wrap .icon::before {
+  content: "\E92A";
 }
 
 .product-label-wrap {

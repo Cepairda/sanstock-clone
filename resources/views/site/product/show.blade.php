@@ -16,13 +16,13 @@
     <section class="section-sm bg-white">
         <div class="container">
             <div class="row">
-                <div class="col-sm-6 col-md-5">
+                <div class="col-sm-12 col-lg-5">
 
                     <!-- Slick Carousel-->
                     <div class="slick-slider carousel-parent" data-arrows="false" data-loop="false" data-dots="false" data-swipe="true" data-items="1" data-child="#child-carousel" data-for="#child-carousel" data-photo-swipe-gallery="gallery">
                         <div class="item">
                             <a class="img-thumbnail-variant-2"
-{{--                               href="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"--}}
+                                {{-- href="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"--}}
                                href="{{ xml_img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name]) }}"
                                data-photo-swipe-item=""
                                data-size="2000x2000">
@@ -68,9 +68,9 @@
 
                 </div>
 
-                <div class="col-sm-6 col-md-7">
+                <div class="col-sm-12 col-lg-7">
                     <div class="product-single">
-                        <h4 class="product-single__title">{{ $product->getData('name') ?? 'Lorem ipsum dolor sit amet.' }}</h4>
+                        <h4 class="product-single__title">{{ $product->getData('name') ?? 'PRODUCT NAME' }}</h4>
                         <p class="product-single__sku">Код товара:<span>{{ $product->details['sku'] }}</span></p>
                         <p class="product-single__description">{{ $product->description }}</p>
 
@@ -86,41 +86,48 @@
                         <div class="mt-5" style="display: flex; align-items: center;">
                             <button class="button button-primary button-icon" type="submit">
                                 <span>{{ __('Where buy') }}</span></button>
-                            <span class="icon icon-md linear-icon-heart ml-4" data-toggle="tooltip"
-                                  data-original-title="Add to Wishlist"
+                            <span class="icon icon-md linear-icon-heart ml-4" data-add="favorite" data-sku="{{$product->getDetails('sku')}}"
                                   style="display: block; height: 100%;font-size: 35px; line-height: 1.5; cursor: pointer"></span>
                         </div>
                         <ul class="product-meta mt-5">
+
                             <li>
                                 <dl class="list-terms-minimal">
-                                    <dt>SKU</dt>
-                                    <dd>{{ $product->details['sku'] }}</dd>
+                                    <dt>*</dt>
+                                    <dd>{{ __('warning') }}</dd>
                                 </dl>
                             </li>
-                            <li>
-                                <dl class="list-terms-minimal">
-                                    <dt>Category</dt>
-                                    <dd>
-                                        <ul class="product-categories">
-                                            <li><a href="single-product.html">Living Room</a></li>
-                                            <li><a href="single-product.html">Dining room</a></li>
-                                            <li><a href="single-product.html">Bedroom</a></li>
-                                            <li><a href="single-product.html">Office</a></li>
-                                        </ul>
-                                    </dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl class="list-terms-minimal">
-                                    <dt>Tags</dt>
-                                    <dd>
-                                        <ul class="product-categories">
-                                            <li><a href="single-product.html">Modern</a></li>
-                                            <li><a href="single-product.html">Table</a></li>
-                                        </ul>
-                                    </dd>
-                                </dl>
-                            </li>
+
+{{--                            <li>--}}
+{{--                                <dl class="list-terms-minimal">--}}
+{{--                                    <dt>SKU</dt>--}}
+{{--                                    <dd>{{ $product->details['sku'] }}</dd>--}}
+{{--                                </dl>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <dl class="list-terms-minimal">--}}
+{{--                                    <dt>Category</dt>--}}
+{{--                                    <dd>--}}
+{{--                                        <ul class="product-categories">--}}
+{{--                                            <li><a href="single-product.html">Living Room</a></li>--}}
+{{--                                            <li><a href="single-product.html">Dining room</a></li>--}}
+{{--                                            <li><a href="single-product.html">Bedroom</a></li>--}}
+{{--                                            <li><a href="single-product.html">Office</a></li>--}}
+{{--                                        </ul>--}}
+{{--                                    </dd>--}}
+{{--                                </dl>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <dl class="list-terms-minimal">--}}
+{{--                                    <dt>Tags</dt>--}}
+{{--                                    <dd>--}}
+{{--                                        <ul class="product-categories">--}}
+{{--                                            <li><a href="single-product.html">Modern</a></li>--}}
+{{--                                            <li><a href="single-product.html">Table</a></li>--}}
+{{--                                        </ul>--}}
+{{--                                    </dd>--}}
+{{--                                </dl>--}}
+{{--                            </li>--}}
                         </ul>
                     </div>
                 </div>
@@ -133,34 +140,63 @@
         <div class="container">
           <div class="row">
             <div class="col-12">
+
                 <!-- Bootstrap tabs-->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
+
                     <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Описание</a>
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{{ __('Description') }}</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Технические характеристики</a>
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">{{ __('Specifications') }}</a>
                     </li>
+
                 </ul>
+
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Lorem ipsum dolor sit amet.</div>
+
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                        <p>{{ $product->description }}</p>
+
+                        @foreach(temp_additional($product->sku) as $uri)
+
+                            <div class="col-sm-12 text-center">
+
+                                <img class="img-fluid" src="{{ $uri }}" alt=""/>
+
+                            </div>
+
+                        @endforeach
+
+                    </div>
+
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <h5>Характеристики</h5>
-                        <table class="table-product-info">
+
+                    <h5>{{ __('Characteristics') }}</h5>
+
+                    <table class="table-product-info">
                             <tbody>
                                 @foreach ($product->characteristics as $characteristic)
                                     <tr>
-                                            <td>{{ $characteristic->name }}</td>
-                                            <td>{{ $characteristic->value }}</td>
-                                        </tr>
+                                        <td>{{ $characteristic->name }}</td>
+                                        <td>{{ $characteristic->value }}</td>
+                                    </tr>
                                 @endforeach
                                 </tbody>
-                            </table>
-                        </div>
+                        </table>
+
                     </div>
+
                 </div>
+
+                </div>
+
             </div>
+
         </div>
+
     </section>
 
     <!-- Divider-->

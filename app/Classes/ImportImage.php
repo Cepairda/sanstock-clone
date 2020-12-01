@@ -48,9 +48,11 @@ class ImportImage
         );
     }
 
-    public static function addToQueue()
+    public static function addToQueue($ids = null)
     {
-        $products = Product::where('details->published', 1)->get();
+        $products = isset($ids)
+            ? Product::where('details->published', 1)->whereIn('id', $ids)->get()
+            : Product::where('details->published', 1)->get();
 
         foreach ($products as $product) {
             ProcessImportImage::dispatch($product->getDetails('sku'))->onQueue('imageImport');
