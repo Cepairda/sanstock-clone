@@ -41520,7 +41520,25 @@ __webpack_require__(/*! ./script */ "./resources/js/site/script.js");
 })(); //liveSearch
 
 
-(function () {//let
+(function () {
+  var inputSearch = document.querySelector('#rd-navbar-search-form-input');
+
+  function xhrLiveSearch(value) {
+    fetch('search').then(function (response) {
+      console.log(response.json());
+    }).then(function (data) {
+      console.log(data);
+    });
+  }
+
+  inputSearch.oninput = function () {
+    var value = this.value.trim();
+
+    if (value.length >= 3) {
+      xhrLiveSearch();
+    } //if(value.trim()){}
+
+  };
 })();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
@@ -42311,32 +42329,7 @@ $document.ready(function () {
    */
 
 
-  function liveSearch(options) {
-    $('#' + options.live).removeClass('cleared').html();
-    options.current++;
-    options.spin.addClass('loading');
-    $.get(handler, {
-      s: decodeURI(options.term),
-      liveSearch: options.live,
-      dataType: "html",
-      liveCount: options.liveCount,
-      filter: options.filter,
-      template: options.template
-    }, function (data) {
-      options.processed++;
-      var live = $('#' + options.live);
-
-      if (options.processed == options.current && !live.hasClass('cleared')) {
-        live.find('> #search-results').removeClass('active');
-        live.html(data);
-        setTimeout(function () {
-          live.find('> #search-results').addClass('active');
-        }, 50);
-      }
-
-      options.spin.parents('.rd-search').find('.input-group-addon').removeClass('loading');
-    });
-  }
+  if (false) { var _liveSearch; }
   /**
    * attachFormValidator
    * @description  attach form validation to elements
@@ -42898,82 +42891,7 @@ $document.ready(function () {
    */
 
 
-  if (plugins.search.length || plugins.searchResults) {
-    var handler = "bat/rd-search.php";
-    var defaultTemplate = '<h6 class="search_title"><a target="_top" href="#{href}" class="search_link">#{title}</a></h6>' + '<p class="match">#{href}</p>' + '<p>...#{token}...</p>';
-    var defaultFilter = '*.html';
-
-    if (plugins.search.length) {
-      for (i = 0; i < plugins.search.length; i++) {
-        var searchItem = $(plugins.search[i]),
-            options = {
-          element: searchItem,
-          filter: searchItem.attr('data-search-filter') ? searchItem.attr('data-search-filter') : defaultFilter,
-          template: searchItem.attr('data-search-template') ? searchItem.attr('data-search-template') : defaultTemplate,
-          live: searchItem.attr('data-search-live') ? searchItem.attr('data-search-live') : false,
-          liveCount: searchItem.attr('data-search-live-count') ? parseInt(searchItem.attr('data-search-live')) : 4,
-          current: 0,
-          processed: 0,
-          timer: {}
-        };
-
-        if ($('.rd-navbar-search-toggle').length) {
-          var toggle = $('.rd-navbar-search-toggle');
-          toggle.on('click', function () {
-            if (!$(this).hasClass('active')) {
-              searchItem.find('input').val('').trigger('propertychange');
-            }
-          });
-        }
-
-        if (options.live) {
-          var clearHandler = false;
-          searchItem.find('input').on("keyup input propertychange", $.proxy(function () {
-            this.term = this.element.find('input').val().trim();
-            this.spin = this.element.find('.input-group-addon');
-            clearTimeout(this.timer);
-
-            if (this.term.length > 2) {
-              this.timer = setTimeout(liveSearch(this), 200);
-
-              if (clearHandler == false) {
-                clearHandler = true;
-                $("body").on("click", function (e) {
-                  if ($(e.toElement).parents('.rd-search').length == 0) {
-                    $('#rd-search-results-live').addClass('cleared').html('');
-                  }
-                });
-              }
-            } else if (this.term.length == 0) {
-              $('#' + this.live).addClass('cleared').html('');
-            }
-          }, options, this));
-        }
-
-        searchItem.submit($.proxy(function () {
-          $('<input />').attr('type', 'hidden').attr('name', "filter").attr('value', this.filter).appendTo(this.element);
-          return true;
-        }, options, this));
-      }
-    }
-
-    if (plugins.searchResults.length) {
-      var regExp = /\?.*s=([^&]+)\&filter=([^&]+)/g;
-      var match = regExp.exec(location.search);
-
-      if (match != null) {
-        $.get(handler, {
-          s: decodeURI(match[1]),
-          dataType: "html",
-          filter: match[2],
-          template: defaultTemplate,
-          live: ''
-        }, function (data) {
-          plugins.searchResults.html(data);
-        });
-      }
-    }
-  }
+  if (false) { var match, regExp, clearHandler, toggle, searchItem, options, defaultFilter, defaultTemplate, handler; }
   /**
    * Isotope
    * @description Enables Isotope plugin

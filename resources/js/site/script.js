@@ -69,5 +69,25 @@ $(document).ready(function () {
 
 //liveSearch
 (function (){
-    //let
+    let inputSearch = document.querySelector('#rd-navbar-search-form-input');
+    function xhrLiveSearch (value) {
+        fetch('search')
+            .then((response) => {
+                console.log(response.json());
+            })
+            .then((data) => {
+                console.log(data);
+            });
+    }
+
+
+    inputSearch.oninput = function () {
+        let value = this.value.trim();
+
+        if(value.length >= 3) {
+            xhrLiveSearch()
+        }
+
+        //if(value.trim()){}
+    }
 }());
