@@ -15,6 +15,13 @@
     "Address string": "ул. Шевченка, 327, корп. 2-2, Харків, Харківська область, 61000",
     "We are open": "Часи роботи",
 
+    "Showing": "Зображено",
+    "of": "з",
+    "Sort by name low to high": "За назвою А-Я",
+    "Sort by name high to low": "За назвою Я-А",
+    "Sort by price low to high": "Спочатку дешевші",
+    "Sort by price high to low": "Спочатку дорожчі",
+
     "Where buy": "Де купити",
     "Enter keyword": "Введіть пошуковий запит",
     "Show more": "Детальніше",
