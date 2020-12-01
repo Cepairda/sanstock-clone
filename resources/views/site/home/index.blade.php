@@ -46,7 +46,15 @@
 
                 <h4 class="col-12 text-center">Популярные категории</h4>
 
-                @php($categories = $categories ?? \App\Category::joinLocalization()->get()->toTree())
+                {{--1. Смесители для ванной - 11
+                2. Душевая система - 8
+                3. Мойки из нерж. стали - 20
+                4. Аксессуары для ванной 5 (это категория 1 уровня)
+                5. Смесители для кухонной мойки - 21
+                6. Смесители для раковины - 13--}}
+
+                @php($categoryId = [11, 8, 20, 5, 21, 13])
+                @php($categories = $categories ?? \App\Category::joinLocalization()->whereIn('id', $categoryId)->get())
 
                 @foreach($categories as $category)
 
@@ -65,7 +73,7 @@
 
     {{-- @include('site.product.carousel', ['title' => 'Новинки', 'products' => $home_product]) --}}
 
-    <section class="home-bn-info section-lg" style=" padding-top: 225px;  padding-bottom: 225px;background-image: url({{ asset('images/site/home-slider/slide-3.jpg') }}); background-position: center;">
+    <section class="home-bn-info section-lg" style="padding-top: 225px;  padding-bottom: 225px;background-image: url({{ asset('images/site/home-slider/slide-3.jpg') }}); background-position: center;">
         <div class="container">
             <div class="row justify-content-end">
                 <div class="col-6 text-right">
