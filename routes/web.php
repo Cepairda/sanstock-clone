@@ -7,7 +7,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
     Auth::routes();
     //Route::get('/home', 'HomeController@index')->middleware(['auth:web', 'checkAccess'])->name('home');
     //Route::get('/home', 'HomeController@index')->name('home');
-    //Route::get('/filter', 'HomeController@filter')->name('filter');
+    Route::get('/filter', 'HomeController@filter')->name('filter');
 
      //view page (test)
      Route::get('/category', function () {return view('site.category.show');})->name('category');
@@ -46,6 +46,8 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::post('/import-price', 'ProductController@importPrice')->name('import-price');
             Route::get('/export', 'ProductController@export')->name('export');
             Route::post('/import', 'ProductController@import')->name('import');
+            Route::get('/create-search-string', 'ProductController@createSearchString')->name('create-search-string');
+
         });
 
         Route::prefix('characteristics')->as('characteristics.')->group(function () {
@@ -101,6 +103,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
     Route::as('site.')->namespace('Site')->group(function () {
         Route::get('/', 'HomeController@index')->name('/');
+        Route::get('search', 'ProductController@search')->name('products.search');
         Route::get('/favorites', 'ResourceController@Favorites')->name('favorites');
         Route::get('/{slug}', 'ResourceController@getResource')->where('slug', '.*')->name('resource');
     });
