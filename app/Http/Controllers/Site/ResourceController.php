@@ -92,7 +92,7 @@ class ResourceController extends Controller
 
                         $alias = 'rr' . $characteristicId;
 
-                        $products->join('resource_resource as ' . $alias, function($q) use ($alias, $fids) {
+                        $products->join('resource_resource as ' . $alias, function ($q) use ($alias, $fids) {
                             $q->on('resources.id', '=', $alias . '.resource_id')
                                 ->whereIn($alias . '.relation_id', $fids);
                         });
@@ -111,15 +111,15 @@ class ResourceController extends Controller
         return view('site.' . $type . '.show', $data);
     }
 
-  public function favorites()
-  {
-    $cookie = !empty($_COOKIE['favorites']) ? $_COOKIE['favorites'] : null;
+    public function favorites()
+    {
+        $cookie = !empty($_COOKIE['favorites']) ? $_COOKIE['favorites'] : null;
 
-    $data['products'] = collect();
+        $data['products'] = collect();
         if (isset($cookie)) {
-          $favorites = explode(',', $cookie);
-          $data['products'] = Product::joinLocalization()->whereIn('details->sku', $favorites)->paginate(12);
+            $favorites = explode(',', $cookie);
+            $data['products'] = Product::joinLocalization()->whereIn('details->sku', $favorites)->paginate(12);
         }
-    return view('site.product.favorites', $data);
-  }
+        return view('site.product.favorites', $data);
+    }
 }
