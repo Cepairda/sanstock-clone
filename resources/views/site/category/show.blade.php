@@ -10,8 +10,6 @@
 
 @section('content')
 
-{{--  {{ dd($category->ancestors) }}--}}
-
     @include('site.components.breadcrumbs', ['title' => $category->getData('name')])
 
     @if( $category->ancestors->isNotEmpty() )
@@ -23,17 +21,16 @@
                 <div class="cell-md-9 section-divided__main section-divided__main-left">
                     <div class="section-sm">
                         <div class="filter-shop-box">
-                            <p>Showing 1–12 of 15 results</p>
+                            <p>{{ __('Showing') }} {{ $products->count() }} {{ __('of') }} {{ $products->total() }} </p>
                             <div class="form-wrap">
                                 <!--Select 2-->
-                                <select class="form-input select-filter" data-placeholder="Default sorting"
-                                        data-minimum-results-for-search="Infinity">
-                                    <option>По названию</option>
-                                    <option value="2">Sort by popularity</option>
-                                    <option value="3">Sort by average rating</option>
-                                    <option value="4">Sort by newness</option>
-                                    <option value="5">Sort by price: low to high</option>
-                                    <option value="6">Sort by price: high to low</option>
+                                <select class="form-input select-filter" data-placeholder="Default sorting" data-minimum-results-for-search="Infinity">
+
+                                    <option>{{ __('Sort by name low to high') }}</option>
+                                    <option value="2">{{ __('Sort by name high to low') }}</option>
+                                    <option value="3">{{ __('Sort by price low to high') }}</option>
+                                    <option value="4">{{ __('Sort by price high to low') }}</option>
+
                                 </select>
                             </div>
                         </div>
@@ -61,6 +58,49 @@
 
     @else
 
+        <div class="container">
+
+            <div class="row">
+
+                @foreach($category->descendants as $category)
+
+                    <div class="col-sm-6 col-lg-4">
+
+                        <img alt="" src="http://lidz.loc.ua/storage/product/1000-21650.jpg">
+
+                        <div class="product product-grid">
+
+                            <div class="product-img-wrap w-100" style="padding: 30px;">
+
+                                <img alt="" src="http://lidz.loc.ua/storage/product/1000-21650.jpg">
+
+                            </div>
+
+                            <div class="product-caption">
+
+                                <div class="product-title">
+
+                                    <a href="{{ route('site.resource', $category->slug) }}">{{ $category->name }}</a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                @endforeach
+
+            </div>
+
+        </div>
+
+
+
+
+        </div>
+
         <section class="section-md bg-white">
 
             <div class="shell">
@@ -87,7 +127,7 @@
 
                                             <div class="product-title">
 
-                                                <a href="{{ route('site.resource', $category->slug) }}">SUBCATEGORY NAME HERE</a>
+                                                <a href="{{ route('site.resource', $category->slug) }}">{{ $category->name }}</a>
 
                                             </div>
 

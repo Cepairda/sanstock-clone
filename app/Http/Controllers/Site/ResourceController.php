@@ -35,14 +35,23 @@ class ResourceController extends Controller
                 break;
             case 'category':
                 $data = [
-                    'category' => $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->first(),
-                    'products' => Product::joinLocalization()->whereExistsCategoryIds($category->id)->paginate()
+
+                    'category' => $category = $resource->type::joinLocalization()->withAncestors()->whereId($resource->id)->first(),
+                    'products' => Product::joinLocalization()->where('details->published', true)->whereExistsCategoryIds($category->id)->paginate()
+
                 ];
 
                 $products = Product::joinLocalization()->whereExistsCategoryIds($category->id)->get()->keyBy('id')->keys();
-                $characteristics = $category->characteristic_group[0]->getDetails('characteristics');
+                $characteristics = isset($category->characteristic_group[0])
+                    ? $category->characteristic_group[0]->getDetails('characteristics')
+                    : null;
+
+                $characteristicIds = null;
 
                 if (isset($characteristics)) {
+                    $characteristicIds = [];
+
+
                     foreach ($characteristics as $id => $characteristic) {
                         if (isset($characteristic['filter']))
                             $characteristicIds[] = $id;
