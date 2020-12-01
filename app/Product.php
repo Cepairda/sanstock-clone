@@ -84,9 +84,15 @@ class Product extends Resource
             ->where('relation_type', CharacteristicValue::class);
     }
 
-    public function getCategoryAttribute()
+    public function scopeWithCategory($query)
     {
-        return $this->attributes['category'] ?? $this->attributes['category'] =
-                Category::whereId($this->getDetails('category_id'))->joinLocalization()->withAncestors()->first();
+        return $query->with(['category' => function($query) {
+            return $query->joinLocalization()->withAncestors();
+        }]);
+    }
+
+    public function category()
+    {
+        return $this->hasOne(Category::class, 'id', 'details->category_id');
     }
 }

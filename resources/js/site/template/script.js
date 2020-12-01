@@ -1476,7 +1476,6 @@ $document.ready(function () {
    * @description Enables PhotoSwipe Gallery plugin
    */
   if (plugins.photoSwipeGallery.length && !isNoviBuilder) {
-
     // init image click event
     $document.delegate("[data-photo-swipe-item]", "click", function (event) {
       event.preventDefault();
@@ -1500,6 +1499,8 @@ $document.ready(function () {
           src = $item.attr('href'),
           size = $item.attr('data-size').split('x'),
           pswdItem;
+
+          console.log(src);
 
         if ($item.is(':visible')) {
 
@@ -1539,16 +1540,7 @@ $document.ready(function () {
             w: $el.width()
           };
         }
-      };
-
-      // open the photoswipe gallery
-      //console.log(`pswpElement ${pswpElement}`);
-      //console.log(`PhotoSwipeUI_Default ${PhotoSwipeUI_Default}`);
-      //console.log(`pswpItems ${pswpItems}`);
-      //console.log(`options ${options}`);
-      //pswp = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, pswpItems, options);
-      //pswp.init();
-      
+      };      
     });
   }
 

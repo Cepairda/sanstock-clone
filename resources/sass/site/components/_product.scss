@@ -140,9 +140,11 @@
 		color: #000;
 
 		&::after {
-			content: "₴";
+			content: "грн.";
 			display: inline-block;
 			margin-left: 4px;
+			font-size: 18px;
+			color: #888;
 		}
 	}
 
