@@ -30,7 +30,7 @@ class Product extends Resource
     {
         return $this->attributes['description'] ?? $this->attributes['description'] =
                 $this->getData('description') ??
-                ($description = $this->characteristics->where('name', (LaravelLocalization::getCurrentLocale() == 'ru' ? 'Описание' : 'Опис'))->first()
+                (($description = $this->characteristics->where('name', (LaravelLocalization::getCurrentLocale() == 'ru' ? 'Описание' : 'Опис'))->first())
                     ? $description->value
                     : null);
     }
