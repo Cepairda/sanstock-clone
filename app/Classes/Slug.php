@@ -9,8 +9,14 @@ class Slug
 {
     public static function create($resource, $name)
     {
-        $originalSlug = Str::slug($name);
-        $slug = $originalSlug;
+        $originalSlug = '';
+        $slugs = explode('/', $name);
+
+        foreach ($slugs as $slug) {
+            $originalSlug .= Str::slug($slug) . '/';
+        }
+
+        $slug = rtrim($originalSlug, '/');
         $i = 0;
 
         while ($resource::whereSlug($slug)->first()) {
