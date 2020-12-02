@@ -21738,9 +21738,10 @@ html[class*=ie] .dtp-hand, html[class*=ie] .dtp-hour-hand {
   padding: 0 2px;
 }
 
-.rd-range-inner [class*=rd-range-input-value-]:before {
-  content: "$";
+.rd-range-inner [class*=rd-range-input-value-]::after {
+  content: "\433\440\43D.";
   display: inline-block;
+  margin-left: 4px;
 }
 
 .slick-slider {
@@ -31215,7 +31216,7 @@ html[class*=ie] .dtp-hand, html[class*=ie] .dtp-hour-hand {
 .rd-navbar-fullwidth .rd-navbar-nav > li > .rd-navbar-dropdown,
 .rd-navbar-static .rd-navbar-nav > li > .rd-navbar-dropdown {
   position: absolute;
-  left: 0;
+  left: 30px;
   z-index: 5;
   display: block;
   text-align: left;
@@ -31682,6 +31683,12 @@ html[class*=ie] .dtp-hand, html[class*=ie] .dtp-hour-hand {
 .rd-navbar-static .rd-navbar-search-wrap,
 .rd-navbar-sidebar .rd-navbar-search-wrap {
   position: relative;
+}
+
+@media (min-width: 768px) {
+  .rd-navbar-search_collapsable {
+    padding-right: 100px;
+  }
 }
 
 .rd-navbar-static .rd-navbar-search-wrap .rd-navbar-search_collapsable,
@@ -32420,7 +32427,7 @@ html[class*=ie] .dtp-hand, html[class*=ie] .dtp-hour-hand {
 @media (max-width: 1199px) {
   .rd-navbar-static.rd-navbar_inverse .rd-navbar-nav > li > .rd-navbar-dropdown,
 .rd-navbar-static.rd-navbar_inverse .rd-navbar-nav > li .rd-navbar-megamenu {
-    margin-top: 29px;
+    margin-top: 5px;
   }
 }
 .rd-navbar-static.rd-navbar_inverse:not(.rd-navbar--is-stuck) .rd-navbar-search {
@@ -32430,7 +32437,7 @@ html[class*=ie] .dtp-hand, html[class*=ie] .dtp-hour-hand {
 @media (min-width: 1200px) {
   .rd-navbar-static.rd-navbar_inverse:not(.rd-navbar--is-stuck) .rd-navbar-nav > li > .rd-navbar-dropdown,
 .rd-navbar-static.rd-navbar_inverse:not(.rd-navbar--is-stuck) .rd-navbar-nav > li .rd-navbar-megamenu {
-    margin-top: 43px;
+    margin-top: 5px;
   }
 }
 .rd-navbar-static.rd-navbar_corporate .rd-navbar-top-panel {
@@ -32547,7 +32554,7 @@ html[class*=ie] .dtp-hand, html[class*=ie] .dtp-hour-hand {
 .rd-navbar-static.rd-navbar--is-stuck .rd-navbar-nav > li > .rd-navbar-dropdown,
 .rd-navbar-static.rd-navbar--is-stuck .rd-navbar-nav > li .rd-navbar-megamenu, .rd-navbar-static.rd-navbar--is-clone .rd-navbar-nav > li > .rd-navbar-dropdown,
 .rd-navbar-static.rd-navbar--is-clone .rd-navbar-nav > li .rd-navbar-megamenu {
-  margin-top: 29px;
+  margin-top: 5px;
 }
 
 .rd-navbar-static.rd-navbar--is-stuck .rd-navbar-top-panel, .rd-navbar-static.rd-navbar--is-clone .rd-navbar-top-panel {
@@ -32756,7 +32763,7 @@ html[class*=ie] .dtp-hand, html[class*=ie] .dtp-hour-hand {
 .rd-navbar-fullwidth.rd-navbar--is-stuck .rd-navbar-nav > li > .rd-navbar-dropdown,
 .rd-navbar-fullwidth.rd-navbar--is-stuck .rd-navbar-nav > li .rd-navbar-megamenu, .rd-navbar-fullwidth.rd-navbar--is-clone .rd-navbar-nav > li > .rd-navbar-dropdown,
 .rd-navbar-fullwidth.rd-navbar--is-clone .rd-navbar-nav > li .rd-navbar-megamenu {
-  margin-top: 29px;
+  margin-top: 5px;
 }
 
 @media (max-width: 1199px) {
@@ -34047,10 +34054,13 @@ html.boxed .rd-navbar--is-clone {
 .rd-search-results-live .search_list > li {
   display: inline-block;
   vertical-align: top;
-  margin-top: 20px;
-  padding-left: 10px;
-  padding-right: 10px;
+  margin-top: 5px;
+  padding: 10px;
   width: 32.5%;
+}
+
+.rd-search-results-live li:hover {
+  background-color: #f5f5f5;
 }
 
 @media (min-width: 1200px) {
@@ -34104,6 +34114,15 @@ html.boxed .rd-navbar--is-clone {
 
 .rd-search-results-live .match {
   display: none;
+}
+
+.rd-search-results-live img {
+  width: 75px;
+  height: 75px;
+}
+
+.rd-search-results-live .linear-icon-heart::before {
+  cursor: pointer;
 }
 
 .not-empty ~ .rd-search-results-live {
@@ -35233,8 +35252,8 @@ span.button {
 
 .header-favorites-count {
   position: absolute;
-  top: -8px;
-  right: -5px;
+  top: 5px;
+  right: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35246,6 +35265,12 @@ span.button {
   line-height: 1;
   background-color: #ec485c;
   color: #fff;
+}
+@media (min-width: 768px) {
+  .header-favorites-count {
+    top: -8px;
+    right: -5px;
+  }
 }
 
 .pre-footer-corporate,
@@ -35922,8 +35947,10 @@ span.button {
 .home .rd-navbar {
   background-color: transparent;
 }
-.home-carousel {
-  margin-top: -100px;
+@media (min-width: 1200px) {
+  .home-carousel {
+    margin-top: -100px;
+  }
 }
 .home__carousel .item__desc {
   position: absolute;
@@ -35932,9 +35959,19 @@ span.button {
   transform: translate(-50%, -50%);
 }
 .home__carousel .item__desc--title {
-  font-size: 56px;
+  font-size: 24px;
   line-height: 1.3;
   color: #000;
+}
+@media (min-width: 576px) {
+  .home__carousel .item__desc--title {
+    font-size: 36px;
+  }
+}
+@media (min-width: 1200px) {
+  .home__carousel .item__desc--title {
+    font-size: 56px;
+  }
 }
 .home__carousel .owl-nav {
   position: absolute;

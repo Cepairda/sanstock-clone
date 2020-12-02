@@ -22,20 +22,20 @@
             </ul>
         </section>
     @endforeach
-
+ 
     <!-- Range-->
     <section class="section-sm">
-        <h5>Filter By Price</h5>
+        <h5>{{ __('Price') }}</h5>
         <!--RD Range-->
         <div class="rd-range-wrap">
-            <div class="rd-range-inner"><span>Price: </span><span class="rd-range-input-value-1"></span><span>—</span><span
+            <div class="rd-range-inner"><span class="rd-range-input-value-1"></span><span>—</span><span
                     class="rd-range-input-value-2"></span></div>
             <div class="rd-range" data-min="10" data-max="500" data-start="[75, 244]" data-step="1"
                  data-tooltip="true" data-min-diff="10" data-input=".rd-range-input-value-1"
                  data-input-2=".rd-range-input-value-2"></div>
         </div>
 {{--        <a class="button button-gray-light-outline" href="#">Filter</a>--}}
-        <button class="button button-gray-light-outline" href="#">Filter</button>
+        <button class="button button-gray-light-outline" href="#">{{ __('Apply') }}</button>
     </section>
 
 </form>
