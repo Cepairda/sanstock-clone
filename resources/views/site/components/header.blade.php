@@ -65,7 +65,7 @@
                                 </ul>
                                 <!-- RD Search-->
                                 <div class="rd-navbar-search rd-navbar-search_toggled rd-navbar-search_not-collapsable">
-                                    <form class="rd-search" action="search-results.html" method="GET"
+                                    <form class="rd-search" action="" method=""
                                           data-search-live="rd-search-results-live">
                                         <div class="form-wrap">
                                             <input class="form-input" id="rd-navbar-search-form-input" type="text"
@@ -74,7 +74,7 @@
                                             <label class="form-label" for="rd-navbar-search-form-input">{{ __('Enter keyword') }}</label>
                                             <div class="rd-search-results-live" id="rd-search-results-live"></div>
                                         </div>
-                                        <button class="rd-search__submit" type="submit"></button>
+                                        <div class="rd-search__submit"></div>
                                     </form>
                                     <div class="rd-navbar-fixed--hidden">
                                         <button class="rd-navbar-search__toggle"

@@ -4273,9 +4273,10 @@ html[class*="ie"] .dtp-hand, html[class*="ie"] .dtp-hour-hand {
 	padding: 0 2px;
 }
 
-.rd-range-inner [class*='rd-range-input-value-']:before {
-	content: "$";
+.rd-range-inner [class*='rd-range-input-value-']::after {
+	content: "грн.";
 	display: inline-block;
+    margin-left: 4px;
 }
 
 .slick-slider {
