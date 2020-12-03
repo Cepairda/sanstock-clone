@@ -3,10 +3,11 @@
 namespace App;
 
 use LaravelLocalization;
+use Carbon\Carbon;
 
 class Product extends Resource
 {
-    protected $appends = ['main_image', 'additional_image'];
+    protected $appends = ['main_image', 'additional_image', 'price_updated_at'];
 
     public function getMainImageAttribute(){
 
@@ -38,6 +39,11 @@ class Product extends Resource
     public function getPriceAttribute()
     {
         return $this->getDetails('price');
+    }
+
+    public function getPriceUpdatedAtAttribute()
+    {
+        return Carbon::parse($this->getDetails('price_updated_at'), config('timezone'));
     }
 
     public function getRelatedAttribute()
@@ -96,5 +102,12 @@ class Product extends Resource
     public function category()
     {
         return $this->hasOne(Category::class, 'id', 'details->category_id');
+    }
+
+    public function relateProducts()
+    {
+        return $this->belongsToMany(Product::class, 'resource_resource',
+            'resource_id', 'relation_id')
+            ->where('relation_type', Product::class);
     }
 }
