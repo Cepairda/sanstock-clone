@@ -79,6 +79,19 @@ class ProductImport implements ToCollection, WithHeadingRow
 
                 $product->updateRelations();
             }
+
+            $relateProductsSku = !empty($row['relate_products_sku']) ? explode('|', $row['relate_products_sku']) : [];
+            $relateProductsIds = Product::whereIn('details->sku', $relateProductsSku)->get()->keyBy('id')->keys()->toArray();
+
+            if (!empty($relateProductsIds)) {
+                $product->setRequest([
+                    'relations' => [
+                        Product::class => $relateProductsIds,
+                    ]
+                ]);
+
+                $product->updateRelations();
+            }
         }
     }
 }

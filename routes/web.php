@@ -7,7 +7,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
     Auth::routes();
     //Route::get('/home', 'HomeController@index')->middleware(['auth:web', 'checkAccess'])->name('home');
     //Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/filter', 'HomeController@filter')->name('filter');
+    // Route::get('/', 'HomeController@filter')->name('filter');
 
      //view page (test)
      Route::get('/category', function () {return view('site.category.show');})->name('category');
@@ -104,6 +104,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
     Route::as('site.')->namespace('Site')->group(function () {
         Route::get('/', 'HomeController@index')->name('/');
         Route::get('search', 'ProductController@search')->name('products.search');
+        Route::post('products/update-price', 'ProductController@updatePrice')->name('products.update-price');
         Route::get('/favorites', 'ResourceController@Favorites')->name('favorites');
         Route::get('/{slug}', 'ResourceController@getResource')->where('slug', '.*')->name('resource');
     });

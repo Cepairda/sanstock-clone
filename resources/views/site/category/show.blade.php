@@ -12,6 +12,10 @@
 
     @include('site.components.breadcrumbs', ['title' => $category->getData('name')])
 
+    <form>
+        <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+    </form>
+
     @if( $category->descendants->isNotEmpty() )
 
         <section class="section-md bg-white">

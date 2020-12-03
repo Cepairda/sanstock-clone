@@ -104,3 +104,28 @@ window.delay = (() => {
         //if(value.trim()){}
     }
 }());
+
+//update Price
+(function (){
+    let url = 'products/update-price';
+    let dataSku = document.querySelectorAll('[data-product-sku].updatePriceJs');
+    let skuArray = [];
+
+    for (let sku of dataSku) {
+        skuArray.push(+sku.dataset.productSku);
+    }
+
+    if (skuArray.length) {
+        fetch(url, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-Token": document.querySelector('input[name=_token]').value,
+            },
+            method: "post",
+            credentials: "same-origin",
+            body: JSON.stringify({'sku': skuArray}),
+        })
+    }
+}());

@@ -9,6 +9,7 @@
 
     @php($controllerClass = get_class(request()->route()->controller))
     @php($resourceClass = get_class($resources))
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -46,10 +47,13 @@
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <div id="example1_filter" class="dataTables_filter">
-                                    <label>Поиск:
-                                        <input type="search" class="form-control form-control-sm"
-                                               placeholder="" aria-controls="example1">
-                                    </label>
+                                    <form>
+                                        <label>Поиск:
+                                            <input type="search" name="search" class="form-control form-control-sm"
+                                                   placeholder="" aria-controls="example1">
+                                        </label>
+                                        <button class="btn btn-primary">Найти</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -61,10 +65,21 @@
                                         @if($resourceClass == 'Kalnoy\Nestedset\Collection')
                                             <th></th>
                                         @endif
-                                        <th class="sorting_asc">ID</th>
-                                        <th class="sorting">Дата создания</th>
-                                        <th class="sorting">Дата редактирования</th>
-                                        <th class="sorting">Дата удаления</th>
+
+                                        @php($search = $search = $_GET['search'] ? ('&search=' . $_GET['search']) : null)
+
+                                        <th class="sorting_asc">
+                                            <a href="{{ ((isset($_GET['id']) && $_GET['id'] == 'desc') ? '?id=asc' : '?id=desc') . $search}}">ID</a>
+                                        </th>
+                                        <th class="sorting">
+                                            <a href="{{ ((isset($_GET['created_at']) && $_GET['created_at'] == 'desc') ? '?created_at=asc' : '?created_at=desc') . $search}}">Дата создания</a>
+                                        </th>
+                                        <th class="sorting">
+                                            <a href="{{ ((isset($_GET['updated_at']) && $_GET['updated_at'] == 'desc') ? '?updated_at=asc' : '?updated_at=desc') . $search}}">Дата редактирования</a>
+                                        </th>
+                                        <th class="sorting">
+                                            <a href="{{ ((isset($_GET['deleted_at']) && $_GET['deleted_at'] == 'desc') ? '?deleted_at=asc' : '?deleted_at=desc') . $search}}">Дата удаления</a>
+                                        </th>
                                         <th>Детали</th>
                                         <th>Данные</th>
                                         <th>Действия</th>

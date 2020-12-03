@@ -36,9 +36,12 @@ class ProductController extends Controller
     {
         try {
             $sku = $request->post('sku');
+
             $productSku = !empty($sku)
-                ? Product::select(['details->sku as sku'])->where('details->sku', $sku)->get()->keyBy('sku')->keys()->toArray()
-                : Product::select(['details->sku as sku'])->get()->keyBy('sku')->keys()->toArray();
+                ? Product::whereIn('details->sku', $sku)->get()->keyBy('sku')->keys()->toArray()
+                : Product::get()->keyBy('sku')->keys()->toArray();
+
+            //dd($productSku);
 
             $client = new Client();
             $res = $client->request('POST', 'https://b2b-sandi.com.ua/api/price-center', [
@@ -58,7 +61,7 @@ class ProductController extends Controller
                 }
             }
 
-            return redirect()->back();
+            //return redirect()->back();
         } catch (\Exception $e) {
 
         }
