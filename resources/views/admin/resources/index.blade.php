@@ -53,6 +53,10 @@
                                                    placeholder="" aria-controls="example1">
                                         </label>
                                         <button class="btn btn-primary">Найти</button>
+                                        <a href="{{ action([$controllerClass, 'createSearchString']) }}"
+                                           class="btn btn-success text-white">
+                                            Генерировать Search String
+                                        </a>
                                     </form>
                                 </div>
                             </div>
@@ -66,7 +70,7 @@
                                             <th></th>
                                         @endif
 
-                                        @php($search = $search = $_GET['search'] ? ('&search=' . $_GET['search']) : null)
+                                        @php($search = isset($_GET['search']) ? ('&search=' . $_GET['search']) : null)
 
                                         <th class="sorting_asc">
                                             <a href="{{ ((isset($_GET['id']) && $_GET['id'] == 'desc') ? '?id=asc' : '?id=desc') . $search}}">ID</a>

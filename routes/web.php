@@ -38,6 +38,8 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
             Route::get('/export', 'CategoryController@export')->name('export');
             Route::post('/import', 'CategoryController@import')->name('import');
+            Route::get('/create-search-string', 'CategoryController@createSearchString')->name('create-search-string');
+
         });
 
         Route::prefix('products')->as('products.')->group(function () {
@@ -52,6 +54,8 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::prefix('characteristics')->as('characteristics.')->group(function () {
             Route::resource('/', 'CharacteristicController')->parameters(['' => 'characteristic'])->except(['show']);
+
+            Route::get('/create-search-string', 'CharacteristicController@createSearchString')->name('create-search-string');
         });
 
         Route::prefix('characteristic-groups')->as('characteristic-groups.')->group(function () {
@@ -60,6 +64,8 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::prefix('sale-points')->as('sale-points.')->group(function () {
             Route::resource('/', 'SalePointController')->parameters(['' => 'sale-point'])->except(['show']);
+
+            Route::get('/create-search-string', 'SalePointController@createSearchString')->name('create-search-string');
         });
 
         Route::prefix('users')->as('users.')->group(function () {
@@ -85,15 +91,21 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         });
 
         Route::prefix('blog-categories')->as('blog-categories.')->group(function () {
-            Route::resource('/', 'BlogCategoryController')->parameters(['' => 'blog-category']);
+            Route::resource('/', 'BlogCategoryController')->parameters(['' => 'blog-category'])->except(['show']);
+
+            Route::get('/create-search-string', 'BlogCategoryController@createSearchString')->name('create-search-string');
         });
 
         Route::prefix('blog-posts')->as('blog-posts.')->group(function () {
             Route::resource('/', 'BlogPostController')->parameters(['' => 'blog-post']);
+
+            Route::get('/create-search-string', 'BlogPostController@createSearchString')->name('create-search-string');
         });
 
         Route::prefix('pages')->as('pages.')->group(function () {
-            Route::resource('/', 'PageController')->parameters(['' => 'page']);
+            Route::resource('/', 'PageController')->parameters(['' => 'page'])->except(['show']);
+
+            Route::get('/create-search-string', 'PageController@createSearchString')->name('create-search-string');
         });
 
         Route::prefix('smart-filters')->as('smart-filters.')->group(function () {

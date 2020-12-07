@@ -9,6 +9,10 @@
     <title>@yield('meta_title')</title>
     <meta name="description" content="@yield('meta_description')">
     <meta name="theme-color" content="">
+    <link rel="alternate" hreflang="{{ 'ru-ua' }}"
+          href="{{ LaravelLocalization::getLocalizedURL('ru') }}">
+    <link rel="alternate" hreflang="{{ 'uk-ua' }}"
+          href="{{ LaravelLocalization::getLocalizedURL('uk') }}">
 </head>
 <body id="@yield('body_id')" class="@yield('body_class')">
     <div class="page">

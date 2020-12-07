@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Resource\Forms;
 
 use App\Category;
 use App\Brand;
+use App\Product;
 use Kris\LaravelFormBuilder\Form;
 
 class ProductForm extends Form
@@ -12,6 +13,9 @@ class ProductForm extends Form
     {
         $resource = $this->getModel();
         $brandChoices = Brand::joinLocalization()->get()->pluck('data.name', 'id')->toArray();
+        $products = Product::joinLocalization()->get();
+        $productsChoices = $products->pluck('details.sku', 'id')->toArray();
+        $productsIds = $resource->relateProducts()->get();//->keyBy('id')->keys();
         $categories = Category::joinLocalization()->with('ancestors')->get()->toFlatTree();
         $categoryChoices = to_select_options($categories);
         $categoryIds = $resource->categories()->get()->keyBy('id')->keys();
@@ -53,6 +57,15 @@ class ProductForm extends Form
                 'label' => 'Price',
                 'rules' => ['required'],
                 'value' => $resource->getDetails('price'),
+            ])
+            ->add('relations[App\Product]', 'choice', [
+                'multiple' => true,
+                'label' => 'Связанные товары',
+                'choices' => $productsChoices,
+                'selected' => $productsIds,
+                'attr' => [
+                    'class' => 'select2bs4 form-control',
+                ],
             ])
             ->add('details[category_id]', 'select', [
                 'label' => 'Основная категория',

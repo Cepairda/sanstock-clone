@@ -71,6 +71,13 @@ class Product extends Resource
         }]);
     }
 
+    public function scopeWithRelateProducts($query, $joinLocalization = true)
+    {
+        return $query->with(['relateProducts' => function ($query) use ($joinLocalization) {
+            if ($joinLocalization) return $query->joinLocalization();
+        }]);
+    }
+
     public function scopeWithCharacteristics($query, $joinLocalization = true)
     {
         return $query->with(['characteristics' => function ($query) use ($joinLocalization) {

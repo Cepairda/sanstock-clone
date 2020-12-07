@@ -23,7 +23,7 @@
             <a href="{{ route('site.resource', $product->slug) }}" alt="{{ $product->name }}">{{ $product->name }}</a>
         </div>
 
-        <p  data-test="{{ $product->price_updated_at }}"
+        <p
             class="product-price {{ !empty($product->price_updated_at) || $product->price_updated_at->addHours(4)->lt(\Carbon\Carbon::now()) ? 'updatePriceJs' : '' }}"
             data-product-sku="{{ $product->sku }}"
         >

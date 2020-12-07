@@ -107,7 +107,7 @@ window.delay = (() => {
 
 //update Price
 (function (){
-    let url = 'products/update-price';
+    let url = '/products/update-price';
     let dataSku = document.querySelectorAll('[data-product-sku].updatePriceJs');
     let skuArray = [];
 

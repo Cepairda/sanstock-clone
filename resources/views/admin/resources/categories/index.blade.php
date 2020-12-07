@@ -47,10 +47,17 @@
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <div id="example1_filter" class="dataTables_filter">
-                                    <label>Поиск:
-                                        <input type="search" class="form-control form-control-sm"
-                                               placeholder="" aria-controls="example1">
-                                    </label>
+                                    <form>
+                                        <label>Поиск:
+                                            <input type="search" name="search" class="form-control form-control-sm"
+                                                   placeholder="" aria-controls="example1">
+                                        </label>
+                                        <button class="btn btn-primary">Найти</button>
+                                        <a href="{{ action([$controllerClass, 'createSearchString']) }}"
+                                           class="btn btn-success text-white">
+                                            Генерировать Search String
+                                        </a>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -62,11 +69,20 @@
                                         @if($resourceClass == 'Kalnoy\Nestedset\Collection')
                                             <th></th>
                                         @endif
+                                        @php($search = isset($_GET['search']) ? ('&search=' . $_GET['search']) : null)
                                         <th class="sorting_asc">ID(Excel файл)</th>
-                                        <th class="sorting_asc">ID(В БД)</th>
-                                        <th class="sorting">Дата создания</th>
-                                        <th class="sorting">Дата редактирования</th>
-                                        <th class="sorting">Дата удаления</th>
+                                        <th class="sorting_asc">
+                                            <a href="{{ ((isset($_GET['id']) && $_GET['id'] == 'desc') ? '?id=asc' : '?id=desc') . $search}}">ID(В БД)</a>
+                                        </th>
+                                        <th class="sorting">
+                                            <a href="{{ ((isset($_GET['created_at']) && $_GET['created_at'] == 'desc') ? '?created_at=asc' : '?created_at=desc') . $search}}">Дата создания</a>
+                                        </th>
+                                        <th class="sorting">
+                                            <a href="{{ ((isset($_GET['updated_at']) && $_GET['updated_at'] == 'desc') ? '?updated_at=asc' : '?updated_at=desc') . $search}}">Дата редактирования</a>
+                                        </th>
+                                        <th class="sorting">
+                                            <a href="{{ ((isset($_GET['deleted_at']) && $_GET['deleted_at'] == 'desc') ? '?deleted_at=asc' : '?deleted_at=desc') . $search}}">Дата удаления</a>
+                                        </th>
                                         <th>Детали</th>
                                         <th>Данные</th>
                                         <th>Действия</th>

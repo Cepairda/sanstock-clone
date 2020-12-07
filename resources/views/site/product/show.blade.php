@@ -13,6 +13,10 @@
 
     @include('site.components.breadcrumbs', ['title' => $product->getData('name')])
 
+    <form>
+        <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+    </form>
+
     <section class="section-sm bg-white">
         <div class="container">
             <div class="row">
@@ -82,7 +86,12 @@
 {{--                            @endforeach--}}
 {{--                        </p>--}}
 
-                        <p class="product-price"><span>{{ $product->getDetails('price') }}</span></p>
+                        <p
+                            class="product-price {{ !empty($product->price_updated_at) || $product->price_updated_at->addHours(4)->lt(\Carbon\Carbon::now()) ? 'updatePriceJs' : '' }}"
+                            data-product-sku="{{ $product->sku }}"
+                        >
+                            <span>{{ $product->getDetails('price') }}</span>
+                        </p>
                         <div class="mt-5" style="display: flex; align-items: center;">
                             <button class="button button-primary button-icon" type="submit">
                                 <span>{{ __('Where buy') }}</span></button>

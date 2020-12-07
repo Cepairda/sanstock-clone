@@ -29,6 +29,8 @@ class ProductController extends Controller
     public function import(Request $request)
     {
         (new ProductWithDataImport())->import($request->file('products'));
+        $this->createSearchString();
+
         return redirect()->back();
     }
 

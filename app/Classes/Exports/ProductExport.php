@@ -26,6 +26,7 @@ class ProductExport implements FromCollection, WithHeadings, WithTitle, WithMapp
             $product->getDetails('published'),
             $product->getData('name'),
             $product->slug,
+            $product->relateProducts->keyBy('details->sku')->keys()->implode('|'),
         ];
     }
 
@@ -38,6 +39,7 @@ class ProductExport implements FromCollection, WithHeadings, WithTitle, WithMapp
             'published',
             'name',
             'slug',
+            'relate_products_sku',
         ];
     }
 
