@@ -1,4 +1,18 @@
 <form class="cell-md-3 section-divided__aside section__aside-left" action="">
+
+    <!-- Range-->
+    <section class="section-sm">
+        <h5>{{ __('Price') }}</h5>
+        <!--RD Range-->
+        <div class="rd-range-wrap">
+            <div class="rd-range-inner"><span class="rd-range-input-value-1"></span><span>—</span><span
+                    class="rd-range-input-value-2"></span></div>
+            <div class="rd-range" data-min="10" data-max="1000" data-start="[75, 244]" data-step="1"
+                 data-tooltip="true" data-min-diff="10" data-input=".rd-range-input-value-1"
+                 data-input-2=".rd-range-input-value-2"></div>
+        </div>
+    </section>
+
     @foreach ($characteristics as $characteristic)
         <section class="section-sm">
             <h5>{{ $characteristic->getData('name') }}</h5>
@@ -15,27 +29,14 @@
                         >
                         <span class="checkbox-custom-dummy"></span>
                         <label class="custom-control-label" for="valueID{{ $value->id }}">{{ $value->getData('value') }}
-                            <span>(1)</span></label>
+                            {{--<span>(1)</span>--}}</label>
                     </div>
                 </li>
             @endforeach
             </ul>
         </section>
     @endforeach
- 
-    <!-- Range-->
-    <section class="section-sm">
-        <h5>{{ __('Price') }}</h5>
-        <!--RD Range-->
-        <div class="rd-range-wrap">
-            <div class="rd-range-inner"><span class="rd-range-input-value-1"></span><span>—</span><span
-                    class="rd-range-input-value-2"></span></div>
-            <div class="rd-range" data-min="10" data-max="500" data-start="[75, 244]" data-step="1"
-                 data-tooltip="true" data-min-diff="10" data-input=".rd-range-input-value-1"
-                 data-input-2=".rd-range-input-value-2"></div>
-        </div>
-{{--        <a class="button button-gray-light-outline" href="#">Filter</a>--}}
-        <button class="button button-gray-light-outline" href="#">{{ __('Apply') }}</button>
-    </section>
+
+    <button class="button button-gray-light-outline" href="#">{{ __('Apply') }}</button>
 
 </form>
