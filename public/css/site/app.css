@@ -31685,7 +31685,7 @@ html[class*=ie] .dtp-hand, html[class*=ie] .dtp-hour-hand {
   position: relative;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   .rd-navbar-search_collapsable {
     padding-right: 100px;
   }
@@ -32175,14 +32175,15 @@ html[class*=ie] .dtp-hand, html[class*=ie] .dtp-hour-hand {
 .rd-navbar-static .rd-navbar-top-panel__content-top,
 .rd-navbar-static .rd-navbar-top-panel__content-bottom {
   display: flex;
-  align-items: center;
   justify-content: space-between;
 }
-
-.rd-navbar-static .rd-navbar-inner > *,
-.rd-navbar-static .rd-navbar-top-panel__content-top > *,
-.rd-navbar-static .rd-navbar-top-panel__content-bottom > * {
-  padding: 0 25px;
+@media (min-width: 1200px) {
+  .rd-navbar-static .rd-navbar-inner,
+.rd-navbar-static .rd-navbar-nav-wrap,
+.rd-navbar-static .rd-navbar-top-panel__content-top,
+.rd-navbar-static .rd-navbar-top-panel__content-bottom {
+    align-items: center;
+  }
 }
 
 .rd-navbar-static .rd-navbar-inner > *:first-child,
@@ -32417,29 +32418,17 @@ html[class*=ie] .dtp-hand, html[class*=ie] .dtp-hour-hand {
 
 .rd-navbar-static.rd-navbar_inverse .rd-navbar-inner {
   max-width: 1850px;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .rd-navbar-static.rd-navbar_inverse .rd-navbar-panel + .rd-navbar-nav-wrap:after {
   content: none;
 }
 
-@media (max-width: 1199px) {
-  .rd-navbar-static.rd-navbar_inverse .rd-navbar-nav > li > .rd-navbar-dropdown,
-.rd-navbar-static.rd-navbar_inverse .rd-navbar-nav > li .rd-navbar-megamenu {
-    margin-top: 5px;
-  }
-}
 .rd-navbar-static.rd-navbar_inverse:not(.rd-navbar--is-stuck) .rd-navbar-search {
   background-color: transparent;
 }
 
-@media (min-width: 1200px) {
-  .rd-navbar-static.rd-navbar_inverse:not(.rd-navbar--is-stuck) .rd-navbar-nav > li > .rd-navbar-dropdown,
-.rd-navbar-static.rd-navbar_inverse:not(.rd-navbar--is-stuck) .rd-navbar-nav > li .rd-navbar-megamenu {
-    margin-top: 5px;
-  }
-}
 .rd-navbar-static.rd-navbar_corporate .rd-navbar-top-panel {
   border-bottom: 0;
 }
@@ -32492,6 +32481,7 @@ html[class*=ie] .dtp-hand, html[class*=ie] .dtp-hour-hand {
 
   .rd-navbar-static:not(.rd-navbar_creative) .rd-navbar-inner {
     flex-direction: row;
+    flex-wrap: wrap;
   }
 
   .rd-navbar-static:not(.rd-navbar_creative) .rd-navbar-inner > * + * {
@@ -32549,12 +32539,6 @@ html[class*=ie] .dtp-hand, html[class*=ie] .dtp-hour-hand {
   min-height: 74px;
   padding-top: 12px;
   padding-bottom: 12px;
-}
-
-.rd-navbar-static.rd-navbar--is-stuck .rd-navbar-nav > li > .rd-navbar-dropdown,
-.rd-navbar-static.rd-navbar--is-stuck .rd-navbar-nav > li .rd-navbar-megamenu, .rd-navbar-static.rd-navbar--is-clone .rd-navbar-nav > li > .rd-navbar-dropdown,
-.rd-navbar-static.rd-navbar--is-clone .rd-navbar-nav > li .rd-navbar-megamenu {
-  margin-top: 5px;
 }
 
 .rd-navbar-static.rd-navbar--is-stuck .rd-navbar-top-panel, .rd-navbar-static.rd-navbar--is-clone .rd-navbar-top-panel {
@@ -35306,16 +35290,52 @@ span.button {
   background-color: #ec485c;
   color: #fff;
 }
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .header-favorites-count {
     top: -8px;
     right: -5px;
   }
 }
 
+@media (min-width: 992px) {
+  .rd-navbar-static .rd-navbar-nav {
+    display: flex;
+  }
+  .rd-navbar-static .rd-navbar-nav > li {
+    display: flex;
+  }
+  .rd-navbar-static .rd-navbar-nav > li > a {
+    white-space: nowrap;
+  }
+}
+@media (min-width: 992px) and (min-width: 992px) and (max-width: 1199.98px) {
+  .rd-navbar-static .rd-navbar-nav > li > a {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1500px) {
+  .rd-navbar-panel.rd-navbar-search_collapsable {
+    padding-bottom: 15px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .rd-navbar-items-list.rd-navbar-search_collapsable {
+    position: absolute;
+    top: -60px;
+  }
+}
+
 @media (max-width: 991.98px) {
   .rd-navbar-wrap {
     height: 0 !important;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .rd-navbar-search_collapsable {
+    padding-top: 10px;
   }
 }
 
@@ -35994,6 +36014,11 @@ span.button {
   background-color: transparent;
 }
 @media (min-width: 1200px) {
+  .home-carousel {
+    margin-top: -115px;
+  }
+}
+@media (min-width: 1500px) {
   .home-carousel {
     margin-top: -100px;
   }

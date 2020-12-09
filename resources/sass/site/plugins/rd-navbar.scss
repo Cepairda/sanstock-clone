@@ -966,7 +966,7 @@
 }
 
 .rd-navbar-search_collapsable {
-    @media (min-width: 992px) {
+    @media (min-width: 1200px) {
         padding-right: 100px;
     }
 }
@@ -1467,18 +1467,20 @@
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
-	-webkit-align-items: center;
-	-ms-flex-align: center;
-	align-items: center;
 	-webkit-justify-content: space-between;
 	-ms-flex-pack: justify;
 	justify-content: space-between;
+    @media (min-width: 1200px) {
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
 }
 
 .rd-navbar-static .rd-navbar-inner > *,
 .rd-navbar-static .rd-navbar-top-panel__content-top > *,
 .rd-navbar-static .rd-navbar-top-panel__content-bottom > * {
-	padding: 0 25px;
+	//padding: 0 25px;
 }
 
 .rd-navbar-static .rd-navbar-inner > *:first-child,
@@ -1724,18 +1726,11 @@
 
 .rd-navbar-static.rd-navbar_inverse .rd-navbar-inner {
 	max-width: 1850px;
-	justify-content: flex-end;
+	justify-content: center;
 }
 
 .rd-navbar-static.rd-navbar_inverse .rd-navbar-panel + .rd-navbar-nav-wrap:after {
 	content: none;
-}
-
-@media (max-width: 1199px) {
-	.rd-navbar-static.rd-navbar_inverse .rd-navbar-nav > li > .rd-navbar-dropdown,
-	.rd-navbar-static.rd-navbar_inverse .rd-navbar-nav > li .rd-navbar-megamenu {
-		margin-top: 5px;
-	}
 }
 
 .rd-navbar-static.rd-navbar_inverse:not(.rd-navbar--is-stuck) .rd-navbar-search {
@@ -1745,7 +1740,7 @@
 @media (min-width: 1200px) {
 	.rd-navbar-static.rd-navbar_inverse:not(.rd-navbar--is-stuck) .rd-navbar-nav > li > .rd-navbar-dropdown,
 	.rd-navbar-static.rd-navbar_inverse:not(.rd-navbar--is-stuck) .rd-navbar-nav > li .rd-navbar-megamenu {
-		margin-top: 5px;
+		//margin-top: 5px;
 	}
 }
 
@@ -1800,6 +1795,7 @@
 		-webkit-flex-direction: row;
 		-ms-flex-direction: row;
 		flex-direction: row;
+        flex-wrap: wrap;
 	}
 	.rd-navbar-static:not(.rd-navbar_creative) .rd-navbar-inner > * + * {
 		margin-top: 0;
@@ -1858,7 +1854,7 @@
 .rd-navbar-static.rd-navbar--is-stuck .rd-navbar-nav > li > .rd-navbar-dropdown,
 .rd-navbar-static.rd-navbar--is-stuck .rd-navbar-nav > li .rd-navbar-megamenu, .rd-navbar-static.rd-navbar--is-clone .rd-navbar-nav > li > .rd-navbar-dropdown,
 .rd-navbar-static.rd-navbar--is-clone .rd-navbar-nav > li .rd-navbar-megamenu {
-	margin-top: 5px;
+	//margin-top: 5px;
 }
 
 .rd-navbar-static.rd-navbar--is-stuck .rd-navbar-top-panel, .rd-navbar-static.rd-navbar--is-clone .rd-navbar-top-panel {

@@ -57,14 +57,48 @@
 	line-height: 1;
 	background-color: #ec485c;
 	color: #fff;
-    @media (min-width: 768px) {
+    @media (min-width: 992px) {
         top: -8px;
         right: -5px;
+    }
+}
+
+.rd-navbar-static .rd-navbar-nav {
+    @media (min-width: 992px) {
+        display: flex;
+
+        & > li {
+            display: flex;
+
+            & > a {
+                white-space: nowrap;
+                @media (min-width: 992px) and (max-width: 1199.98px) {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
+.rd-navbar-panel.rd-navbar-search_collapsable {
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        padding-bottom: 15px;
+    }
+}
+.rd-navbar-items-list.rd-navbar-search_collapsable {
+    @media (min-width: 992px) and (max-width: 1200px) {
+        position: absolute;
+        top: -60px;
     }
 }
 
 .rd-navbar-wrap {
     @media (max-width: 991.98px) {
         height: 0 !important;
+    }
+}
+
+.rd-navbar-search_collapsable {
+    @media (min-width: 992px) and (max-width: 1199.98px) {
+        padding-top: 10px;
     }
 }
