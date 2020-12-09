@@ -41,7 +41,7 @@ class ResourceController extends Controller
 
                 ];
 
-                $products = Product::joinLocalization()->whereExistsCategoryIds($category->id)->get()->keyBy('id')->keys();
+                $products = Product::joinLocalization()->whereExistsCategoryIds($category->id)->where('details->published', 1)->get()->keyBy('id')->keys();
                 $characteristics = isset($category->characteristic_group[0])
                     ? $category->characteristic_group[0]->getDetails('characteristics')
                     : null;
