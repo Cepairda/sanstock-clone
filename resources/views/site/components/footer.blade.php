@@ -38,7 +38,7 @@
                     <li><a href="/about-us">{{ __('About us') }}</a></li>
                     <li><a href="/documentation">{{ __('Documentation') }}</a></li>
                     <li><p style="font-size: 20px; color: #000">{{ __('Get in Touch') }}</ps></li>
-                    <li><a style="font-size: 20px; color: #000" href="mail:0800212008">0800 212 008</a></li>
+                    <li><a style="font-size: 20px; color: #000" href="mail:0800212008">0800 210 377</a></li>
                 </ul>
             </div>
 

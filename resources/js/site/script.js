@@ -129,3 +129,12 @@ window.delay = (() => {
         })
     }
 }());
+
+//Reload page checkbox category
+(function (){
+    let bodyCategory = document.querySelector('body.category');
+    if( bodyCategory ) {
+        let form = document.querySelector('.section-divided__aside');
+        form.addEventListener('input', () => form.submit(), false)
+    }
+}());
