@@ -31,12 +31,10 @@ trait isResource
         }
 
         if ($this->resource->usedNodeTrait()) {
-            $resources = $resources->with('ancestors')->get()->toFlatTree();
+            $resources = $resources->with('ancestors')->get()->toFlatTree()->append(Request::except('page'));
         } else {
-            $resources = $resources->paginate(50);
+            $resources = $resources->paginate(50)->appends(Request::except('page'));
         }
-
-        $resources = $resources->appends(Request::except('page'));
 
         return view('admin.resources.index', compact('resources'));
     }

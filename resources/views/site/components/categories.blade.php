@@ -1,4 +1,4 @@
-@php($categories = $categories ?? \App\Category::joinLocalization()->get()->toTree())
+@php($categories = $categories ?? \App\Category::joinLocalization()->where('details->published', 1)->where('details->is_menu_item', 1)->get()->toTree())
 <ul class="{{ $ul_class }}">
     @foreach($categories as $category)
         @if($category->children->isNotEmpty())
