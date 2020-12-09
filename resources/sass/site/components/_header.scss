@@ -25,18 +25,18 @@
 	}
 }
 .rd-navbar-nav-wrap.rd-navbar-search_not-collapsable {
-	@media(min-width: 768px) {
+	@media(min-width: 992px) {
 		padding-right: 85px;
 	}
 }
 .rd-navbar-nav-wrap.rd-navbar-search_not-collapsable {
-	@media(min-width: 768px) {
+	@media(min-width: 992px) {
 		position: relative;
 		justify-content: center;
 	}
 }
 .rd-navbar-items-list.rd-navbar-search_collapsable {
-	@media(min-width: 768px) {
+	@media(min-width: 992px) {
 		position: absolute;
 		right: 0;
 	}
@@ -60,5 +60,11 @@
     @media (min-width: 768px) {
         top: -8px;
         right: -5px;
+    }
+}
+
+.rd-navbar-wrap {
+    @media (max-width: 991.98px) {
+        height: 0 !important;
     }
 }

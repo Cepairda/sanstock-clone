@@ -31685,7 +31685,7 @@ html[class*=ie] .dtp-hand, html[class*=ie] .dtp-hour-hand {
   position: relative;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .rd-navbar-search_collapsable {
     padding-right: 100px;
   }
@@ -34997,6 +34997,46 @@ code,
   color: #000 !important;
 }
 
+.documents__wrap--item a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 45px;
+}
+.documents__wrap--item a img {
+  width: 100%;
+  box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.5);
+}
+.documents__wrap--item a span {
+  padding-top: 10px;
+  margin-top: auto;
+  text-align: center;
+}
+
+.certificateLink {
+  display: inline-block;
+  width: 200px;
+  height: 300px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 3px;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+.certificateLink .certificateTitle {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  height: 50px;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  padding: 5px;
+}
+
 .button {
   position: relative;
   display: inline-block;
@@ -35230,20 +35270,20 @@ span.button {
   font-weight: 400;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .rd-navbar-nav-wrap.rd-navbar-search_not-collapsable {
     padding-right: 85px;
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .rd-navbar-nav-wrap.rd-navbar-search_not-collapsable {
     position: relative;
     justify-content: center;
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .rd-navbar-items-list.rd-navbar-search_collapsable {
     position: absolute;
     right: 0;
@@ -35270,6 +35310,12 @@ span.button {
   .header-favorites-count {
     top: -8px;
     right: -5px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .rd-navbar-wrap {
+    height: 0 !important;
   }
 }
 

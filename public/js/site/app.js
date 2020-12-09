@@ -43535,9 +43535,9 @@ $document.ready(function () {
         0: {
           stickUp: !isNoviBuilder ? plugins.rdNavbar.attr("data-stick-up") === 'true' : false
         },
-        768: {
-          stickUp: !isNoviBuilder ? plugins.rdNavbar.attr("data-sm-stick-up") === 'true' : false
-        },
+        // 768: {
+        //   stickUp: (!isNoviBuilder) ? plugins.rdNavbar.attr("data-stick-up") === 'true' : false
+        // },
         992: {
           stickUp: !isNoviBuilder ? plugins.rdNavbar.attr("data-md-stick-up") === 'true' : false
         },

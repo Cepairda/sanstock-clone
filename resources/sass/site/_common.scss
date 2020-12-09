@@ -559,3 +559,47 @@ code,
 		color: #000 !important;
 	}
 }
+
+//
+.documents__wrap--item {
+    a {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding-top: 45px;
+
+        img {
+            width: 100%;
+            box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.5);
+        }
+
+        span {
+            padding-top: 10px;
+            margin-top: auto;
+            text-align: center;
+        }
+    }
+}
+.certificateLink {
+    display: inline-block;
+    width: 200px;
+    height: 300px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 3px;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.certificateLink .certificateTitle {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    height: 50px;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+    padding: 5px;
+}
