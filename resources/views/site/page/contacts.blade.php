@@ -1,7 +1,11 @@
 @extends('layouts.site')
 @section('body_class', 'contacts')
+@section('breadcrumbs')
+    <li class="active">{{ __('Contacts') }}</li>
+@endsection
 @section('content')
-    @include('site.components.breadcrumbs')
+
+    @include('site.components.breadcrumbs', ['title' => __('Contacts')])
 {{--    <section>--}}
 {{--        <div class="container-fluid">--}}
 {{--            <div class="row">--}}
@@ -90,10 +94,10 @@
                                 <dt>{{ __('Phone') }}</dt>
                                 <dd>
                                     <ul class="list-semicolon">
-                                        <li><a href="callto:#">0-800-212-008</a></li>
-                                        <li><a href="callto:#">+380 (97) 917-94-94</a></li>
-                                        <li><a href="callto:#">+380 (95) 917-94-94</a></li>
-                                        <li><a href="callto:#">+380 (93) 917-94-94</a></li>
+                                        <li><a href="callto:#">0-800-210-377</a></li>
+                                        {{--<li><a href="callto:#">+380 (97) 917-94-94</a></li>--}}
+                                        {{--<li><a href="callto:#">+380 (95) 917-94-94</a></li>--}}
+                                        {{--<li><a href="callto:#">+380 (93) 917-94-94</a></li>--}}
                                     </ul>
                                 </dd>
                             </dl>
@@ -104,13 +108,8 @@
                                 <dd><a href="mailto:#">info@lidz.ua</a></dd>
                             </dl>
                         </li>
-                        <li>
-                            <dl class="list-terms-minimal">
-                                <dt>{{ __('We are open') }}</dt>
-                                <dd>Пн-Пт: 9:00 - 18:00</dd>
-                            </dl>
-                        </li>
-                        <li>
+
+                        {{--<li>
                             <ul class="list-inline-sm">
                                 <li><a class="icon icon-gray-4 icon-sm fa-facebook" href="#"></a></li>
                                 <li><a class="icon icon-gray-4 icon-sm fa-twitter" href="#"></a></li>
@@ -119,7 +118,7 @@
                                 <li><a class="icon icon-gray-4 icon-sm fa-youtube" href="#"></a></li>
                                 <li><a class="icon icon-gray-4 icon-sm fa-pinterest-p" href="#"></a></li>
                             </ul>
-                        </li>
+                        </li>--}}
                     </ul>
                 </div>
 
