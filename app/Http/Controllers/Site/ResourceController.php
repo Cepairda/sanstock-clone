@@ -36,12 +36,12 @@ class ResourceController extends Controller
             case 'category':
                 $data = [
 
-                    'category' => $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->first(),
+                    'category' => $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->where('details->published', 1)->firstOrFail(),
                     'products' => Product::joinLocalization()->where('details->published', 1)->whereExistsCategoryIds($category->id)->paginate()
 
                 ];
 
-                $products = Product::joinLocalization()->whereExistsCategoryIds($category->id)->get()->keyBy('id')->keys();
+                $products = Product::joinLocalization()->whereExistsCategoryIds($category->id)->where('details->published', 1)->get()->keyBy('id')->keys();
                 $characteristics = isset($category->characteristic_group[0])
                     ? $category->characteristic_group[0]->getDetails('characteristics')
                     : null;

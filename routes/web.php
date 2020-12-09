@@ -116,6 +116,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::get('search', 'ProductController@search')->name('products.search');
         Route::post('products/update-price', 'ProductController@updatePrice')->name('products.update-price');
         Route::get('/favorites', 'ResourceController@Favorites')->name('favorites');
+        Route::get('/sitemap', function () {return view('site.page.sitemap');})->name('sitemap');
         Route::get('/{slug}', 'ResourceController@getResource')->where('slug', '.*')->name('resource');
     });
 });

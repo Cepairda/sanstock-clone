@@ -43,12 +43,12 @@ class Category extends Resource
     public function scopeWithDescendants($query)
     {
         return $query->with(['descendants' => function ($query) {
-            return $query->with('product')->joinLocalization();
+            return $query->with('product')->joinLocalization()->where('details->published', 1);
         }]);
     }
 
     public function product()
     {
-        return $this->hasOne(Product::class, 'details->category_id', 'id');
+        return $this->hasOne(Product::class, 'details->category_id', 'id')->where('details->published', 1);
     }
 }

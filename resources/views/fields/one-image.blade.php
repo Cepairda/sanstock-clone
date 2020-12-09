@@ -17,23 +17,23 @@
             <?php endif; ?>
             <?php endif; ?>
 
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <a data-input="{{ $options['data-input'] }}" data-preview="{{ $options['data-preview'] }}" class="btn btn-primary lfm-image">
-                            <i class="fa fa-picture-o"></i> Выбрать
-                        </a>
-                    </span>
-                    <!--input id="thumbnail" class="form-control" type="text" name="filepath"-->
-                    <?= Form::input($type, $name, $options['value'], $options['attr']) ?>
-                </div>
-                <div id="{{ $options['data-preview'] }}" style="margin-top:15px;max-height:100px;">
-                    @if(isset($options['value']))
-                        <img src="{{ $options['value'] }}" style="height: 5rem;">
-                    @endif
-                </div>
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <a data-input="{{ $options['data-input'] }}" data-preview="{{ $options['data-preview'] }}" class="btn btn-primary lfm-image">
+                        <i class="fa fa-picture-o"></i> Выбрать
+                    </a>
+                </span>
+                <!--input id="thumbnail" class="form-control" type="text" name="filepath"-->
+                <?= Form::input($type, $name, $options['value'], $options['attr']) ?>
+            </div>
+            <div id="{{ $options['data-preview'] }}" style="margin-top:15px;max-height:100px;">
+                @if(isset($options['value']))
+                    <img src="{{ $options['value'] }}" style="height: 5rem;">
+                @endif
+            </div>
 
-            <?php include 'errors.php' ?>
-            <?php include 'help_block.php' ?>
+            <?php include resource_path() . '/views/vendor/laravel-form-builder/errors.php' ?>
+            <?php include resource_path() . '/views/vendor/laravel-form-builder/help_block.php' ?>
 
             <?php if ($options['innerWrapper'] ?? true): ?>
         </div>

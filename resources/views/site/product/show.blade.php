@@ -213,6 +213,6 @@
         <div class="divider"></div>
     </div>
 
-    {{-- @include('site.product.carousel', ['title' => 'Также вас могут заинтересовать']) --}}
+    @include('site.product.carousel', ['title' => 'Также вас могут заинтересовать'])
 
 @endsection

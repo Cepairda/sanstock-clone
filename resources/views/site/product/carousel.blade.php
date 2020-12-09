@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <h4 class="col-12 text-center mb-5">{{ $title }}</h4>
-            @foreach($products as $product)
+            @foreach($product->relateProducts as $product)
                 <div class="col-sm-6 col-lg-3">
                     @include('site.components.product')
                 </div>
