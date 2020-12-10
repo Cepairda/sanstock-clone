@@ -81,7 +81,7 @@ class ResourceController extends Controller
                 if (Request::has('minPrice') && Request::has('maxPrice')) {
                     $minPriceSelect = Request::input('minPrice');
                     $maxPriceSelect = Request::input('maxPrice');
-                    $products = $products->where('details->price', '>=', $minPriceSelect)->where('details->price', '<=', $maxPriceSelect);
+                    $products = $products->where('details->price', '>=', +$minPriceSelect)->where('details->price', '<=', +$maxPriceSelect);
                 }
 
                 if (Request::has('filter')) {
