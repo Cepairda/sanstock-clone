@@ -35,7 +35,7 @@ class ResourceController extends Controller
                 break;
             case 'category':
                 $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->where('details->published', 1)->firstOrFail();
-                $products = Product::joinLocalization()->whereExistsCategoryIds($category->id)->where('details->published', 1)->get()->keyBy('id')->keys();
+                $products = Product::whereExistsCategoryIds($category->id)->where('details->published', 1)->get()->keyBy('id')->keys();
                 $characteristics = isset($category->characteristic_group[0])
                     ? $category->characteristic_group[0]->getDetails('characteristics')
                     : null;
@@ -72,7 +72,7 @@ class ResourceController extends Controller
 
                 $characteristicsIds = array_keys($valuesForView);
 
-                $products = Product::whereIn('id', $products);
+                $products = Product::joinLocalization()->whereIn('id', $products);
 
                 $mixMaxPriceQuery = (clone $products)->selectRaw("MIN(CAST(JSON_EXTRACT(`details`, '$.price') AS FLOAT)) AS minPrice, MAX(CAST(JSON_EXTRACT(`details`, '$.price') AS FLOAT)) AS maxPrice")->first();
                 $minPrice = $mixMaxPriceQuery->minPrice;
