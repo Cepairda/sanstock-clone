@@ -79,7 +79,7 @@ window.delay = (() => {
     const inputSearch = document.querySelector('#rd-navbar-search-form-input'),
           searchResult = document.querySelector('.rd-search-results-live');
     async function xhrLiveSearch (value) {
-        const xhrUrl = `${location.origin}/search/?query=${value}`,
+        const xhrUrl = `${location.origin}/live-search/?query=${value}`,
             response = await fetch(xhrUrl, {});
         if (response.status === 200) {
             let data = await response.text();

@@ -65,11 +65,11 @@
                                 </ul>
                                 <!-- RD Search-->
                                 <div class="rd-navbar-search rd-navbar-search_toggled rd-navbar-search_not-collapsable">
-                                    <form class="rd-search" action="" method=""
+                                    <form class="rd-search" action="{{ route('site.products.search') }}" method=""
                                           data-search-live="rd-search-results-live">
                                         <div class="form-wrap">
                                             <input class="form-input" id="rd-navbar-search-form-input" type="text"
-                                                   name="s"
+                                                   name="query"
                                                    autocomplete="off">
                                             <label class="form-label" for="rd-navbar-search-form-input">{{ __('Enter keyword') }}</label>
                                             <div class="rd-search-results-live" id="rd-search-results-live"></div>
