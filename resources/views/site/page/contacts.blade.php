@@ -94,7 +94,7 @@
                                 <dt>{{ __('Phone') }}</dt>
                                 <dd>
                                     <ul class="list-semicolon">
-                                        <li><a href="callto:#">0-800-210-377</a></li>
+                                        <li><a href="callto:0800210377">0-800-210-377</a></li>
                                         {{--<li><a href="callto:#">+380 (97) 917-94-94</a></li>--}}
                                         {{--<li><a href="callto:#">+380 (95) 917-94-94</a></li>--}}
                                         {{--<li><a href="callto:#">+380 (93) 917-94-94</a></li>--}}
