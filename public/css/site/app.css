@@ -35743,6 +35743,9 @@ span.button {
 
 .product-grid {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .product-grid * + .button {
@@ -35764,6 +35767,11 @@ span.button {
 }
 
 .product-caption {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
   margin-top: 15px;
 }
 
@@ -35855,6 +35863,7 @@ span.button {
 }
 
 .product-price {
+  margin-top: auto !important;
   font-size: 18px;
   font-weight: 400;
 }
