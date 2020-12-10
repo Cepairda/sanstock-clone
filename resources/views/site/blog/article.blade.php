@@ -8,8 +8,8 @@
             <h2 style="color: #fff; text-transform: uppercase;">{{ $post->name }}</h2>
             <div class="post-meta">
                 <div class="group">
-                    <div> <time datetime="2017" style="color: #fff">Jan.20, 2016</time></div>
-                    <div class="meta-author" style="color: #fff">by Brian Williamson</div>
+                    <div> <time datetime="2017" style="color: #fff">{{ $post->created_at->format('d.m.Y') }}</time></div>
+                    {{--<div class="meta-author" style="color: #fff">by Brian Williamson</div>--}}
                 </div>
             </div>
         </div>
