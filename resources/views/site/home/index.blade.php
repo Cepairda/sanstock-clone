@@ -2,6 +2,8 @@
 @section('body_class', 'home')
 @section('content')
 
+    @php($category_banner_1 = \App\Category::joinLocalization()->where('virtual_id', 21)->first())
+
     <section class="home-carousel">
         <div class="owl-carousel owl-theme home__carousel">
             <div class="item">
@@ -10,7 +12,7 @@
                     <div class="row">
                         <div class="col-12">
                             <p class="item__desc--title">{!! __('Home slide 1') !!}</p>
-                            <a class="button button-primary item__desc--link" href="#">{{ __('Show more') }}</a>
+                            <a class="button button-primary item__desc--link" href="{{ route('site.resource', $category_banner_1->slug) }}">{{ __('Show more') }}</a>
                         </div>
                     </div>
                 </div>
@@ -70,12 +72,15 @@
 
     {{-- @include('site.product.carousel', ['title' => 'Новинки', 'products' => $home_product]) --}}
 
+    @php($category_banner_2 = \App\Category::joinLocalization()->where('virtual_id', 20)->first())
+
+
     <section class="home-bn-info section-lg" style="background-image: url({{ asset('images/site/home-slider/slide-3.jpg') }});">
         <div class="container">
             <div class="row justify-content-end">
                 <div class="col-12 text-right">
                     <p class="home-bn-info__title">{!! __('Home slide 2') !!}</p>
-                    <a class="button button-primary item__desc--link" href="#">{{ __('Show more') }}</a>
+                    <a class="button button-primary item__desc--link" href="{{ route('site.resource', $category_banner_1->slug) }}">{{ __('Show more') }}</a>
                 </div>
             </div>
         </div>

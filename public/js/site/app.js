@@ -44012,7 +44012,7 @@ $document.ready(function () {
             src = $item.attr('href'),
             size = $item.attr('data-size').split('x'),
             pswdItem;
-        console.log(src);
+        window.open(src);
 
         if ($item.is(':visible')) {
           // if we have this image the first time
@@ -44047,7 +44047,9 @@ $document.ready(function () {
             w: $el.width()
           };
         }
-      };
+      }; // open the photoswipe gallery
+      //pswp = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, pswpItems, options);
+      //pswp.init();
     });
   }
   /**

@@ -27,7 +27,7 @@
                         <div class="item">
                             <a class="img-thumbnail-variant-2"
                                 {{-- href="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"--}}
-                               href="{{ xml_img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name]) }}"
+                               href="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"
                                data-photo-swipe-item=""
                                data-size="2000x2000">
                                 <figure>
@@ -106,9 +106,9 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <div class="modal-body">
-                                            <p>{{ __('For all questions call') }} call-center:</p>
-                                            <a class="d-block text-center" href="callto:0800210377">0-800-210-377</a>
+                                        <div class="modal-body text-center">
+                                            <p>{{ __('For all questions call') }}</p>
+                                            <p >Call-Center: <a href="callto:0800210377">0-800-210-377</a></p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
