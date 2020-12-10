@@ -79,7 +79,7 @@ window.delay = (() => {
     const inputSearch = document.querySelector('#rd-navbar-search-form-input'),
           searchResult = document.querySelector('.rd-search-results-live');
     async function xhrLiveSearch (value) {
-        const xhrUrl = `${location.origin}/search/?query=${value}`,
+        const xhrUrl = `${location.origin}/live-search/?query=${value}`,
             response = await fetch(xhrUrl, {});
         if (response.status === 200) {
             let data = await response.text();
@@ -135,6 +135,9 @@ window.delay = (() => {
     let bodyCategory = document.querySelector('body.category');
     if( bodyCategory ) {
         let form = document.querySelector('.section-divided__aside');
-        form.addEventListener('input', () => form.submit(), false)
+        form.addEventListener('input', e => {
+            let checkbox = e.target.closest('[type="checkbox"]');
+            checkbox && form.submit();
+        }, false)
     }
 }());

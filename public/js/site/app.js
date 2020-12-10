@@ -42330,7 +42330,7 @@ window.delay = function () {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              xhrUrl = "".concat(location.origin, "/search/?query=").concat(value);
+              xhrUrl = "".concat(location.origin, "/live-search/?query=").concat(value);
               _context.next = 3;
               return fetch(xhrUrl, {});
 
@@ -42416,8 +42416,9 @@ window.delay = function () {
 
   if (bodyCategory) {
     var form = document.querySelector('.section-divided__aside');
-    form.addEventListener('input', function () {
-      return form.submit();
+    form.addEventListener('input', function (e) {
+      var checkbox = e.target.closest('[type="checkbox"]');
+      checkbox && form.submit();
     }, false);
   }
 })();

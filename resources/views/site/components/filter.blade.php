@@ -1,20 +1,22 @@
 <form class="cell-md-3 section-divided__aside section__aside-left" action="">
 
     <!-- Range-->
-    <section class="section-sm">
-        <h5>{{ __('Price') }}</h5>
-        <!--RD Range-->
-        <div class="rd-range-wrap">
-            <div class="rd-range-inner">
-                <span class="rd-range-input-value-1"></span>
-                <span>—</span>
-                <span class="rd-range-input-value-2"></span>
+    @if ($minPrice != $maxPrice)
+        <section class="section-sm">
+            <h5>{{ __('Price') }}</h5>
+            <!--RD Range-->
+            <div class="rd-range-wrap">
+                <div class="rd-range-inner">
+                    <input name="minPrice" class="rd-range-input-value-1" style="width: 75px;">
+                    <input name="maxPrice" class="rd-range-input-value-2" style="width: 75px;">
+                    <button type="submit">OK</button>
+                </div>
+                <div class="rd-range" data-min="{{ $minPrice }}" data-max="{{ $maxPrice }}" data-start="[{{ $minPriceSelect }}, {{ $maxPriceSelect }}]" data-step="1"
+                     data-tooltip="true" data-min-diff="10" data-input=".rd-range-input-value-1"
+                     data-input-2=".rd-range-input-value-2"></div>
             </div>
-            <div class="rd-range" data-min="10" data-max="1000" data-start="[75, 244]" data-step="1"
-                 data-tooltip="true" data-min-diff="10" data-input=".rd-range-input-value-1"
-                 data-input-2=".rd-range-input-value-2"></div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     @foreach ($characteristics as $characteristic)
         <section class="section-sm">
@@ -24,7 +26,7 @@
                 <li>
                     <div class="form-group form-check custom-checkbox">
                         <input
-                            type=checkbox
+                            type="checkbox"
                             class="custom-control-input checkbox-custom"
                             name=filter[{{ $characteristic->id }}][]
                             id="valueID{{ $value->id }}"

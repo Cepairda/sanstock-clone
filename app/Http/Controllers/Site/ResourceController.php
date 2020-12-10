@@ -34,13 +34,7 @@ class ResourceController extends Controller
                 ];
                 break;
             case 'category':
-                $data = [
-
-                    'category' => $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->where('details->published', 1)->firstOrFail(),
-                    'products' => Product::joinLocalization()->where('details->published', 1)->whereExistsCategoryIds($category->id)->paginate()
-
-                ];
-
+                $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->where('details->published', 1)->firstOrFail();
                 $products = Product::joinLocalization()->whereExistsCategoryIds($category->id)->where('details->published', 1)->get()->keyBy('id')->keys();
                 $characteristics = isset($category->characteristic_group[0])
                     ? $category->characteristic_group[0]->getDetails('characteristics')
@@ -50,7 +44,6 @@ class ResourceController extends Controller
 
                 if (isset($characteristics)) {
                     $characteristicIds = [];
-
 
                     foreach ($characteristics as $id => $characteristic) {
                         if (isset($characteristic['filter']))
@@ -78,10 +71,18 @@ class ResourceController extends Controller
                 }
 
                 $characteristicsIds = array_keys($valuesForView);
-                $data['characteristics'] = Characteristic::joinLocalization()->whereIn('id', $characteristicsIds)->get();
-                $data['valuesForView'] = $valuesForView;
 
                 $products = Product::whereIn('id', $products);
+
+                $mixMaxPriceQuery = (clone $products)->selectRaw("MIN(CAST(JSON_EXTRACT(`details`, '$.price') AS FLOAT)) AS minPrice, MAX(CAST(JSON_EXTRACT(`details`, '$.price') AS FLOAT)) AS maxPrice")->first();
+                $minPrice = $mixMaxPriceQuery->minPrice;
+                $maxPrice = $mixMaxPriceQuery->maxPrice;
+
+                if (Request::has('minPrice') && Request::has('maxPrice')) {
+                    $minPriceSelect = Request::input('minPrice');
+                    $maxPriceSelect = Request::input('maxPrice');
+                    $products = $products->where('details->price', '>=', $minPriceSelect)->where('details->price', '<=', $maxPriceSelect);
+                }
 
                 if (Request::has('filter')) {
                     $filters = Request::input('filter');
@@ -98,8 +99,21 @@ class ResourceController extends Controller
                         });
                     }
 
-                    $data['products'] = $products->paginate();
+
                 }
+
+                $products = $products->paginate();
+
+                $data = [
+                    'category' => $category,
+                    'products' => $products,
+                    'minPrice' => $minPrice,
+                    'maxPrice' => $maxPrice,
+                    'minPriceSelect' => $minPriceSelect ?? $products->min('details->price'),
+                    'maxPriceSelect' => $maxPriceSelect ?? $products->max('details->price'),
+                    'characteristics' => Characteristic::joinLocalization()->whereIn('id', $characteristicsIds)->get(),
+                    'valuesForView' => $valuesForView,
+                ];
 
                 break;
             case 'page':
