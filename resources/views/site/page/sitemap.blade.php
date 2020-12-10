@@ -18,6 +18,7 @@
                 <div class="m-auto section-sm">
                     <ul class="sitemap">
                         <li><a href="{{ route('site.contacts') }}">{{ __('Contacts') }}</a></li>
+                        <li><a href="{{ route('site.blog') }}">{{ __('Blog') }}</a></li>
                         <li><a href="{{ route('site.documentations') }}">{{ __('Documentation') }}</a></li>
                         <li><a href="{{ route('site.resource', ['slug' => 'about-us']) }}">{{ __('About us') }}</a></li>
                     </ul>

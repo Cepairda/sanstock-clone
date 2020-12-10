@@ -78,6 +78,8 @@ class ResourceController extends Controller
                 $minPrice = $mixMaxPriceQuery->minPrice;
                 $maxPrice = $mixMaxPriceQuery->maxPrice;
 
+                $products = $products->selectRaw('*, CAST(JSON_EXTRACT(`details`, \'$.price\') AS FLOAT) as price');
+
                 if (Request::has('minPrice') && Request::has('maxPrice')) {
                     $minPriceSelect = Request::input('minPrice');
                     $maxPriceSelect = Request::input('maxPrice');
@@ -100,6 +102,16 @@ class ResourceController extends Controller
                     }
 
 
+                }
+
+                if (Request::has('name')) {
+                    $sortName = Request::input('name') == 'up' ? 'ASC' : 'DESC';
+                    $products = $products->orderBy('data->name', $sortName);
+                }
+
+                if (Request::has('price')) {
+                    $sortPrice = Request::input('price') == 'up' ? 'ASC' : 'DESC';
+                    $products = $products->orderBy('price', $sortPrice);
                 }
 
                 $products = $products->paginate();

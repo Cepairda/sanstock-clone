@@ -1,7 +1,7 @@
 @extends('layouts.site')
 @section('body_class', 'category')
-@section('meta_title', 'Page Title')
-@section('meta_description', 'Page Title')
+@section('meta_title', $category->meta_title)
+@section('meta_description', $category->meta_description)
 
 @section('breadcrumbs')
     @foreach($category->ancestors as $ancestor)
@@ -84,11 +84,11 @@
                                         <!--Select 2-->
                                         <select class="form-input select-filter" data-placeholder="Default sorting"
                                                 data-minimum-results-for-search="Infinity">
-
-                                            <option>{{ __('Sort by name low to high') }}</option>
-                                            <option value="2">{{ __('Sort by name high to low') }}</option>
-                                            <option value="3">{{ __('Sort by price low to high') }}</option>
-                                            <option value="4">{{ __('Sort by price high to low') }}</option>
+                                            <option >Sort by</option>
+                                            <option value="1" {{ ($_GET['name'] ?? null) == 'up' ? 'selected' : '' }}>{{ __('Sort by name low to high') }}</option>
+                                            <option value="2" {{ ($_GET['name'] ?? null) == 'down' ? 'selected' : '' }}>{{ __('Sort by name high to low') }}</option>
+                                            <option value="3" {{ ($_GET['price'] ?? null) == 'up' ? 'selected' : '' }}>{{ __('Sort by price low to high') }}</option>
+                                            <option value="4" {{ ($_GET['price'] ?? null) == 'down' ? 'selected' : '' }}>{{ __('Sort by price high to low') }}</option>
 
                                         </select>
                                     </div>
@@ -123,4 +123,30 @@
 
     @endif
 
+@endsection
+
+@section('javascript')
+    <script type="text/javascript">
+        (function () {
+        const selectSort = document.querySelector('.form-input.select-filter');
+        console.log(4);
+        selectSort.onchange = function () {
+           switch (+this.value) {
+                case 1:
+                    location.href = '?name=up';
+                    break;
+                case 2:
+                    location.href = '?name=down';
+                    break;
+                case 3:
+                    location.href = '?price=up';
+                    break;
+                case 4:
+                    location.href = '?price=down';
+                    break;
+            }
+        }
+
+        }());
+    </script>
 @endsection
