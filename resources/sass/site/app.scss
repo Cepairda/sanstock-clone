@@ -20,7 +20,7 @@
 // plugins
 @import
 	'plugins/rd-navbar',
-	'~owl.carousel/src/scss/owl.carousel';
+	'plugins/owl-carousel';
 
 @import 'common';
 
@@ -35,7 +35,7 @@
 	'components/checkbox';
 
 // page
-@import 
+@import
 	'page/home',
 	'page/category',
 	'page/product';

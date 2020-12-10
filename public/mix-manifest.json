@@ -2,6 +2,6 @@
     "/js/admin/resourses/create-or-edit.js": "/js/admin/resourses/create-or-edit.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/css/site/app.css": "/css/site/app.css",
-    "/js/site/app.js": "/js/site/app.js"
+    "/js/site/app.js": "/js/site/app.js",
+    "/css/site/app.css": "/css/site/app.css"
 }
