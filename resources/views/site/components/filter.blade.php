@@ -7,9 +7,9 @@
             <!--RD Range-->
             <div class="rd-range-wrap">
                 <div class="rd-range-inner">
-                    <input name="minPrice" class="rd-range-input-value-1" style="width: 75px;">
-                    <input name="maxPrice" class="rd-range-input-value-2" style="width: 75px;">
-                    <button type="submit">OK</button>
+                    <input class="rd-range-input-value-1" name="minPrice">
+                    <input class="rd-range-input-value-2" name="maxPrice">
+                    <button class="rd-range-input-btn" type="submit">OK</button>
                 </div>
                 <div class="rd-range" data-min="{{ $minPrice }}" data-max="{{ $maxPrice }}" data-start="[{{ $minPriceSelect }}, {{ $maxPriceSelect }}]" data-step="1"
                      data-tooltip="true" data-min-diff="10" data-input=".rd-range-input-value-1"

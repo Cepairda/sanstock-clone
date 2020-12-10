@@ -25,7 +25,7 @@
             <div class="col-sm-6 col-md-5 col-lg-3">
                 <h5>{{ __('Information') }}</h5>
                 <ul class="list-sm">
-                    <li><a href="/for-user">{{ __('For user') }}</a></li>
+                    {{--<li><a href="/for-user">{{ __('For user') }}</a></li>--}}
                     <li><a href="/sitemap">{{ __('Sitemap') }}</a></li>
                     <li><a href="/blog">{{ __('Blog') }}</a></li>
                     <li><a href="/contacts">{{ __('Contacts') }}</a></li>

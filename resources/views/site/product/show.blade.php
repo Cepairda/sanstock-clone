@@ -93,8 +93,29 @@
                             <span>{{ $product->getDetails('price') }}</span>
                         </p>
                         <div class="mt-5" style="display: flex; align-items: center;">
-                            <button class="button button-primary button-icon" type="submit">
+                            <button class="button button-primary button-icon" data-toggle="modal" data-target="#exampleModal">
                                 <span>{{ __('Where buy') }}</span></button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">{{ __('Where buy') }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>{{ __('For all questions call') }} call-center:</p>
+                                            <a class="d-block text-center" href="callto:0800210377">0-800-210-377</a>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <span class="icon icon-md linear-icon-heart ml-4" data-add="favorite" data-sku="{{$product->getDetails('sku')}}"
                                   style="display: block; height: 100%;font-size: 35px; line-height: 1.5; cursor: pointer"></span>
                         </div>
