@@ -12,7 +12,9 @@
                     <div class="row">
                         <div class="col-12">
                             <p class="item__desc--title">{!! __('Home slide 1') !!}</p>
-                            <a class="button button-primary item__desc--link" href="{{ route('site.resource', $category_banner_1->slug) }}">{{ __('Show more') }}</a>
+                            @isset($category_banner_1)
+                                <a class="button button-primary item__desc--link" href="{{ route('site.resource', $category_banner_1->slug) }}">{{ __('Show more') }}</a>
+                            @endisset
                         </div>
                     </div>
                 </div>
@@ -80,7 +82,9 @@
             <div class="row justify-content-end">
                 <div class="col-12 text-right">
                     <p class="home-bn-info__title">{!! __('Home slide 2') !!}</p>
-                    <a class="button button-primary item__desc--link" href="{{ route('site.resource', $category_banner_1->slug) }}">{{ __('Show more') }}</a>
+                    @isset($category_banner_2)
+                        <a class="button button-primary item__desc--link" href="{{ route('site.resource', $category_banner_1->slug) }}">{{ __('Show more') }}</a>
+                    @endisset
                 </div>
             </div>
         </div>

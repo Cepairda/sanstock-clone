@@ -19,27 +19,31 @@
     @endif
 
     @foreach ($characteristics as $characteristic)
-        <section class="section-sm">
-            <h5>{{ $characteristic->getData('name') }}</h5>
-            <ul class="small list">
-            @foreach ($valuesForView[$characteristic->id] as $value)
-                <li>
-                    <div class="form-group form-check custom-checkbox">
-                        <input
-                            type="checkbox"
-                            class="custom-control-input checkbox-custom"
-                            name=filter[{{ $characteristic->id }}][]
-                            id="valueID{{ $value->id }}"
-                            value="{{ $value->id }}" {{ in_array($value->id, ($_GET['filter'][$characteristic->id]) ?? []) ? 'checked' : ''}}
-                        >
-                        <span class="checkbox-custom-dummy"></span>
-                        <label class="custom-control-label" for="valueID{{ $value->id }}">{{ $value->getData('value') }}
-                            {{--<span>(1)</span>--}}</label>
-                    </div>
-                </li>
-            @endforeach
-            </ul>
-        </section>
+        @if(count($valuesForView[$characteristic->id]) > 1)
+            <section class="section-sm">
+                <h5>{{ $characteristic->getData('name') }}</h5>
+                <ul class="small list">
+
+                    @foreach ($valuesForView[$characteristic->id] as $value)
+                        <li>
+                            <div class="form-group form-check custom-checkbox">
+                                <input
+                                    type="checkbox"
+                                    class="custom-control-input checkbox-custom"
+                                    name=filter[{{ $characteristic->id }}][]
+                                    id="valueID{{ $value->id }}"
+                                    value="{{ $value->id }}" {{ in_array($value->id, ($_GET['filter'][$characteristic->id]) ?? []) ? 'checked' : ''}}
+                                >
+                                <span class="checkbox-custom-dummy"></span>
+                                <label class="custom-control-label"
+                                       for="valueID{{ $value->id }}">{{ $value->getData('value') }}
+                                    {{--<span>(1)</span>--}}</label>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </section>
+        @endif
     @endforeach
 
     <button class="button button-gray-light-outline" href="#">{{ __('Apply') }}</button>
