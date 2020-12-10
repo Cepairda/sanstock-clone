@@ -117,6 +117,9 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::post('products/update-price', 'ProductController@updatePrice')->name('products.update-price');
         Route::get('/favorites', 'ResourceController@Favorites')->name('favorites');
 
+        Route::get('/blog', 'BlogController@index')->name('blog');
+        Route::get('/blog/{slug}', 'BlogController@post')->name('blog-post');
+
         Route::get('/contacts', 'ContactController@index')->name('contacts');
         Route::post('/contacts', 'ContactController@contactForm')->name('contact-form');
 
