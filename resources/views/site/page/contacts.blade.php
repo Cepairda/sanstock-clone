@@ -83,12 +83,12 @@
                 <div class="cell-sm-5 cell-md-4">
                     <h3>{{ __('Contacts') }}</h3>
                     <ul class="list-xs contact-info">
-                        <li>
+                        {{--<li>
                             <dl class="list-terms-minimal">
                                 <dt>{{ __('Address') }}</dt>
                                 <dd>Вулиця Шевченка, 327, корп. 2-2, Харків, Харківська область, 61000</dd>
                             </dl>
-                        </li>
+                        </li>--}}
                         <li>
                             <dl class="list-terms-minimal">
                                 <dt>{{ __('Phone') }}</dt>
