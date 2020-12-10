@@ -213,6 +213,8 @@
         <div class="divider"></div>
     </div>
 
-    @include('site.product.carousel', ['title' => 'Также вас могут заинтересовать'])
+    @if($product->relateProducts->isNotEmpty())
+        @include('site.product.carousel', ['title' => 'Также вас могут заинтересовать'])
+    @endif
 
 @endsection
