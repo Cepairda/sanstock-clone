@@ -125,7 +125,9 @@
                 <div class="cell-sm-7 cell-md-8">
                     <h3>{{ __('Get in Touch') }}</h3>
                     <!-- RD Mailform-->
-                    <form class="rd-mailform rd-mailform_style-1" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
+                    <form class="rd-mailform rd-mailform_style-1" data-form-output="form-output-global" data-form-type="contact" method="post" action="{{ route('site.contact-form') }}">
+                        @method('post')
+                        {{ csrf_field() }}
                         <div class="form-wrap">
                             <input class="form-input" id="contact-name" type="text" name="name" data-constraints="@Required">
                             <label class="form-label" for="contact-name">{{ __('Name') }}</label>
