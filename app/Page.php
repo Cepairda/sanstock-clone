@@ -18,4 +18,14 @@ class Page extends Resource
     {
         return $this->getData('text');
     }
+
+    public function getMetaTitleAttribute()
+    {
+        return $this->getData('meta_title');
+    }
+
+    public function getMetaDescriptionAttribute()
+    {
+        return $this->getData('meta_description');
+    }
 }

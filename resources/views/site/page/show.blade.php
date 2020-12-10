@@ -1,6 +1,9 @@
 @extends('layouts.site')
 @section('body_class', 'pages')
 @section('content')
+@section('meta_title', $page->meta_title)
+@section('meta_description', $page->meta_description)
+
 
     @include('site.components.breadcrumbs')
 

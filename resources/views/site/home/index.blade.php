@@ -1,5 +1,8 @@
 @extends('layouts.site')
 @section('body_class', 'home')
+@section('meta_title', __('Home'))
+@section('meta_description',  __('Home'))
+
 @section('content')
 
     @php($category_banner_1 = \App\Category::joinLocalization()->where('virtual_id', 21)->first())

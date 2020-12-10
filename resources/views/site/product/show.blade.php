@@ -1,5 +1,7 @@
 @extends('layouts.site')
 @section('body_class', 'product')
+@section('meta_title', $product->meta_title)
+@section('meta_description', $product->meta_description)
 
 @section('breadcrumbs')
     @foreach($product->category->ancestors as $ancestor)

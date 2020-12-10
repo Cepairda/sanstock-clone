@@ -1,5 +1,8 @@
 @extends('layouts.site')
 @section('body_class', 'documents')
+@section('meta_title', __('Documentation'))
+@section('meta_description',  __('Documentation'))
+
 @section('breadcrumbs')
     <li class="active">{{ __('Documentation') }}</li>
 @endsection
