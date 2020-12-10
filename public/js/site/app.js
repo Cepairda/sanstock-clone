@@ -42330,7 +42330,7 @@ window.delay = function () {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              xhrUrl = "".concat(location.origin, "/search/?query=").concat(value);
+              xhrUrl = "".concat(location.origin, "/live-search/?query=").concat(value);
               _context.next = 3;
               return fetch(xhrUrl, {});
 
@@ -44715,7 +44715,7 @@ $document.ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Program Files\OpenServer\domains\lidz.local\resources\js\site\app.js */"./resources/js/site/app.js");
+module.exports = __webpack_require__(/*! /var/www/resources/js/site/app.js */"./resources/js/site/app.js");
 
 
 /***/ })
