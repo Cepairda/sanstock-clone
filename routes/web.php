@@ -10,9 +10,8 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
     // Route::get('/', 'HomeController@filter')->name('filter');
 
      //view page (test)
-     Route::get('/contacts', function () {return view('site.page.contacts');})->name('contacts');
-     Route::get('/documentation', function () {return view('site.page.documentation');})->name('documentations');
-     Route::get('/documents/certificates', function () {return view('site.page.certificates');})->name('certificates');
+     //Route::get('/contacts', function () {return view('site.page.contacts');})->name('contacts');
+
      #Route::get('/blog', function () {return view('site.blog.index');})->name('blog');
      #Route::get('/blog/article', function () {return view('site.blog.article');})->name('article');
 
@@ -117,6 +116,13 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::get('search', 'SearchController@search')->name('products.search');
         Route::post('products/update-price', 'ProductController@updatePrice')->name('products.update-price');
         Route::get('/favorites', 'ResourceController@Favorites')->name('favorites');
+
+        Route::get('/contacts', 'ContactController@index')->name('contacts');
+        Route::post('/contacts', 'ContactController@contactForm')->name('contact-form');
+
+        Route::get('/documentation', function () {return view('site.page.documentation');})->name('documentations');
+        Route::get('/documents/certificates', function () {return view('site.page.certificates');})->name('certificates');
+
         Route::get('/sitemap', function () {return view('site.page.sitemap');})->name('sitemap');
         Route::get('/{slug}', 'ResourceController@getResource')->where('slug', '.*')->name('resource');
     });

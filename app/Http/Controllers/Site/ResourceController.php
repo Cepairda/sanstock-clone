@@ -109,8 +109,8 @@ class ResourceController extends Controller
                     'products' => $products,
                     'minPrice' => $minPrice,
                     'maxPrice' => $maxPrice,
-                    'minPriceSelect' => $minPriceSelect ?? $products->min('details->price'),
-                    'maxPriceSelect' => $maxPriceSelect ?? $products->max('details->price'),
+                    'minPriceSelect' => $minPriceSelect ?? $minPrice,
+                    'maxPriceSelect' => $maxPriceSelect ?? $maxPrice,
                     'characteristics' => Characteristic::joinLocalization()->whereIn('id', $characteristicsIds)->get(),
                     'valuesForView' => $valuesForView,
                 ];
