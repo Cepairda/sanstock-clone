@@ -90,7 +90,7 @@
                             class="product-price {{ !empty($product->price_updated_at) || $product->price_updated_at->addHours(4)->lt(\Carbon\Carbon::now()) ? 'updatePriceJs' : '' }}"
                             data-product-sku="{{ $product->sku }}"
                         >
-                            <span>{{ $product->getDetails('price') }}</span>
+                            <span>{{ number_format(ceil($product->getDetails('price')),0,'',' ') }}</span>
                         </p>
                         <div class="mt-5" style="display: flex; align-items: center;">
                             <button class="button button-primary button-icon" data-toggle="modal" data-target="#exampleModal">

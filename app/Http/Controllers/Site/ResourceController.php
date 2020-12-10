@@ -114,7 +114,7 @@ class ResourceController extends Controller
                     $products = $products->orderBy('price', $sortPrice);
                 }
 
-                $products = $products->paginate();
+                $products = $products->paginate(21);
 
                 $data = [
                     'category' => $category,

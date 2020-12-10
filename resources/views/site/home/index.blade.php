@@ -83,7 +83,7 @@
                 <div class="col-12 text-right">
                     <p class="home-bn-info__title">{!! __('Home slide 2') !!}</p>
                     @isset($category_banner_2)
-                        <a class="button button-primary item__desc--link" href="{{ route('site.resource', $category_banner_1->slug) }}">{{ __('Show more') }}</a>
+                        <a class="button button-primary item__desc--link" href="{{ route('site.resource', $category_banner_2->slug) }}">{{ __('Show more') }}</a>
                     @endisset
                 </div>
             </div>

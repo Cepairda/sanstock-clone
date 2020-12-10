@@ -14,8 +14,8 @@
 
                     <section class="section-sm post-single-body">
 
-{{--                        <p class="first-letter">After a hard day’s work, there’s nothing better than sitting and getting all comfortable and cozy in a soft, comfy chair. But finding a recliner that will perfectly fit your body and your budget at the same time (prices range from $250 to $5,000) isn’t as relaxing and easy. If we’re also adding quality, a decent lounger should last at least 10 years with regular use. Here’s how to pick one that won’t break down prematurely!</p>--}}
-                        <h1>{{ $page->name }}</h1>
+                        {{--<p class="first-letter">After a hard day’s work, there’s nothing better than sitting and getting all comfortable and cozy in a soft, comfy chair. But finding a recliner that will perfectly fit your body and your budget at the same time (prices range from $250 to $5,000) isn’t as relaxing and easy. If we’re also adding quality, a decent lounger should last at least 10 years with regular use. Here’s how to pick one that won’t break down prematurely!</p>--}}
+                        <div style="margin-bottom: 16px; font-size: 45px; font-weight: 400; color: #000">{{ $page->name }}</div>
                         <div>{!! $page->description !!}</div>
 
                     </section>
