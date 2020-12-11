@@ -30,6 +30,7 @@ class ResourceController extends Controller
                         ->whereId($resource->id)
                         ->where('details->published', 1)
                         ->withCategory()
+                        ->withRelateProducts()
                         ->first(),
                 ];
                 break;
