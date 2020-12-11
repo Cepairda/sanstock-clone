@@ -50,9 +50,12 @@
     "No results found for": "По запросу ничего не найдено",
     "Apply": "Применить",
     "Price": "Цена",
+    "Sort by": "Сортировать по",
 
     "No products": "Нет товаров",
     "No price": "Нет цены",
     "For all questions call": "По вопросам покупки или сотрудничества звоните в ",
-    "Close": "Закрыть"
+    "Close": "Закрыть",
+
+    "You may also be interested in": "Также вас могут заинтересовать"
 }

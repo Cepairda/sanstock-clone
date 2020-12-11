@@ -8,7 +8,10 @@
         <div class="posts-lists-masonry-3-cols">
             @foreach($posts as $post)
             <!-- Post classic-->
-            <article class="post-classic post-minimal"><img src="images/post-minimal-1-418x315.jpg" alt="" width="418" height="315"/>
+            <article class="post-classic post-minimal">
+                <a href="{{ route('site.blog-post', ['slug' => $post->slug]) }}">
+                    <img src="{{ asset('images/site/Blog/' . $post->slug . '.jpg') }}" alt="" width="418" height="315"/>
+                </a>
                 <div class="post-classic-title">
                     <h5><a href="{{ route('site.blog-post', ['slug' => $post->slug]) }}">{{ $post->name }}</a></h5>
                 </div>

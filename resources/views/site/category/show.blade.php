@@ -84,7 +84,7 @@
                                         <!--Select 2-->
                                         <select class="form-input select-filter" data-placeholder="Default sorting"
                                                 data-minimum-results-for-search="Infinity">
-                                            <option >Sort by</option>
+                                            <option >{{ __('Sort by') }}</option>
                                             <option value="1" {{ ($_GET['name'] ?? null) == 'up' ? 'selected' : '' }}>{{ __('Sort by name low to high') }}</option>
                                             <option value="2" {{ ($_GET['name'] ?? null) == 'down' ? 'selected' : '' }}>{{ __('Sort by name high to low') }}</option>
                                             <option value="3" {{ ($_GET['price'] ?? null) == 'up' ? 'selected' : '' }}>{{ __('Sort by price low to high') }}</option>
