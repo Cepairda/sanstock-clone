@@ -32,7 +32,7 @@
                     </a>
                 </div>
                 <div class="col-sm-6 col-lg-4 documents__wrap--item">
-                    <a href="{{ route('certificates') }}">
+                    <a href="{{ route('site.certificates') }}">
                         <img src="https://b2b-sandi.com.ua/photos/shares/certificates/23_09_21_Lidz____________________________________________________________________________.png" alt="">
                         <span>{{ __('Certificates') }}</span>
                     </a>
