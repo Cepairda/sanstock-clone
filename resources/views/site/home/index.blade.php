@@ -1,5 +1,8 @@
 @extends('layouts.site')
 @section('body_class', 'home')
+@section('meta_title', __('Home'))
+@section('meta_description',  __('Home'))
+
 @section('content')
 
     <section class="home-carousel">

@@ -38,12 +38,22 @@ class Product extends Resource
 
     public function getPriceAttribute()
     {
-        return $this->getDetails('price');
+        return +($this->getDetails('price'));
     }
 
     public function getPriceUpdatedAtAttribute()
     {
         return Carbon::parse($this->getDetails('price_updated_at'), config('timezone'));
+    }
+
+    public function getMetaTitleAttribute()
+    {
+        return $this->getData('meta_title');
+    }
+
+    public function getMetaDescriptionAttribute()
+    {
+        return $this->getData('meta_description');
     }
 
     public function getRelatedAttribute()

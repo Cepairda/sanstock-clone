@@ -1,5 +1,7 @@
 @extends('layouts.site')
 @section('body_class', 'contacts')
+@section('meta_title', __('Contacts'))
+@section('meta_description', __('Contacts'))
 @section('breadcrumbs')
     <li class="active">{{ __('Contacts') }}</li>
 @endsection

@@ -1,5 +1,8 @@
 @extends('layouts.site')
 @section('body_class', 'certificates')
+@section('meta_title', __('Documentation'))
+@section('meta_description',  __('Documentation'))
+
 @section('breadcrumbs')
     <li><a href="{{ route('documentations') }}">{{ __('Documentation') }}</a></li>
     <li class="active">{{ __('Certificates') }}</li>
