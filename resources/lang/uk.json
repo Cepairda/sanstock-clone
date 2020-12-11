@@ -50,9 +50,12 @@
     "No results found for": "За запитом нічого не знайдено",
     "Apply": "Застосувати",
     "Price": "Ціна",
+    "Sort by": "Сортувати за",
 
     "No products": "Немає товарів",
     "No price": "Немає ціни",
     "For all questions call": "З питань покупки або співпраці дзвоніть в",
-    "Close": "Закрити"
+    "Close": "Закрити",
+
+    "You may also be interested in": "Також вас можуть зацікавити"
 }

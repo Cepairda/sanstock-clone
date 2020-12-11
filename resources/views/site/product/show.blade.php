@@ -237,7 +237,7 @@
     </div>
 
     @if($product->relateProducts->isNotEmpty())
-        @include('site.product.carousel', ['title' => 'Также вас могут заинтересовать'])
+        @include('site.product.carousel', ['title' => __('You may also be interested in')])
     @endif
 
 @endsection
