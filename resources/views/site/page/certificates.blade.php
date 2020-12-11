@@ -4,7 +4,7 @@
 @section('meta_description',  __('Documentation'))
 
 @section('breadcrumbs')
-    <li><a href="{{ route('documentations') }}">{{ __('Documentation') }}</a></li>
+    <li><a href="{{ route('site.documentations') }}">{{ __('Documentation') }}</a></li>
     <li class="active">{{ __('Certificates') }}</li>
 @endsection
 @section('content')
