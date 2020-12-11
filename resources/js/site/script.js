@@ -141,3 +141,7 @@ window.delay = (() => {
         }, false)
     }
 }());
+
+//lightgallery.js
+window.addEventListener("load", () => (document.body.classList.contains('product') && lightGallery(document.querySelector('.slick-track'))), false);
+

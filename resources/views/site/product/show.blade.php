@@ -25,31 +25,20 @@
                 <div class="col-sm-12 col-lg-5">
 
                     <!-- Slick Carousel-->
-                    <div class="slick-slider carousel-parent" data-arrows="false" data-loop="false" data-dots="false" data-swipe="true" data-items="1" data-child="#child-carousel" data-for="#child-carousel" data-photo-swipe-gallery="gallery">
-                        <div class="item">
-                            <a class="img-thumbnail-variant-2"
-                                {{-- href="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"--}}
-                               href="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"
-                               data-photo-swipe-item=""
-                               data-size="2000x2000">
-                                <figure>
+                    <div id="lightgallery" class="slick-slider carousel-parent" data-child="#child-carousel" data-for="#child-carousel">
+                            <a class="img-thumbnail-variant-2 cursor-pointer" data-src="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"                            >
                                     <img src="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="535" height="535"/>
-                                </figure>
-                                <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div></a>
-                        </div>
+                            <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div>
+                            </a>
 
                         @foreach(temp_additional($product->sku) as $uri)
 
-                            <div class="item">
-                                <a class="img-thumbnail-variant-2"
-                                   href="{{ $uri }}"
-                                   data-photo-swipe-item=""
-                                   data-size="2000x2000">
-                                    <figure>
+                                <a class="img-thumbnail-variant-2 cursor-pointer" data-src="{{ $uri }}">
+
                                         <img src="{{ $uri }}" alt="" width="535" height="535"/>
-                                    </figure>
-                                    <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div></a>
-                            </div>
+
+                                    <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div>
+                                </a>
 
                         @endforeach
 
@@ -235,9 +224,7 @@
     <div class="shell">
         <div class="divider"></div>
     </div>
-
     @if($product->relateProducts->isNotEmpty())
         @include('site.product.carousel', ['title' => __('You may also be interested in')])
     @endif
-
 @endsection
