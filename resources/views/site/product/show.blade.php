@@ -26,14 +26,14 @@
 
                     <!-- Slick Carousel-->
                     <div id="lightgallery" class="slick-slider carousel-parent" data-child="#child-carousel" data-for="#child-carousel">
-                            <a class="img-thumbnail-variant-2 cursor-pointer" data-src="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"                            >
+                            <a class="img-thumbnail-variant-2" href="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"                            >
                                     <img src="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="535" height="535"/>
                             <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div>
                             </a>
 
                         @foreach(temp_additional($product->sku) as $uri)
 
-                                <a class="img-thumbnail-variant-2 cursor-pointer" data-src="{{ $uri }}">
+                                <a class="img-thumbnail-variant-2" href="{{ $uri }}">
 
                                         <img src="{{ $uri }}" alt="" width="535" height="535"/>
 
