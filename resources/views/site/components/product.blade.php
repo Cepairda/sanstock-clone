@@ -23,14 +23,12 @@
             <a href="{{ route('site.resource', $product->slug) }}" alt="{{ $product->name }}">{{ $product->name }}</a>
         </div>
 
-        <p
-            class="product-price {{ !empty($product->price_updated_at) || $product->price_updated_at->addHours(4)->lt(\Carbon\Carbon::now()) ? 'updatePriceJs' : '' }}"
-            data-product-sku="{{ $product->sku }}"
-        >
+        <p class="product-price {{ !empty($product->price_updated_at) || $product->price_updated_at->addHours(4)->lt(\Carbon\Carbon::now()) ? 'updatePriceJs' : '' }}"
+            data-product-sku="{{ $product->sku }}">
             @if($product->price)
-                <span>{{ $product->price}}</span>
+                <span>{{ number_format(ceil($product->price),0,'',' ') }}</span>
             @else
-                Нет цены
+            {{ __('No price') }}
             @endif
         </p>
 

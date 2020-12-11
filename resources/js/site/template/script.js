@@ -1479,74 +1479,79 @@ $document.ready(function () {
    * PhotoSwipe Gallery
    * @description Enables PhotoSwipe Gallery plugin
    */
-  if (plugins.photoSwipeGallery.length && !isNoviBuilder) {
-    // init image click event
-    $document.delegate("[data-photo-swipe-item]", "click", function (event) {
-      event.preventDefault();
+    if (plugins.photoSwipeGallery.length && !isNoviBuilder) {
 
-      var $el = $(this),
-        $galleryItems = $el.parents("[data-photo-swipe-gallery]").find("a[data-photo-swipe-item]"),
-        pswpElement = document.querySelectorAll('.pswp')[0],
-        encounteredItems = {},
-        pswpItems = [],
-        options,
-        pswpIndex = 0,
-        pswp;
+        // init image click event
+        $document.delegate("[data-photo-swipe-item]", "click", function (event) {
+            event.preventDefault();
 
-      if ($galleryItems.length == 0) {
-        $galleryItems = $el;
-      }
+            var $el = $(this),
+                $galleryItems = $el.parents("[data-photo-swipe-gallery]").find("a[data-photo-swipe-item]"),
+                pswpElement = document.querySelectorAll('.pswp')[0],
+                encounteredItems = {},
+                pswpItems = [],
+                options,
+                pswpIndex = 0,
+                pswp;
 
-      // loop over the gallery to build up the photoswipe items
-      $galleryItems.each(function () {
-        var $item = $(this),
-          src = $item.attr('href'),
-          size = $item.attr('data-size').split('x'),
-          pswdItem;
+            if ($galleryItems.length == 0) {
+                $galleryItems = $el;
+            }
 
-          console.log(src);
+            // loop over the gallery to build up the photoswipe items
+            $galleryItems.each(function () {
+                var $item = $(this),
+                    src = $item.attr('href'),
+                    size = $item.attr('data-size').split('x'),
+                    pswdItem;
 
-        if ($item.is(':visible')) {
+                    window.open(src);
 
-          // if we have this image the first time
-          if (!encounteredItems[src]) {
-            // build the photoswipe item
-            pswdItem = {
-              src: src,
-              w: parseInt(size[0], 10),
-              h: parseInt(size[1], 10),
-              el: $item // save link to element for getThumbBoundsFn
+                if ($item.is(':visible')) {
+
+                    // if we have this image the first time
+                    if (!encounteredItems[src]) {
+                        // build the photoswipe item
+                        pswdItem = {
+                            src: src,
+                            w: parseInt(size[0], 10),
+                            h: parseInt(size[1], 10),
+                            el: $item // save link to element for getThumbBoundsFn
+                        };
+
+                        // store that we already had this item
+                        encounteredItems[src] = {
+                            item: pswdItem,
+                            index: pswpIndex
+                        };
+
+                        // push the item to the photoswipe list
+                        pswpItems.push(pswdItem);
+                        pswpIndex++;
+                    }
+                }
+            });
+
+            options = {
+                index: encounteredItems[$el.attr('href')].index,
+
+                getThumbBoundsFn: function (index) {
+                    var $el = pswpItems[index].el,
+                        offset = $el.offset();
+
+                    return {
+                        x: offset.left,
+                        y: offset.top,
+                        w: $el.width()
+                    };
+                }
             };
 
-            // store that we already had this item
-            encounteredItems[src] = {
-              item: pswdItem,
-              index: pswpIndex
-            };
-
-            // push the item to the photoswipe list
-            pswpItems.push(pswdItem);
-            pswpIndex++;
-          }
-        }
-      });
-
-      options = {
-        index: encounteredItems[$el.attr('href')].index,
-
-        getThumbBoundsFn: function (index) {
-          var $el = pswpItems[index].el,
-            offset = $el.offset();
-
-          return {
-            x: offset.left,
-            y: offset.top,
-            w: $el.width()
-          };
-        }
-      };
-    });
-  }
+            // open the photoswipe gallery
+            //pswp = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, pswpItems, options);
+            //pswp.init();
+        });
+    }
 
   /**
    * Custom Toggles
