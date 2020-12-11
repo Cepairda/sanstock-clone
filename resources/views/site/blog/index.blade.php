@@ -13,8 +13,9 @@
                     <h5><a href="{{ route('site.blog-post', ['slug' => $post->slug]) }}">{{ $post->name }}</a></h5>
                 </div>
                 <div class="post-meta">
-                    <div class="group"><a href="image-post.html">
-                            <time datetime="2017">Jan.20, 2016</time></a><a class="meta-author" href="image-post.html">by Brian Williamson</a></div>
+                    <div class="group">
+                        <a href="image-post.html"><time datetime="2017">{{ $post->created_at->format('d.m.Y') }}</time></a>
+                        {{--<a class="meta-author" href="image-post.html">by Brian Williamson</a></div>--}}
                 </div>
             </article>
             @endforeach
