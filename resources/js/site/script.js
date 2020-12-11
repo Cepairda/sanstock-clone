@@ -60,7 +60,14 @@ window.delay = (() => {
                     favorite.classList.add('selected');
                 } else {
                     favoritesMass.splice(indexSku, 1);
-                    favorite.classList.remove('selected');
+                    if(document.body.classList.contains('favorites')) {
+                        let card = favorite.closest('.product.product-grid');
+                        card.parentElement.classList.add('hideBock')
+                        setTimeout(() => card.parentElement.remove(), 355);
+                        !favoritesMass.length && location.reload();
+                    } else {
+                        favorite.classList.remove('selected');
+                    }
                 }
                 document.querySelector('.header-favorites-count').textContent = favoritesMass.length;
                 document.cookie = 'favorites' + "=" + favoritesMass.join(',') + "; path=/; expires=" + date.toUTCString();
@@ -100,28 +107,27 @@ window.delay = (() => {
                 xhrLiveSearch(value)
             }
         }, 500);
-
-        //if(value.trim()){}
     }
 }());
 
 //update Price
 (function (){
-    let url = '/products/update-price';
-    let dataSku = document.querySelectorAll('[data-product-sku].updatePriceJs');
-    let skuArray = [];
+    let url = '/products/update-price',
+        dataSku = document.querySelectorAll('[data-product-sku].updatePriceJs'),
+        token = document.querySelector('input[name=_token]'),
+        skuArray = [];
 
     for (let sku of dataSku) {
         skuArray.push(+sku.dataset.productSku);
     }
 
-    if (skuArray.length) {
+    if (skuArray.length && token) {
         fetch(url, {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
                 "X-Requested-With": "XMLHttpRequest",
-                "X-CSRF-Token": document.querySelector('input[name=_token]').value,
+                "X-CSRF-Token": token.value,
             },
             method: "post",
             credentials: "same-origin",
@@ -145,3 +151,25 @@ window.delay = (() => {
 //lightgallery.js
 window.addEventListener("load", () => (document.body.classList.contains('product') && lightGallery(document.querySelector('.slick-track'))), false);
 
+//filter category
+(function () {
+    const selectSort = document.querySelector('.form-input.select-filter');
+    if (selectSort) {
+        selectSort.onchange = function () {
+            switch (+this.value) {
+                case 1:
+                    location.href = '?name=up';
+                    break;
+                case 2:
+                    location.href = '?name=down';
+                    break;
+                case 3:
+                    location.href = '?price=up';
+                    break;
+                case 4:
+                    location.href = '?price=down';
+                    break;
+            }
+        }
+    }
+}());

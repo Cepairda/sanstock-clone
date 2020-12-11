@@ -124,29 +124,3 @@
     @endif
 
 @endsection
-
-@section('javascript')
-    <script type="text/javascript">
-        (function () {
-        const selectSort = document.querySelector('.form-input.select-filter');
-        console.log(4);
-        selectSort.onchange = function () {
-           switch (+this.value) {
-                case 1:
-                    location.href = '?name=up';
-                    break;
-                case 2:
-                    location.href = '?name=down';
-                    break;
-                case 3:
-                    location.href = '?price=up';
-                    break;
-                case 4:
-                    location.href = '?price=down';
-                    break;
-            }
-        }
-
-        }());
-    </script>
-@endsection

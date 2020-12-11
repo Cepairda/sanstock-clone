@@ -186,3 +186,16 @@
 * + .product-price {
 	margin-top: 7px;
 }
+
+.hideBock {
+    animation: hBlock .35s linear forwards;
+}
+
+@keyframes hBlock {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
