@@ -125,6 +125,23 @@ class Product extends Resource
     {
         return $this->belongsToMany(Product::class, 'resource_resource',
             'resource_id', 'relation_id')
-            ->where('relation_type', Product::class);
+            ->where('relation_type', Product::class)
+            ->where('details->price', '>' , 0);
+    }
+
+    public function stars()
+    {
+        return +$this->getDetails('enable_stars') ?? null;
+    }
+
+    public function comments()
+    {
+        if (+$this->getDetails('enable_comments')) {
+            return $this->hasMany(Comment::class, 'details->resource_id', 'id')
+                ->whereNull('parent_id')
+                ->where('details->status', 1);
+        }
+
+        return null;
     }
 }
