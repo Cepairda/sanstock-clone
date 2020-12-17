@@ -25,7 +25,7 @@ class ContactController extends Controller
 
         $emails = [
             'kartsev@sandiplus.com.ua',
-            'makarov@sandiplus.com.ua',
+            'maikov@sandiplus.com.ua',
             'callcenter@sandiplus.com.ua',
         ];
 

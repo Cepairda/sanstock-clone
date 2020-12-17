@@ -2,7 +2,7 @@
 @section('body_class', 'category')
 
 @section('breadcrumbs')
-    <li class="active">{{ Str::words($searchQuery, 1, '...') }}</li>
+    <li class="active">{{ Str::words($searchQuery, 3, '...') }}</li>
 @endsection
 
 @section('content')
