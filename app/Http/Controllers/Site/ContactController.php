@@ -22,9 +22,19 @@ class ContactController extends Controller
             Session::flash('captcha_error', true);
             return redirect()->back();
         }*/
-        $user = new User();
-        $user->email = 'cepairda@gmail.com';
-        $user->notify(new ContactForm($request->all()));
+
+        $emails = [
+            'kartsev@sandiplus.com.ua',
+            'makarov@sandiplus.com.ua',
+            'callcenter@sandiplus.com.ua',
+        ];
+
+        foreach ($emails as $email) {
+            $user = new User();
+            $user->email = $email;
+            $user->notify(new ContactForm($request->all()));
+        }
+
         //Session::flash('back_call', true);
         return redirect()->back();
     }
