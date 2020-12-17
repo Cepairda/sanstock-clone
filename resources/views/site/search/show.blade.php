@@ -2,7 +2,7 @@
 @section('body_class', 'category')
 
 @section('breadcrumbs')
-
+    <li class="active">{{ Str::words($searchQuery, 1, '...') }}</li>
 @endsection
 
 @section('content')
@@ -22,8 +22,8 @@
                         <div class="section-sm">
                             <div class="filter-shop-box">
                                 <p>{{ __('Showing') }} {{ $products->count() }} {{ __('of') }} {{ $products->total() }} </p>
-                                <div class="form-wrap">
-                                    <!--Select 2-->
+                                <!--div class="form-wrap">
+
                                     <select class="form-input select-filter" data-placeholder="Default sorting"
                                             data-minimum-results-for-search="Infinity">
 
@@ -33,7 +33,7 @@
                                         <option value="4">{{ __('Sort by price high to low') }}</option>
 
                                     </select>
-                                </div>
+                                </div-->
                             </div>
                             <div class="range range-xs-center range-70">
                                 @foreach($products as $product)
