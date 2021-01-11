@@ -4,6 +4,7 @@ namespace App;
 
 use LaravelLocalization;
 use Carbon\Carbon;
+use Spatie\SchemaOrg\Schema;
 
 class Product extends Resource
 {
@@ -143,5 +144,33 @@ class Product extends Resource
         }
 
         return null;
+    }
+
+    public function getJsonLd()
+    {
+        return Schema::product()
+            ->name($this->name)
+            ->sku($this->sku)
+            ->mpn($this->sku)
+            ->url(LaravelLocalization::getLocalizedURL())
+            ->category($this->category->name)
+            //->image(url('image' . $this->sku))
+            ->brand(
+                Schema::brand()
+                    ->name('Lidz')
+                    ->logo(asset('images/site/logo.svg'))
+            )
+            ->manufacturer('Lidz')
+            ->itemCondition('NewCondition')
+            ->description($this->description)
+            ->offers(
+                Schema::offer()
+                    ->availability('https://schema.org/InStock')
+                    ->url(LaravelLocalization::getLocalizedURL())
+                    ->priceValidUntil((date('Y') + 1) . '-05-31')
+                    ->price($this->price)
+                    ->priceCurrency('UAH')
+            )
+            ->toScript();
     }
 }

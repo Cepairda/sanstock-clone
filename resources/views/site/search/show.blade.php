@@ -1,8 +1,27 @@
 @extends('layouts.site')
 @section('body_class', 'category')
 
+@section('rel_alternate_pagination')
+    @if (isset($_GET['page']))
+        <link rel="alternate" hreflang="{{ 'ru-ua' }}"
+              href="{{ strtok(LaravelLocalization::getLocalizedURL('ru'), '?') }}"
+        >
+        <link rel="alternate" hreflang="{{ 'uk-ua' }}"
+              href="{{ strtok(LaravelLocalization::getLocalizedURL('uk'), '?') }}"
+        >
+    @endif
+@endsection
+
 @section('breadcrumbs')
-    <li class="active">{{ __('Search') }}</li>
+    <li class="active"
+        itemprop="itemListElement"
+        itemscope itemtype="https://schema.org/ListItem"
+    >
+        <span itemprop="name">
+            {{ __('Search') }}
+        </span>
+        <meta itemprop="position" content="2" />
+    </li>
 @endsection
 
 @section('content')

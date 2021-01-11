@@ -3,7 +3,15 @@
 @section('meta_title', __('Contacts'))
 @section('meta_description', __('Contacts'))
 @section('breadcrumbs')
-    <li class="active">{{ __('Contacts') }}</li>
+    <li class="active"
+        itemprop="itemListElement"
+        itemscope itemtype="https://schema.org/ListItem"
+    >
+        <span itemprop="name">
+            {{ __('Contacts') }}
+        </span>
+        <meta itemprop="position" content="2" />
+    </li>
 @endsection
 @section('content')
 
