@@ -4,8 +4,25 @@
 @section('meta_description',  __('Documentation'))
 
 @section('breadcrumbs')
-    <li><a href="{{ route('site.documentations') }}">{{ __('Documentation') }}</a></li>
-    <li class="active">{{ __('Certificates') }}</li>
+    <li itemprop="itemListElement"
+        itemscope itemtype="https://schema.org/ListItem"
+    >
+        <a href="{{ route('site.documentations') }}" itemprop="item">
+            <span itemprop="name">
+                {{ __('Documentation') }}
+            </span>
+        </a>
+        <meta itemprop="position" content="2" />
+    </li>
+    <li class="active"
+        itemprop="itemListElement"
+        itemscope itemtype="https://schema.org/ListItem"
+    >
+        <span itemprop="name">
+            {{ __('Certificates') }}
+        </span>
+        <meta itemprop="position" content="3" />
+    </li>
 @endsection
 @section('content')
 

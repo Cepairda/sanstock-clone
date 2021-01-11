@@ -4,15 +4,46 @@
 @section('meta_description', $product->meta_description)
 
 @section('breadcrumbs')
+    @php($i = 2)
     @foreach($product->category->ancestors as $ancestor)
-        <li><a href="{{ route('site.resource', $ancestor->slug) }}">{{ $ancestor->name }}</a></li>
+        <li itemprop="itemListElement"
+            itemscope itemtype="https://schema.org/ListItem"
+        >
+            <a href="{{ route('site.resource', $ancestor->slug) }}" itemprop="item">
+                <span itemprop="name">
+                    {{ $ancestor->name }}
+                </span>
+            </a>
+            <meta itemprop="position" content="{{ $i }}" />
+        </li>
+        @php($i++)
     @endforeach
-    <li><a href="{{ route('site.resource', $product->category->slug) }}">{{ $product->category->name }}</a></li>
-    <li class="active">{{ $product->name }}</li>
+    <li itemprop="itemListElement"
+        itemscope itemtype="https://schema.org/ListItem"
+    >
+        <a href="{{ route('site.resource', $product->category->slug) }}" itemprop="item">
+            <span itemprop="name">
+                 {{ $product->category->name }}
+            </span>
+        </a>
+        <meta itemprop="position" content="{{ $i++ }}" />
+    </li>
+    <li class="active"
+        itemprop="itemListElement"
+        itemscope itemtype="https://schema.org/ListItem"
+    >
+        <span itemprop="name">
+            {{ $product->name }}
+        </span>
+        <meta itemprop="position" content="{{ $i }}" />
+    </li>
+@endsection
+
+@section('jsonld')
+    {!! $product->getJsonLd() !!}
 @endsection
 
 @section('content')
-
     @include('site.components.breadcrumbs', ['title' => $product->getData('name')])
 
     <form>

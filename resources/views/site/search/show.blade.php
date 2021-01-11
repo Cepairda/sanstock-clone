@@ -2,7 +2,15 @@
 @section('body_class', 'category')
 
 @section('breadcrumbs')
-    <li class="active">{{ __('Search') }}</li>
+    <li class="active"
+        itemprop="itemListElement"
+        itemscope itemtype="https://schema.org/ListItem"
+    >
+        <span itemprop="name">
+            {{ __('Search') }}
+        </span>
+        <meta itemprop="position" content="2" />
+    </li>
 @endsection
 
 @section('content')

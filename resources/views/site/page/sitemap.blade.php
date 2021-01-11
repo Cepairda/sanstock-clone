@@ -3,7 +3,15 @@
 @section('meta_title',  __('Sitemap'))
 @section('meta_description',  __('Sitemap'))
 @section('breadcrumbs')
-    <li class="active">{{ __('Sitemap') }}</li>
+    <li class="active"
+        itemprop="itemListElement"
+        itemscope itemtype="https://schema.org/ListItem"
+    >
+        <span itemprop="name">
+            {{ __('Sitemap') }}
+        </span>
+        <meta itemprop="position" content="2" />
+    </li>
 @endsection
 @section('content')
 

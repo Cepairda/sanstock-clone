@@ -4,8 +4,17 @@
 
             <p class="breadcrumbs-custom__title">{{ $title ?? '' }}</p>
 
-            <ul class="breadcrumbs-custom__path">
-                <li><a href="/">{{ __('Home') }}</a></li>
+            <ul class="breadcrumbs-custom__path" itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement"
+                    itemscope itemtype="https://schema.org/ListItem"
+                >
+                    <a href="/" itemprop="item">
+                        <span itemprop="name">
+                            {{ __('Home') }}
+                        </span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
                 @yield('breadcrumbs')
 {{--                <li><a href="#">{{ 'Пусто' ?? $someVariable }}</a></li>--}}
 {{--                <li class="active">{{ 'Пусто' ?? $someVariable }}</li>--}}

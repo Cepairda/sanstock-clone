@@ -2,7 +2,15 @@
 @section('body_class', 'favorites')
 
 @section('breadcrumbs')
-    <li class="active">{{ __('Favorites') }}</li>
+    <li class="active"
+        itemprop="itemListElement"
+        itemscope itemtype="https://schema.org/ListItem"
+    >
+        <span itemprop="name">
+            {{ __('Favorites') }}
+        </span>
+        <meta itemprop="position" content="2" />
+    </li>
 @endsection
 
 @section('content')

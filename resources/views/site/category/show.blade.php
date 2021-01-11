@@ -4,10 +4,29 @@
 @section('meta_description', $category->meta_description)
 
 @section('breadcrumbs')
+    @php($i = 2)
     @foreach($category->ancestors as $ancestor)
-        <li><a href="{{ route('site.resource', $ancestor->slug) }}">{{ $ancestor->name }}</a></li>
+        <li itemprop="itemListElement"
+            itemscope itemtype="https://schema.org/ListItem"
+        >
+            <a href="{{ route('site.resource', $ancestor->slug) }}" itemprop="item">
+                <span itemprop="name">
+                    {{ $ancestor->name }}
+                </span>
+            </a>
+            <meta itemprop="position" content="{{ $i }}" />
+        </li>
+        @php($i++)
     @endforeach
-    <li class="active">{{ $category->name }}</li>
+    <li class="active"
+        itemprop="itemListElement"
+        itemscope itemtype="https://schema.org/ListItem"
+    >
+        <span itemprop="name">
+            {{ $category->name }}
+        </span>
+        <meta itemprop="position" content="{{ $i }}" />
+    </li>
 @endsection
 
 @section('content')

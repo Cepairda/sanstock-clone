@@ -4,7 +4,15 @@
 @section('meta_description',  __('Documentation'))
 
 @section('breadcrumbs')
-    <li class="active">{{ __('Documentation') }}</li>
+    <li class="active"
+        itemprop="itemListElement"
+        itemscope itemtype="https://schema.org/ListItem"
+    >
+        <span itemprop="name">
+            {{ __('Documentation') }}
+        </span>
+        <meta itemprop="position" content="2" />
+    </li>
 @endsection
 @section('content')
 
