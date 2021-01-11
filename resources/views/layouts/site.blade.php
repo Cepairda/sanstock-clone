@@ -13,6 +13,7 @@
           href="{{ LaravelLocalization::getLocalizedURL('ru') }}">
     <link rel="alternate" hreflang="{{ 'uk-ua' }}"
           href="{{ LaravelLocalization::getLocalizedURL('uk') }}">
+    @yield('rel_alternate_pagination')
     @yield('jsonld')
 </head>
 <body id="@yield('body_id')" class="@yield('body_class')">
