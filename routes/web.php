@@ -108,6 +108,12 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::prefix('smart-filters')->as('smart-filters.')->group(function () {
             Route::resource('/', 'SmartFilterController')->parameters(['' => 'category']);
         });
+
+        Route::prefix('icons')->as('icons.')->group(function () {
+            Route::resource('/', 'IconController')->parameters(['' => 'icon']);
+
+            Route::get('/create-search-string', 'IconController@createSearchString')->name('create-search-string');
+        });
     });
 
     Route::as('site.')->namespace('Site')->group(function () {

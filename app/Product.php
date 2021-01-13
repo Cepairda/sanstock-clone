@@ -130,6 +130,12 @@ class Product extends Resource
             ->where('details->price', '>' , 0);
     }
 
+    public function icons()
+    {
+        return $this->belongsToMany(Icon::class, 'resource_resource',
+            'resource_id', 'relation_id');
+    }
+
     public function stars()
     {
         return +$this->getDetails('enable_stars') ?? null;

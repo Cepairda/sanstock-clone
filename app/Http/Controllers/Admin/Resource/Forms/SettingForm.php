@@ -8,7 +8,7 @@ use App\Product;
 use App\Icon;
 use Kris\LaravelFormBuilder\Form;
 
-class ProductForm extends Form
+class SettingForm extends Form
 {
     public function buildForm()
     {
