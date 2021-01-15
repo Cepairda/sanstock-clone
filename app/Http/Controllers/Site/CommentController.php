@@ -16,8 +16,17 @@ class CommentController extends Controller
         $this->resource = $comment;
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $files = $request->file('attachment');
+
+        if($request->hasFile('attachment'))
+        {
+            foreach ($files as $file) {
+                $file->store('users/' . $this->user->id . '/messages');
+            }
+        }
+
         $this->resource->storeOrUpdate();
 
         return back();

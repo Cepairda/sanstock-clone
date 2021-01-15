@@ -24,11 +24,35 @@ class SettingForm extends Form
                 'empty_value' => ' '
             ])
             ->add('details[comments][App\Product][stars]', 'select', [
-                'label' => 'Товары(Звездв)',
+                'label' => 'Товары(Звезды в Комментариях)',
                 'rules' => ['required'],
                 'choices' => ['Выключено', 'Включено'],
                 'selected' => $resource->getDetails('comments')['App\Product']['stars'],
                 'empty_value' => ' '
+            ])
+            ->add('details[comments][App\Product][enable]', 'select', [
+                'label' => 'Товары(Отзывы)',
+                'rules' => ['required'],
+                'choices' => ['Выключено', 'Включено'],
+                'selected' => $resource->getDetails('comments')['App\Product']['enable'],
+                'empty_value' => ' '
+            ])
+            ->add('details[reviews][App\Product][stars]', 'select', [
+                'label' => 'Товары(Звезды в Отзывах)',
+                'rules' => ['required'],
+                'choices' => ['Выключено', 'Включено'],
+                'selected' => $resource->getDetails('comments')['App\Product']['stars'],
+                'empty_value' => ' '
+            ])
+            ->add('details[comments][files][count]', 'number', [
+                'label' => 'Количество файлов(Комментарии)',
+                'rules' => ['required'],
+                'value' => $resource->getDetails('comments')['files']['count'],
+            ])
+            ->add('details[comments][files][size]', 'number', [
+                'label' => 'Max размер файла в МБ(Комментарии)',
+                'rules' => ['required'],
+                'value' => $resource->getDetails('comments')['files']['size'],
             ])
             ->add('submit', 'submit', [
                 'label' => 'Сохранить'

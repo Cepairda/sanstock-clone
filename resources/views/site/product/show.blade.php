@@ -263,7 +263,7 @@
 
                     <hr />
                     <h4>{{ __('Add comment') }}</h4>
-                    <form method="post" action="{{ route('site.comments.store') }}">
+                    <form method="post" enctype="multipart/form-data" action="{{ route('site.comments.store') }}">
                         @csrf
                         <div class="form-group">
                             <input type="text" name="details[name]" class="form-control" placeholder="{{ __('Name') }}" />
