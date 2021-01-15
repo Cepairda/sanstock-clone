@@ -133,13 +133,15 @@
                             </div>
                             <section class="text-center">
                                 <!-- Classic Pagination-->
-                                <button type="button" class="btn-more-link" data-page="{{ $show_more['page'] }}"
+                                @isset($showMore)
+                                <button type="button" class="btn-more-link" data-page="{{ $showMore['page'] }}"
                                         data-url="{{ LaravelLocalization::localizeUrl('/show-more') . '?' . Request::getQueryString() }}"
                                         id="showMore"
-                                        data-token="{{ csrf_token() }}" data-slug="{{ $show_more['slug'] }}"
-                                        >
-                                    Показать больше
+                                        data-token="{{ csrf_token() }}" data-slug="{{ $showMore['slug'] }}"
+                                >
+                                    @lang('Show More')
                                 </button>
+                                @endisset
                             </section>
                             <!-- Pagination-->
                             <section class="section-sm">

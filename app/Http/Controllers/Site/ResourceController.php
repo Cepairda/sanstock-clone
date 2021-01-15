@@ -131,13 +131,10 @@ class ResourceController extends Controller
                     //dd($showMore);
                 }
 
-                if ($parameters['showMore']) {
+                if (isset($parameters['showMore'])) {
                     return [
                         'products' => $products,
                         'show_more' => $showMore,
-                        'filter' => $filters ?? null,
-                        //'minPrice' =>,
-                        //'maxPrice'
                     ];
                 }
 
@@ -150,7 +147,7 @@ class ResourceController extends Controller
                     'maxPriceSelect' => $maxPriceSelect ?? $maxPrice,
                     'characteristics' => Characteristic::joinLocalization()->whereIn('id', $characteristicsIds)->get(),
                     'valuesForView' => $valuesForView,
-                    'show_more' => $showMore,
+                    'showMore' => $showMore,
                 ];
 
                 break;
