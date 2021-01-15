@@ -15,6 +15,11 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
      #Route::get('/blog', function () {return view('site.blog.index');})->name('blog');
      #Route::get('/blog/article', function () {return view('site.blog.article');})->name('article');
 
+    Route::get('/sitemap.xml', 'SitemapController@index');
+    Route::get('/sitemap.xml/categories', 'SitemapController@categories');
+    Route::get('/sitemap.xml/products', 'SitemapController@products');
+    Route::get('/sitemap.xml/pages', 'SitemapController@pages');
+
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
@@ -109,6 +114,12 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::resource('/', 'SmartFilterController')->parameters(['' => 'category']);
         });
 
+        Route::prefix('comments')->as('comments.')->group(function () {
+            Route::resource('/', 'CommentController')->parameters(['' => 'comment']);
+
+            Route::get('/create-search-string', 'CommentController@createSearchString')->name('create-search-string');
+        });
+
         Route::prefix('icons')->as('icons.')->group(function () {
             Route::resource('/', 'IconController')->parameters(['' => 'icon']);
 
@@ -137,6 +148,9 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::get('/documentation', function () {return view('site.page.documentation');})->name('documentations');
         Route::get('/documents/certificates', function () {return view('site.page.certificates');})->name('certificates');
+
+        Route::post('/comments', 'CommentController@store')->name('comments.store');
+
         Route::get('/sitemap', function () {return view('site.page.sitemap');})->name('sitemap');
 
         Route::post('/show-more', 'ResourceController@showMore');

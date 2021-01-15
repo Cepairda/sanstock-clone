@@ -252,6 +252,37 @@
 
     </section>
 
+    @if ($product->comments())
+    <section class="section-sm bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <hr />
+                    <h4>{{ __('Comments') }}</h4>
+
+                    @include('site.components.comments', ['comments' => $product->comments, 'resourceId' => $product->id])
+
+                    <hr />
+                    <h4>{{ __('Add comment') }}</h4>
+                    <form method="post" action="{{ route('site.comments.store') }}">
+                        @csrf
+                        <div class="form-group">
+                            <input type="text" name="details[name]" class="form-control" placeholder="{{ __('Name') }}" />
+                            <input type="text" name="details[email]" class="form-control" placeholder="Email" />
+                            <input type="text" name="details[phone]" class="form-control" placeholder="{{ __('Phone') }}" />
+                            <textarea class="form-control" name="details[body]" placeholder="{{ __('Comment') }}"></textarea>
+                            <input type="hidden" name="details[resource_id]" value="{{ $product->id }}" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-success" value="{{ __('Add comment') }}" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    @endif
+
     <!-- Divider-->
     <div class="shell">
         <div class="divider"></div>
