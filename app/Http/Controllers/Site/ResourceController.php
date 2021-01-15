@@ -115,7 +115,7 @@ class ResourceController extends Controller
                     $products = $products->orderBy('price', $sortPrice);
                 }
 
-                $products = $products->paginate(4)->appends(Request::except('page'));
+                $products = $products->paginate(21)->appends(Request::except('page'));
 
                 $showMore = null;
 
