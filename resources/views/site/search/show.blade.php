@@ -70,7 +70,7 @@
                     </div>
                 @else
                     <div class="section-sm m-auto">
-                        <p>{{ __('No products') }}</p>
+                        <p>{{ __('Search not result', ['search_value' => $searchQuery]) }}</p>
                     </div>
                 @endif
             </div>

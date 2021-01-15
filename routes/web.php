@@ -137,8 +137,10 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::get('/documentation', function () {return view('site.page.documentation');})->name('documentations');
         Route::get('/documents/certificates', function () {return view('site.page.certificates');})->name('certificates');
-
         Route::get('/sitemap', function () {return view('site.page.sitemap');})->name('sitemap');
+
+        Route::post('/show-more', 'ResourceController@showMore');
+
         Route::get('/{slug}', 'ResourceController@getResource')->where('slug', '.*')->name('resource');
     });
 });

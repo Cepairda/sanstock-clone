@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Request;
 
 class ResourceController extends Controller
 {
-    public function getResource($slug)
+    public function getResource($slug, array $parameters = null)
     {
         $resource = Resource::withoutGlobalScopes()
             ->where('slug', $slug)
@@ -115,7 +115,31 @@ class ResourceController extends Controller
                     $products = $products->orderBy('price', $sortPrice);
                 }
 
-                $products = $products->paginate(21)->appends(Request::except('page'));
+                $products = $products->paginate(4)->appends(Request::except('page'));
+
+                $showMore = null;
+
+                $pageNumber = $products->currentPage();
+
+
+                if ($pageNumber < $products->lastPage()) {
+                    $showMore = [
+                        'slug' => $slug,
+                        'page' => ($pageNumber + 1)
+                    ];
+
+                    //dd($showMore);
+                }
+
+                if ($parameters['showMore']) {
+                    return [
+                        'products' => $products,
+                        'show_more' => $showMore,
+                        'filter' => $filters ?? null,
+                        //'minPrice' =>,
+                        //'maxPrice'
+                    ];
+                }
 
                 $data = [
                     'category' => $category,
@@ -126,6 +150,7 @@ class ResourceController extends Controller
                     'maxPriceSelect' => $maxPriceSelect ?? $maxPrice,
                     'characteristics' => Characteristic::joinLocalization()->whereIn('id', $characteristicsIds)->get(),
                     'valuesForView' => $valuesForView,
+                    'show_more' => $showMore,
                 ];
 
                 break;
@@ -141,6 +166,16 @@ class ResourceController extends Controller
         }
 
         return view('site.' . $type . '.show', $data);
+    }
+
+    public function showMore(\Illuminate\Http\Request $request)
+    {
+        $data = $this->getResource($request->input('slug'), ['page' => $request->input('page'), 'showMore' => true]);
+
+        return response()->json([
+            'products' => view('site.components.products', ['products' => $data['products']])->render(),
+            'show_more' => $data['show_more']
+        ], 200);
     }
 
     public function favorites()

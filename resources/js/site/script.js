@@ -9,6 +9,36 @@ $(document).ready(function () {
     });
 });
 
+$('body').on('click', '#showMore', function () {
+    var $this = $(this);
+    $.ajax({
+        method: 'post',
+        url: $this.data('url'),
+        dataType: 'json',
+        data: {
+            page: $this.data('page'),
+            filter: $this.data('filter'),
+            slug: $this.data('slug'),
+            _token: $this.data('token')
+        },
+        beforeSend: function () {
+        },
+        success: function (data) {
+
+            $('.products-wrapper').append(data.products);
+            if (data.show_more) {
+                $this.data('page', data.show_more['page']);
+                $this.data('parameters', data.show_more['parameters']);
+            } else {
+                $this.remove();
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        }
+    });
+});
+
 window.delay = (() => {
     let timer = 0;
     return (callback, ms) => {

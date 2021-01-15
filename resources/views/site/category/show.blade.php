@@ -123,7 +123,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="range range-xs-center range-70">
+                                <div class="range range-xs-center range-70 products-wrapper">
                                     @foreach($products as $product)
                                         <div class="cell-sm-6 cell-lg-4">
                                             @include('site.components.product')
@@ -131,6 +131,15 @@
                                     @endforeach
                                 </div>
                             </div>
+                            <section class="section-sm text-center">
+                                <!-- Classic Pagination-->
+                                <button type="button" class="btn-more-link" data-page="{{ $show_more['page'] }}"
+                                        data-url="{{ LaravelLocalization::localizeUrl('/show-more') }}"
+                                        id="showMore"
+                                        data-token="{{ csrf_token() }}" data-slug="{{ $show_more['slug'] }}">
+                                    Показать больше
+                                </button>
+                            </section>
                             <!-- Pagination-->
                             <section class="section-sm">
                                 <!-- Classic Pagination-->

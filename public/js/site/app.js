@@ -45150,6 +45150,34 @@ $(document).ready(function () {
     navText: ['<span class=" linear-icon-chevron-left"></span>', '<span class="linear-icon-chevron-right"></span>']
   });
 });
+$('body').on('click', '#showMore', function () {
+  var $this = $(this);
+  $.ajax({
+    method: 'post',
+    url: $this.data('url'),
+    dataType: 'json',
+    data: {
+      page: $this.data('page'),
+      filter: $this.data('filter'),
+      slug: $this.data('slug'),
+      _token: $this.data('token')
+    },
+    beforeSend: function beforeSend() {},
+    success: function success(data) {
+      $('.products-wrapper').append(data.products);
+
+      if (data.show_more) {
+        $this.data('page', data.show_more['page']);
+        $this.data('parameters', data.show_more['parameters']);
+      } else {
+        $this.remove();
+      }
+    },
+    error: function error(jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR, textStatus, errorThrown);
+    }
+  });
+});
 
 window.delay = function () {
   var timer = 0;
