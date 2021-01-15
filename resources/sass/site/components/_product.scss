@@ -24,6 +24,16 @@
 	}
 }
 
+.product-grid .product-icon-wrap-left {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+
+    .icon.selected {
+        color: #000;
+    }
+}
+
 .desktop .product-grid .product-icon-wrap > *,
 .desktop .product-grid .product-label-wrap {
 	transition: 350ms ease-out;

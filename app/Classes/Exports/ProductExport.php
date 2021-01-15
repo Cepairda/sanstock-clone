@@ -27,6 +27,7 @@ class ProductExport implements FromCollection, WithHeadings, WithTitle, WithMapp
             $product->getData('name'),
             $product->slug,
             $product->relateProducts->keyBy('details->sku')->keys()->implode('|'),
+            $product->icons->keyBy('id')->keys()->implode('|'),
         ];
     }
 
@@ -40,6 +41,7 @@ class ProductExport implements FromCollection, WithHeadings, WithTitle, WithMapp
             'name',
             'slug',
             'relate_products_sku',
+            'icons_ids',
         ];
     }
 

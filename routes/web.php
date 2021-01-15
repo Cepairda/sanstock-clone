@@ -119,6 +119,18 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
             Route::get('/create-search-string', 'CommentController@createSearchString')->name('create-search-string');
         });
+
+        Route::prefix('icons')->as('icons.')->group(function () {
+            Route::resource('/', 'IconController')->parameters(['' => 'icon']);
+
+            Route::get('/create-search-string', 'IconController@createSearchString')->name('create-search-string');
+        });
+
+        Route::prefix('setting')->as('setting.')->group(function () {
+            Route::resource('/', 'SettingController')->parameters(['' => 'setting']);
+
+            Route::get('/create-search-string', 'SettingController@createSearchString')->name('create-search-string');
+        });
     });
 
     Route::as('site.')->namespace('Site')->group(function () {

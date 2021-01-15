@@ -96,6 +96,13 @@ class Product extends Resource
         }]);
     }
 
+    public function scopeWithIcons($query, $joinLocalization = true)
+    {
+        return $query->with(['icons' => function ($query) use ($joinLocalization) {
+            if ($joinLocalization) return $query->select('*')->joinLocalization();
+        }]);
+    }
+
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'resource_resource',
@@ -128,6 +135,12 @@ class Product extends Resource
             'resource_id', 'relation_id')
             ->where('relation_type', Product::class)
             ->where('details->price', '>' , 0);
+    }
+
+    public function icons()
+    {
+        return $this->belongsToMany(Icon::class, 'resource_resource',
+            'resource_id', 'relation_id');
     }
 
     public function stars()

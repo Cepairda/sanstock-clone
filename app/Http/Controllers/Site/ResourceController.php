@@ -73,7 +73,7 @@ class ResourceController extends Controller
 
                 $characteristicsIds = array_keys($valuesForView);
 
-                $products = Product::joinLocalization()->whereIn('id', $products)->where('details->price', '>' , 0);
+                $products = Product::joinLocalization()->withIcons()->whereIn('id', $products)->where('details->price', '>' , 0);
 
                 $mixMaxPriceQuery = (clone $products)->selectRaw("MIN(CAST(JSON_EXTRACT(`details`, '$.price') AS FLOAT)) AS minPrice, MAX(CAST(JSON_EXTRACT(`details`, '$.price') AS FLOAT)) AS maxPrice")->first();
                 $minPrice = $mixMaxPriceQuery->minPrice;

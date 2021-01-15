@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Resource\Forms;
 use App\Category;
 use App\Brand;
 use App\Product;
+use App\Icon;
 use Kris\LaravelFormBuilder\Form;
 
 class ProductForm extends Form
@@ -13,6 +14,9 @@ class ProductForm extends Form
     {
         $resource = $this->getModel();
         $brandChoices = Brand::joinLocalization()->get()->pluck('data.name', 'id')->toArray();
+        $icons = Icon::joinLocalization()->get();
+        $iconsChoices = $icons->pluck('data.name', 'id')->toArray();
+        $iconsIds = $resource->icons;
         $products = Product::joinLocalization()->get();
         $productsChoices = $products->pluck('details.sku', 'id')->toArray();
         $productsIds = $resource->relateProducts()->get();//->keyBy('id')->keys();
@@ -33,6 +37,15 @@ class ProductForm extends Form
                 'choices' => $brandChoices,
                 'selected' => $resource->getDetails('brand_id'),
                 'empty_value' => ' '
+            ])
+            ->add('relations[App\Icon]', 'choice', [
+                'multiple' => true,
+                'label' => 'Icons',
+                'choices' => $iconsChoices,
+                'selected' => $iconsIds,
+                'attr' => [
+                    'class' => 'select2bs4 form-control',
+                ],
             ])
             ->add('details[sku]', 'text', [
                 'label' => 'Sku',

@@ -88422,13 +88422,13 @@ var config = {
   /*file_browser_callback : function(field_name, url, type, win) {
       var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
       var y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;
-        var cmsURL = config.path_absolute + 'laravel-filemanager?field_name=' + field_name;
+       var cmsURL = config.path_absolute + 'laravel-filemanager?field_name=' + field_name;
       if (type == 'image') {
           cmsURL = cmsURL + "&type=Images";
       } else {
           cmsURL = cmsURL + "&type=Files";
       }
-        tinymce.activeEditor.windowManager.open({
+       tinymce.activeEditor.windowManager.open({
           file : cmsURL,
           title : 'Filemanager',
           width : x * 0.8,
@@ -88436,7 +88436,7 @@ var config = {
           resizable : "yes",
           close_previous : "no"
       });
-        tinymce.activeEditor.windowManager.openUrl({
+       tinymce.activeEditor.windowManager.openUrl({
           url : url,
           title : 'Filemanager',
           width : x * 0.8,
@@ -88474,7 +88474,7 @@ tinymce_tinymce__WEBPACK_IMPORTED_MODULE_0___default.a.init(config);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Program Files\OpenServer\domains\lidz.local\resources\js\admin\resourses\create-or-edit.js */"./resources/js/admin/resourses/create-or-edit.js");
+module.exports = __webpack_require__(/*! /var/www/resources/js/admin/resourses/create-or-edit.js */"./resources/js/admin/resourses/create-or-edit.js");
 
 
 /***/ })

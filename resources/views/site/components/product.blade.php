@@ -7,6 +7,16 @@
         {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name]) !!}
         </a>
 
+        @if ($product->icons)
+            <div class="product-icon-wrap-left">
+                @foreach($product->icons as $icon)
+                    <span>
+                        <img src="{{ $icon->image }}" title="{{ $icon->name }}" width="40" height="40">
+                    </span>
+                @endforeach
+            </div>
+        @endif
+
         <div class="product-icon-wrap">
             <span class="icon icon-md linear-icon-heart" data-add="favorite" data-sku="{{$product->getDetails('sku')}}"></span>
         </div>

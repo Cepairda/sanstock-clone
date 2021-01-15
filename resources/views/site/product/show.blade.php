@@ -58,7 +58,8 @@
                     <!-- Slick Carousel-->
                     <div id="lightgallery" class="slick-slider carousel-parent" data-child="#child-carousel" data-for="#child-carousel">
                             <a class="img-thumbnail-variant-2" href="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"                            >
-                                    <img src="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="535" height="535"/>
+                                    <!--img src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="535" height="535"/-->
+                                    <img src="{{ xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="535" height="535" />
                             <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div>
                             </a>
 

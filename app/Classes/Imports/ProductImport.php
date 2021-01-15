@@ -5,6 +5,7 @@ namespace App\Classes\Imports;
 use App\Alias;
 use App\Category;
 use App\Classes\Slug;
+use App\Icon;
 use App\Product;
 use App\ProductCategory;
 use Illuminate\Support\Collection;
@@ -87,6 +88,19 @@ class ProductImport implements ToCollection, WithHeadingRow
                 $product->setRequest([
                     'relations' => [
                         Product::class => $relateProductsIds,
+                    ]
+                ]);
+
+                $product->updateRelations();
+            }
+
+            $iconsIds = !empty($row['icons_ids']) ? explode('|', $row['icons_ids']) : [];
+            $iconsIds = Icon::whereIn('id', $iconsIds)->get()->keyBy('id')->keys()->toArray();
+
+            if (!empty($iconsIds)) {
+                $product->setRequest([
+                    'relations' => [
+                        Icon::class => $iconsIds,
                     ]
                 ]);
 
