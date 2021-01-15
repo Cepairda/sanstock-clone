@@ -108,6 +108,20 @@ class ProductForm extends Form
                 'rules' => [],
                 'value' => $resource->getData('meta_description')
             ])
+            ->add('details[enable_comments]', 'select', [
+                'label' => 'Включить комментарии',
+                'rules' => ['required'],
+                'choices' => ['Нет', 'Да'],
+                'selected' => $resource->getDetails('enable_comments'),
+                'empty_value' => ' '
+            ])
+            ->add('details[enable_stars]', 'select', [
+                'label' => 'Включить звёзды',
+                'rules' => ['required'],
+                'choices' => ['Нет', 'Да'],
+                'selected' => $resource->getDetails('enable_stars'),
+                'empty_value' => ' '
+            ])
             ->add('submit', 'submit', [
                 'label' => 'Сохранить'
             ])
