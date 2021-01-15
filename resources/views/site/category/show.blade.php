@@ -131,12 +131,13 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <section class="section-sm text-center">
+                            <section class="text-center">
                                 <!-- Classic Pagination-->
                                 <button type="button" class="btn-more-link" data-page="{{ $show_more['page'] }}"
-                                        data-url="{{ LaravelLocalization::localizeUrl('/show-more') }}"
+                                        data-url="{{ LaravelLocalization::localizeUrl('/show-more') . '?' . Request::getQueryString() }}"
                                         id="showMore"
-                                        data-token="{{ csrf_token() }}" data-slug="{{ $show_more['slug'] }}">
+                                        data-token="{{ csrf_token() }}" data-slug="{{ $show_more['slug'] }}"
+                                        >
                                     Показать больше
                                 </button>
                             </section>

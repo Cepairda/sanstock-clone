@@ -11,13 +11,14 @@ $(document).ready(function () {
 
 $('body').on('click', '#showMore', function () {
     var $this = $(this);
+    let page = $this.data('page');
+
     $.ajax({
         method: 'post',
         url: $this.data('url'),
         dataType: 'json',
         data: {
-            page: $this.data('page'),
-            filter: $this.data('filter'),
+            page: page,
             slug: $this.data('slug'),
             _token: $this.data('token')
         },
@@ -32,6 +33,14 @@ $('body').on('click', '#showMore', function () {
             } else {
                 $this.remove();
             }
+
+            let pagination = $('.pagination li');
+
+            if (pagination.length - page - 1) {
+                $('.pagination li').eq(+page).addClass('active');
+                $('.pagination li').eq(+page).empty().append('<span>' + (page) + '</span>').addClass('page-item');
+            }
+
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
