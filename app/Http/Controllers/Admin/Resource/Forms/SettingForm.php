@@ -20,39 +20,39 @@ class SettingForm extends Form
                 'label' => 'Товары(Комментарии)',
                 'rules' => ['required'],
                 'choices' => ['Выключено', 'Включено'],
-                'selected' => $resource->getDetails('comments')['App\Product']['enable'],
+                'selected' => $resource->getDetails('comments')['App\Product']['enable'] ?? null,
                 'empty_value' => ' '
             ])
             ->add('details[comments][App\Product][stars]', 'select', [
                 'label' => 'Товары(Звезды в Комментариях)',
                 'rules' => ['required'],
                 'choices' => ['Выключено', 'Включено'],
-                'selected' => $resource->getDetails('comments')['App\Product']['stars'],
+                'selected' => $resource->getDetails('comments')['App\Product']['stars'] ?? null,
                 'empty_value' => ' '
             ])
-            ->add('details[comments][App\Product][enable]', 'select', [
+            ->add('details[reviews][App\Product][enable]', 'select', [
                 'label' => 'Товары(Отзывы)',
                 'rules' => ['required'],
                 'choices' => ['Выключено', 'Включено'],
-                'selected' => $resource->getDetails('comments')['App\Product']['enable'],
+                'selected' => $resource->getDetails('comments')['App\Product']['enable'] ?? null,
                 'empty_value' => ' '
             ])
             ->add('details[reviews][App\Product][stars]', 'select', [
                 'label' => 'Товары(Звезды в Отзывах)',
                 'rules' => ['required'],
                 'choices' => ['Выключено', 'Включено'],
-                'selected' => $resource->getDetails('comments')['App\Product']['stars'],
+                'selected' => $resource->getDetails('comments')['App\Product']['stars'] ?? null,
                 'empty_value' => ' '
             ])
             ->add('details[comments][files][count]', 'number', [
                 'label' => 'Количество файлов(Комментарии)',
                 'rules' => ['required'],
-                'value' => $resource->getDetails('comments')['files']['count'],
+                'value' => $resource->getDetails('comments')['files']['count'] ?? null,
             ])
             ->add('details[comments][files][size]', 'number', [
                 'label' => 'Max размер файла в МБ(Комментарии)',
                 'rules' => ['required'],
-                'value' => $resource->getDetails('comments')['files']['size'],
+                'value' => $resource->getDetails('comments')['files']['size'] ?? null,
             ])
             ->add('submit', 'submit', [
                 'label' => 'Сохранить'

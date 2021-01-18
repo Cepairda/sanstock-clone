@@ -269,6 +269,8 @@
                             <input type="text" name="details[name]" class="form-control" placeholder="{{ __('Name') }}" />
                             <input type="text" name="details[email]" class="form-control" placeholder="Email" />
                             <input type="text" name="details[phone]" class="form-control" placeholder="{{ __('Phone') }}" />
+                            <input type="file" name="attachment[]" class="form-control" placeholder="Выберите файл" />
+                            <input type="file" name="attachment[]" class="form-control" placeholder="Выберите файл" />
                             <textarea class="form-control" name="details[body]" placeholder="{{ __('Comment') }}"></textarea>
                             <input type="hidden" name="details[resource_id]" value="{{ $product->id }}" />
                         </div>
