@@ -16,11 +16,14 @@
 	'template/modules',
 	'template/plugins',
 	'template/fonts';
+//plugins font
+@import "plugins/fonts/jquery-filer-fonts";
 
 // plugins
 @import
 	'plugins/rd-navbar',
-	'plugins/owl-carousel';
+	'plugins/owl-carousel',
+	'plugins/jquery.filer';
 @import   '~lightgallery.js/src/sass/lightgallery';
 
 @import 'common';

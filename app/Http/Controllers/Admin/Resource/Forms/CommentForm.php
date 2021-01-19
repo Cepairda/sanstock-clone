@@ -43,9 +43,18 @@ class CommentForm extends Form
                 'label' => 'Comment',
                 'rules' => [],
                 'value' => $resource->getDetails('body'),
-            ])
+            ]);
 
-            ->add('submit', 'submit', [
+        foreach ($resource->getDetails('attachment') as $key => $attachment) {
+            $this
+                ->add('details[attachment][' . $key . ']', 'text', [
+                    'label' => 'Attachment ' . $key,
+                    'rules' => ['required'],
+                    'value' => $attachment,
+                ]);
+        }
+
+        $this->add('submit', 'submit', [
                 'label' => 'Сохранить'
             ])
             ->formOptions = [

@@ -105,7 +105,14 @@
                                             <td>
                                                 @isset($resource->details)
                                                     @foreach($resource->details as $key => $value)
-                                                        <b>{{ $key }}</b>: {{ Str::limit($value, 20, '...') }}; <br>
+                                                        @if (!is_array($value))
+                                                            <b>{{ $key }}</b>: {{ Str::limit($value, 20, '...') }}; <br>
+                                                        @else
+                                                            <b>{{ $key }}</b>:<br>
+                                                            @foreach($value as $file)
+                                                                <p><a href="{{ asset('resource/' . $file) }}">{{ $file }}</a></p>
+                                                            @endforeach
+                                                        @endif
                                                     @endforeach
                                                 @endisset
                                             </td>
