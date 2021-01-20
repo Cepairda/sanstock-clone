@@ -57,7 +57,7 @@
 
                     <!-- Slick Carousel-->
                     <div id="lightgallery" class="slick-slider carousel-parent" data-child="#child-carousel" data-for="#child-carousel">
-                            <a class="img-thumbnail-variant-2" href="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"                            >
+                            <a class="img-thumbnail-variant-2" href="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"                            >
                                     <img src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="535" height="535"/>
                             <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div>
                             </a>
@@ -77,7 +77,7 @@
                     <div class="slick-slider" id="child-carousel" data-for=".carousel-parent" data-arrows="false" data-loop="false" data-dots="false" data-swipe="true" data-items="3" data-xs-items="4" data-sm-items="4" data-md-items="4" data-lg-items="5" data-slide-to-scroll="1">
 
                         <div class="item">
-                            <img src="{{ temp_xml_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="89" height="89"/>
+                            <img src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="89" height="89"/>
                         </div>
 
                         @foreach(temp_additional($product->sku) as $uri)
@@ -265,11 +265,19 @@
                     <h4>{{ __('Add comment') }}</h4>
                     <form method="post" enctype="multipart/form-data" action="{{ route('site.comments.store') }}">
                         @csrf
-                        <div class="form-group">
-                            <input type="text" name="details[name]" class="form-control" placeholder="{{ __('Name') }}" />
-                            <input type="text" name="details[email]" class="form-control" placeholder="Email" />
-                            <input type="text" name="details[phone]" class="form-control" placeholder="{{ __('Phone') }}" />
+                        <div class="form-group mb-2">
+                            <input type="text" name="details[name]" class="form-control" required="required" placeholder="{{ __('Name') }}" />
+                        </div>
+                        <div class="form-group mb-2">
+                            <input type="email" name="details[email]" class="form-control email-comment" required="required" placeholder="Email" />
+                        </div>
+                        <div class="form-group mb-2">
+                            <input type="tel" name="details[phone]" class="form-control phone-comment" required="required" placeholder="{{ __('Phone') }}" />
+                        </div>
+                        <div class="form-group mb-2">
                             <textarea class="form-control" name="details[body]" placeholder="{{ __('Comment') }}"></textarea>
+                        </div>
+                        <div class="form-group mb-2">
                             <input type="file" name="attachment[]" class="filer_input" data-jfiler-limit="3" data-jfiler-fileMaxSize="2" multiple="multiple" data-jfiler-options='{"language": "{{ LaravelLocalization::getCurrentLocale() }}"}'>
                             <input type="hidden" name="details[resource_id]" value="{{ $product->id }}" />
                         </div>

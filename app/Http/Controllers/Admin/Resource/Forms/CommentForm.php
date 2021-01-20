@@ -47,9 +47,14 @@ class CommentForm extends Form
 
         foreach ($resource->getDetails('attachment') as $key => $attachment) {
             $this
-                ->add('details[attachment][' . $key . ']', 'text', [
+                ->add('details[attachment][' . $key . ']', 'hidden', [
                     'label' => 'Attachment ' . $key,
-                    'rules' => ['required'],
+                    'value' => $attachment,
+                ])
+                ->add('link[' . $key . ']', 'static', [
+                    'tag' => 'a',
+                    'attr' => ['href' => asset('storage/' . $attachment), 'target' => '_blank'],
+                    'label' => 'Attachment ' . $key,
                     'value' => $attachment,
                 ]);
         }

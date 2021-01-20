@@ -110,7 +110,7 @@
                                                         @else
                                                             <b>{{ $key }}</b>:<br>
                                                             @foreach($value as $file)
-                                                                <p><a href="{{ asset('resource/' . $file) }}">{{ $file }}</a></p>
+                                                                <p><a href="{{ asset('storage/' . $file) }}">{{ $file }}</a></p>
                                                             @endforeach
                                                         @endif
                                                     @endforeach
