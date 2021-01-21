@@ -266,6 +266,20 @@
                     <form method="post" enctype="multipart/form-data" action="{{ route('site.comments.store') }}">
                         @csrf
                         <div class="form-group mb-2">
+                            <div class="rating">
+                                <input type="radio" name="details[star]" id="product-comment-5" value="5"/>
+                                <label class="rating-label star" for="product-comment-5"></label>
+                                <input type="radio" name="details[star]" id="product-comment-4" value="4"/>
+                                <label class="rating-label star" for="product-comment-4"></label>
+                                <input type="radio" name="details[star]" id="product-comment-3" value="3"/>
+                                <label class="rating-label star" for="product-comment-3"></label>
+                                <input type="radio" name="details[star]" id="product-comment-2" value="2"/>
+                                <label class="rating-label star" for="product-comment-2"></label>
+                                <input type="radio" name="details[star]" id="product-comment-1" value="1"/>
+                                <label class="rating-label star" for="product-comment-1"></label>
+                            </div>
+                        </div>
+                        <div class="form-group mb-2">
                             <input type="text" name="details[name]" class="form-control" required="required" placeholder="{{ __('Name') }}" />
                         </div>
                         <div class="form-group mb-2">

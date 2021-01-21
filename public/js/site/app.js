@@ -44523,7 +44523,7 @@ __webpack_require__(/*! ./script */ "./resources/js/site/script.js");
             if (n.changeInput) {
               switch (_typeof(n.changeInput)) {
                 case "boolean":
-                  o = $('<div class="jFiler-input"><div class="jFiler-input-caption"><span>' + n.captions[n.options.language].feedback + '</span></div><div class="jFiler-input-button">' + n.captions.ru.button + '</div></div>"');
+                  o = $('<div class="jFiler-input"><div class="jFiler-input-caption"><span>' + n.captions[n.options.language].feedback + '</span></div><div class="jFiler-input-button">' + n.captions[n.options.language].button + '</div></div>"');
                   break;
 
                 case "string":

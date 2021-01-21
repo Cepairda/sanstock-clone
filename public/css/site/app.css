@@ -34581,6 +34581,7 @@ html.boxed .rd-navbar--is-clone {
 }
 
 .owl-carousel .owl-stage {
+  display: flex;
   position: relative;
   -ms-touch-action: pan-Y;
 }
@@ -34629,7 +34630,7 @@ html.boxed .rd-navbar--is-clone {
 .owl-carousel .owl-item {
   position: relative;
   min-height: 1px;
-  float: left;
+  display: flex;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
 }
@@ -37731,6 +37732,59 @@ span.button {
 .custom-control-label:disabled + label {
   color: #d4d3d3 !important;
   cursor: default;
+}
+
+ul.rating {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  direction: rtl;
+  text-align: left;
+}
+
+div.rating {
+  float: left;
+}
+
+div.rating > input {
+  display: none;
+}
+
+.star {
+  position: relative;
+  line-height: 30px;
+  display: inline-block;
+  transition: color 0.2s ease;
+  color: #ebebeb;
+}
+
+.star:before {
+  content: "\2605";
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+}
+
+label.star {
+  float: right;
+}
+
+label.star:hover,
+.star.selected,
+label.star:hover ~ .star,
+.star.selected ~ .star,
+input:checked ~ .star {
+  transition: color 0.8s ease;
+  color: black;
+  white-space: nowrap;
+}
+
+.display-comment {
+  margin-bottom: 30px;
+}
+.display-comment p + p {
+  margin-top: 5px;
 }
 
 .home .rd-navbar {

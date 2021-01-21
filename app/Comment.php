@@ -19,6 +19,11 @@ class Comment extends Resource
         return $this->getDetails('name');
     }
 
+    public function getStarAttribute()
+    {
+        return +($this->getDetails('star'));
+    }
+
     public function replies()
     {
         return $this->hasMany(Comment::class, 'parent_id', 'id')->where('details->status', 1);

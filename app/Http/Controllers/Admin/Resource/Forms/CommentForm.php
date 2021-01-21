@@ -19,6 +19,12 @@ class CommentForm extends Form
                 'selected' => $resource->getDetails('status'),
                 'empty_value' => ' '
             ])
+            ->add('details[star]', 'number', [
+                'label' => 'Оценка',
+                'rules' => ['required'],
+                'selected' => $resource->getDetails('star'),
+                'empty_value' => ' '
+            ])
             ->add('details[resource_id]', 'number', [
                 'label' => 'Resource ID',
                 'rules' => ['required'],
@@ -41,7 +47,7 @@ class CommentForm extends Form
             ])
             ->add('details[body]', 'textarea', [
                 'label' => 'Comment',
-                'rules' => [],
+                'rules' => ['required'],
                 'value' => $resource->getDetails('body'),
             ]);
 

@@ -1,0 +1,45 @@
+ul.rating {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    direction: rtl;
+    text-align: left;
+}
+
+div.rating {
+    float: left;
+}
+
+div.rating > input {
+    display: none;
+}
+
+.star {
+    position: relative;
+    line-height: 30px;
+    display: inline-block;
+    transition: color 0.2s ease;
+    color: #ebebeb;
+}
+
+.star:before {
+    content: '\2605';
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+}
+
+label.star {
+    float: right;
+}
+
+label.star:hover,
+.star.selected,
+label.star:hover ~ .star,
+.star.selected ~ .star,
+input:checked ~ .star {
+    transition: color 0.8s ease;
+    color: black;
+    white-space: nowrap;
+}

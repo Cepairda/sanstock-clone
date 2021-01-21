@@ -1,5 +1,8 @@
 @foreach($comments as $comment)
     <div class="display-comment" @if($comment->parent_id != null) style="margin-left:40px;" @endif>
+        @if($comment->parent_id == null)
+            @include('site.components.stars-list', ['star' => $comment->star])
+        @endif
         <strong>{{ $comment->name }}</strong>
         <p>{{ $comment->body }}</p>
         <!--a href="" id="reply"></a-->

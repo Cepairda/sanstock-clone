@@ -64,6 +64,7 @@
 }
 
 .owl-carousel .owl-stage {
+  display: flex;
   position: relative;
   -ms-touch-action: pan-Y;
 }
@@ -109,7 +110,8 @@
 .owl-carousel .owl-item {
   position: relative;
   min-height: 1px;
-  float: left;
+  //float: left;
+  display: flex;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
 }

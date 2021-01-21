@@ -103,6 +103,14 @@ class Product extends Resource
         }]);
     }
 
+    public function scopeWithComments($query, $joinLocalization = true)
+    {
+        return $query->with(['comments' => function ($query) {
+            //if ($joinLocalization) return $query->select('*')->joinLocalization();
+            return $query;
+        }]);
+    }
+
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'resource_resource',
@@ -150,13 +158,13 @@ class Product extends Resource
 
     public function comments()
     {
-        if (+$this->getDetails('enable_comments')) {
+        //if (+$this->getDetails('enable_comments')) {
             return $this->hasMany(Comment::class, 'details->resource_id', 'id')
                 ->whereNull('parent_id')
                 ->where('details->status', 1);
-        }
+        //}
 
-        return null;
+        //return null;
     }
 
     public function getJsonLd()
