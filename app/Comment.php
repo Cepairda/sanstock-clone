@@ -26,6 +26,6 @@ class Comment extends Resource
 
     public function replies()
     {
-        return $this->hasMany(Comment::class, 'parent_id', 'id')->where('details->status', 1);
+        return $this->hasMany(Comment::class, 'parent_id', 'id')->where('details->status', 1)->where('parent_id', '!=', null);
     }
 }

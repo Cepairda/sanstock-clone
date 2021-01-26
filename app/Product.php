@@ -2,12 +2,15 @@
 
 namespace App;
 
+use App\Traits\Commentable;
 use LaravelLocalization;
 use Carbon\Carbon;
 use Spatie\SchemaOrg\Schema;
 
 class Product extends Resource
 {
+    use Commentable;
+
     protected $appends = ['main_image', 'additional_image', 'price_updated_at'];
 
     public function getMainImageAttribute(){
@@ -93,21 +96,13 @@ class Product extends Resource
     {
         return $query->with(['relateProducts' => function ($query) use ($joinLocalization) {
             if ($joinLocalization) return $query->select('*')->joinLocalization();
-        }]);
+        }, 'relateProducts.icons']);
     }
 
     public function scopeWithIcons($query, $joinLocalization = true)
     {
         return $query->with(['icons' => function ($query) use ($joinLocalization) {
             if ($joinLocalization) return $query->select('*')->joinLocalization();
-        }]);
-    }
-
-    public function scopeWithComments($query, $joinLocalization = true)
-    {
-        return $query->with(['comments' => function ($query) {
-            //if ($joinLocalization) return $query->select('*')->joinLocalization();
-            return $query;
         }]);
     }
 
@@ -154,17 +149,6 @@ class Product extends Resource
     public function stars()
     {
         return +$this->getDetails('enable_stars') ?? null;
-    }
-
-    public function comments()
-    {
-        //if (+$this->getDetails('enable_comments')) {
-            return $this->hasMany(Comment::class, 'details->resource_id', 'id')
-                ->whereNull('parent_id')
-                ->where('details->status', 1);
-        //}
-
-        //return null;
     }
 
     public function getJsonLd()

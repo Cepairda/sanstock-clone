@@ -31,7 +31,6 @@ class ResourceController extends Controller
                         ->where('details->published', 1)
                         ->withCategory()
                         ->withRelateProducts()
-                        //->withIcons()
                         ->withComments()
                         ->first(),
                 ];

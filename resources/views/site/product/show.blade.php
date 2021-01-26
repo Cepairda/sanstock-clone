@@ -251,7 +251,7 @@
 
     </section>
 
-    @if ($product->comments())
+    @if (config('settings.comments.' . $product->type . '.enable') && $product->getDetails('enable_comments'))
     <section class="section-sm bg-white">
         <div class="container">
             <div class="row">
@@ -265,6 +265,8 @@
                     <h4>{{ __('Add comment') }}</h4>
                     <form method="post" enctype="multipart/form-data" action="{{ route('site.comments.store') }}">
                         @csrf
+
+                        @if ((config('settings.comments.' . $product->type . '.stars')) && $product->getDetails('enable_stars'))
                         <div class="form-group mb-2">
                             <div class="rating">
                                 <input type="radio" name="details[star]" id="product-comment-5" value="5"/>
@@ -279,6 +281,7 @@
                                 <label class="rating-label star" for="product-comment-1"></label>
                             </div>
                         </div>
+                        @endif
                         <div class="form-group mb-2">
                             <input type="text" name="details[name]" class="form-control" required="required" placeholder="{{ __('Name') }}" />
                         </div>
@@ -292,8 +295,9 @@
                             <textarea class="form-control" name="details[body]" placeholder="{{ __('Comment') }}"></textarea>
                         </div>
                         <div class="form-group mb-2">
-                            <input type="file" name="attachment[]" class="filer_input" data-jfiler-limit="3" data-jfiler-fileMaxSize="2" multiple="multiple" data-jfiler-options='{"language": "{{ LaravelLocalization::getCurrentLocale() }}"}'>
+                            <input type="file" name="attachment[]" class="filer_input" data-jfiler-limit="{{ config('settings.comments.files.count') }}" data-jfiler-fileMaxSize="{{ config('settings.comments.files.size') }}" multiple="multiple" data-jfiler-options='{"language": "{{ LaravelLocalization::getCurrentLocale() }}"}'>
                             <input type="hidden" name="details[resource_id]" value="{{ $product->id }}" />
+                            <input type="hidden" name="details[type]" value="1" />
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-success" value="{{ __('Add comment') }}" />

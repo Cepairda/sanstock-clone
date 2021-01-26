@@ -10,9 +10,12 @@ class SettingController
 {
     use isResource;
 
-    public function __construct(Setting $setting)
+    protected $cache;
+
+    public function __construct(Setting $setting, Factory $cache)
     {
         $this->resource = $setting;
+        $this->cache = $cache;
     }
 
     public function index()
@@ -25,12 +28,12 @@ class SettingController
         return view('admin.resources.create-or-edit', compact('form'));
     }
 
-    private function storeOrUpdate(Factory $cache)
+    private function storeOrUpdate()
     {
         $form = $this->getForm();
         $form->redirectIfNotValid();
         $this->resource->storeOrUpdate();
-        $cache->forget('settings');
+        $this->cache->forget('settings');
 
         return redirect(action([get_class($this), 'index']));
     }
