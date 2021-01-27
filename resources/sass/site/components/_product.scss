@@ -154,10 +154,18 @@
     margin-top: auto !important;
 	font-size: 18px;
 	font-weight: 400;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
 
 	span {
 		font-size: 32px;
 		color: #000;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
 
 		&::after {
 			content: "грн.";
@@ -166,6 +174,17 @@
 			font-size: 18px;
 			color: #888;
 		}
+
+        &:nth-child(2) {
+            color: #888;
+
+            &::before {
+                content: "";
+                border-bottom: 3px solid #888;
+                position: absolute;
+                width: 100%;
+            }
+        }
 	}
 
 	&.sale-price span {

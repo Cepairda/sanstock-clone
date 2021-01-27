@@ -120,6 +120,12 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::get('/create-search-string', 'CommentController@createSearchString')->name('create-search-string');
         });
 
+        Route::prefix('reviews')->as('reviews.')->group(function () {
+            Route::resource('/', 'CommentController')->parameters(['' => 'comment']);
+
+            Route::get('/create-search-string', 'CommentController@createSearchString')->name('create-search-string');
+        });
+
         Route::prefix('icons')->as('icons.')->group(function () {
             Route::resource('/', 'IconController')->parameters(['' => 'icon']);
 

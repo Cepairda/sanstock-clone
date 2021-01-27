@@ -37,6 +37,10 @@
             data-product-sku="{{ $product->sku }}">
             @if($product->price)
                 <span>{{ number_format(ceil($product->price),0,'',' ') }}</span>
+
+                @if ($product->oldPrice)
+                    <span>{{ number_format(ceil($product->oldPrice),0,'',' ') }}</span>
+                @endif
             @else
             {{ __('No price') }}
             @endif

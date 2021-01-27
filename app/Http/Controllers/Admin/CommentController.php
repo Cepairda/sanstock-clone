@@ -17,7 +17,12 @@ class CommentController
 
     public function index()
     {
+        //dd(Request::is('*comments*'));
         $resources = $this->resource->joinLocalization()->orderBy('id', 'desc');
+
+        $resources = Request::is('*comments*')
+            ? $resources->where('details->type', 1)
+            : $resources->where('details->type', 2);
 
         if (Request::has('id')) {
             $resources = $resources->orderBy('id', Request::input('id'));

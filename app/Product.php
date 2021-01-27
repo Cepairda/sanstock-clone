@@ -45,6 +45,11 @@ class Product extends Resource
         return +($this->getDetails('price'));
     }
 
+    public function getOldPriceAttribute()
+    {
+        return +($this->getDetails('old_price'));
+    }
+
     public function getPriceUpdatedAtAttribute()
     {
         return Carbon::parse($this->getDetails('price_updated_at'), config('timezone'));

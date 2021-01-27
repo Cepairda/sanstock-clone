@@ -13,7 +13,7 @@ trait Commentable
         }, 'comments.replies']);
     }
 
-    public function scopeWithRewiews($query)
+    public function scopeWithReviews($query)
     {
         return $query->with(['reviews' => function ($query) {
             return $query->latest();

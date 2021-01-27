@@ -128,11 +128,25 @@ class ProductForm extends Form
                 'selected' => $resource->getDetails('enable_comments'),
                 'empty_value' => ' '
             ])
-            ->add('details[enable_stars]', 'select', [
-                'label' => 'Включить звёзды',
+            ->add('details[enable_stars_comments]', 'select', [
+                'label' => 'Включить звёзды(Комментарии)',
                 'rules' => ['required'],
                 'choices' => ['Нет', 'Да'],
-                'selected' => $resource->getDetails('enable_stars'),
+                'selected' => $resource->getDetails('enable_stars_comments'),
+                'empty_value' => ' '
+            ])
+            ->add('details[enable_reviews]', 'select', [
+                'label' => 'Включить отзывы',
+                'rules' => ['required'],
+                'choices' => ['Нет', 'Да'],
+                'selected' => $resource->getDetails('enable_reviews'),
+                'empty_value' => ' '
+            ])
+            ->add('details[enable_stars_reviews]', 'select', [
+                'label' => 'Включить звёзды(Отзывы)',
+                'rules' => ['required'],
+                'choices' => ['Нет', 'Да'],
+                'selected' => $resource->getDetails('enable_stars_reviews'),
                 'empty_value' => ' '
             ])
             ->add('submit', 'submit', [

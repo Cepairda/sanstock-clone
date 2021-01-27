@@ -37419,10 +37419,18 @@ span.button {
   margin-top: auto !important;
   font-size: 18px;
   font-weight: 400;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
 }
 .product-price span {
   font-size: 32px;
   color: #000;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 .product-price span::after {
   content: "\433\440\43D.";
@@ -37430,6 +37438,15 @@ span.button {
   margin-left: 4px;
   font-size: 18px;
   color: #888;
+}
+.product-price span:nth-child(2) {
+  color: #888;
+}
+.product-price span:nth-child(2)::before {
+  content: "";
+  border-bottom: 3px solid #888;
+  position: absolute;
+  width: 100%;
 }
 .product-price.sale-price span {
   padding: 0 3px;

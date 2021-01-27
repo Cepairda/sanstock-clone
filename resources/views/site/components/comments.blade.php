@@ -21,11 +21,14 @@
             <div class="form-group mb-2">
                 <textarea class="form-control" name="details[body]" placeholder="{{ __('Comment') }}"></textarea>
             </div>
+            @if (config('settings.comments.files.enable'))
             <div class="form-group mb-2">
                 <input type="file" name="attachment[]" class="filer_input" data-jfiler-limit="3" data-jfiler-fileMaxSize="2" multiple="multiple" data-jfiler-options='{"language": "{{ LaravelLocalization::getCurrentLocale() }}"}'>
-                <input type="hidden" name="details[resource_id]" value="{{ $resourceId }}" />
-                <input type="hidden" name="parent_id" value="{{ $comment->id }}" />
             </div>
+            @endif
+            <input type="hidden" name="details[resource_id]" value="{{ $resourceId }}" />
+            <input type="hidden" name="details[type]" value="{{ $type }}" />
+            <input type="hidden" name="parent_id" value="{{ $comment->id }}" />
             <div class="form-group">
                 <input type="submit" class="btn btn-warning" value="{{ __('Reply') }}" />
             </div>

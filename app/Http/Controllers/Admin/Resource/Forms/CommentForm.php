@@ -12,6 +12,10 @@ class CommentForm extends Form
         $controllerClass = get_class(request()->route()->controller);
 
         $this
+            ->add('details[type]', 'hidden', [
+                'rules' => ['required'],
+                'value' => $resource->getDetails('type')
+            ])
             ->add('details[status]', 'select', [
                 'label' => 'Промодерировано',
                 'rules' => ['required'],
@@ -51,18 +55,20 @@ class CommentForm extends Form
                 'value' => $resource->getDetails('body'),
             ]);
 
-        foreach ($resource->getDetails('attachment') as $key => $attachment) {
-            $this
-                ->add('details[attachment][' . $key . ']', 'hidden', [
-                    'label' => 'Attachment ' . $key,
-                    'value' => $attachment,
-                ])
-                ->add('link[' . $key . ']', 'static', [
-                    'tag' => 'a',
-                    'attr' => ['href' => asset('storage/' . $attachment), 'target' => '_blank'],
-                    'label' => 'Attachment ' . $key,
-                    'value' => $attachment,
-                ]);
+        if ($resource->getDetails('attachment')) {
+            foreach ($resource->getDetails('attachment') as $key => $attachment) {
+                $this
+                    ->add('details[attachment][' . $key . ']', 'hidden', [
+                        'label' => 'Attachment ' . $key,
+                        'value' => $attachment,
+                    ])
+                    ->add('link[' . $key . ']', 'static', [
+                        'tag' => 'a',
+                        'attr' => ['href' => asset('storage/' . $attachment), 'target' => '_blank'],
+                        'label' => 'Attachment ' . $key,
+                        'value' => $attachment,
+                    ]);
+            }
         }
 
         $this->add('submit', 'submit', [
