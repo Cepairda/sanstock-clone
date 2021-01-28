@@ -41,8 +41,9 @@ class ProductController extends Controller
             foreach ($prices as $sku => $item) {
                 if ($item['price'] != 'Недоступно') {
                     Product::where('details->sku', $sku)->update([
-                        'details->price' => $item['price'],
-                        'details->price_updated_at' => Carbon::now()
+                        'details->price' => $item['discount_price'] ?? $item['price'],
+                        'details->price_updated_at' => Carbon::now(),
+                        'details->old_price' => isset($item['discount_price']) ? $item['price'] : null
                     ]);
                 }
             }

@@ -118,7 +118,7 @@ class RoleController extends Controller
     {
         RoleAccess::updateById($id, $request->input('accesses'));
 
-        return redirect(action([get_class($this), 'accesses']));
+        return redirect(action([get_class($this), 'accesses'], ['id' => $id]));
     }
 
 }

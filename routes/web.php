@@ -24,7 +24,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
 
-    Route::prefix('admin')->as('admin.')->middleware('checkAccess')->namespace('Admin')->group(function () {
+    Route::prefix('admin')->as('admin.')->middleware(['auth:web', 'checkAccess'])->namespace('Admin')->group(function () {
 
         Route::get('/', 'DashboardController@index')->name('dashboard.index');
 
