@@ -37420,8 +37420,6 @@ span.button {
   font-size: 18px;
   font-weight: 400;
   display: flex;
-  width: 100%;
-  justify-content: space-evenly;
 }
 .product-price span {
   font-size: 32px;
