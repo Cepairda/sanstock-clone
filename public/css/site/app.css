@@ -38247,3 +38247,26 @@ input:checked ~ .star {
     margin-top: 75px;
   }
 }
+.partnet-list-item {
+  padding: 7.5px;
+}
+
+.partnet-list-item > div {
+  border: 1px solid #c0c0c0;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 5px;
+  transition: all 0.3s ease;
+}
+
+.partnet-list-item > div:hover {
+  border: 1px solid #000000;
+}
+
+.partnet-list-item.lead div.message {
+  position: absolute;
+  top: 45%;
+  text-align: center;
+  width: 86%;
+  font-size: 14px;
+}

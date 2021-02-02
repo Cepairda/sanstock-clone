@@ -33,6 +33,7 @@ class ResourceController extends Controller
                         ->withRelateProducts()
                         ->withComments()
                         ->withReviews()
+                        ->withPartnerUrl()
                         ->first(),
                 ];
                 break;

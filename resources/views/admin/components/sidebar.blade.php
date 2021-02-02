@@ -113,6 +113,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.partners.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-list"></i>
+                        <p>
+                            Партнёры
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('admin.blog-categories.index') }}" class="nav-link">
                         <i class="nav-icon fa fa-list"></i>
                         <p>
