@@ -11,8 +11,9 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\Importable;
 use LaravelLocalization;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class PartnerImport implements ToCollection, WithHeadingRow
+class PartnerImport implements ToCollection, WithHeadingRow //,WithMultipleSheets
 {
     use Importable;
 
@@ -22,41 +23,51 @@ class PartnerImport implements ToCollection, WithHeadingRow
         $partners = []; // Для оптимизации производительности
 
         foreach ($rows as $row) {
-            $requestData = [];
-            $sku = (int)$row['sku'];
-            $url = $row['url'];
-            $partnerUrl = PartnerUrl::where('details->url', $url)->first();
+            if (!empty($row['sku'])) {
+                $requestData = [];
+                $sku = $row['sku'];
+                $url = $row['url'];
+                $partnerUrl = PartnerUrl::where('details->url', $url)->first();
 
-            if (!isset($partnerUrl)) {
-                $partnerUrl = new PartnerUrl();
-            }
-
-            $partnerHost = parse_url($url, PHP_URL_HOST);
-
-            if (!isset($partners[$partnerHost])) {
-                $partner = Partner::where('details->host', $partnerHost)->first();
-
-                if (!isset($partner)) {
-                    $partner = new Partner();
-                    $requestData['details']['host'] = $partnerHost;
-
-                    $partner->setRequest($requestData);
-                    LaravelLocalization::setLocale('ru');
-                    $partner->storeOrUpdate();
+                if (!isset($partnerUrl)) {
+                    $partnerUrl = new PartnerUrl();
                 }
 
-                $partners[$partnerHost] = $partner->id;
+                //$partnerHost = parse_url($url, PHP_URL_HOST);
+                $partnerHost = $row['host'];
+
+                if (!isset($partners[$partnerHost])) {
+                    $partner = Partner::where('details->host', $partnerHost)->first();
+
+                    if (!isset($partner)) {
+                        $partner = new Partner();
+                        $requestData['details']['host'] = $partnerHost;
+
+                        $partner->setRequest($requestData);
+                        LaravelLocalization::setLocale('ru');
+                        $partner->storeOrUpdate();
+                    }
+
+                    $partners[$partnerHost] = $partner->id;
+                }
+
+                $partnerId = $partners[$partnerHost];
+
+                $requestData['details']['url'] = $url;
+                $requestData['details']['sku'] = $sku;
+                $requestData['details']['partner_id'] = $partnerId;
+
+                $partnerUrl->setRequest($requestData);
+                LaravelLocalization::setLocale('ru');
+                $partnerUrl->storeOrUpdate();
             }
-
-            $partnerId = $partners[$partnerHost];
-
-            $requestData['details']['url'] = $url;
-            $requestData['details']['sku'] = $sku;
-            $requestData['details']['partner_id'] = $partnerId;
-
-            $partnerUrl->setRequest($requestData);
-            LaravelLocalization::setLocale('ru');
-            $partnerUrl->storeOrUpdate();
         }
     }
+
+    /*public function sheets(): array
+    {
+        return [
+            'Rozetka' => new self(),
+        ];
+    }*/
 }

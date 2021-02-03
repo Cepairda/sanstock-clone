@@ -14,7 +14,7 @@
                         @foreach($product->partnersUrl as $partnerUrl)
                             <div class="col-6 col-sm-4 col-md-3 partnet-list-item">
 
-                            <div onclick="window.open('{{ $partnerUrl->url }}')">
+                            <div onclick="window.open('//{{ $partnerUrl->url }}')">
 
                                 <img class="img-responsive" alt="partners" src="{{ asset($partnerUrl->partner->img) }}">
 
