@@ -54,21 +54,18 @@ class ProductController extends Controller
             ]);
             $prices = json_decode($res->getBody(), true);
 
-            $t['start'] = \Carbon\Carbon::now()->format('H:i:s');
+            //dd($prices);
 
             foreach ($prices as $sku => $item) {
                 if ($item['price'] != 'Недоступно') {
-                    Product::where('details->sku', $sku)->update([
+                    //dd('work');
+                    Product::where('details->sku', (string) $sku)->update([
                         'details->price' => $item['discount_price'] ?? $item['price'],
                         'details->price_updated_at' => Carbon::now(),
                         'details->old_price' => isset($item['discount_price']) ? $item['price'] : null
                     ]);
                 }
             }
-
-            $t['end'] = \Carbon\Carbon::now()->format('H:i:s');
-
-            dd($t);
 
             //return redirect()->back();
         } catch (\Exception $e) {
