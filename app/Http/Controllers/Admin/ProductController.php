@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Classes\Exports\ProductWithDataExport;
+use App\Classes\Imports\PriceImport;
 use App\Http\Controllers\Admin\Resource\isResource;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ImageController;
@@ -36,44 +37,13 @@ class ProductController extends Controller
 
     public function importPrice(Request $request)
     {
-        try {
-            $sku = $request->post('sku');
+        $sku = $request->post('sku');
 
-            $productSku = !empty($sku)
-                ? Product::whereIn('details->sku', $sku)->get()->keyBy('sku')->keys()->toArray()
-                : Product::get()->keyBy('sku')->keys()->toArray();
+        $productSku = !empty($sku)
+            ? Product::whereIn('details->sku', $sku)->get()->keyBy('sku')->keys()->toArray()
+            : Product::get()->keyBy('sku')->keys()->toArray();
 
-            //dd($productSku);
-
-            $client = new Client();
-            $res = $client->request('POST', 'https://b2b-sandi.com.ua/api/price-center', [
-                'form_params' => [
-                    'action' => 'get_ir_prices',
-                    'sku_list' => $productSku,
-                ]
-            ]);
-            $prices = json_decode($res->getBody(), true);
-
-            $t['start'] = \Carbon\Carbon::now()->format('H:i:s');
-
-            foreach ($prices as $sku => $item) {
-                if ($item['price'] != 'Недоступно') {
-                    Product::where('details->sku', $sku)->update([
-                        'details->price' => $item['discount_price'] ?? $item['price'],
-                        'details->price_updated_at' => Carbon::now(),
-                        'details->old_price' => isset($item['discount_price']) ? $item['price'] : null
-                    ]);
-                }
-            }
-
-            $t['end'] = \Carbon\Carbon::now()->format('H:i:s');
-
-            dd($t);
-
-            //return redirect()->back();
-        } catch (\Exception $e) {
-
-        }
+        PriceImport::import($productSku);
     }
 
     public function createSearchString() {

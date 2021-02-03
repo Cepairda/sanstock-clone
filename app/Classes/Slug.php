@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class Slug
 {
-    public static function create($resource, $name)
+    public static function create($resource, $name, $id = null)
     {
         $originalSlug = '';
         $slugs = explode('/', $name);
@@ -19,8 +19,8 @@ class Slug
         $slug = rtrim($originalSlug, '/');
         $i = 0;
 
-        while ($resource::whereSlug($slug)->first()) {
-            $slug = $originalSlug . '-' . ++$i;
+        while ($resourceId = $resource::whereSlug($slug)->where('id', '!=', $id)->first()) {
+               $slug .= '-' . ++$i;
         }
 
         return $slug;

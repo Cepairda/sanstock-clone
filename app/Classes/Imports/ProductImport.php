@@ -32,6 +32,7 @@ class ProductImport implements ToCollection, WithHeadingRow
                 $product = new Product();
                 $requestData['details']['sku'] = $sku;
                 //$requestData['slug'] = (Slug::create(Product::class, $row['name']));
+                dd($product->id);
             }
 
             if (empty($slug)) {
@@ -42,7 +43,7 @@ class ProductImport implements ToCollection, WithHeadingRow
                     ? $category->slug . '/' . $slugName
                     : $slugName;
             } else {
-                $slug = Slug::create(Product::class, $row['slug']);
+                $slug = Slug::create(Product::class, $row['slug'], $product->id ?? null);
             }
 
             $requestData['slug'] = $slug;
@@ -52,6 +53,8 @@ class ProductImport implements ToCollection, WithHeadingRow
             $requestData['details']['ref'] = $product->getDetails('ref');
             $requestData['details']['brand_id'] = $product->getDetails('brand_id');
             $requestData['details']['price'] = $product->getDetails('price');
+            $requestData['details']['price_updated_at'] = $product->getDetails('price_updated_at');
+            $requestData['details']['old_price'] = $product->getDetails('old_price');
 
             $product->setRequest($requestData);
 

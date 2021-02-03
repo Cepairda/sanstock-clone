@@ -87,7 +87,7 @@
                                             <td>{{ isset($resource->deleted_at) ? $resource->deleted_at->format('d.m.Y') : '' }}</td>
                                             <td>
                                                 @foreach($resource->categories as $category)
-                                                    {{ print_r($category->getData('name')) }} (ID: {{ $category->id }});
+                                                    {{ $category->getData('name') }} (ID: {{ $category->id }});
                                                 @endforeach
                                             </td>
                                             <td>
