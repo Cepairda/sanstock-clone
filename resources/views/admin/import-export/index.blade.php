@@ -48,6 +48,19 @@
                         <a href="{{ route('admin.products.export') }}" class="btn btn-success">Экспортировать товары</a>
                     </form>
                     <hr>
+                    <form action="{{ route('admin.partners.import') }}" enctype="multipart/form-data" method="post">
+                        {{ csrf_field() }}
+
+                        <div class="form-group row">
+                            <label for="productsExcelFile" class="col-form-label col-lg-2">Файл (.xlsx)</label>
+                            <div class="col-lg-10">
+                                <input type="file" id="productsExcelFile" name="partners" class="form-control-uniform" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger">Импортировать партнеров</button>
+                    </form>
+                    <hr>
                     <a href="{{ route('admin.import') }}" class="btn btn-success">Импорт(Бренды, Товары, Характеристики)</a>
                     <form class="d-inline" method="post" action="{{ route('admin.products.import-price') }}">
                         {{ csrf_field() }}

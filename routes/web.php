@@ -54,6 +54,14 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         });
 
+        Route::prefix('partners')->as('partners.')->group(function () {
+            Route::resource('/', 'PartnerController')->parameters(['' => 'partner'])->except(['show']);
+
+            Route::post('/import', 'PartnerController@import')->name('import');
+            Route::get('/create-search-string', 'PartnerController@createSearchString')->name('create-search-string');
+
+        });
+
         Route::prefix('characteristics')->as('characteristics.')->group(function () {
             Route::resource('/', 'CharacteristicController')->parameters(['' => 'characteristic'])->except(['show']);
 

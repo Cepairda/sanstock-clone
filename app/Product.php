@@ -111,6 +111,13 @@ class Product extends Resource
         }]);
     }
 
+    public function scopeWithPartnerUrl($query)
+    {
+        return $query->with(['partnersUrl' => function($query) {
+            return $query->joinLocalization();
+        }, 'partnersUrl.partner']);
+    }
+
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'resource_resource',
@@ -149,6 +156,11 @@ class Product extends Resource
     {
         return $this->belongsToMany(Icon::class, 'resource_resource',
             'resource_id', 'relation_id');
+    }
+
+    public function partnersUrl()
+    {
+        return $this->hasMany(PartnerUrl::class, 'details->sku', 'details->sku');
     }
 
     public function stars()

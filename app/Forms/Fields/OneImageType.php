@@ -16,8 +16,9 @@ class OneImageType extends FormField
 
     public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
     {
-        preg_match('/data\[(.+)\]/', $this->getName(), $matches);
-        $name = trim($matches[1]);
+        preg_match('/data\[(.+)\]/', $this->getName(), $dataMatches);
+        preg_match('/details\[(.+)\]/', $this->getName(), $detailsMatches);
+        $name = isset($dataMatches[1]) ? trim($dataMatches[1]) : trim($detailsMatches[1]);
 
         $thumbnail = 'thumbnail-one-' . $name;
 

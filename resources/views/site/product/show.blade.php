@@ -113,26 +113,27 @@
                             <button class="button button-primary button-icon" data-toggle="modal" data-target="#exampleModal">
                                 <span>{{ __('Where buy') }}</span></button>
 
+                            @include('site.product.components.partners')
                             <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">{{ __('Where buy') }}</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body text-center">
-                                            <p>{{ __('For all questions call') }}</p>
-                                            <p >Call-Center: <a href="callto:0800210377">0-800-210-377</a></p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+{{--                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">--}}
+{{--                                <div class="modal-dialog" role="document">--}}
+{{--                                    <div class="modal-content">--}}
+{{--                                        <div class="modal-header">--}}
+{{--                                            <h5 class="modal-title" id="exampleModalLabel">{{ __('Where buy') }}</h5>--}}
+{{--                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                                                <span aria-hidden="true">&times;</span>--}}
+{{--                                            </button>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="modal-body text-center">--}}
+{{--                                            <p>{{ __('For all questions call') }}</p>--}}
+{{--                                            <p >Call-Center: <a href="callto:0800210377">0-800-210-377</a></p>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="modal-footer">--}}
+{{--                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <span class="icon icon-md linear-icon-heart ml-4" data-add="favorite" data-sku="{{$product->getDetails('sku')}}"
                                   style="display: block; height: 100%;font-size: 35px; line-height: 1.5; cursor: pointer"></span>
                         </div>
@@ -382,65 +383,6 @@
 
 
 
-
-    @if (config('settings.comments.' . $product->type . '.enable') && $product->getDetails('enable_comments'))
-{{--    <section class="section-sm bg-white">--}}
-{{--        <div class="container">--}}
-{{--            <div class="row">--}}
-{{--                <div class="col-12">--}}
-{{--                    <hr />--}}
-{{--                    <h4>{{ __('Comments') }}</h4>--}}
-
-{{--                    @include('site.components.comments', ['comments' => $product->comments, 'resourceId' => $product->id])--}}
-
-{{--                    <hr />--}}
-{{--                    <h4>{{ __('Add comment') }}</h4>--}}
-{{--                    <form method="post" enctype="multipart/form-data" action="{{ route('site.comments.store') }}">--}}
-{{--                        @csrf--}}
-
-{{--                        @if ((config('settings.comments.' . $product->type . '.stars')) && $product->getDetails('enable_stars'))--}}
-{{--                        <div class="form-group mb-2">--}}
-{{--                            <div class="rating">--}}
-{{--                                <input type="radio" name="details[star]" id="product-comment-5" value="5"/>--}}
-{{--                                <label class="rating-label star" for="product-comment-5"></label>--}}
-{{--                                <input type="radio" name="details[star]" id="product-comment-4" value="4"/>--}}
-{{--                                <label class="rating-label star" for="product-comment-4"></label>--}}
-{{--                                <input type="radio" name="details[star]" id="product-comment-3" value="3"/>--}}
-{{--                                <label class="rating-label star" for="product-comment-3"></label>--}}
-{{--                                <input type="radio" name="details[star]" id="product-comment-2" value="2"/>--}}
-{{--                                <label class="rating-label star" for="product-comment-2"></label>--}}
-{{--                                <input type="radio" name="details[star]" id="product-comment-1" value="1"/>--}}
-{{--                                <label class="rating-label star" for="product-comment-1"></label>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        @endif--}}
-{{--                        <div class="form-group mb-2">--}}
-{{--                            <input type="text" name="details[name]" class="form-control" required="required" placeholder="{{ __('Name') }}" />--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group mb-2">--}}
-{{--                            <input type="email" name="details[email]" class="form-control email-comment" required="required" placeholder="Email" />--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group mb-2">--}}
-{{--                            <input type="tel" name="details[phone]" class="form-control phone-comment" required="required" placeholder="{{ __('Phone') }}" />--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group mb-2">--}}
-{{--                            <textarea class="form-control" name="details[body]" placeholder="{{ __('Comment') }}"></textarea>--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group mb-2">--}}
-{{--                            <input type="file" name="attachment[]" class="filer_input" data-jfiler-limit="{{ config('settings.comments.files.count') }}" data-jfiler-fileMaxSize="{{ config('settings.comments.files.size') }}" multiple="multiple" data-jfiler-options='{"language": "{{ LaravelLocalization::getCurrentLocale() }}"}'>--}}
-{{--                            <input type="hidden" name="details[resource_id]" value="{{ $product->id }}" />--}}
-{{--                            <input type="hidden" name="details[type]" value="1" />--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group">--}}
-{{--                            <input type="submit" class="btn btn-success" value="{{ __('Add comment') }}" />--}}
-{{--                        </div>--}}
-{{--                    </form>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </section>--}}
-    @endif
-
     <!-- Divider-->
     <div class="shell">
         <div class="divider"></div>
@@ -448,4 +390,5 @@
     @if($product->relateProducts->isNotEmpty())
         @include('site.product.carousel', ['title' => __('You may also be interested in')])
     @endif
+
 @endsection
