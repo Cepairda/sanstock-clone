@@ -164,4 +164,11 @@ if (!function_exists('temp_additional')) {
         return $data;
 
     }
+
+    if (!function_exists('contains_access')) {
+        function contains_access($name)
+        {
+            return auth()->user()->accesses->contains($name) ? true : false;
+        }
+    }
 }

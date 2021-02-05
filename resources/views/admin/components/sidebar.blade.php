@@ -48,126 +48,157 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.import-export') }}" class="nav-link">
-                        <i class="nav-icon fa fa-users"></i>
-                        <p>
-                            Импорт/Экспорт
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.users.index') }}" class="nav-link">
-                        <i class="nav-icon fa fa-users"></i>
-                        <p>
-                            Пользователи
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.roles.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-unlock"></i>
-                        <p>
-                            Роли
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.mysql-backup.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-sync"></i>
-                        <p>
-                            Backup БД
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.categories.index') }}" class="nav-link">
-                        <i class="nav-icon fa fa-list"></i>
-                        <p>
-                            Категории
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.products.index') }}" class="nav-link">
-                        <i class="nav-icon fa fa-list"></i>
-                        <p>
-                            Товары
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.characteristics.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-cogs"></i>
-                        <p>
-                            Характеристики
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.characteristic-groups.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-cogs"></i>
-                        <p>
-                            Группы Характеристик
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.partners.index') }}" class="nav-link">
-                        <i class="nav-icon fa fa-list"></i>
-                        <p>
-                            Партнёры
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.blog-categories.index') }}" class="nav-link">
-                        <i class="nav-icon fa fa-list"></i>
-                        <p>
-                            Категории блога
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.blog-posts.index') }}" class="nav-link">
-                        <i class="nav-icon fa fa-list"></i>
-                        <p>
-                            Статьи блога
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.pages.index') }}" class="nav-link">
-                        <i class="nav-icon fa fa-list"></i>
-                        <p>
-                            Страницы
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.sale-points.index') }}" class="nav-link">
-                        <i class="nav-icon fa fa-shopping-cart"></i>
-                        <p>
-                            Точки продаж
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.comments.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-comment"></i>
-                        <p>
-                            Комментарии
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.reviews.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-comment"></i>
-                        <p>
-                            Отзывы
-                        </p>
-                    </a>
-                </li>
+                @if (contains_access('admin.import-export'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.import-export') }}" class="nav-link">
+                            <i class="nav-icon fa fa-users"></i>
+                            <p>
+                                Импорт/Экспорт
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (contains_access('admin.users.index'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.users.index') }}" class="nav-link">
+                            <i class="nav-icon fa fa-users"></i>
+                            <p>
+                                Пользователи
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (contains_access('admin.roles.index'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.roles.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-unlock"></i>
+                            <p>
+                                Роли
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (contains_access('admin.mysql-backup.index'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.mysql-backup.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-sync"></i>
+                            <p>
+                                Backup БД
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (contains_access('admin.categories.index'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.categories.index') }}" class="nav-link">
+                            <i class="nav-icon fa fa-list"></i>
+                            <p>
+                                Категории
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (contains_access('admin.products.index'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.products.index') }}" class="nav-link">
+                            <i class="nav-icon fa fa-list"></i>
+                            <p>
+                                Товары
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (contains_access('admin.characteristics.index'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.characteristics.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-cogs"></i>
+                            <p>
+                                Характеристики
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (contains_access('admin.characteristic-groups.index'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.characteristic-groups.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-cogs"></i>
+                            <p>
+                                Группы Характеристик
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (contains_access('admin.partners.index'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.partners.index') }}" class="nav-link">
+                            <i class="nav-icon fa fa-list"></i>
+                            <p>
+                                Партнёры
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (contains_access('admin.blog-categories.index'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.blog-categories.index') }}" class="nav-link">
+                            <i class="nav-icon fa fa-list"></i>
+                            <p>
+                                Категории блога
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (contains_access('admin.blog-posts.index'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.blog-posts.index') }}" class="nav-link">
+                            <i class="nav-icon fa fa-list"></i>
+                            <p>
+                                Статьи блога
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (contains_access('admin.pages.index'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.pages.index') }}" class="nav-link">
+                            <i class="nav-icon fa fa-list"></i>
+                            <p>
+                                Страницы
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (contains_access('admin.sale-points.index'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.sale-points.index') }}" class="nav-link">
+                            <i class="nav-icon fa fa-shopping-cart"></i>
+                            <p>
+                                Точки продаж
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (contains_access('admin.comments.index'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.comments.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-comment"></i>
+                            <p>
+                                Комментарии
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (contains_access('admin.reviews.index'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.reviews.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-comment"></i>
+                            <p>
+                                Отзывы
+                            </p>
+                        </a>
+                    </li>
+                @endif
+
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-cogs"></i>
@@ -177,12 +208,14 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('admin.icons.index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Иконки</p>
-                            </a>
-                        </li>
+                        @if (contains_access('admin.icons.index'))
+                            <li class="nav-item">
+                                <a href="{{ route('admin.icons.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Иконки</p>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
             </ul>
