@@ -11,7 +11,6 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\Importable;
 use LaravelLocalization;
-use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
 class PartnerImport implements ToCollection, WithHeadingRow //,WithMultipleSheets
 {
@@ -22,19 +21,16 @@ class PartnerImport implements ToCollection, WithHeadingRow //,WithMultipleSheet
         ini_set('max_execution_time', 900);
         $partners = []; // Для оптимизации производительности
 
+        PartnerUrl::where('type', 'App\\PartnerUrl')->forceDelete();
+
         foreach ($rows as $row) {
             if (!empty($row['sku'])) {
                 $requestData = [];
                 $sku = $row['sku'];
                 $url = $row['url'];
-                $partnerUrl = PartnerUrl::where('details->url', $url)->first();
-
-                if (!isset($partnerUrl)) {
-                    $partnerUrl = new PartnerUrl();
-                }
-
-                //$partnerHost = parse_url($url, PHP_URL_HOST);
                 $partnerHost = $row['host'];
+
+                $partnerUrl = new PartnerUrl();
 
                 if (!isset($partners[$partnerHost])) {
                     $partner = Partner::where('details->host', $partnerHost)->first();
@@ -63,11 +59,4 @@ class PartnerImport implements ToCollection, WithHeadingRow //,WithMultipleSheet
             }
         }
     }
-
-    /*public function sheets(): array
-    {
-        return [
-            'Rozetka' => new self(),
-        ];
-    }*/
 }
