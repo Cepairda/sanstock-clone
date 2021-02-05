@@ -14,28 +14,32 @@
                         @foreach($product->partnersUrl as $partnerUrl)
                             <div class="col-6 col-sm-4 col-md-3 partnet-list-item">
 
-                            <div onclick="window.open('//{{ $partnerUrl->url }}')">
-
-                                <img class="img-responsive" alt="partners" src="{{ asset($partnerUrl->partner->img) }}">
-
-                            </div>
-
+                            @if (isset($partnerUrl->partner->img))
+                                <div onclick="window.open('//{{ $partnerUrl->url }}')">
+                                    <img class="img-responsive" alt="partners" src="{{ asset($partnerUrl->partner->img) }}">
+                                </div>
+                            @else
+                                    <div>
+                                        <img class="img-responsive" alt="partners" src="{{ asset('images/site/default.jpg') }}">
+                                    </div>
+                            @endif
                             </div>
                         @endforeach
                     @endif
 
-                    <div class="col-6 col-sm-4 col-md-3 partnet-list-item lead">
+                    @for($i = 4; $i > count($product->partnersUrl) % 4; $i--)
+                        <div class="col-6 col-sm-4 col-md-3 partnet-list-item lead">
 
-                        <div onclick="window.open('{{ route('site.contacts') }}')">
+                            <div onclick="window.open('{{ route('site.contacts') }}')">
 
-                            <img class="img-responsive" alt="partners" src="{{ asset('images/site/partners/empty.jpg') }}">
+                                <img class="img-responsive" alt="partners" src="{{ asset('images/site/partners/empty.jpg') }}">
 
-                            <div class="message">{{ __('Become a partner') }}</div>
+                                <div class="message">{{ __('Become a partner') }}</div>
+
+                            </div>
 
                         </div>
-
-                    </div>
-
+                    @endfor
                 </div>
             </div>
             <div class="modal-footer">
