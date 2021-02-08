@@ -118,7 +118,7 @@ window.delay = (() => {
     }
     window.favoriteSelected = () => {
         let favorites = getCookie('favorites'),
-            favoritesMass = favorites === '' ? '' : favorites.split(','),
+            favoritesMass = favorites === undefined ? '' : favorites.split(','),
             leng = favoritesMass.length;
         favoriteLink.textContent = leng;
         if (leng) {

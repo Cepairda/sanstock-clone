@@ -24,5 +24,10 @@ require('lightgallery.js');
 require('lg-zoom.js');
 require('lg-thumbnail.js');
 
+require('lazysizes');
+// import a plugin
+require('lazysizes/plugins/parent-fit/ls.parent-fit')
+
+
 //custom script
 require('./script');
