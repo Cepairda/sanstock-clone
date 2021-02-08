@@ -53,7 +53,12 @@ if (!function_exists('img')) {
         if (!empty($data)) {
             $class = !empty($data['class']) ? ' class="' . implode(' ', $data['class']) . '"' : '';
             $alt = !empty($data['alt']) ? ' alt="' . $data['alt'] . '"': '';
-            $uri = ' src="' . \App\Classes\ImportImage::getImage($data) . '"';
+
+            if ($data['data-src']) {
+                $uri = ' data-src="' . \App\Classes\ImportImage::getImage($data) . '"';
+            } else {
+                $uri = ' src="' . \App\Classes\ImportImage::getImage($data) . '"';
+            }
 
             $tag = '<img' . $class . $alt . $uri . ' />';
 

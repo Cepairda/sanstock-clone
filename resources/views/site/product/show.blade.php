@@ -58,7 +58,7 @@
                     <!-- Slick Carousel-->
                     <div id="lightgallery" class="slick-slider carousel-parent" data-child="#child-carousel" data-for="#child-carousel">
                             <a class="img-thumbnail-variant-2" href="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"                            >
-                                    <img src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="535" height="535"/>
+                                    <img class="lazyload no-src" data-src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="535" height="535"/>
                             <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div>
                             </a>
 
@@ -66,7 +66,7 @@
 
                                 <a class="img-thumbnail-variant-2" href="{{ $uri }}">
 
-                                        <img src="{{ $uri }}" alt="" width="535" height="535"/>
+                                        <img data-src="{{ $uri }}" class="lazyload no-src" alt="" width="535" height="535"/>
 
                                     <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div>
                                 </a>
@@ -75,16 +75,15 @@
 
                     </div>
                     <div class="slick-slider" id="child-carousel" data-for=".carousel-parent" data-arrows="false" data-loop="false" data-dots="false" data-swipe="true" data-items="3" data-xs-items="4" data-sm-items="4" data-md-items="4" data-lg-items="5" data-slide-to-scroll="1">
-
                         <div class="item">
-                            <img src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="89" height="89"/>
+                            <img data-src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="89" height="89"/>
                         </div>
 
                         @foreach(temp_additional($product->sku) as $uri)
 
                             <div class="item">
 
-                                <img src="{{ $uri }}" alt="" width="89" height="89"/>
+                                <img data-src="{{ $uri }}" class="lazyload no-src" alt="" width="89" height="89"/>
 
                             </div>
 
@@ -212,7 +211,7 @@
 
                             <div class="col-sm-12 text-center">
 
-                                <img class="img-fluid" src="{{ $uri }}" alt=""/>
+                                <img class="img-fluid lazyload no-src" data-src="{{ $uri }}" alt=""/>
 
                             </div>
 
@@ -251,131 +250,133 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        @php($enableComment = (config('settings.comments.' . $product->type . '.enable') && $product->getDetails('enable_comments')))
-                        @php($enableReview = (config('settings.reviews.' . $product->type . '.enable') && $product->getDetails('enable_reviews')))
+                    @php($enableComment = (config('settings.comments.' . $product->type . '.enable') && $product->getDetails('enable_comments')))
+                    @php($enableReview = (config('settings.reviews.' . $product->type . '.enable') && $product->getDetails('enable_reviews')))
 
-                        @if ($enableComment)
-                            <li class="nav-item">
-                                <a class="nav-link active" id="comment-tab" data-toggle="tab" href="#comment" role="tab" aria-controls="comment" aria-selected="true">{{ __('Comments') }}</a>
-                            </li>
-                        @endif
+                    @if ($enableComment || $enableReview)
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            @if ($enableComment)
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="comment-tab" data-toggle="tab" href="#comment" role="tab" aria-controls="comment" aria-selected="true">{{ __('Comments') }}</a>
+                                </li>
+                            @endif
+                            @if ($enableReview)
+                                <li class="nav-item">
+                                    <a class="nav-link {{ !$enableComment ? 'active' : '' }}" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">{{ __('Reviews') }}</a>
+                                </li>
+                            @endif
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            @if ($enableComment)
+                            <div class="tab-pane fade show active" id="comment" role="tabpanel" aria-labelledby="comment-tab">
 
-                        @if ($enableReview)
-                            <li class="nav-item">
-                                <a class="nav-link {{ !$enableComment ? 'active' : '' }}" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">{{ __('Reviews') }}</a>
-                            </li>
-                        @endif
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
+                                <h4>{{ __('Comments') }}</h4>
 
-                        <div class="tab-pane fade show active" id="comment" role="tabpanel" aria-labelledby="comment-tab">
+                                @include('site.components.comments', ['comments' => $product->comments, 'resourceId' => $product->id, 'type' => 1])
 
-                            <h4>{{ __('Comments') }}</h4>
+                                <hr />
+                                <h4>{{ __('Add comment') }}</h4>
+                                <form method="post" enctype="multipart/form-data" action="{{ route('site.comments.store') }}">
+                                    @csrf
 
-                            @include('site.components.comments', ['comments' => $product->comments, 'resourceId' => $product->id, 'type' => 1])
-
-                            <hr />
-                            <h4>{{ __('Add comment') }}</h4>
-                            <form method="post" enctype="multipart/form-data" action="{{ route('site.comments.store') }}">
-                                @csrf
-
-                                @if ((config('settings.comments.' . $product->type . '.stars')) && $product->getDetails('enable_stars_comments'))
-                                    <div class="form-group mb-2">
-                                        <div class="rating">
-                                            <input type="radio" name="details[star]" id="product-comment-5" value="5"/>
-                                            <label class="rating-label star" for="product-comment-5"></label>
-                                            <input type="radio" name="details[star]" id="product-comment-4" value="4"/>
-                                            <label class="rating-label star" for="product-comment-4"></label>
-                                            <input type="radio" name="details[star]" id="product-comment-3" value="3"/>
-                                            <label class="rating-label star" for="product-comment-3"></label>
-                                            <input type="radio" name="details[star]" id="product-comment-2" value="2"/>
-                                            <label class="rating-label star" for="product-comment-2"></label>
-                                            <input type="radio" name="details[star]" id="product-comment-1" value="1"/>
-                                            <label class="rating-label star" for="product-comment-1"></label>
+                                    @if ((config('settings.comments.' . $product->type . '.stars')) && $product->getDetails('enable_stars_comments'))
+                                        <div class="form-group mb-2">
+                                            <div class="rating">
+                                                <input type="radio" name="details[star]" id="product-comment-5" value="5"/>
+                                                <label class="rating-label star" for="product-comment-5"></label>
+                                                <input type="radio" name="details[star]" id="product-comment-4" value="4"/>
+                                                <label class="rating-label star" for="product-comment-4"></label>
+                                                <input type="radio" name="details[star]" id="product-comment-3" value="3"/>
+                                                <label class="rating-label star" for="product-comment-3"></label>
+                                                <input type="radio" name="details[star]" id="product-comment-2" value="2"/>
+                                                <label class="rating-label star" for="product-comment-2"></label>
+                                                <input type="radio" name="details[star]" id="product-comment-1" value="1"/>
+                                                <label class="rating-label star" for="product-comment-1"></label>
+                                            </div>
                                         </div>
-                                    </div>
-                                @endif
-                                <div class="form-group mb-2">
-                                    <input type="text" name="details[name]" class="form-control" required="required" placeholder="{{ __('Name') }}" />
-                                </div>
-                                <div class="form-group mb-2">
-                                    <input type="email" name="details[email]" class="form-control email-comment" required="required" placeholder="Email" />
-                                </div>
-                                <div class="form-group mb-2">
-                                    <input type="tel" name="details[phone]" class="form-control phone-comment" required="required" placeholder="{{ __('Phone') }}" />
-                                </div>
-                                <div class="form-group mb-2">
-                                    <textarea class="form-control" name="details[body]" placeholder="{{ __('Comment') }}"></textarea>
-                                </div>
-                                @if (config('settings.comments.files.enable'))
+                                    @endif
                                     <div class="form-group mb-2">
-                                        <input type="file" name="attachment[]" class="filer_input" data-jfiler-limit="{{ config('settings.comments.files.count') ?? 5 }}" data-jfiler-fileMaxSize="{{ config('settings.comments.files.size') ?? 1 }}" multiple="multiple" data-jfiler-options='{"language": "{{ LaravelLocalization::getCurrentLocale() }}"}'>
+                                        <input type="text" name="details[name]" class="form-control" required="required" placeholder="{{ __('Name') }}" />
                                     </div>
-                                @endif
-                                <input type="hidden" name="details[resource_id]" value="{{ $product->id }}" />
-                                <input type="hidden" name="details[type]" value="1" />
-                                <div class="form-group">
-                                    <input type="submit" class="btn btn-success" value="{{ __('Add comment') }}" />
-                                </div>
-                            </form>
-
-                        </div>
-
-                        <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-
-                            <h4>{{ __('Reviews') }}</h4>
-
-                            @include('site.components.comments', ['comments' => $product->reviews, 'resourceId' => $product->id, 'type' => 2])
-
-                            <hr />
-                            <h4>{{ __('Add review') }}</h4>
-                            <form method="post" enctype="multipart/form-data" action="{{ route('site.comments.store') }}">
-                                @csrf
-
-                                @if ((config('settings.reviews.' . $product->type . '.stars')) && $product->getDetails('enable_stars_reviews'))
                                     <div class="form-group mb-2">
-                                        <div class="rating">
-                                            <input type="radio" name="details[star]" id="product-review-5" value="5"/>
-                                            <label class="rating-label star" for="product-review-5"></label>
-                                            <input type="radio" name="details[star]" id="product-review-4" value="4"/>
-                                            <label class="rating-label star" for="product-review-4"></label>
-                                            <input type="radio" name="details[star]" id="product-review-3" value="3"/>
-                                            <label class="rating-label star" for="product-review-3"></label>
-                                            <input type="radio" name="details[star]" id="product-review-2" value="2"/>
-                                            <label class="rating-label star" for="product-review-2"></label>
-                                            <input type="radio" name="details[star]" id="product-review-1" value="1"/>
-                                            <label class="rating-label star" for="product-review-1"></label>
+                                        <input type="email" name="details[email]" class="form-control email-comment" required="required" placeholder="Email" />
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <input type="tel" name="details[phone]" class="form-control phone-comment" required="required" placeholder="{{ __('Phone') }}" />
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <textarea class="form-control" name="details[body]" placeholder="{{ __('Comment') }}"></textarea>
+                                    </div>
+                                    @if (config('settings.comments.files.enable'))
+                                        <div class="form-group mb-2">
+                                            <input type="file" name="attachment[]" class="filer_input" data-jfiler-limit="{{ config('settings.comments.files.count') ?? 5 }}" data-jfiler-fileMaxSize="{{ config('settings.comments.files.size') ?? 1 }}" multiple="multiple" data-jfiler-options='{"language": "{{ LaravelLocalization::getCurrentLocale() }}"}'>
                                         </div>
+                                    @endif
+                                    <input type="hidden" name="details[resource_id]" value="{{ $product->id }}" />
+                                    <input type="hidden" name="details[type]" value="1" />
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-success" value="{{ __('Add comment') }}" />
                                     </div>
-                                @endif
-                                <div class="form-group mb-2">
-                                    <input type="text" name="details[name]" class="form-control" required="required" placeholder="{{ __('Name') }}" />
-                                </div>
-                                <div class="form-group mb-2">
-                                    <input type="email" name="details[email]" class="form-control email-comment" required="required" placeholder="Email" />
-                                </div>
-                                <div class="form-group mb-2">
-                                    <input type="tel" name="details[phone]" class="form-control phone-comment" required="required" placeholder="{{ __('Phone') }}" />
-                                </div>
-                                <div class="form-group mb-2">
-                                    <textarea class="form-control" name="details[body]" placeholder="{{ __('Review') }}"></textarea>
-                                </div>
-                                @if (config('settings.comments.files.enable'))
+                                </form>
+
+                            </div>
+                            @endif
+                            @if ($enableReview)
+                            <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
+
+                                <h4>{{ __('Reviews') }}</h4>
+
+                                @include('site.components.comments', ['comments' => $product->reviews, 'resourceId' => $product->id, 'type' => 2])
+
+                                <hr />
+                                <h4>{{ __('Add review') }}</h4>
+                                <form method="post" enctype="multipart/form-data" action="{{ route('site.comments.store') }}">
+                                    @csrf
+
+                                    @if ((config('settings.reviews.' . $product->type . '.stars')) && $product->getDetails('enable_stars_reviews'))
+                                        <div class="form-group mb-2">
+                                            <div class="rating">
+                                                <input type="radio" name="details[star]" id="product-review-5" value="5"/>
+                                                <label class="rating-label star" for="product-review-5"></label>
+                                                <input type="radio" name="details[star]" id="product-review-4" value="4"/>
+                                                <label class="rating-label star" for="product-review-4"></label>
+                                                <input type="radio" name="details[star]" id="product-review-3" value="3"/>
+                                                <label class="rating-label star" for="product-review-3"></label>
+                                                <input type="radio" name="details[star]" id="product-review-2" value="2"/>
+                                                <label class="rating-label star" for="product-review-2"></label>
+                                                <input type="radio" name="details[star]" id="product-review-1" value="1"/>
+                                                <label class="rating-label star" for="product-review-1"></label>
+                                            </div>
+                                        </div>
+                                    @endif
                                     <div class="form-group mb-2">
-                                        <input type="file" name="attachment[]" class="filer_input" data-jfiler-limit="{{ config('settings.comments.files.count') ?? 5 }}" data-jfiler-fileMaxSize="{{ config('settings.comments.files.size') ?? 1 }}" multiple="multiple" data-jfiler-options='{"language": "{{ LaravelLocalization::getCurrentLocale() }}"}'>
+                                        <input type="text" name="details[name]" class="form-control" required="required" placeholder="{{ __('Name') }}" />
                                     </div>
-                                @endif
-                                <input type="hidden" name="details[resource_id]" value="{{ $product->id }}" />
-                                <input type="hidden" name="details[type]" value="2" />
-                                <div class="form-group">
-                                    <input type="submit" class="btn btn-success" value="{{ __('Add review') }}" />
-                                </div>
-                            </form>
+                                    <div class="form-group mb-2">
+                                        <input type="email" name="details[email]" class="form-control email-comment" required="required" placeholder="Email" />
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <input type="tel" name="details[phone]" class="form-control phone-comment" required="required" placeholder="{{ __('Phone') }}" />
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <textarea class="form-control" name="details[body]" placeholder="{{ __('Review') }}"></textarea>
+                                    </div>
+                                    @if (config('settings.comments.files.enable'))
+                                        <div class="form-group mb-2">
+                                            <input type="file" name="attachment[]" class="filer_input" data-jfiler-limit="{{ config('settings.comments.files.count') ?? 5 }}" data-jfiler-fileMaxSize="{{ config('settings.comments.files.size') ?? 1 }}" multiple="multiple" data-jfiler-options='{"language": "{{ LaravelLocalization::getCurrentLocale() }}"}'>
+                                        </div>
+                                    @endif
+                                    <input type="hidden" name="details[resource_id]" value="{{ $product->id }}" />
+                                    <input type="hidden" name="details[type]" value="2" />
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-success" value="{{ __('Add review') }}" />
+                                    </div>
+                                </form>
 
+                            </div>
+                            @endif
                         </div>
-
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>

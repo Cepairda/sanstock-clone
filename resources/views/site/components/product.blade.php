@@ -4,7 +4,7 @@
         <a href="{{ route('site.resource', $product->slug) }}" title="{{ $product->name }}">
         {{-- {!! temp_img('https://b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') !!}--}}
 
-        {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name]) !!}
+        {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name, 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}
         </a>
 
         @if ($product->icons)
