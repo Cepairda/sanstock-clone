@@ -1,7 +1,7 @@
 @extends('layouts.site')
 @section('body_class', 'home')
-@section('meta_title', __('Home'))
-@section('meta_description',  __('Home'))
+@section('meta_title', __('Home title'))
+@section('meta_description',  __('Home description'))
 
 @section('content')
 
@@ -64,7 +64,7 @@
 
                     <div class="col-md-6 col-lg-4 popular-category cat-{{ $category->id }}">
                         <a class="popular-category__inner" href="{{ route('site.resource', $category->slug) }}">
-                            <img class="popular-category__inner--image" src="{{ asset('images/site/home-popular-category/' . $category->id . '.png') }}" alt="{!! $category->getData('name') !!}">
+                            <img class="popular-category__inner--image lazyload no-src" data-src="{{ asset('images/site/home-popular-category/' . $category->id . '.png') }}" alt="{!! $category->getData('name') !!}">
                             <p class="popular-category__inner--name" style="font-size: 20px;">{!! $category->getData('name') !!}</p>
                         </a>
                     </div>
