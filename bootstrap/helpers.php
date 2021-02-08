@@ -54,7 +54,7 @@ if (!function_exists('img')) {
             $class = !empty($data['class']) ? ' class="' . implode(' ', $data['class']) . '"' : '';
             $alt = !empty($data['alt']) ? ' alt="' . $data['alt'] . '"': '';
 
-            if ($data['data-src']) {
+            if (isset($data['data-src'])) {
                 $uri = ' data-src="' . \App\Classes\ImportImage::getImage($data) . '"';
             } else {
                 $uri = ' src="' . \App\Classes\ImportImage::getImage($data) . '"';

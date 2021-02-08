@@ -35251,6 +35251,16 @@ span.jFiler-icon-file.f-audio {
   color: #d9534f;
 }
 
+.lazyload,
+.lazyloading {
+  opacity: 0;
+}
+
+.lazyloaded {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
 @font-face {
   font-family: "lg";
   src: url("../../../fonts/site/lg/lg.ttf?22t19m") format("truetype"), url("../../../fonts/site/lg/lg.woff?22t19m") format("woff"), url("../../../fonts/site/lg/lg.svg?22t19m#lg") format("svg");
