@@ -76,7 +76,7 @@
                     </div>
                     <div class="slick-slider" id="child-carousel" data-for=".carousel-parent" data-arrows="false" data-loop="false" data-dots="false" data-swipe="true" data-items="3" data-xs-items="4" data-sm-items="4" data-md-items="4" data-lg-items="5" data-slide-to-scroll="1">
                         <div class="item">
-                            <img data-src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="89" height="89"/>
+                            <img  class="lazyload no-src" data-src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="89" height="89"/>
                         </div>
 
                         @foreach(temp_additional($product->sku) as $uri)
