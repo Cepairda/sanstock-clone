@@ -9,11 +9,16 @@
     <title>@yield('meta_title')</title>
     <meta name="description" content="@yield('meta_description')">
     <meta name="theme-color" content="">
+    @section('rel_alternate_pagination')
+        <link rel="canonical"
+              href="{{ LaravelLocalization::getLocalizedURL() }}"
+        >
+    @endsection
+    @yield('rel_alternate_pagination')
     <link rel="alternate" hreflang="{{ 'ru-ua' }}"
           href="{{ LaravelLocalization::getLocalizedURL('ru') }}">
     <link rel="alternate" hreflang="{{ 'uk-ua' }}"
           href="{{ LaravelLocalization::getLocalizedURL('uk') }}">
-    @yield('rel_alternate_pagination')
     @yield('jsonld')
 <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MH95R4F43C"></script>

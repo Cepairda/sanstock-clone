@@ -3,16 +3,13 @@
 @section('meta_title', $category->meta_title)
 @section('meta_description', $category->meta_description)
 
-@section('rel_alternate_pagination')
-    @if (isset($_GET['page']))
-        <link rel="alternate" hreflang="{{ 'ru-ua' }}"
-              href="{{ strtok(LaravelLocalization::getLocalizedURL('ru'), '?') }}"
-        >
-        <link rel="alternate" hreflang="{{ 'uk-ua' }}"
-              href="{{ strtok(LaravelLocalization::getLocalizedURL('uk'), '?') }}"
-        >
-    @endif
-@endsection
+@if (isset($_GET['page']))
+    @section('rel_alternate_pagination')
+            <link rel="canonical"
+                  href="{{ strtok(LaravelLocalization::getLocalizedURL(), '?') }}"
+            >
+    @endsection
+@endif
 
 @section('breadcrumbs')
     @php($i = 2)
