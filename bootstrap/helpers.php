@@ -55,7 +55,7 @@ if (!function_exists('img')) {
             $alt = !empty($data['alt']) ? ' alt="' . $data['alt'] . '"': '';
 
             if (isset($data['data-src'])) {
-                $uri = ' data-src="' . \App\Classes\ImportImage::getImage($data) . '"';
+                $uri = 'data-src="' . \App\Classes\ImportImage::getImage($data) . '" src="' . asset('images/site/default_white.jpg') . '"';
             } else {
                 $uri = ' src="' . \App\Classes\ImportImage::getImage($data) . '"';
             }
@@ -141,7 +141,7 @@ if (!function_exists('temp_additional')) {
      * @return string
      */
 
-    function temp_additional($sku)
+    function temp_additional($sku, $firstAddition = false)
     {
 
         $data = [];
@@ -160,6 +160,9 @@ if (!function_exists('temp_additional')) {
 
                     $data[] = asset('/storage/' . $file_path);
 
+                    if ($firstAddition) {
+                        break;
+                    }
                 }
 
             }

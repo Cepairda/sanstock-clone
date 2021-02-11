@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <div>
+    <div class="rd-navbar-height">
         <div class="container">
             <div class="row">
                 <!-- RD Navbar-->

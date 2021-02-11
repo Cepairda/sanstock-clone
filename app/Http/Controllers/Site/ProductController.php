@@ -28,4 +28,12 @@ class ProductController extends Controller
 
         PriceImport::import($productSku);
     }
+
+    public function getFirstAdditional(Request $request)
+    {
+        $sku = $request->post('sku');
+        $additional = temp_additional($sku, true);
+
+        return response()->json(['additional' => $additional]);
+    }
 }

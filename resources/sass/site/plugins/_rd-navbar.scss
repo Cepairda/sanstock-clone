@@ -3630,3 +3630,17 @@ html.boxed .rd-navbar--is-clone {
 * + .search-form-classic {
 	margin-top: 25px;
 }
+
+.rd-navbar-height {
+    @media (min-width: 991px) {
+        height: 156px;
+    }
+
+    @media (min-width: 1200px) {
+        height: 123px;
+    }
+
+    @media (min-width: 1500px) {
+        height: 100px;
+    }
+}

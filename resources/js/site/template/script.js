@@ -31,8 +31,8 @@ var userAgent = navigator.userAgent.toLowerCase(),
     swiper: $(".swiper-slider"),
     search: $(".rd-search"),
     searchResults: $('.rd-search-results'),
-    mfp: $('[data-lightbox]').not('[data-lightbox="gallery"] [data-lightbox]'),
-    mfpGallery: $('[data-lightbox^="gallery"]'),
+    //mfp: $('[data-lightbox]').not('[data-lightbox="gallery"] [data-lightbox]'),
+    //mfpGallery: $('[data-lightbox^="gallery"]'),
     statefulButton: $('.btn-stateful'),
     isotope: $(".isotope"),
     popover: $('[data-toggle="popover"]'),
@@ -1755,7 +1755,7 @@ $document.ready(function () {
    * @see          http://dimsemenov.com/plugins/magnific-popup/
    * @version      v1.0.0
    */
-  if (plugins.mfp.length > 0 || plugins.mfpGallery.length > 0 && isNoviBuilder != "designMode") {
+  /*if (plugins.mfp.length > 0 || plugins.mfpGallery.length > 0 && isNoviBuilder != "designMode") {
     if (plugins.mfp.length) {
       for (i = 0; i < plugins.mfp.length; i++) {
         var mfpItem = plugins.mfp[i];
@@ -1783,7 +1783,7 @@ $document.ready(function () {
           });
       }
     }
-  }
+  }*/
 
   /**
    * Slick carousel

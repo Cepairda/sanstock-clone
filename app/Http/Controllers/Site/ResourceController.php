@@ -34,7 +34,7 @@ class ResourceController extends Controller
                         ->withComments()
                         ->withReviews()
                         ->withPartnerUrl()
-                        ->first(),
+                        ->firstOrFail(),
                 ];
                 break;
             case 'category':

@@ -20,9 +20,9 @@ require('./template/script');
 require('./plugins/rd-navbar');
 require('./plugins/jquery.filer');
 window.owlCarousel = require('owl.carousel');
-require('lightgallery.js');
-require('lg-zoom.js');
-require('lg-thumbnail.js');
+//require('lightgallery.js');
+//require('lg-zoom.js');
+//require('lg-thumbnail.js');
 
 require('lazysizes');
 // import a plugin
