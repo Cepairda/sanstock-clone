@@ -149,7 +149,8 @@ class Product extends Resource
         return $this->belongsToMany(Product::class, 'resource_resource',
             'resource_id', 'relation_id')
             ->where('relation_type', Product::class)
-            ->where('details->price', '>' , 0);
+            ->where('details->price', '>' , 0)
+            ->where('details->published', 1);
     }
 
     public function icons()
