@@ -384,7 +384,7 @@
 
     {{-- Карусель --}}
     <div class="modal fade show" id="carouselModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-lg" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h6 class="modal-title" id="carouselModalLabel">{{ $product->getData('name') }}</h6>
@@ -403,15 +403,15 @@
                                 <li data-target="#carouselExample" data-slide-to="{{ $c }}"></li>
                             @endfor
                         </ol>
-                        <div class="carousel-inner text-center">
+                        <div class="carousel-inner text-center height">
 
                             <div class="carousel-item active">
-                                <img class="img-fluid" src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}">
+                                <img class="image" src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}">
                             </div>
 
                             @foreach(temp_additional($product->sku) as $uri)
-                                <div class="carousel-item">
-                                    <img class="img-fluid" src="{{ $uri }}" class="lazyload no-src" alt="" />
+                                <div class="carousel-item height">
+                                    <img class="image" src="{{ $uri }}" class="lazyload no-src" alt="" />
                                 </div>
 
                             @endforeach

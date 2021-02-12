@@ -1,3 +1,24 @@
+.modal {
+    .modal-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        pointer-events: auto;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 0.3rem;
+        outline: 0;
+        height: calc(100vh - 3.5rem);
+        overflow: hidden;
+
+        @media (max-width: 576px) {
+            height: calc(100vh - 1rem);
+        }
+    }
+}
+
 .carousel .carousel-indicators li {
     background-color: #fff;
     background-color: rgba(70, 70, 70, 0.25);
@@ -13,4 +34,21 @@
 
 .carousel .carousel-control-next-icon {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23444' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5L3.75 4l-2.5 2.5L2.75 8l4-4-4-4z'/%3e%3c/svg%3e");
+}
+
+.carousel .image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 100%;
+}
+
+.carousel .height {
+    //height: calc(100vh - 250px);
+    height: calc(100vh - 3.5rem - 60px - 71px - 72px - 2rem);
+
+    @media (max-width: 576px) {
+        height: calc(100vh - 60px - 71px - 73px - 2rem);
+    }
 }
