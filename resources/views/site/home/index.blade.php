@@ -10,7 +10,7 @@
     <section class="home-carousel">
         <div class="owl-carousel owl-theme home__carousel">
             <div class="item">
-                <img class="item__img" src="{{ asset('images/site/home-slider/slide-1.jpg') }}" alt="slide-3">
+                <img class="item__img" src="{{ asset('images/site/home-slider/slide-1.webp') }}" alt="slide-3">
                 <div class="container item__desc">
                     <div class="row">
                         <div class="col-12">
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <!-- <div class="item">
-                <img class="item__img" src="{{ asset('images/site/home-slider/slide-1.jpg') }}" alt="slide-1">
+                <img class="item__img" src="{{ asset('images/site/home-slider/slide-1.webp') }}" alt="slide-1">
                 <div class="container item__desc" style="">
                     <div class="row">
                         <div class="col-12">
@@ -34,7 +34,7 @@
                 </div>
             </div> -->
             <!-- <div class="item">
-                <img class="item__img" src="{{ asset('images/site/home-slider/slide-2.jpg') }}" alt="slide-2">
+                <img class="item__img" src="{{ asset('images/site/home-slider/slide-2.webp') }}" alt="slide-2">
                 <div class="container item__desc">
                     <div class="row">
                         <div class="col-12">
@@ -80,7 +80,7 @@
     @php($category_banner_2 = \App\Category::joinLocalization()->where('virtual_id', 20)->first())
 
 
-    <section class="home-bn-info section-lg" style="background-image: url({{ asset('images/site/home-slider/slide-3.jpg') }});">
+    <section class="home-bn-info section-lg" style="background-image: url({{ asset('images/site/home-slider/slide-3.webp') }});">
         <div class="container">
             <div class="row justify-content-end">
                 <div class="col-12 text-right">

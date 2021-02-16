@@ -449,7 +449,9 @@
 	content: "\e68b";
 }
 .linear-icon-heart:before {
-	content: "\e68c";
+	//content: "\e68c";
+    content: url(../../images/site/icons/favorites.svg);
+    width: 28px;
 }
 .linear-icon-star:before {
 	content: "\e68d";

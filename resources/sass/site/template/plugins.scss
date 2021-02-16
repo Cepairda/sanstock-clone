@@ -706,8 +706,14 @@ html:not(.lt-ie10) .not-animated {
 }
 
 .ui-to-top::before {
-	content: '\e941';
-	font-family: 'Linearicons';
+	//content: '\e941';
+	//font-family: 'Linearicons';
+
+    content: url('../../images/site/icons/arrow-up.svg');
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .ui-to-top, .ui-to-top:active, .ui-to-top:focus {
