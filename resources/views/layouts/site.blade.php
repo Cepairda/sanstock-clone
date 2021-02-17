@@ -25,14 +25,7 @@
           href="{{ LaravelLocalization::getLocalizedURL('uk') }}">
     @yield('jsonld')
 <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MH95R4F43C"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
 
-        gtag('config', 'G-MH95R4F43C');
-    </script>
 </head>
 <body id="@yield('body_id')" class="@yield('body_class')">
     <div class="page">
@@ -46,6 +39,14 @@
         @include('site.components.footer')
     </div>
     <script type="text/javascript" src="{{ mix('js/site/app.js') }}"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MH95R4F43C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-MH95R4F43C');
+    </script>
     @yield('javascript')
 </body>
 </html>

@@ -1,8 +1,8 @@
-window._ = require('lodash');
+//window._ = require('lodash');
 
 // axios
-window.axios = require('axios');
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+//window.axios = require('axios');
+//window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 // popper
 window.Popper = require('popper.js').default;
@@ -20,9 +20,6 @@ require('./template/script');
 require('./plugins/rd-navbar');
 require('./plugins/jquery.filer');
 window.owlCarousel = require('owl.carousel');
-//require('lightgallery.js');
-//require('lg-zoom.js');
-//require('lg-thumbnail.js');
 
 require('lazysizes');
 // import a plugin

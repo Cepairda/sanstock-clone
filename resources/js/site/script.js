@@ -292,28 +292,3 @@ $('div.range').on('mouseenter', '.product-img-wrap', function (){
 $('#closeCarousel').on('click', function (){
     $('#carouselModal').modal('hide');
 });
-/*$('div.range').on('mouseenter', '.product-img-wrap', function (){
-    let currentImgWrap = this;
-    let images = $(currentImgWrap).find('img').length;
-    let sku = $(currentImgWrap).parent().find('.product-price').data('product-sku');
-
-    if (images < 2) {
-        $.ajax({
-            method: 'post',
-            url: '/products/get-first-additional',
-            dataType: 'json',
-            data: {
-                sku: sku,//$this.data('slug'),
-                _token: $('#csrf-token').val(),
-            },
-            success: function (data) {
-                if(data.additional[0]) {
-                    $(currentImgWrap).find('a').append("<img class='image-hover' src='" + data.additional[0] + "'>");
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            }
-        });
-    }
-});*/
