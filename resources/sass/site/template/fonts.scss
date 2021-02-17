@@ -49,13 +49,13 @@
 * Font Awesome Icons 4.7.0
 * --------------------------------------------------
 */
-@font-face {
-	font-family: 'FontAwesome';
-	src: url("../../fonts/site/fontawesome-webfont.eot?v=4.7.0");
-	src: url("../../fonts/site/fontawesome-webfont.eot?#iefix&v=4.7.0") format("embedded-opentype"), url("../../fonts/site/fontawesome-webfont.woff2?v=4.7.0") format("woff2"), url("../../fonts/site/fontawesome-webfont.woff?v=4.7.0") format("woff"), url("../../fonts/site/fontawesome-webfont.ttf?v=4.7.0") format("truetype"), url("../../fonts/site/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular") format("svg");
-	font-weight: normal;
-	font-style: normal;
-}
+//@font-face {
+//	font-family: 'FontAwesome';
+//	src: url("../../fonts/site/fontawesome-webfont.eot?v=4.7.0");
+//	src: url("../../fonts/site/fontawesome-webfont.eot?#iefix&v=4.7.0") format("embedded-opentype"), url("../../fonts/site/fontawesome-webfont.woff2?v=4.7.0") format("woff2"), url("../../fonts/site/fontawesome-webfont.woff?v=4.7.0") format("woff"), url("../../fonts/site/fontawesome-webfont.ttf?v=4.7.0") format("truetype"), url("../../fonts/site/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular") format("svg");
+//	font-weight: normal;
+//	font-style: normal;
+//}
 
 .fa {
 	display: inline-block;
@@ -3689,7 +3689,7 @@
 .linear-icon-heart:before, .product-img-wrap .icon.selected.linear-icon-heart:before {
 	//content: "\e68c";
     content: '';
-    background-image: url(../../images/site/icons/favorites-black.svg);
+    background-image: url(/images/site/icons/favorites-black.svg);
     background-repeat: no-repeat;
     width: 28px;
     height: 28px;
@@ -3697,12 +3697,12 @@
 }
 
 .linear-icon-heart:hover::before {
-    background-image: url(../../images/site/icons/favorites-grey.svg);
+    background-image: url(/images/site/icons/favorites-grey.svg);
 }
 
 .product-img-wrap .icon.linear-icon-heart:before {
     content: '';
-    background-image: url(../../images/site/icons/favorites-grey.svg);
+    background-image: url(/images/site/icons/favorites-grey.svg);
     background-repeat: no-repeat;
     width: 28px;
     height: 28px;
@@ -3710,7 +3710,7 @@
 }
 
 .product-img-wrap .icon.linear-icon-heart:hover:before {
-    background-image: url(../../images/site/icons/favorites-black.svg);
+    background-image: url(/images/site/icons/favorites-black.svg);
 }
 
 .linear-icon-star:before {
