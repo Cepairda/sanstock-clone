@@ -18,7 +18,7 @@ require('./template/script');
 
 // plugins
 require('./plugins/rd-navbar');
-require('./plugins/jquery.filer');
+//require('./plugins/jquery.filer');
 window.owlCarousel = require('owl.carousel');
 
 require('lazysizes');

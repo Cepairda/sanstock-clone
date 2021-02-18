@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+require('laravel-mix-purgecss');
 
 /*
  |--------------------------------------------------------------------------
@@ -21,7 +22,9 @@ mix.js('resources/js/app.js', 'public/js')
     .options({
         processCssUrls: false
     })
-    .js('resources/js/site/app.js', 'public/js/site');
+    .js('resources/js/site/app.js', 'public/js/site')
+    .js('resources/js/site/plugins/jquery.filer.js', 'public/js/site/plugins')
+    .purgeCss();
 
 
 mix.autoload({
