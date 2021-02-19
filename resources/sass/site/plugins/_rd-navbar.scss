@@ -339,8 +339,9 @@
 }
 
 .rd-navbar .rd-navbar-search__toggle::after {
+    font-family: 'FontAwesome';
 	margin-top: -1px;
-	content: '\e92a';
+	content: '\e800';
 	font-size: 22px;
 }
 

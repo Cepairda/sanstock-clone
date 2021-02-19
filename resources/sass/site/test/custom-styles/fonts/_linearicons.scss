@@ -2437,7 +2437,11 @@
 	content: "\e921";
 }
 .linear-icon-magnifier:before {
-	content: "\e922";
+	//content: "\e922";
+    content: '';
+    background-image: url(/images/site/icons/search-grey.svg);
+    width: 35px;
+    height: 35px;
 }
 .linear-icon-file-search:before {
 	content: "\e923";
