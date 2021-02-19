@@ -24,7 +24,12 @@ mix.js('resources/js/app.js', 'public/js')
     })
     .js('resources/js/site/app.js', 'public/js/site')
     .js('resources/js/site/plugins/jquery.filer.js', 'public/js/site/plugins')
-    .purgeCss();
+    .purgeCss({
+        extend: {
+            content: [path.join(__dirname, 'node_modules/**/*.js')],
+            safelist: { deep: [/hljs/] },
+        },
+    });
 
 
 mix.autoload({

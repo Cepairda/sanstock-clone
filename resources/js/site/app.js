@@ -23,7 +23,7 @@ window.owlCarousel = require('owl.carousel');
 
 require('lazysizes');
 // import a plugin
-require('lazysizes/plugins/parent-fit/ls.parent-fit')
+//require('lazysizes/plugins/parent-fit/ls.parent-fit')
 
 
 //custom script
