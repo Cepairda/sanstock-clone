@@ -409,12 +409,12 @@
 
                             <div class="carousel-item active height">
                                 <!--img class="image" src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"-->
-                                {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name, 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}
+                                {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name, 'class' => ['lazyload', 'no-src', 'image'], 'data-src' => true]) !!}
                             </div>
 
                             @foreach(temp_additional($product->sku) as $uri)
                                 <div class="carousel-item height">
-                                    <img class="image" src="{{ $uri }}" class="lazyload no-src" alt="" />
+                                    <img src="{{ $uri }}" class="lazyload no-src image" alt="" />
                                 </div>
 
                             @endforeach
