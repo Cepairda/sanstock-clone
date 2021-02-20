@@ -57,8 +57,9 @@
 
                     <!-- Slick Carousel-->
                     <div class="slick-slider carousel-parent" data-child="#child-carousel" data-for="#child-carousel" data-toggle="modal" data-target="#carouselModal">
-                            <a class="img-thumbnail-variant-2" href="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"                            >
-                                    <img data-target="#carouselExample" data-slide-to="{{ $j = 0 }}" class="lazyload no-src" data-src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="535" height="535"/>
+                            <a class="img-thumbnail-variant-2" data-target="#carouselExample" data-slide-to="{{ $j = 0 }}" href="#">
+                                    <!--img data-target="#carouselExample" data-slide-to="{{ $j = 0 }}" class="lazyload no-src" data-src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="535" height="535"/ -->
+                                    {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name, 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}
                             <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div>
                             </a>
 
@@ -76,7 +77,8 @@
                     </div>
                     <div class="slick-slider" id="child-carousel" data-for=".carousel-parent" data-arrows="false" data-loop="false" data-dots="false" data-swipe="true" data-items="3" data-xs-items="4" data-sm-items="4" data-md-items="4" data-lg-items="5" data-slide-to-scroll="1">
                         <div class="item">
-                            <img  class="lazyload no-src" data-src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="89" height="89"/>
+                            <!--img  class="lazyload no-src" data-src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="89" height="89"/-->
+                            {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name, 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}
                         </div>
 
                         @foreach(temp_additional($product->sku) as $uri)
@@ -99,7 +101,7 @@
                         <p class="product-single__sku">Код товара:<span>{{ $product->details['sku'] }}</span></p>
                         <p class="product-single__description">{{ $product->description }}</p>
                         <p
-                            class="product-price {{ empty($product->price_updated_at) || $product->price_updated_at->addHours(4)->lt(\Carbon\Carbon::now()) ? 'updatePriceJs' : '' }}"
+                            class="product-price {{ (empty($product->price_updated_at) || $product->price_updated_at->addHours(4)->lt(\Carbon\Carbon::now())) ? 'updatePriceJs' : '' }}"
                             data-product-sku="{{ $product->sku }}"
                         >
                             <span>{{ number_format(ceil($product->getDetails('price')),0,'',' ') }}</span>
@@ -405,8 +407,9 @@
                         </ol>
                         <div class="carousel-inner text-center height">
 
-                            <div class="carousel-item active">
-                                <img class="image" src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}">
+                            <div class="carousel-item active height">
+                                <!--img class="image" src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"-->
+                                {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name, 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}
                             </div>
 
                             @foreach(temp_additional($product->sku) as $uri)
