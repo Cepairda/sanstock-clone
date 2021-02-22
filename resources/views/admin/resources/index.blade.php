@@ -123,10 +123,14 @@
                                                    class="btn btn-warning text-white">
                                                     <span class="far fa-edit"></span>
                                                 </a>
-                                                <a href="{{ action([$controllerClass, 'destroy'], $resource->id) }}"
-                                                   class="btn btn-danger text-white">
-                                                    <span class="fa fa-trash-alt"></span>
-                                                </a>
+                                                <form class="d-inline" method="post" action="{{ action([$controllerClass, 'destroy'], $resource->id) }}">
+                                                    {{ csrf_field() }}
+                                                    {{ method_field('DELETE') }}
+                                                    <button
+                                                       class="btn btn-danger text-white">
+                                                        <span class="fa fa-trash-alt"></span>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
