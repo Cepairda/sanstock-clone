@@ -25,12 +25,12 @@ class MysqlBackupController extends Controller
 
     public function download($name)
     {
-        return Storage::download(config('settings.backup_folder') . '/' . $name);
+        return Storage::download(config('settings-file.backup_folder') . '/' . $name);
     }
 
     public function destroy($name)
     {
-        $result = Storage::delete(config('settings.backup_folder') . '/' . $name);
+        $result = Storage::delete(config('settings-file.backup_folder') . '/' . $name);
 
         return redirect()->back();
     }
