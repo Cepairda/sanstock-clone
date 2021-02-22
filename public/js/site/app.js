@@ -23978,7 +23978,7 @@ window.delay = function () {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              xhrUrl = "/live-search/?query=".concat(value);
+              xhrUrl = "".concat(location.origin, "/live-search?query=").concat(value);
               _context.next = 3;
               return fetch(xhrUrl, {});
 
