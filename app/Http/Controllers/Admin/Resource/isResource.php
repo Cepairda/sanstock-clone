@@ -54,13 +54,22 @@ trait isResource
     {
         $this->resource = $this->resource->joinLocalization()->find($id);
         $form = $this->getForm();
+
         return view('admin.resources.create-or-edit', compact('form'));
     }
 
     public function update($id)
     {
         $this->resource = $this->resource->find($id);
+
         return $this->storeOrUpdate();
+    }
+
+    public function destroy($id)
+    {
+        $this->resource->destroy($id);
+
+        return redirect(action([get_class($this), 'index']));
     }
 
     private function storeOrUpdate()
@@ -68,6 +77,7 @@ trait isResource
         $form = $this->getForm();
         $form->redirectIfNotValid();
         $this->resource->storeOrUpdate();
+
         return redirect(action([get_class($this), 'index']));
     }
 
