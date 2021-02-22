@@ -9,6 +9,6 @@ class Backup extends Model
 {
     protected static function backupFiles()
     {
-        return array_reverse(Storage::allfiles(config('settings.backup_folder')));
+        return array_reverse(Storage::allfiles(config('settings-file.backup_folder')));
     }
 }

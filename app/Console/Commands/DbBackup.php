@@ -40,7 +40,7 @@ class DbBackup extends Command
     {
         parent::__construct();
 
-        $path = storage_path() . '/app/' . config('settings.backup_folder');
+        $path = storage_path() . '/app/' . config('settings-file.backup_folder');
         File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
 
         $filename = 'backup-' . Carbon::now()->format('Y.m.d_H-i-s') . '.gz';

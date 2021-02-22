@@ -27,10 +27,10 @@ class ImportImage
         set_time_limit(0);
         ini_set('memory_limit','5024M');
 
-        self::$params['sizeMainImg'] = config('settings.import_image.main.size');
-        self::$params['sizePreviewImg'] = config('settings.import_image.preview.size');
-        self::$params['formatPreviewImg'] = config('settings.import_image.preview.format');
-        self::$params['defaultImg'] = config('settings.import_image.defaultImg');
+        self::$params['sizeMainImg'] = config('settings-file.import_image.main.size');
+        self::$params['sizePreviewImg'] = config('settings-file.import_image.preview.size');
+        self::$params['formatPreviewImg'] = config('settings-file.import_image.preview.format');
+        self::$params['defaultImg'] = config('settings-file.import_image.defaultImg');
 
         self::$formatImg = array_combine(self::FORMAT_IMG_ORIGINAL, self::FORMAT_IMG_ORIGINAL);
     }
@@ -194,8 +194,8 @@ class ImportImage
     private static function generatePreview($product)
     {
         $s = Storage::disk('public');
-        $sizes = config('settings.import_image.preview.size');
-        $formats = config('settings.import_image.preview.format');
+        $sizes = config('settings-file.import_image.preview.size');
+        $formats = config('settings-file.import_image.preview.format');
 
         //$watermark = Image::make( $s->get('watermark.png') );
 
