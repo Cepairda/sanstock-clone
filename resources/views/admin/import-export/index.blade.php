@@ -20,34 +20,48 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    @if (contains_access('admin.categories.import') || contains_access('admin.categories.export'))
                     <form action="{{ route('admin.categories.import') }}" enctype="multipart/form-data" method="post">
                         {{ csrf_field() }}
-
-                        <div class="form-group row">
-                            <label for="categoriesExcelFile" class="col-form-label col-lg-2">Файл (.xlsx)</label>
-                            <div class="col-lg-10">
-                                <input type="file" id="categoriesExcelFile" name="categories" class="form-control-uniform" required>
+                        @if (contains_access('admin.categories.import'))
+                            <div class="form-group row">
+                                <label for="categoriesExcelFile" class="col-form-label col-lg-2">Файл (.xlsx)</label>
+                                <div class="col-lg-10">
+                                    <input type="file" id="categoriesExcelFile" name="categories" class="form-control-uniform" required>
+                                </div>
                             </div>
-                        </div>
 
-                        <button type="submit" class="btn btn-danger">Импортировать категории</button>
-                        <a href="{{ route('admin.categories.export') }}" class="btn btn-success">Экспортировать категории</a>
+                            <button type="submit" class="btn btn-danger">Импортировать категории</button>
+                        @endif
+                        @if (contains_access('admin.categories.export'))
+                            <a href="{{ route('admin.categories.export') }}" class="btn btn-success">Экспортировать категории</a>
+                        @endif
                     </form>
                     <hr>
-                    <form action="{{ route('admin.products.import') }}" enctype="multipart/form-data" method="post">
-                        {{ csrf_field() }}
+                    @endif
 
-                        <div class="form-group row">
-                            <label for="productsExcelFile" class="col-form-label col-lg-2">Файл (.xlsx)</label>
-                            <div class="col-lg-10">
-                                <input type="file" id="productsExcelFile" name="products" class="form-control-uniform" required>
-                            </div>
-                        </div>
+                    @if (contains_access('admin.products.import') || contains_access('admin.products.export'))
+                        <form action="{{ route('admin.products.import') }}" enctype="multipart/form-data" method="post">
+                            {{ csrf_field() }}
 
-                        <button type="submit" class="btn btn-danger">Импортировать товары</button>
-                        <a href="{{ route('admin.products.export') }}" class="btn btn-success">Экспортировать товары</a>
-                    </form>
-                    <hr>
+                            @if (contains_access('admin.products.import'))
+                                <div class="form-group row">
+                                    <label for="productsExcelFile" class="col-form-label col-lg-2">Файл (.xlsx)</label>
+                                    <div class="col-lg-10">
+                                        <input type="file" id="productsExcelFile" name="products" class="form-control-uniform" required>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-danger">Импортировать товары</button>
+                            @endif
+                            @if (contains_access('admin.products.export'))
+                                <a href="{{ route('admin.products.export') }}" class="btn btn-success">Экспортировать товары</a>
+                            @endif
+                        </form>
+                        <hr>
+                    @endif
+
+                    @if (contains_access('admin.partners.import'))
                     <form action="{{ route('admin.partners.import') }}" enctype="multipart/form-data" method="post">
                         {{ csrf_field() }}
 
@@ -61,17 +75,25 @@
                         <button type="submit" class="btn btn-danger">Импортировать партнеров</button>
                     </form>
                     <hr>
-                    <a href="{{ route('admin.import') }}" class="btn btn-success">Импорт(Бренды, Товары, Характеристики)</a>
-                    <form class="d-inline" method="post" action="{{ route('admin.products.import-price') }}">
+                    @endif
+
+                    @if (contains_access('admin.import'))
+                        <a href="{{ route('admin.import') }}" class="btn btn-success">Импорт(Бренды, Товары, Характеристики)</a>
+                    @endif
+                    @if (contains_access('admin.products.import-price'))
+                        <form class="d-inline" method="post" action="{{ route('admin.products.import-price') }}">
                         {{ csrf_field() }}
                         {{ method_field('POST') }}
                         <button type="submit" class="btn btn-success">Обновить цены</button>
                     </form>
-                    <form class="d-inline" method="post" action="{{ route('admin.import-image.store') }}">
+                    @endif
+                    @if (contains_access('admin.import-image.store'))
+                        <form class="d-inline" method="post" action="{{ route('admin.import-image.store') }}">
                         {{ csrf_field() }}
                         {{ method_field('POST') }}
                         <button type="submit" class="btn btn-success">Импорт изображений</button>
                     </form>
+                    @endif
                 </div>
             </div>
         </div>
