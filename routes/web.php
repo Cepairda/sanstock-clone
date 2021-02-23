@@ -148,9 +148,11 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
     });
 
     Route::as('site.')->namespace('Site')->group(function () {
-        //Route::middleware(['cacheResponse'])->group(function () {
+        Route::get('live-search', 'ProductController@search')->name('products.live-search');
+
+        Route::middleware(['cacheResponse'])->group(function () {
             Route::get('/', 'HomeController@index')->name('/');
-            Route::get('live-search', 'ProductController@search')->name('products.live-search');
+
             Route::get('search', 'SearchController@search')->name('products.search');
             Route::post('products/update-price', 'ProductController@updatePrice')->name('products.update-price');
             Route::post('products/get-first-additional', 'ProductController@getFirstAdditional')->name('products.get-first-additional');
@@ -172,6 +174,6 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::post('/show-more', 'ResourceController@showMore');
 
             Route::get('/{slug}', 'ResourceController@getResource')->where('slug', '.*')->name('resource');
-        //});
+        });
     });
 });
