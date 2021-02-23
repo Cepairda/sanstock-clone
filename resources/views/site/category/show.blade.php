@@ -60,28 +60,28 @@
                             @foreach($category->descendants as $category)
 
                                 <div class="cell-sm-6 cell-lg-4">
+                                    <a href="{{ route('site.resource', $category->slug) }}">
+                                        <div class="product product-grid">
 
-                                    <div class="product product-grid">
+                                            <div class="product-img-wrap w-100" style="padding: 30px;">
 
-                                        <div class="product-img-wrap w-100" style="padding: 30px;">
+    {{--                                            <img alt="" src="http://lidz.loc.ua/storage/product/1000-21650.jpg">--}}
+                                                {!! img(['type' => 'product', 'sku' => $category->product->sku, 'size' => 1000, 'alt' => $category->name]) !!}
 
-{{--                                            <img alt="" src="http://lidz.loc.ua/storage/product/1000-21650.jpg">--}}
-                                            {!! img(['type' => 'product', 'sku' => $category->product->sku, 'size' => 1000, 'alt' => $category->name]) !!}
+                                            </div>
 
-                                        </div>
+                                            <div class="product-caption">
 
-                                        <div class="product-caption">
+                                                <div class="product-title">
 
-                                            <div class="product-title">
+                                                   {{ $category->name }}
 
-                                                <a href="{{ route('site.resource', $category->slug) }}">{{ $category->name }}</a>
+                                                </div>
 
                                             </div>
 
                                         </div>
-
-                                    </div>
-
+                                    </a>
                                 </div>
 
                             @endforeach
