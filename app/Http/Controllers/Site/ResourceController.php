@@ -167,11 +167,11 @@ class ResourceController extends Controller
         }
 
 
-        return Cache::remember('resource_' . $resource->id, 3600, function() use ($type, $data){
-            return view('site.' . $type . '.show', $data)->render();
-        });
+//        return Cache::remember('resource_' . $resource->id, 3600, function() use ($type, $data){
+//            return view('site.' . $type . '.show', $data)->render();
+//        });
 
-        //return view('site.' . $type . '.show', $data);
+        return view('site.' . $type . '.show', $data);
     }
 
     public function showMore(\Illuminate\Http\Request $request)
