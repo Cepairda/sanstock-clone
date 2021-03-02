@@ -26,7 +26,7 @@
                 </div>
                 <div class="post-meta">
                     <div class="group">
-                        <a href="image-post.html"><time datetime="2017">{{ $post->created_at->format('d.m.Y') }}</time></a>
+                        <span><time datetime="2017">{{ $post->created_at->format('d.m.Y') }}</time></span>
                         {{--<a class="meta-author" href="image-post.html">by Brian Williamson</a></div>--}}
                 </div>
             </article>
