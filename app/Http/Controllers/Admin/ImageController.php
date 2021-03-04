@@ -30,7 +30,7 @@ class ImageController extends Controller
      */
     public function index($productsID = null)
     {
-        ImportImage::addToQueue();
+        ImportImage::import(55);
     }
 
     /**

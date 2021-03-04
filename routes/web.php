@@ -140,6 +140,12 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::get('/create-search-string', 'IconController@createSearchString')->name('create-search-string');
         });
 
+        Route::prefix('html-blocks')->as('html-blocks.')->group(function () {
+            Route::resource('/', 'HtmlBlockController')->parameters(['' => 'block']);
+
+            Route::get('/create-search-string', 'HtmlBlockController@createSearchString')->name('create-search-string');
+        });
+
         Route::prefix('setting')->as('setting.')->group(function () {
             Route::resource('/', 'SettingController')->parameters(['' => 'setting']);
 

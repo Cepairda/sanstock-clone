@@ -11,6 +11,7 @@ use App\CharacteristicValue;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Cache;
+use App\HtmlBlock;
 
 class ResourceController extends Controller
 {
@@ -171,7 +172,7 @@ class ResourceController extends Controller
 //            return view('site.' . $type . '.show', $data)->render();
 //        });
 
-        return view('site.' . $type . '.show', $data);
+        return HtmlBlock::replaceShortCode(view('site.' . $type . '.show', $data)->render());
     }
 
     public function showMore(\Illuminate\Http\Request $request)

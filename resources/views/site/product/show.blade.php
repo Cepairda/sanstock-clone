@@ -452,7 +452,6 @@
         </div>
     </div>
     {{-- Карусель --}}
-
     <!-- Divider-->
     <div class="shell">
         <div class="divider"></div>

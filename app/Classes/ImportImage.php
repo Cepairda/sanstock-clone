@@ -2,6 +2,8 @@
 
 namespace App\Classes;
 
+use App\ProductImage;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Storage;
 use File;
@@ -10,11 +12,19 @@ use Cache;
 use Jenssegers\Agent\Agent;
 use App\Product;
 use App\Jobs\ProcessImportImage;
+use Illuminate\Support\Facades\DB;
 
 class ImportImage
 {
     private const FORMAT_IMG_ORIGINAL = ['jpg', 'png', 'webp'];
     private static $formatImg;
+
+    private static $imageRegister;
+    private static $imageRegisterUrl;
+
+    private static $apiProductImage;
+    private static $dbProductImage;
+    private static $requestProductImage;
 
     public static $params = [
         'defaultImg' => '/image/site/default.jpg'
@@ -33,6 +43,13 @@ class ImportImage
         self::$params['defaultImg'] = config('settings-file.import_image.defaultImg');
 
         self::$formatImg = array_combine(self::FORMAT_IMG_ORIGINAL, self::FORMAT_IMG_ORIGINAL);
+
+        self::$imageRegisterUrl = 'https://isw.b2b-sandi.com.ua/imagecache/full';
+
+        $client = new Client();
+        $res = $client->request('GET', 'https://b2b-sandi.com.ua/api/products/images/register');
+
+        self::$imageRegister = json_decode($res->getBody(), true);
     }
 
     public static function __callStatic($name, $arguments)
@@ -61,12 +78,38 @@ class ImportImage
 
     private static function import($sku)
     {
+        $sku = 21650;
         $product = Product::where('details->published', 1)->where('details->sku', $sku)->first();
 
         if (!empty($product)) {
+            self::$apiProductImage = self::$imageRegister[$sku];
+            //dd(self::$imageRegister[$sku]);
+            self::$dbProductImage = ProductImage::where('details->product_sku', $sku)->first();
+
+            if (!self::$dbProductImage) {
+                self::$dbProductImage = new ProductImage();
+                self::$dbProductImage->setRequest([
+                    'details' => [
+                        'product_sku' => $sku
+                    ]
+                ]);
+                self::$dbProductImage->storeOrUpdate();
+            }
+
+            //self::$dbProductImage = ProductImage::firstOrCreate(['details->product_sku' => $sku]);
+
             self::downloadMainImage($product);
             self::generatePreview($product);
-            self::downloadAdditional($product);
+            //self::downloadAdditional($product);
+
+            //$mainImage = isset(self::$requestProductImage['details']['main']) ? self::$requestProductImage['details']['main'] : self::$dbProductImage['details']['main'];
+            //$additionalImage = isset(self::$requestProductImage['details']['additional']) ? self::$requestProductImage['details']['additional'] : self::$dbProductImage['details']['additional'];
+            //$request = [
+            //    'details' =>
+            //];
+
+            //self::$dbProductImage->setRequest(self::$requestProductImage);
+            //self::$dbProductImage->storeOrUpdate();
         }
     }
 
@@ -142,43 +185,46 @@ class ImportImage
 
     private static function downloadMainImage($product)
     {
-        $s = Storage::disk('public');
         $size = self::$params['sizeMainImg']; // size for original images in PX
+        $url = self::$imageRegisterUrl . self::$apiProductImage['main']['path'];
 
-//            if (!$s->exists('product/' . $data['sku'] . '.jpg')) { // if not exists original files, download from B2B
-
-        $url = 'https://b2b-sandi.com.ua/imagecache/large/' . $product->getDetails('sku') . '.' . self::$formatImg['jpg'];
-
-        if (@getimagesize($url)) {
+        if (self::$apiProductImage['main']['filemtime'] != (self::$dbProductImage['main']['filemtime'] ?? null)) {
             $contents = @Image::make($url)->contrast(5);
             $contents->trim(null, null, 5, 50)->resize($size, $size, function ($constraint) {
                 $constraint->aspectRatio();
             })->resizeCanvas($size, $size, 'center', false, [255, 255, 255, 0]);
             $contents->save(public_path('storage/product/' . $product->getDetails('sku')) . '.' . self::$formatImg['jpg']); // save original
+
+            ///self::$requestProductImage['details']['main']['filemtime'] = self::$apiProductImage['main']['filemtime'];
+//            ProductImage::where('details->product_sku', $product->getDetails('sku'))->update([
+//                    //'details->product_sku' => $product->getDetails('sku'),
+//                    'details->main' => [
+//                        'filemtime' => self::$apiProductImage['main']['filemtime']
+//                    ],//self::$apiProductImage['main']['filemtime']
+//            ]);
+
+            $query = 'UPDATE `resources`
+                SET `details` = JSON_SET(`details`, "$.main.n", "' . self::$apiProductImage['main']['filemtime'] . '") WHERE JSON_EXTRACT(`details`, "$.product_sku") = "21650"';
+
+            //$query = 'UPDATE `resources`
+            //    SET `details` = JSON_SET(`details`, "$.main", "23223") WHERE JSON_EXTRACT(`details`, "$.product_sku") = "21650"';
+            DB::statement($query);
+
+//            Product::where('details->sku', $item['sku'])->update([
+//                'details->price' => $item['discount_price'] ?? $item['price'],
+//                'details->price_updated_at' => Carbon::now(),
+//                'details->old_price' => isset($item['discount_price']) ? $item['price'] : null
+//            ]);
         }
-//            }
     }
 
     private static function downloadAdditional($product)
     {
-        $s = Storage::disk('public');
-        $sufixs = [];
-
-        for ($i = 1; $i <= 15; $i++) {
-            $sufixs[] = '-' . $i;
-            $sufixs[] = '_' . $i;
-        }
-
-        foreach ($sufixs as $sufix) {
-            $url = 'https://b2b-sandi.com.ua/imagecache/large/' .
-                substr($product->getDetails('sku'), 0, 1) . '/' .
-                substr($product->getDetails('sku'), 1, 1) . '/' .
-                $product->getDetails('sku') . '/' . $product->getDetails('sku') .
-                $sufix . '.' . self::$formatImg['jpg'];
-
-            if (@getimagesize($url)) {
+        foreach (self::$apiProductImage['additional'] as $key => $additional) {
+            if ($additional['filemtime'] != (self::$dbProductImage['additional'][$key]['filemtime'] ?? null)) {
+                $url = self::$imageRegisterUrl . $additional['path'];
                 $contents = @Image::make($url);
-                $path = 'storage/product/'. $product->getDetails('sku') . '/';
+                $path = 'storage/product/' . $product->getDetails('sku') . '/';
                 $savePath = public_path($path);
 
                 if (!file_exists($savePath)) {
@@ -186,7 +232,13 @@ class ImportImage
 
                 }
 
-                $contents->save(public_path($path . $product->getDetails('sku') . $sufix) . '.' . self::$formatImg['jpg']); // save additional
+                $contents->save(public_path($path . $product->getDetails('sku') . '_' . $key) . '.' . self::$formatImg['jpg']); // save additional
+
+                //self::$requestProductImage['details']['additional'][$key]['filemtime'] = $additional['filemtime'];
+                ProductImage::where('details->product_sku', $product->getDetails('sku'))->update([
+                    //'details->product_sku' => $product->getDetails('sku'),
+                    'details->main->' . $key . '->filemtime' => self::$apiProductImage['main']['filemtime']
+                ]);
             }
         }
     }
