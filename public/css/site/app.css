@@ -18297,65 +18297,11 @@ html:not(.lt-ie10) .not-animated {
   margin-right: auto;
 }
 
-/*
-* @subsection   ToTop
-* @license      MIT license - http://opensource.org/licenses/MIT
-* @version      1.0.0
-*/
-.ui-to-top {
-  position: fixed;
-  right: 15px;
-  bottom: 15px;
-  width: 58px;
-  height: 58px;
-  border-radius: 100%;
-  font-size: 24px;
-  line-height: 58px;
-  overflow: hidden;
-  text-align: center;
-  text-decoration: none;
-  z-index: 20;
-  transition: 0.3s all ease;
-  transform: translateY(100px);
-}
-
-.ui-to-top::before {
-  content: url("/images/site/icons/arrow-up.svg");
-  width: 40px;
-  height: 40px;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.ui-to-top, .ui-to-top:active, .ui-to-top:focus {
-  color: #fff;
-  background: black;
-}
-
-.ui-to-top:hover {
-  color: #fff;
-  background: #888;
-}
-
-.ui-to-top:focus {
-  outline: 0;
-}
-
-.ui-to-top.active {
-  transform: translateY(0);
-}
-
 .mobile .ui-to-top,
 .tablet .ui-to-top {
   display: none !important;
 }
 
-@media (min-width: 480px) {
-  .ui-to-top {
-    right: 40px;
-    bottom: 40px;
-  }
-}
 /*
 *
 * Photoswipe
@@ -36778,6 +36724,49 @@ code,
   padding: 5px;
 }
 
+/*
+*  ToTop
+*/
+.ui-to-top {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  width: 58px;
+  height: 58px;
+  border-radius: 100%;
+  color: #fff;
+  background: #000 url(/images/site/icons/arrow-up.svg) center center no-repeat;
+  background-size: 36px;
+  font-size: 24px;
+  line-height: 58px;
+  overflow: hidden;
+  text-align: center;
+  text-decoration: none;
+  z-index: 20;
+  transition: 0.3s all ease;
+  transform: translateY(100px);
+}
+@media (min-width: 480px) {
+  .ui-to-top {
+    right: 40px;
+    bottom: 40px;
+  }
+}
+.ui-to-top:active, .ui-to-top:focus {
+  color: #fff;
+  background-color: #000;
+}
+.ui-to-top.active {
+  transform: translateY(0);
+}
+.ui-to-top:focus {
+  outline: 0;
+}
+.ui-to-top:hover {
+  color: #fff;
+  background-color: #888;
+}
+
 .button {
   position: relative;
   display: inline-block;
@@ -36932,22 +36921,32 @@ span.button {
 .button-link {
   border: 0;
   padding: 0;
+  color: #000;
   text-transform: uppercase;
 }
-
-.button-link, .button-link:active, .button-link:focus {
+.button-link:active, .button-link:focus {
   color: #000;
 }
-
 .button-link:hover {
   color: #888;
 }
-
-.button-link:after {
-  display: inline-block;
-  padding-left: 8px;
-  content: "\E944";
-  font-family: "Linearicons";
+.button-link:hover::after {
+  background-image: url(/images/site/icons/arrow-right-gray.svg);
+  transform: translate(3px, -50%);
+}
+.button-link::after {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  display: block;
+  width: 20px;
+  height: 100%;
+  margin-left: 8px;
+  background: transparent url(/images/site/icons/arrow-right-black.svg) center center no-repeat;
+  background-size: 20px;
+  transform: translateY(-50%);
+  transition: all 0.25s ease-in-out;
 }
 
 .page .button.button-icon .icon {
@@ -37999,7 +37998,7 @@ input:checked ~ .star {
 }
 
 .section-divided__aside [class*=section]:last-child {
-  border-bottom: 1px solid #ececee;
+  border-bottom: none;
 }
 
 .rd-range-input-value-1,

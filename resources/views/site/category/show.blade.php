@@ -61,7 +61,7 @@
 
                                 <div class="cell-sm-6 cell-lg-4">
 
-                                    <div class="product product-grid">
+                                    <a href="{{ route('site.resource', $category->slug) }}" class="product product-grid">
 
                                         <div class="product-img-wrap w-100" style="padding: 30px;">
 
@@ -74,13 +74,13 @@
 
                                             <div class="product-title">
 
-                                                <a href="{{ route('site.resource', $category->slug) }}">{{ $category->name }}</a>
+                                                <span>{{ $category->name }}</span>
 
                                             </div>
 
                                         </div>
 
-                                    </div>
+                                    </a>
 
                                 </div>
 
