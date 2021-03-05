@@ -193,9 +193,11 @@ class ImportImage
 
     private static function generatePreview($product)
     {
+        dd('work');
         $s = Storage::disk('public');
         $sizes = config('settings-file.import_image.preview.size');
         $formats = config('settings-file.import_image.preview.format');
+
 
         //$watermark = Image::make( $s->get('watermark.png') );
 
@@ -216,6 +218,7 @@ class ImportImage
                 //$contents->insert($watermark, 'center');
 
                 foreach($sizes as $size) {
+
                     $tmpContents = $contents;
 
                     foreach($formats as $format) { // formats for resized images webp, png
