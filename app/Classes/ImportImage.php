@@ -107,9 +107,9 @@ class ImportImage
             //$request = [
             //    'details' =>
             //];
-
-            //self::$dbProductImage->setRequest(self::$requestProductImage);
-            //self::$dbProductImage->storeOrUpdate();
+            self::$requestProductImage['details']['product_sku'] = $sku;
+            self::$dbProductImage->setRequest(self::$requestProductImage);
+            self::$dbProductImage->storeOrUpdate();
         }
     }
 
@@ -195,7 +195,7 @@ class ImportImage
             })->resizeCanvas($size, $size, 'center', false, [255, 255, 255, 0]);
             $contents->save(public_path('storage/product/' . $product->getDetails('sku')) . '.' . self::$formatImg['jpg']); // save original
 
-            ///self::$requestProductImage['details']['main']['filemtime'] = self::$apiProductImage['main']['filemtime'];
+            self::$requestProductImage['details']['main']['filemtime'] = self::$apiProductImage['main']['filemtime'];
 //            ProductImage::where('details->product_sku', $product->getDetails('sku'))->update([
 //                    //'details->product_sku' => $product->getDetails('sku'),
 //                    'details->main' => [
@@ -203,18 +203,20 @@ class ImportImage
 //                    ],//self::$apiProductImage['main']['filemtime']
 //            ]);
 
-            $query = 'UPDATE `resources`
-                SET `details` = JSON_SET(`details`, "$.main.n", "' . self::$apiProductImage['main']['filemtime'] . '") WHERE JSON_EXTRACT(`details`, "$.product_sku") = "21650"';
+            //$query = 'UPDATE `resources`
+            //    SET `details` = JSON_SET(`details`, "$.main.n", "' . self::$apiProductImage['main']['filemtime'] . '") WHERE JSON_EXTRACT(`details`, "$.product_sku") = "21650"';
 
             //$query = 'UPDATE `resources`
             //    SET `details` = JSON_SET(`details`, "$.main", "23223") WHERE JSON_EXTRACT(`details`, "$.product_sku") = "21650"';
-            DB::statement($query);
+            //DB::statement($query);
 
 //            Product::where('details->sku', $item['sku'])->update([
 //                'details->price' => $item['discount_price'] ?? $item['price'],
 //                'details->price_updated_at' => Carbon::now(),
 //                'details->old_price' => isset($item['discount_price']) ? $item['price'] : null
 //            ]);
+        } elseif (self::$apiProductImage['main']['filemtime'] == (self::$dbProductImage['main']['filemtime'] ?? null)) {
+            self::$requestProductImage['details']['main']['filemtime'] = self::$dbProductImage['details']['main']['filemtime'];
         }
     }
 
