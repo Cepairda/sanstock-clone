@@ -10,6 +10,7 @@ use App\Characteristic;
 use App\CharacteristicValue;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ResourceController extends Controller
 {
@@ -164,6 +165,11 @@ class ResourceController extends Controller
                     'resource' => $resource->type::joinLocalization()->whereId($resource->id)->first()
                 ];
         }
+
+
+//        return Cache::remember('resource_' . $resource->id, 3600, function() use ($type, $data){
+//            return view('site.' . $type . '.show', $data)->render();
+//        });
 
         return view('site.' . $type . '.show', $data);
     }

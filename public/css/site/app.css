@@ -36767,6 +36767,80 @@ code,
   background-color: #888;
 }
 
+.post-block-1 {
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  margin-bottom: 25px;
+  padding-top: 45px;
+  padding-bottom: 45px;
+}
+.post-block-1 .block-title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+.post-block-1 .block-content {
+  display: flex;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.post-block-1 .advantages, .post-block-1 .disadvantages {
+  flex-basis: 50%;
+  padding: 0 15px;
+}
+.post-block-1 .advantages ul, .post-block-1 .disadvantages ul {
+  list-style: decimal;
+  padding-left: 20px;
+}
+.post-block-1 .advantages li, .post-block-1 .disadvantages li {
+  display: list-item;
+  font-style: italic;
+}
+.post-block-1 .advantages .block-title {
+  font-size: 20px;
+  color: green;
+}
+.post-block-1 .advantages .block-title span {
+  position: relative;
+}
+.post-block-1 .advantages .block-title span::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: calc(100% + 5px);
+  height: 20px;
+  width: 20px;
+  background: transparent url(/images/site/icons/thumbs-up-regular.svg) center center no-repeat;
+  background-size: 20px;
+  line-height: 1.5;
+}
+.post-block-1 .advantages li::marker {
+  color: green;
+  font-size: 20px;
+}
+.post-block-1 .disadvantages .block-title {
+  font-size: 20px;
+  color: red;
+}
+.post-block-1 .disadvantages .block-title span {
+  position: relative;
+}
+.post-block-1 .disadvantages .block-title span::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: calc(100% + 5px);
+  height: 20px;
+  width: 20px;
+  background: transparent url(/images/site/icons/thumbs-down-regular.svg) center center no-repeat;
+  background-size: 20px;
+  line-height: 1.5;
+}
+.post-block-1 .disadvantages li::marker {
+  color: red;
+  font-size: 20px;
+}
+
 .button {
   position: relative;
   display: inline-block;

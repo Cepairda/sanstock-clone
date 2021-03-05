@@ -49,7 +49,7 @@ class ProductForm extends Form
             ])
             ->add('details[sku]', 'text', [
                 'label' => 'Sku',
-                'rules' => ['required', 'unique:resources,details->sku,' . $resource->id],
+                //'rules' => ['required', 'unique:resources,details->sku,' . $resource->id],
                 'value' => $resource->getDetails('sku'),
                 //'attr' => ['disabled' => true],
             ])

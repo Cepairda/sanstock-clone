@@ -58,8 +58,7 @@
                     <!-- Slick Carousel-->
                     <div class="slick-slider carousel-parent" data-child="#child-carousel" data-for="#child-carousel" data-toggle="modal" data-target="#carouselModal">
                             <a class="img-thumbnail-variant-2" data-target="#carouselExample" data-slide-to="{{ $j = 0 }}" href="#">
-                                    <!--img data-target="#carouselExample" data-slide-to="{{ $j = 0 }}" class="lazyload no-src" data-src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="535" height="535"/ -->
-                                    {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name, 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}
+                                  {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name, 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}
                             <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div>
                             </a>
 
@@ -73,11 +72,9 @@
                                 </a>
 
                         @endforeach
-
                     </div>
                     <div class="slick-slider" id="child-carousel" data-for=".carousel-parent" data-arrows="false" data-loop="false" data-dots="false" data-swipe="true" data-items="3" data-xs-items="4" data-sm-items="4" data-md-items="4" data-lg-items="5" data-slide-to-scroll="1">
                         <div class="item">
-                            <!--img  class="lazyload no-src" data-src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}" alt="" width="89" height="89"/-->
                             {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name, 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}
                         </div>
 
@@ -248,6 +245,142 @@
 
     </section>
 
+    <section class="section-sm bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    @php($enableComment = (config('settings.comments.' . $product->type . '.enable') && $product->getDetails('enable_comments')))
+                    @php($enableReview = (config('settings.reviews.' . $product->type . '.enable') && $product->getDetails('enable_reviews')))
+
+                    @if ($enableComment || $enableReview)
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            @if ($enableComment)
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="comment-tab" data-toggle="tab" href="#comment" role="tab" aria-controls="comment" aria-selected="true">{{ __('Comments') }}</a>
+                                </li>
+                            @endif
+                            @if ($enableReview)
+                                <li class="nav-item">
+                                    <a class="nav-link {{ !$enableComment ? 'active' : '' }}" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">{{ __('Reviews') }}</a>
+                                </li>
+                            @endif
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            @if ($enableComment)
+                            <div class="tab-pane fade show active" id="comment" role="tabpanel" aria-labelledby="comment-tab">
+
+                                <h4>{{ __('Comments') }}</h4>
+
+                                @include('site.components.comments', ['comments' => $product->comments, 'resourceId' => $product->id, 'type' => 1])
+
+                                <hr />
+                                <h4>{{ __('Add comment') }}</h4>
+                                <form method="post" enctype="multipart/form-data" action="{{ route('site.comments.store') }}">
+                                    @csrf
+
+                                    @if ((config('settings.comments.' . $product->type . '.stars')) && $product->getDetails('enable_stars_comments'))
+                                        <div class="form-group mb-2">
+                                            <div class="rating">
+                                                <input type="radio" name="details[star]" id="product-comment-5" value="5"/>
+                                                <label class="rating-label star" for="product-comment-5"></label>
+                                                <input type="radio" name="details[star]" id="product-comment-4" value="4"/>
+                                                <label class="rating-label star" for="product-comment-4"></label>
+                                                <input type="radio" name="details[star]" id="product-comment-3" value="3"/>
+                                                <label class="rating-label star" for="product-comment-3"></label>
+                                                <input type="radio" name="details[star]" id="product-comment-2" value="2"/>
+                                                <label class="rating-label star" for="product-comment-2"></label>
+                                                <input type="radio" name="details[star]" id="product-comment-1" value="1"/>
+                                                <label class="rating-label star" for="product-comment-1"></label>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <div class="form-group mb-2">
+                                        <input type="text" name="details[name]" class="form-control" required="required" placeholder="{{ __('Name') }}" />
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <input type="email" name="details[email]" class="form-control email-comment" required="required" placeholder="Email" />
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <input type="tel" name="details[phone]" class="form-control phone-comment" required="required" placeholder="{{ __('Phone') }}" />
+                                    </div>
+                                    <div class="form-group mb-2">
+
+                                    </div>
+                                    @if (config('settings.comments.files.enable'))
+                                        <div class="form-group mb-2">
+                                            <input type="file" name="attachment[]" class="filer_input" data-jfiler-limit="{{ config('settings.comments.files.count') ?? 5 }}" data-jfiler-fileMaxSize="{{ config('settings.comments.files.size') ?? 1 }}" multiple="multiple" data-jfiler-options='{"language": "{{ LaravelLocalization::getCurrentLocale() }}"}'>
+                                        </div>
+                                    @endif
+                                    <input type="hidden" name="details[resource_id]" value="{{ $product->id }}" />
+                                    <input type="hidden" name="details[type]" value="1" />
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-success" value="{{ __('Add comment') }}" />
+                                    </div>
+                                </form>
+
+                            </div>
+                            @endif
+                            @if ($enableReview)
+                            <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
+
+                                <h4>{{ __('Reviews') }}</h4>
+
+                                @include('site.components.comments', ['comments' => $product->reviews, 'resourceId' => $product->id, 'type' => 2])
+
+                                <hr />
+                                <h4>{{ __('Add review') }}</h4>
+                                <form method="post" enctype="multipart/form-data" action="{{ route('site.comments.store') }}">
+                                    @csrf
+
+                                    @if ((config('settings.reviews.' . $product->type . '.stars')) && $product->getDetails('enable_stars_reviews'))
+                                        <div class="form-group mb-2">
+                                            <div class="rating">
+                                                <input type="radio" name="details[star]" id="product-review-5" value="5"/>
+                                                <label class="rating-label star" for="product-review-5"></label>
+                                                <input type="radio" name="details[star]" id="product-review-4" value="4"/>
+                                                <label class="rating-label star" for="product-review-4"></label>
+                                                <input type="radio" name="details[star]" id="product-review-3" value="3"/>
+                                                <label class="rating-label star" for="product-review-3"></label>
+                                                <input type="radio" name="details[star]" id="product-review-2" value="2"/>
+                                                <label class="rating-label star" for="product-review-2"></label>
+                                                <input type="radio" name="details[star]" id="product-review-1" value="1"/>
+                                                <label class="rating-label star" for="product-review-1"></label>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <div class="form-group mb-2">
+                                        <input type="text" name="details[name]" class="form-control" required="required" placeholder="{{ __('Name') }}" />
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <input type="email" name="details[email]" class="form-control email-comment" required="required" placeholder="Email" />
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <input type="tel" name="details[phone]" class="form-control phone-comment" required="required" placeholder="{{ __('Phone') }}" />
+                                    </div>
+                                    <div class="form-group mb-2">
+
+                                    </div>
+                                    @if (config('settings.comments.files.enable'))
+                                        <div class="form-group mb-2">
+                                            <input type="file" name="attachment[]" class="filer_input" data-jfiler-limit="{{ config('settings.comments.files.count') ?? 5 }}" data-jfiler-fileMaxSize="{{ config('settings.comments.files.size') ?? 1 }}" multiple="multiple" data-jfiler-options='{"language": "{{ LaravelLocalization::getCurrentLocale() }}"}'>
+                                        </div>
+                                    @endif
+                                    <input type="hidden" name="details[resource_id]" value="{{ $product->id }}" />
+                                    <input type="hidden" name="details[type]" value="2" />
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-success" value="{{ __('Add review') }}" />
+                                    </div>
+                                </form>
+
+                            </div>
+                            @endif
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </section>
+
     {{-- Карусель --}}
     <div class="modal fade show" id="carouselModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -272,8 +405,7 @@
                         <div class="carousel-inner text-center height">
 
                             <div class="carousel-item active height">
-                                <!--img class="image" src="{{ temp_xml_img('https://media.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg') }}"-->
-                                {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name, 'class' => ['lazyload', 'no-src', 'image'], 'data-src' => true]) !!}
+                              {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name, 'class' => ['lazyload', 'no-src', 'image'], 'data-src' => true]) !!}
                             </div>
 
                             @foreach(temp_additional($product->sku) as $uri)
@@ -295,7 +427,7 @@
 
                     <div style="display: flex; align-items: center; justify-content: center">
                         <div
-                            class="product-price text-center {{ empty($product->price_updated_at) || $product->price_updated_at->addHours(4)->lt(\Carbon\Carbon::now()) ? 'updatePriceJs' : '' }}"
+                            class="product-price text-center {{ (empty($product->price_updated_at) || $product->price_updated_at->addHours(4)->lt(\Carbon\Carbon::now())) ? 'updatePriceJs' : '' }}"
                             data-product-sku="{{ $product->sku }}"
                         >
                             <span>{{ number_format(ceil($product->getDetails('price')),0,'',' ') }}</span>
