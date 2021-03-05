@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\HtmlBlock;
 use App\BlogPost;
-use App\Notifications\ContactForm;
-use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
