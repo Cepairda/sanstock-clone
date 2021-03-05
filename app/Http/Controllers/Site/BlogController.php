@@ -21,6 +21,6 @@ class BlogController extends Controller
     {
         $post = BlogPost::joinLocalization()->whereSlug($slug)->firstOrFail();
 
-        return view('site.blog.article', compact('post'));
+        return HtmlBlock::replaceShortCode(view('site.blog.article', compact('post'))->render());
     }
 }
