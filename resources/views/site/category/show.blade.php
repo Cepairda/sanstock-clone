@@ -95,7 +95,7 @@
 
             <div class="shell">
                 <div class="range range-60 range-md-reverse">
-                    <div class="section-divided__main {{ $products->total() <= 1 ? 'cell-12' : 'cell-md-9 section-divided__main-left'}}">
+                    <div class="section-divided__main {{ $productsTotal <= 1 ? 'cell-12' : 'cell-md-9 section-divided__main-left'}}">
                         @if($products->isNotEmpty())
                             <div class="section-sm">
                                 <div class="filter-shop-box">
@@ -145,7 +145,7 @@
                         @endif
 
                     </div>
-                    @if ($products->total() > 1)
+                    @if ($productsTotal > 1)
                         @include('site.components.filter')
                     @endif
 
