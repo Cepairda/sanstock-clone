@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         {!! $post->text !!}
-                        {{----}}
+                        {{--
                         <div class="post-block-1">
                             <h4 class="block-title">Открытые душ-кабины</h4>
                             <div class="block-content">
@@ -70,6 +70,7 @@
                                 </div>
                             </div>
                         </div>
+                        --}}
 
 
                     </section>
