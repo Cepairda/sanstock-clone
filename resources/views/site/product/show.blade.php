@@ -58,31 +58,53 @@
                     <!-- Slick Carousel-->
                     <div class="slick-slider carousel-parent" data-child="#child-carousel" data-for="#child-carousel" data-toggle="modal" data-target="#carouselModal">
                             <a class="img-thumbnail-variant-2" data-target="#carouselExample" data-slide-to="{{ $j = 0 }}" href="#">
-                                  {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name, 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}
+                                  {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 600, 'alt' => $product->name, 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}
                             <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div>
                             </a>
+                        @foreach($additional as $key => $uri)
 
-                        @foreach(temp_additional($product->sku) as $uri)
+                                <a class="img-thumbnail-variant-2" href="" data-target="#carouselExample" data-slide-to="{{ ++$j }}">
 
-                                <a class="img-thumbnail-variant-2" href="{{ $uri }}" data-target="#carouselExample" data-slide-to="{{ ++$j }}">
-
-                                        <img data-src="{{ $uri }}" class="lazyload no-src" alt="" width="535" height="535"/>
+                                        <!--img data-src="" class="lazyload no-src" alt="" width="535" height="535"/-->
+                                    {!! img([
+                                                'type' => 'product',
+                                                'sku' => $product->sku,
+                                                'size' => 600,
+                                                'alt' => $product->name,
+                                                'class' => ['lazyload', 'no-src'],
+                                                'data-src' => true,
+                                                'additional' => true,
+                                                'key' => $key
+                                            ])
+                                    !!}
 
                                     <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div>
                                 </a>
 
                         @endforeach
+
                     </div>
                     <div class="slick-slider" id="child-carousel" data-for=".carousel-parent" data-arrows="false" data-loop="false" data-dots="false" data-swipe="true" data-items="3" data-xs-items="4" data-sm-items="4" data-md-items="4" data-lg-items="5" data-slide-to-scroll="1">
                         <div class="item">
-                            {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name, 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}
+                            {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 150, 'alt' => $product->name, 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}
                         </div>
 
-                        @foreach(temp_additional($product->sku) as $uri)
+                        @foreach($additional as $key => $uri)
 
                             <div class="item">
 
-                                <img data-src="{{ $uri }}" class="lazyload no-src" alt="" width="89" height="89"/>
+                                <!--img data-src="" class="lazyload no-src" alt="" width="535" height="535"/-->
+                                {!! img([
+                                            'type' => 'product',
+                                            'sku' => $product->sku,
+                                            'size' => 150,
+                                            'alt' => $product->name,
+                                            'class' => ['lazyload', 'no-src'],
+                                            'data-src' => true,
+                                            'additional' => true,
+                                            'key' => $key
+                                        ])
+                                !!}
 
                             </div>
 
@@ -206,11 +228,22 @@
 
                         <p>{{ $product->description }}</p>
 
-                        @foreach(temp_additional($product->sku) as $uri)
+                        @foreach($additional as $key => $uri)
 
                             <div class="col-sm-12 text-center">
 
-                                <img class="img-fluid lazyload no-src" data-src="{{ $uri }}" alt=""/>
+                                <!--img data-src="" class="lazyload no-src" alt="" width="535" height="535"/-->
+                                {!! img([
+                                            'type' => 'product',
+                                            'sku' => $product->sku,
+                                            'size' => 600,
+                                            'alt' => $product->name,
+                                            'class' => ['lazyload', 'no-src', 'img-fluid'],
+                                            'data-src' => true,
+                                            'additional' => true,
+                                            'key' => $key
+                                        ])
+                                !!}
 
                             </div>
 
@@ -405,12 +438,25 @@
                         <div class="carousel-inner text-center height">
 
                             <div class="carousel-item active height">
-                              {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name, 'class' => ['lazyload', 'no-src', 'image'], 'data-src' => true]) !!}
+                              {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 600, 'alt' => $product->name, 'class' => ['lazyload', 'no-src', 'image'], 'data-src' => true]) !!}
                             </div>
 
-                            @foreach(temp_additional($product->sku) as $uri)
+                            @foreach($additional as $key => $uri)
+
                                 <div class="carousel-item height">
-                                    <img src="{{ $uri }}" class="lazyload no-src image" alt="" />
+                                    <!--img data-src="" class="lazyload no-src" alt="" width="535" height="535"/-->
+                                    {!! img([
+                                                'type' => 'product',
+                                                'sku' => $product->sku,
+                                                'size' => 600,
+                                                'alt' => $product->name,
+                                                'class' => ['lazyload', 'no-src', 'image'],
+                                                'data-src' => true,
+                                                'additional' => true,
+                                                'key' => $key
+                                            ])
+                                    !!}
+
                                 </div>
 
                             @endforeach
@@ -452,7 +498,6 @@
         </div>
     </div>
     {{-- Карусель --}}
-
     <!-- Divider-->
     <div class="shell">
         <div class="divider"></div>

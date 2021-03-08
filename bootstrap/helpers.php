@@ -144,33 +144,42 @@ if (!function_exists('temp_additional')) {
     function temp_additional($sku, $firstAddition = false)
     {
 
-        $data = [];
+//        $data = [];
+//
+//        $s = Storage::disk('public');
+//
+//        $additional_path = 'storage/product/' . $sku . '/';
+//
+//        if (file_exists($additional_path)) {
+//
+//            foreach (['-1', '-2', '-3', '_1', '_2', '_3',] as $sufix) {
+//
+//                $file_path = 'product/' . $sku . '/' . $sku . $sufix . '.jpg';
+//
+//                if ($s->exists($file_path)) {
+//
+//                    $data[] = asset('/storage/' . $file_path);
+//
+//                    if ($firstAddition) {
+//                        break;
+//                    }
+//                }
+//
+//            }
+//
+//        }
 
-        $s = Storage::disk('public');
+        $additional = \App\ProductImage::where('details->product_sku', $sku)->first();
 
-        $additional_path = 'storage/product/' . $sku . '/';
-
-        if (file_exists($additional_path)) {
-
-            foreach (['-1', '-2', '-3', '_1', '_2', '_3',] as $sufix) {
-
-                $file_path = 'product/' . $sku . '/' . $sku . $sufix . '.jpg';
-
-                if ($s->exists($file_path)) {
-
-                    $data[] = asset('/storage/' . $file_path);
-
-                    if ($firstAddition) {
-                        break;
-                    }
-                }
-
+        if (isset($additional) && $additional->getDetails('additional')) {
+            if ($firstAddition) {
+                return $additional->getDetails('additional')[1];
             }
 
+            return $additional->getDetails('additional');
         }
 
-        return $data;
-
+        return [];
     }
 
     if (!function_exists('contains_access')) {
