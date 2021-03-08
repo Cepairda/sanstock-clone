@@ -1,5 +1,5 @@
 // Import ACE editor
-import ace from 'ace-builds';
+//import ace from 'ace-builds';
 
 // Import TinyMCE
 import tinymce from 'tinymce/tinymce';
