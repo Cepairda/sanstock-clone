@@ -4,7 +4,7 @@
             @foreach($products as $product)
                 <li style="display: flex; width: 100%;">
                     <a class="d-flex" href="{{ route('site.resource', $product->slug) }}" alt="{{ $product->name }}" style=" flex-grow: 1">
-                        {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name]) !!}
+                        {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 150, 'alt' => $product->name]) !!}
                         <div class="d-flex flex-column ml-3" style="justify-content: center">
                             <p class="heading-4" style="font-size: 16px">{{ $product->name }}</p>
                         </div>

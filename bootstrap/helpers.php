@@ -170,9 +170,7 @@ if (!function_exists('temp_additional')) {
 //        }
 
         $additional = \App\ProductImage::where('details->product_sku', $sku)->first();
-        //$additional = \App\ProductImage::where('details->product_sku', $sku)->first();
 
-        //dd($additional);
         if (isset($additional) && $additional->getDetails('additional')) {
             if ($firstAddition) {
                 return $additional->getDetails('additional')[1];

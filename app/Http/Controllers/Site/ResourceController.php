@@ -38,6 +38,8 @@ class ResourceController extends Controller
                         ->withPartnerUrl()
                         ->firstOrFail(),
                 ];
+                $data['additional'] = temp_additional($data['product']->sku);
+
                 break;
             case 'category':
                 $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->where('details->published', 1)->firstOrFail();
