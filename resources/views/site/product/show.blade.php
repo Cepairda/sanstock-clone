@@ -56,7 +56,7 @@
                 <div class="col-sm-12 col-lg-5">
 
                     <!-- Slick Carousel-->
-                    <div class="slick-slider carousel-parent" data-child="#child-carousel" data-for="#child-carousel" data-toggle="modal" data-target="#carouselModal">
+                    <div class="slick-slider carousel-parent" data-child="#child-carousel" data-for="#child-carousel" data-toggle="modal" data-target="#modal-product">
                             <a class="img-thumbnail-variant-2" data-target="#carouselExample" data-slide-to="{{ $j = 0 }}" href="#">
                                   {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name, 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}
                             <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div>
@@ -382,72 +382,87 @@
     </section>
 
     {{-- Карусель --}}
-    <div class="modal fade show" id="carouselModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+    <div class="modal modal-product fade show" id="modal-product" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <div class="modal-dialog modal-product__container" role="document">
             <div class="modal-content">
+
                 <div class="modal-header">
-                    <h6 class="modal-title" id="carouselModalLabel">{{ $product->getData('name') }}</h6>
+                    <div class="modal-product__title" id="carouselModalLabel">{{ $product->getData('name') }}</div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
+
                 <div class="modal-body">
 
-                    <!-- Carousel markup: https://getbootstrap.com/docs/4.4/components/carousel/ -->
+                    {{-- Carousel markup: https://getbootstrap.com/docs/4.4/components/carousel/ --}}
                     <div id="carouselExample" class="carousel slide" data-ride="carousel">
+
                         <ol class="carousel-indicators">
+
                             <li class="active" data-target="#carouselExample" data-slide-to="0"></li>
 
                             @for ($c = 1; $c <= $j; $c++)
                                 <li data-target="#carouselExample" data-slide-to="{{ $c }}"></li>
                             @endfor
-                        </ol>
-                        <div class="carousel-inner text-center height">
 
-                            <div class="carousel-item active height">
+                        </ol>
+
+                        <div class="carousel-inner">
+
+                            <div class="carousel-item active">
                               {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 1000, 'alt' => $product->name, 'class' => ['lazyload', 'no-src', 'image'], 'data-src' => true]) !!}
                             </div>
 
                             @foreach(temp_additional($product->sku) as $uri)
-                                <div class="carousel-item height">
+
+                                <div class="carousel-item">
                                     <img src="{{ $uri }}" class="lazyload no-src image" alt="" />
                                 </div>
 
                             @endforeach
                         </div>
+
                         <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
                         </a>
+
                         <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="sr-only">Next</span>
                         </a>
+
                     </div>
 
-                    <div style="display: flex; align-items: center; justify-content: center">
-                        <div
-                            class="product-price text-center {{ (empty($product->price_updated_at) || $product->price_updated_at->addHours(4)->lt(\Carbon\Carbon::now())) ? 'updatePriceJs' : '' }}"
-                            data-product-sku="{{ $product->sku }}"
-                        >
+                    <div class="modal-product__price">
+
+                        <div class="product-price text-center {{ (empty($product->price_updated_at) || $product->price_updated_at->addHours(4)->lt(\Carbon\Carbon::now())) ? 'updatePriceJs' : '' }}"
+                            data-product-sku="{{ $product->sku }}">
+
                             <span>{{ number_format(ceil($product->getDetails('price')),0,'',' ') }}</span>
 
                             @if ($product->oldPrice)
                                 &nbsp;&nbsp;&nbsp;<span>{{ number_format(ceil($product->oldPrice),0,'',' ') }}</span>
                             @endif
+
                         </div>
+
+                        <button class="button button-primary button-icon" id="closeCarousel" data-toggle="modal" data-target="#exampleModal">
+                            <span>{{ __('Where buy') }}</span>
+                        </button>
+
                         <div style="display: flex; align-items: center;">
-                            <button class="button button-primary button-icon" id="closeCarousel" data-toggle="modal" data-target="#exampleModal">
-                                <span>{{ __('Where buy') }}</span></button>
-                            <span class="icon icon-md linear-icon-heart ml-4" data-add="favorite" data-sku="{{$product->getDetails('sku')}}"
+                            <span class="icon icon-md linear-icon-heart ml-4"
+                                  data-add="favorite"
+                                  data-sku="{{$product->getDetails('sku')}}"
                                   style="display: block; height: 100%;font-size: 35px; line-height: 1.5; cursor: pointer"></span>
                         </div>
+
                     </div>
                 </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
-                </div>
             </div>
         </div>
     </div>
