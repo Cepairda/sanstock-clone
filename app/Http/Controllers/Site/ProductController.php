@@ -32,8 +32,13 @@ class ProductController extends Controller
     public function getFirstAdditional(Request $request)
     {
         $sku = $request->post('sku');
-        $additional = temp_additional($sku, true);
+        //$additional = temp_additional($sku, true);
+        $additionalPath = 'storage/product/' . $sku . '/300-' . $sku . '_1.jpg';
 
-        return response()->json(['additional' => $additional]);
+        if (file_exists($additionalPath)) {
+            return response()->json(['additional' => [asset($additionalPath)]]);
+        }
+
+        return null;
     }
 }

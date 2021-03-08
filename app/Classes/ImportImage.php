@@ -2,6 +2,8 @@
 
 namespace App\Classes;
 
+use App\ProductImage;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Storage;
 use File;
@@ -15,6 +17,13 @@ class ImportImage
 {
     private const FORMAT_IMG_ORIGINAL = ['jpg', 'png', 'webp'];
     private static $formatImg;
+
+    private static $imageRegister;
+    private static $imageRegisterUrl;
+
+    private static $apiProductImage;
+    private static $dbProductImage;
+    private static $requestProductImage;
 
     public static $params = [
         'defaultImg' => '/image/site/default.jpg'
@@ -33,6 +42,13 @@ class ImportImage
         self::$params['defaultImg'] = config('settings-file.import_image.defaultImg');
 
         self::$formatImg = array_combine(self::FORMAT_IMG_ORIGINAL, self::FORMAT_IMG_ORIGINAL);
+
+        self::$imageRegisterUrl = 'https://isw.b2b-sandi.com.ua/imagecache/full';
+
+        $client = new Client();
+        $res = $client->request('GET', 'https://b2b-sandi.com.ua/api/products/images/register');
+
+        self::$imageRegister = json_decode($res->getBody(), true);
     }
 
     public static function __callStatic($name, $arguments)
@@ -61,12 +77,30 @@ class ImportImage
 
     private static function import($sku)
     {
+        $sku = 21661;
         $product = Product::where('details->published', 1)->where('details->sku', $sku)->first();
 
         if (!empty($product)) {
+            self::$apiProductImage = self::$imageRegister[$sku];
+            self::$dbProductImage = ProductImage::where('details->product_sku', $sku)->first();
+
+            if (!self::$dbProductImage) {
+                self::$dbProductImage = new ProductImage();
+                self::$dbProductImage->setRequest([
+                    'details' => [
+                        'product_sku' => $sku
+                    ]
+                ]);
+                self::$dbProductImage->storeOrUpdate();
+            }
+
             self::downloadMainImage($product);
-            self::generatePreview($product);
             self::downloadAdditional($product);
+            //self::generateAdditionalPreview($product);
+
+            self::$requestProductImage['details']['product_sku'] = $sku;
+            self::$dbProductImage->setRequest(self::$requestProductImage);
+            self::$dbProductImage->storeOrUpdate();
         }
     }
 
@@ -99,7 +133,7 @@ class ImportImage
         return  asset(self::$params['defaultImg']);
     }
 
-    private static function getImage($data)
+    public static function getImage($data)
     {
 
 
@@ -108,7 +142,8 @@ class ImportImage
         } else {
             $agent = new Agent();
 //            $imagesFormat = ($agent->is('iPhone') || $agent->is('OS X')) ? self::$formatImg['png'] : self::$formatImg['webp'];
-            $imagesFormat = ($agent->is('iPhone') || $agent->is('OS X')) ? self::$formatImg['jpg'] : self::$formatImg['jpg'];
+            //$imagesFormat = ($agent->is('iPhone') || $agent->is('OS X')) ? 'jpg' : 'jpg';
+            $imagesFormat = 'jpg';
             $data['format'] = $imagesFormat;
 
             session(['images_format' => $imagesFormat]);
@@ -116,14 +151,19 @@ class ImportImage
 
         $s = Storage::disk('public');
 
-        $filePath = '/' . $data['type'] . '/' . $data['size'] . '-' . $data['sku'] . '.' . $data['format'];
+        if (isset($data['additional'])) {
+            $filePath = '/' . $data['type'] . '/' . $data['sku'] . '/' . $data['size'] . '-' . $data['sku'] . '_' . $data['key'] . '.' . $data['format'];
+        } else {
+            $filePath = '/' . $data['type'] . '/' . $data['size'] . '-' . $data['sku'] . '.' . $data['format'];
+        }
 
         if ($data['type'] == 'product') {
             if ($s->exists($filePath)) {
                 return asset('/storage' . $filePath);
             } else {
                 //self::create($data);
-                return asset('/images/site/default.jpg');
+                //dd($filePath);
+                return asset('/images/site/' . $data['size'] . '-default.jpg');
             }
         }
 
@@ -131,7 +171,7 @@ class ImportImage
             if ($s->exists($filePath)) {
                 return asset('/storage' . $filePath);
             } else {
-                $data['original'] = $data['name'] . '.' .  self::$formatImg['jpg'];
+                $data['original'] = $data['name'] . '.' .  'jpg';
                 //self::create($data);
                 return asset('/images/site/default.jpg');
             }
@@ -142,43 +182,30 @@ class ImportImage
 
     private static function downloadMainImage($product)
     {
-        $s = Storage::disk('public');
         $size = self::$params['sizeMainImg']; // size for original images in PX
+        $url = self::$imageRegisterUrl . self::$apiProductImage['main']['path'];
 
-//            if (!$s->exists('product/' . $data['sku'] . '.jpg')) { // if not exists original files, download from B2B
-
-        $url = 'https://b2b-sandi.com.ua/imagecache/large/' . $product->getDetails('sku') . '.' . self::$formatImg['jpg'];
-
-        if (@getimagesize($url)) {
+        if (self::$apiProductImage['main']['filemtime'] != (self::$dbProductImage['details']['main']['filemtime'] ?? null)) {
             $contents = @Image::make($url)->contrast(5);
             $contents->trim(null, null, 5, 50)->resize($size, $size, function ($constraint) {
                 $constraint->aspectRatio();
             })->resizeCanvas($size, $size, 'center', false, [255, 255, 255, 0]);
             $contents->save(public_path('storage/product/' . $product->getDetails('sku')) . '.' . self::$formatImg['jpg']); // save original
+
+            self::$requestProductImage['details']['main']['filemtime'] = self::$apiProductImage['main']['filemtime'];
+            self::generatePreview($product);
+        } elseif (self::$apiProductImage['main']['filemtime'] == (self::$dbProductImage['details']['main']['filemtime'] ?? null)) {
+            self::$requestProductImage['details']['main']['filemtime'] = self::$dbProductImage['details']['main']['filemtime'];
         }
-//            }
     }
 
     private static function downloadAdditional($product)
     {
-        $s = Storage::disk('public');
-        $sufixs = [];
-
-        for ($i = 1; $i <= 15; $i++) {
-            $sufixs[] = '-' . $i;
-            $sufixs[] = '_' . $i;
-        }
-
-        foreach ($sufixs as $sufix) {
-            $url = 'https://b2b-sandi.com.ua/imagecache/large/' .
-                substr($product->getDetails('sku'), 0, 1) . '/' .
-                substr($product->getDetails('sku'), 1, 1) . '/' .
-                $product->getDetails('sku') . '/' . $product->getDetails('sku') .
-                $sufix . '.' . self::$formatImg['jpg'];
-
-            if (@getimagesize($url)) {
+        foreach (self::$apiProductImage['additional'] as $key => $additional) {
+            if ($additional['filemtime'] != (self::$dbProductImage['details']['additional'][$key]['filemtime'] ?? null)) {
+                $url = self::$imageRegisterUrl . $additional['path'];
                 $contents = @Image::make($url);
-                $path = 'storage/product/'. $product->getDetails('sku') . '/';
+                $path = 'storage/product/' . $product->getDetails('sku') . '/';
                 $savePath = public_path($path);
 
                 if (!file_exists($savePath)) {
@@ -186,16 +213,23 @@ class ImportImage
 
                 }
 
-                $contents->save(public_path($path . $product->getDetails('sku') . $sufix) . '.' . self::$formatImg['jpg']); // save additional
+                $contents->save(public_path($path . $product->getDetails('sku') . '_' . $key) . '.' . self::$formatImg['jpg']); // save additional
+
+                self::$requestProductImage['details']['additional'][$key]['filemtime'] = $additional['filemtime'];
+                self::generateAdditionalPreview($product, $key);
+            } elseif ($additional['filemtime'] != (self::$dbProductImage['additional'][$key]['filemtime'] ?? null)) {
+                self::$requestProductImage['details']['additional'][$key]['filemtime'] = self::$dbProductImage['details']['additional'][$key]['filemtime'];
             }
         }
     }
 
     private static function generatePreview($product)
     {
+        dd('work');
         $s = Storage::disk('public');
         $sizes = config('settings-file.import_image.preview.size');
         $formats = config('settings-file.import_image.preview.format');
+
 
         //$watermark = Image::make( $s->get('watermark.png') );
 
@@ -216,6 +250,7 @@ class ImportImage
                 //$contents->insert($watermark, 'center');
 
                 foreach($sizes as $size) {
+
                     $tmpContents = $contents;
 
                     foreach($formats as $format) { // formats for resized images webp, png
@@ -228,5 +263,43 @@ class ImportImage
                 }
             }
         }
+    }
+
+    private static function generateAdditionalPreview($product, $key)
+    {
+        $s = Storage::disk('public');
+        $sizes = config('settings-file.import_image.preview.size');
+        $formats = config('settings-file.import_image.preview.format');
+
+        //$watermark = Image::make( $s->get('watermark.png') );
+
+        $productPath = null;
+
+        $dir = 'product/' . $product->getDetails('sku') . '/';
+
+        //foreach (self::$apiProductImage['additional'] as $key => $additional) {
+            $productPath = $dir . $product->getDetails('sku') . '_' . $key . '.' . self::$formatImg['jpg'];
+
+            //if (!empty($productPath)) {
+                $contents = Image::make( $s->get($productPath) );
+
+                if ($contents) {
+                    //$contents->insert($watermark, 'center');
+
+                    foreach($sizes as $size) {
+                        $tmpContents = clone $contents;
+
+                        foreach($formats as $format) { // formats for resized images webp, png
+                            $tmpContents->trim(null, null, 5, 50)->resize($size, $size, function ($constraint) {
+                                $constraint->aspectRatio();
+                            })->resizeCanvas($size, $size, 'center', false, [255, 255, 255, 0]);
+
+                            $tmpContents->encode($format, 90)->save(
+                                public_path('storage/product/' . $product->getDetails('sku') . '/' . $size . '-' . $product->getDetails('sku')) . '_'  . $key . '.' . $format);
+                        }
+                    }
+                }
+            //}
+        //}
     }
 }

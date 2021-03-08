@@ -37623,11 +37623,6 @@ span.button {
     max-width: 1140px;
   }
 }
-@media (min-width: 1500px) {
-  .modal-product__container {
-    max-width: 1440px;
-  }
-}
 .modal-product .modal-header {
   border-bottom: none;
 }

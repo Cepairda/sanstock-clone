@@ -30,7 +30,13 @@ class ImageController extends Controller
      */
     public function index($productsID = null)
     {
-        ImportImage::addToQueue();
+        $products = isset($ids)
+            ? Product::where('details->published', 1)->whereIn('id', $ids)->get()
+            : Product::where('details->published', 1)->get();
+
+        foreach ($products as $product) {
+            ImportImage::import($product->getDetails('sku'));
+        }
     }
 
     /**

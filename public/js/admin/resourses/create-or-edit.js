@@ -2704,126 +2704,6 @@ __webpack_require__(/*! ./plugin.js */ "./node_modules/tinymce/plugins/charmap/p
 
 /***/ }),
 
-/***/ "./node_modules/tinymce/plugins/code/index.js":
-/*!****************************************************!*\
-  !*** ./node_modules/tinymce/plugins/code/index.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Exports the "code" plugin for usage with module loaders
-// Usage:
-//   CommonJS:
-//     require('tinymce/plugins/code')
-//   ES2015:
-//     import 'tinymce/plugins/code'
-__webpack_require__(/*! ./plugin.js */ "./node_modules/tinymce/plugins/code/plugin.js");
-
-/***/ }),
-
-/***/ "./node_modules/tinymce/plugins/code/plugin.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/tinymce/plugins/code/plugin.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Copyright (c) Tiny Technologies, Inc. All rights reserved.
- * Licensed under the LGPL or a commercial license.
- * For LGPL see License.txt in the project root for license information.
- * For commercial licenses see https://www.tiny.cloud/
- *
- * Version: 5.4.1 (2020-07-08)
- */
-(function () {
-    'use strict';
-
-    var global = tinymce.util.Tools.resolve('tinymce.PluginManager');
-
-    var setContent = function (editor, html) {
-      editor.focus();
-      editor.undoManager.transact(function () {
-        editor.setContent(html);
-      });
-      editor.selection.setCursorLocation();
-      editor.nodeChanged();
-    };
-    var getContent = function (editor) {
-      return editor.getContent({ source_view: true });
-    };
-
-    var open = function (editor) {
-      var editorContent = getContent(editor);
-      editor.windowManager.open({
-        title: 'Source Code',
-        size: 'large',
-        body: {
-          type: 'panel',
-          items: [{
-              type: 'textarea',
-              name: 'code'
-            }]
-        },
-        buttons: [
-          {
-            type: 'cancel',
-            name: 'cancel',
-            text: 'Cancel'
-          },
-          {
-            type: 'submit',
-            name: 'save',
-            text: 'Save',
-            primary: true
-          }
-        ],
-        initialData: { code: editorContent },
-        onSubmit: function (api) {
-          setContent(editor, api.getData().code);
-          api.close();
-        }
-      });
-    };
-
-    var register = function (editor) {
-      editor.addCommand('mceCodeEditor', function () {
-        open(editor);
-      });
-    };
-
-    var register$1 = function (editor) {
-      editor.ui.registry.addButton('code', {
-        icon: 'sourcecode',
-        tooltip: 'Source code',
-        onAction: function () {
-          return open(editor);
-        }
-      });
-      editor.ui.registry.addMenuItem('code', {
-        icon: 'sourcecode',
-        text: 'Source code',
-        onAction: function () {
-          return open(editor);
-        }
-      });
-    };
-
-    function Plugin () {
-      global.add('code', function (editor) {
-        register(editor);
-        register$1(editor);
-        return {};
-      });
-    }
-
-    Plugin();
-
-}());
-
-
-/***/ }),
-
 /***/ "./node_modules/tinymce/plugins/directionality/index.js":
 /*!**************************************************************!*\
   !*** ./node_modules/tinymce/plugins/directionality/index.js ***!
@@ -88354,28 +88234,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tinymce_plugins_visualblocks__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_visualblocks__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var tinymce_plugins_visualchars__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! tinymce/plugins/visualchars */ "./node_modules/tinymce/plugins/visualchars/index.js");
 /* harmony import */ var tinymce_plugins_visualchars__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_visualchars__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var tinymce_plugins_code__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! tinymce/plugins/code */ "./node_modules/tinymce/plugins/code/index.js");
-/* harmony import */ var tinymce_plugins_code__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_code__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var tinymce_plugins_fullscreen__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! tinymce/plugins/fullscreen */ "./node_modules/tinymce/plugins/fullscreen/index.js");
-/* harmony import */ var tinymce_plugins_fullscreen__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_fullscreen__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var tinymce_plugins_insertdatetime__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! tinymce/plugins/insertdatetime */ "./node_modules/tinymce/plugins/insertdatetime/index.js");
-/* harmony import */ var tinymce_plugins_insertdatetime__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_insertdatetime__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var tinymce_plugins_media__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! tinymce/plugins/media */ "./node_modules/tinymce/plugins/media/index.js");
-/* harmony import */ var tinymce_plugins_media__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_media__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var tinymce_plugins_nonbreaking__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! tinymce/plugins/nonbreaking */ "./node_modules/tinymce/plugins/nonbreaking/index.js");
-/* harmony import */ var tinymce_plugins_nonbreaking__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_nonbreaking__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var tinymce_plugins_save__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! tinymce/plugins/save */ "./node_modules/tinymce/plugins/save/index.js");
-/* harmony import */ var tinymce_plugins_save__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_save__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var tinymce_plugins_table__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! tinymce/plugins/table */ "./node_modules/tinymce/plugins/table/index.js");
-/* harmony import */ var tinymce_plugins_table__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_table__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var tinymce_plugins_directionality__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! tinymce/plugins/directionality */ "./node_modules/tinymce/plugins/directionality/index.js");
-/* harmony import */ var tinymce_plugins_directionality__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_directionality__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var tinymce_plugins_template__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! tinymce/plugins/template */ "./node_modules/tinymce/plugins/template/index.js");
-/* harmony import */ var tinymce_plugins_template__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_template__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var tinymce_plugins_paste__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! tinymce/plugins/paste */ "./node_modules/tinymce/plugins/paste/index.js");
-/* harmony import */ var tinymce_plugins_paste__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_paste__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var tinymce_plugins_textpattern__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! tinymce/plugins/textpattern */ "./node_modules/tinymce/plugins/textpattern/index.js");
-/* harmony import */ var tinymce_plugins_textpattern__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_textpattern__WEBPACK_IMPORTED_MODULE_28__);
+/* harmony import */ var tinymce_plugins_fullscreen__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! tinymce/plugins/fullscreen */ "./node_modules/tinymce/plugins/fullscreen/index.js");
+/* harmony import */ var tinymce_plugins_fullscreen__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_fullscreen__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var tinymce_plugins_insertdatetime__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! tinymce/plugins/insertdatetime */ "./node_modules/tinymce/plugins/insertdatetime/index.js");
+/* harmony import */ var tinymce_plugins_insertdatetime__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_insertdatetime__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var tinymce_plugins_media__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! tinymce/plugins/media */ "./node_modules/tinymce/plugins/media/index.js");
+/* harmony import */ var tinymce_plugins_media__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_media__WEBPACK_IMPORTED_MODULE_20__);
+/* harmony import */ var tinymce_plugins_nonbreaking__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! tinymce/plugins/nonbreaking */ "./node_modules/tinymce/plugins/nonbreaking/index.js");
+/* harmony import */ var tinymce_plugins_nonbreaking__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_nonbreaking__WEBPACK_IMPORTED_MODULE_21__);
+/* harmony import */ var tinymce_plugins_save__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! tinymce/plugins/save */ "./node_modules/tinymce/plugins/save/index.js");
+/* harmony import */ var tinymce_plugins_save__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_save__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var tinymce_plugins_table__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! tinymce/plugins/table */ "./node_modules/tinymce/plugins/table/index.js");
+/* harmony import */ var tinymce_plugins_table__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_table__WEBPACK_IMPORTED_MODULE_23__);
+/* harmony import */ var tinymce_plugins_directionality__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! tinymce/plugins/directionality */ "./node_modules/tinymce/plugins/directionality/index.js");
+/* harmony import */ var tinymce_plugins_directionality__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_directionality__WEBPACK_IMPORTED_MODULE_24__);
+/* harmony import */ var tinymce_plugins_template__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! tinymce/plugins/template */ "./node_modules/tinymce/plugins/template/index.js");
+/* harmony import */ var tinymce_plugins_template__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_template__WEBPACK_IMPORTED_MODULE_25__);
+/* harmony import */ var tinymce_plugins_paste__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! tinymce/plugins/paste */ "./node_modules/tinymce/plugins/paste/index.js");
+/* harmony import */ var tinymce_plugins_paste__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_paste__WEBPACK_IMPORTED_MODULE_26__);
+/* harmony import */ var tinymce_plugins_textpattern__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! tinymce/plugins/textpattern */ "./node_modules/tinymce/plugins/textpattern/index.js");
+/* harmony import */ var tinymce_plugins_textpattern__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(tinymce_plugins_textpattern__WEBPACK_IMPORTED_MODULE_27__);
+// Import ACE editor
+//import ace from 'ace-builds';
 // Import TinyMCE
  // Default icons are required for TinyMCE 5.3 or above
 
@@ -88397,7 +88277,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+ //import 'tinymce/plugins/code';
+//import 'tinymce/plugins/codeeditor/plugin';
 
 
 
@@ -88415,8 +88296,10 @@ var config = {
   content_css: false,
   selector: 'textarea.tinymce',
   //plugins: ['paste', 'link']
-  plugins: ['advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'print', 'preview', 'hr', 'anchor', 'pagebreak', 'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime', 'media', 'nonbreaking', 'save', 'table', 'directionality', 'template', 'paste', 'textpattern'],
-  toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media',
+  plugins: ['advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'print', 'preview', 'hr', 'anchor', 'pagebreak', 'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'fullscreen', 'insertdatetime', 'media', 'nonbreaking', 'save', 'table', 'directionality', 'template', 'paste', 'textpattern' //'codeeditor'
+  ],
+  toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media codeeditor',
+  //toolbar: ['insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media',  'codeeditor'],
   relative_urls: false,
 
   /*file_browser_callback : function(field_name, url, type, win) {

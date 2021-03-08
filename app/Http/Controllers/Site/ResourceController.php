@@ -11,6 +11,7 @@ use App\CharacteristicValue;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Cache;
+use App\HtmlBlock;
 
 class ResourceController extends Controller
 {
@@ -37,6 +38,8 @@ class ResourceController extends Controller
                         ->withPartnerUrl()
                         ->firstOrFail(),
                 ];
+                $data['additional'] = temp_additional($data['product']->sku);
+
                 break;
             case 'category':
                 $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->where('details->published', 1)->firstOrFail();
@@ -175,6 +178,7 @@ class ResourceController extends Controller
 //            return view('site.' . $type . '.show', $data)->render();
 //        });
 
+        //return HtmlBlock::replaceShortCode(view('site.' . $type . '.show', $data)->render());
         return view('site.' . $type . '.show', $data);
     }
 

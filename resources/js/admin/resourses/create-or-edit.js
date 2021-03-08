@@ -1,3 +1,6 @@
+// Import ACE editor
+//import ace from 'ace-builds';
+
 // Import TinyMCE
 import tinymce from 'tinymce/tinymce';
 
@@ -23,7 +26,8 @@ import 'tinymce/plugins/searchreplace';
 import 'tinymce/plugins/wordcount';
 import 'tinymce/plugins/visualblocks';
 import 'tinymce/plugins/visualchars';
-import 'tinymce/plugins/code';
+//import 'tinymce/plugins/code';
+//import 'tinymce/plugins/codeeditor/plugin';
 import 'tinymce/plugins/fullscreen';
 import 'tinymce/plugins/insertdatetime';
 import 'tinymce/plugins/media';
@@ -44,11 +48,14 @@ var config = {
     plugins: [
         'advlist', 'autolink' , 'lists', 'link', 'image', 'charmap', 'print',
         'preview', 'hr', 'anchor', 'pagebreak', 'searchreplace', 'wordcount',
-        'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+        'visualblocks', 'visualchars', 'fullscreen', 'insertdatetime',
         'media', 'nonbreaking', 'save', 'table', 'directionality',
         'template', 'paste', 'textpattern',
+        //'codeeditor'
     ],
-    toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media',
+    toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media codeeditor',
+    //toolbar: ['insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media',  'codeeditor'],
+
     relative_urls: false,
     /*file_browser_callback : function(field_name, url, type, win) {
         var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
@@ -102,3 +109,4 @@ var config = {
 
 // Initialize the app
 tinymce.init(config);
+

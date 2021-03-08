@@ -43,36 +43,6 @@
                             </div>
                         </div>
                         {!! $post->text !!}
-                        {{--
-                        <div class="post-block-1">
-                            <h4 class="block-title">Открытые душ-кабины</h4>
-                            <div class="block-content">
-                                <div class="advantages">
-                                    <div class="block-title"><span>Преимущества</span></div>
-                                    <ul>
-                                        <li>Lorem ipsum dolor sit.</li>
-                                        <li>Lorem ipsum dolor.</li>
-                                        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores provident
-                                            quibusdam suscipit veritatis. Pariatur, perspiciatis.
-                                        </li>
-                                        <li>Lorem ipsum dolor sit amet, consectetur adipisicing.</li>
-                                        <li>Lorem ipsum.</li>
-                                    </ul>
-                                </div>
-                                <div class="disadvantages">
-                                    <div class="block-title"><span>Недостатки</span></div>
-                                    <ul>
-                                        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium!</li>
-                                        <li>Lorem ipsum dolor sit.</li>
-                                        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, vel.</li>
-                                        <li>Lorem ipsum dolor sit amet, consectetur.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        --}}
-
-
                     </section>
 
                     {{--
