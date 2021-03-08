@@ -172,7 +172,8 @@ class ResourceController extends Controller
 //            return view('site.' . $type . '.show', $data)->render();
 //        });
 
-        return HtmlBlock::replaceShortCode(view('site.' . $type . '.show', $data)->render());
+        //return HtmlBlock::replaceShortCode(view('site.' . $type . '.show', $data)->render());
+        return view('site.' . $type . '.show', $data);
     }
 
     public function showMore(\Illuminate\Http\Request $request)
