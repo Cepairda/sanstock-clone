@@ -150,8 +150,11 @@
 	margin-top: 5px;
 }
 
+.product-grid .product-price {
+	margin-top: auto;
+}
+
 .product-price {
-    margin-top: auto !important;
 	font-size: 18px;
 	font-weight: 400;
     display: flex;
