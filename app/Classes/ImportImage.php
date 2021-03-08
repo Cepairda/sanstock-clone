@@ -150,14 +150,19 @@ class ImportImage
 
         $s = Storage::disk('public');
 
-        $filePath = '/' . $data['type'] . '/' . $data['size'] . '-' . $data['sku'] . '.' . $data['format'];
+        if (isset($data['additional'])) {
+            $filePath = '/' . $data['type'] . '/' . $data['sku'] . '/' . $data['size'] . '-' . $data['sku'] . '_' . $data['key'] . '.' . $data['format'];
+        } else {
+            $filePath = '/' . $data['type'] . '/' . $data['size'] . '-' . $data['sku'] . '.' . $data['format'];
+        }
 
         if ($data['type'] == 'product') {
             if ($s->exists($filePath)) {
                 return asset('/storage' . $filePath);
             } else {
                 //self::create($data);
-                return asset('/images/site/default.jpg');
+                //dd($filePath);
+                return asset('/images/site/' . $data['size'] . '-default.jpg');
             }
         }
 
@@ -210,7 +215,7 @@ class ImportImage
                 $contents->save(public_path($path . $product->getDetails('sku') . '_' . $key) . '.' . self::$formatImg['jpg']); // save additional
 
                 self::$requestProductImage['details']['additional'][$key]['filemtime'] = $additional['filemtime'];
-                self::generateAdditionalPreview($product);
+                self::generateAdditionalPreview($product, $key);
             } elseif ($additional['filemtime'] != (self::$dbProductImage['additional'][$key]['filemtime'] ?? null)) {
                 self::$requestProductImage['details']['additional'][$key]['filemtime'] = self::$dbProductImage['details']['additional'][$key]['filemtime'];
             }
@@ -256,7 +261,7 @@ class ImportImage
         }
     }
 
-    private static function generateAdditionalPreview($product)
+    private static function generateAdditionalPreview($product, $key)
     {
         $s = Storage::disk('public');
         $sizes = config('settings-file.import_image.preview.size');
@@ -268,10 +273,10 @@ class ImportImage
 
         $dir = 'product/' . $product->getDetails('sku') . '/';
 
-        foreach (self::$apiProductImage['additional'] as $key => $additional) {
+        //foreach (self::$apiProductImage['additional'] as $key => $additional) {
             $productPath = $dir . $product->getDetails('sku') . '_' . $key . '.' . self::$formatImg['jpg'];
 
-            if (!empty($productPath)) {
+            //if (!empty($productPath)) {
                 $contents = Image::make( $s->get($productPath) );
 
                 if ($contents) {
@@ -286,11 +291,11 @@ class ImportImage
                             })->resizeCanvas($size, $size, 'center', false, [255, 255, 255, 0]);
 
                             $tmpContents->encode($format, 90)->save(
-                                public_path('storage/product/' . $product->getDetails('sku') . '/' . $size . '-' . $product->getDetails('sku')) . $key . '_'  . '.' . $format);
+                                public_path('storage/product/' . $product->getDetails('sku') . '/' . $size . '-' . $product->getDetails('sku')) . '_'  . $key . '.' . $format);
                         }
                     }
                 }
-            }
-        }
+            //}
+        //}
     }
 }
