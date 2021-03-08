@@ -2,7 +2,7 @@
     <div class="shell">
         <div class="breadcrumbs-custom__inner">
 
-            <p class="breadcrumbs-custom__title">{{ $title ?? '' }}</p>
+            <h1 class="breadcrumbs-custom__title">{{ $title ?? '' }}</h1>
 
             <ul class="breadcrumbs-custom__path" itemscope itemtype="https://schema.org/BreadcrumbList">
                 <li itemprop="itemListElement"
