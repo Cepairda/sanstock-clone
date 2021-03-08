@@ -133,7 +133,7 @@ class ImportImage
         return  asset(self::$params['defaultImg']);
     }
 
-    private static function getImage($data)
+    public static function getImage($data)
     {
 
 
@@ -142,7 +142,8 @@ class ImportImage
         } else {
             $agent = new Agent();
 //            $imagesFormat = ($agent->is('iPhone') || $agent->is('OS X')) ? self::$formatImg['png'] : self::$formatImg['webp'];
-            $imagesFormat = ($agent->is('iPhone') || $agent->is('OS X')) ? self::$formatImg['jpg'] : self::$formatImg['jpg'];
+            //$imagesFormat = ($agent->is('iPhone') || $agent->is('OS X')) ? 'jpg' : 'jpg';
+            $imagesFormat = 'jpg';
             $data['format'] = $imagesFormat;
 
             session(['images_format' => $imagesFormat]);
@@ -170,7 +171,7 @@ class ImportImage
             if ($s->exists($filePath)) {
                 return asset('/storage' . $filePath);
             } else {
-                $data['original'] = $data['name'] . '.' .  self::$formatImg['jpg'];
+                $data['original'] = $data['name'] . '.' .  'jpg';
                 //self::create($data);
                 return asset('/images/site/default.jpg');
             }
