@@ -52,7 +52,7 @@ if (!function_exists('img')) {
 
         if (!empty($data)) {
             $class = !empty($data['class']) ? ' class="' . implode(' ', $data['class']) . '"' : '';
-            $alt = !empty($data['alt']) ? ' alt="' . $data['alt'] . '"': '';
+            $alt = !empty($data['alt']) ? ' alt="' . htmlspecialchars($data['alt']) . '"': '';
 
             if (isset($data['data-src'])) {
                 $uri = 'data-src="' . \App\Classes\ImportImage::getImage($data) . '" src="' . asset('images/site/default_white.jpg') . '"';

@@ -10,14 +10,14 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $posts = BlogPost::joinLocalization()->paginate(12);
+        $posts = BlogPost::joinLocalization()->where('details->published', 1)->paginate(12);
 
         return view('site.blog.index', compact('posts'));
     }
 
     public function post($slug)
     {
-        $post = BlogPost::joinLocalization()->whereSlug($slug)->firstOrFail();
+        $post = BlogPost::joinLocalization()->where('details->published', 1)->whereSlug($slug)->firstOrFail();
 
         return HtmlBlock::replaceShortCode(view('site.blog.article', compact('post'))->render());
     }
