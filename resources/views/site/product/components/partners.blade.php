@@ -14,15 +14,15 @@
                         @foreach($product->partnersUrl as $partnerUrl)
                             <div class="col-6 col-sm-4 col-md-3 partnet-list-item">
 
-                            @if (isset($partnerUrl->partner->img))
                                 <div onclick="window.open('//{{ $partnerUrl->url }}')">
+
+                                @if (isset($partnerUrl->partner->img))
                                     <img class="img-responsive" alt="partners" src="{{ asset($partnerUrl->partner->img) }}">
+                                @else
+                                    <img class="img-responsive" alt="partners" src="{{ asset('images/site/default.jpg') }}">
+                                @endif
+
                                 </div>
-                            @else
-                                    <div>
-                                        <img class="img-responsive" alt="partners" src="{{ asset('images/site/default.jpg') }}">
-                                    </div>
-                            @endif
                             </div>
                         @endforeach
                     @endif
