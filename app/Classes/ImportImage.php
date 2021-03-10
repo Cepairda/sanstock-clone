@@ -67,7 +67,7 @@ class ImportImage
     public static function addToQueue($ids = null)
     {
         $products = isset($ids)
-            ? Product::where('details->published', 1)->whereIn('id', $ids)->get()
+            ? Product::where('details->published', 1)->whereIn('details->sku', explode(',', $ids))->get()
             : Product::where('details->published', 1)->get();
 
         foreach ($products as $product) {
@@ -77,7 +77,6 @@ class ImportImage
 
     private static function import($sku)
     {
-        $sku = 21661;
         $product = Product::where('details->published', 1)->where('details->sku', $sku)->first();
 
         if (!empty($product)) {
@@ -183,49 +182,57 @@ class ImportImage
     private static function downloadMainImage($product)
     {
         $size = self::$params['sizeMainImg']; // size for original images in PX
-        $url = self::$imageRegisterUrl . self::$apiProductImage['main']['path'];
 
-        if (self::$apiProductImage['main']['filemtime'] != (self::$dbProductImage['details']['main']['filemtime'] ?? null)) {
-            $contents = @Image::make($url)->contrast(5);
-            $contents->trim(null, null, 5, 50)->resize($size, $size, function ($constraint) {
-                $constraint->aspectRatio();
-            })->resizeCanvas($size, $size, 'center', false, [255, 255, 255, 0]);
-            $contents->save(public_path('storage/product/' . $product->getDetails('sku')) . '.' . self::$formatImg['jpg']); // save original
+        if (isset(self::$apiProductImage['main'])) {
+            $url = self::$imageRegisterUrl . self::$apiProductImage['main']['path'];
 
-            self::$requestProductImage['details']['main']['filemtime'] = self::$apiProductImage['main']['filemtime'];
-            self::generatePreview($product);
-        } elseif (self::$apiProductImage['main']['filemtime'] == (self::$dbProductImage['details']['main']['filemtime'] ?? null)) {
-            self::$requestProductImage['details']['main']['filemtime'] = self::$dbProductImage['details']['main']['filemtime'];
+            if (md5(self::$apiProductImage['main']['filemtime']) != (self::$dbProductImage['details']['main']['filemtime_md5'] ?? null)) {
+                $contents = @Image::make($url)->contrast(5);
+                $contents->trim(null, null, 5, 50)->resize($size, $size, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->resizeCanvas($size, $size, 'center', false, [255, 255, 255, 0]);
+                $contents->save(public_path('storage/product/' . $product->getDetails('sku')) . '.' . self::$formatImg['jpg']); // save original
+
+                self::$requestProductImage['details']['main']['filemtime'] = self::$apiProductImage['main']['filemtime'];
+                self::$requestProductImage['details']['main']['filemtime_md5'] = md5(self::$apiProductImage['main']['filemtime']);
+                self::generatePreview($product);
+            } elseif (self::$apiProductImage['main']['filemtime'] == (self::$dbProductImage['details']['main']['filemtime'] ?? null)) {
+                self::$requestProductImage['details']['main']['filemtime'] = self::$dbProductImage['details']['main']['filemtime'];
+                self::$requestProductImage['details']['main']['filemtime_md5'] = md5(self::$dbProductImage['details']['main']['filemtime']);
+            }
         }
     }
 
     private static function downloadAdditional($product)
     {
-        foreach (self::$apiProductImage['additional'] as $key => $additional) {
-            if ($additional['filemtime'] != (self::$dbProductImage['details']['additional'][$key]['filemtime'] ?? null)) {
-                $url = self::$imageRegisterUrl . $additional['path'];
-                $contents = @Image::make($url);
-                $path = 'storage/product/' . $product->getDetails('sku') . '/';
-                $savePath = public_path($path);
+        if (isset(self::$apiProductImage['additional'])) {
+            foreach (self::$apiProductImage['additional'] as $key => $additional) {
+                if (md5($additional['filemtime']) != (self::$dbProductImage['details']['additional'][$key]['filemtime_md5'] ?? null)) {
+                    $url = self::$imageRegisterUrl . $additional['path'];
+                    $contents = @Image::make($url);
+                    $path = 'storage/product/' . $product->getDetails('sku') . '/';
+                    $savePath = public_path($path);
 
-                if (!file_exists($savePath)) {
-                    mkdir($savePath, 0777, true);
+                    if (!file_exists($savePath)) {
+                        mkdir($savePath, 0777, true);
 
+                    }
+
+                    $contents->save(public_path($path . $product->getDetails('sku') . '_' . $key) . '.' . self::$formatImg['jpg']); // save additional
+
+                    self::$requestProductImage['details']['additional'][$key]['filemtime'] = $additional['filemtime'];
+                    self::$requestProductImage['details']['additional'][$key]['filemtime_md5'] = md5($additional['filemtime']);
+                    self::generateAdditionalPreview($product, $key);
+                } elseif ($additional['filemtime'] != (self::$dbProductImage['additional'][$key]['filemtime'] ?? null)) {
+                    self::$requestProductImage['details']['additional'][$key]['filemtime'] = self::$dbProductImage['details']['additional'][$key]['filemtime'];
+                    self::$requestProductImage['details']['additional'][$key]['filemtime_md5'] = md5(self::$dbProductImage['details']['additional'][$key]['filemtime']);
                 }
-
-                $contents->save(public_path($path . $product->getDetails('sku') . '_' . $key) . '.' . self::$formatImg['jpg']); // save additional
-
-                self::$requestProductImage['details']['additional'][$key]['filemtime'] = $additional['filemtime'];
-                self::generateAdditionalPreview($product, $key);
-            } elseif ($additional['filemtime'] != (self::$dbProductImage['additional'][$key]['filemtime'] ?? null)) {
-                self::$requestProductImage['details']['additional'][$key]['filemtime'] = self::$dbProductImage['details']['additional'][$key]['filemtime'];
             }
         }
     }
 
     private static function generatePreview($product)
     {
-        dd('work');
         $s = Storage::disk('public');
         $sizes = config('settings-file.import_image.preview.size');
         $formats = config('settings-file.import_image.preview.format');
@@ -251,7 +258,7 @@ class ImportImage
 
                 foreach($sizes as $size) {
 
-                    $tmpContents = $contents;
+                    $tmpContents = clone $contents;
 
                     foreach($formats as $format) { // formats for resized images webp, png
                         $tmpContents->trim(null, null, 5, 50)->resize($size, $size, function ($constraint) {

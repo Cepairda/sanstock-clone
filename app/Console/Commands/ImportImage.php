@@ -12,7 +12,7 @@ class ImportImage extends Command
      *
      * @var string
      */
-    protected $signature = 'import:image';
+    protected $signature = 'import:image {--sku=}';
 
     /**
      * The console command description.
@@ -29,7 +29,9 @@ class ImportImage extends Command
     public function handle()
     {
         try {
-            ImportImg::addToQueue();
+            $sku = $this->option('sku');
+
+            ImportImg::addToQueue($sku);
 
             $this->info('Images have been successfully added to the queue');
         } catch (\Exception $exception) {
