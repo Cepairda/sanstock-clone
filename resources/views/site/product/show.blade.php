@@ -120,7 +120,7 @@
                         <p class="product-single__sku">Код товара:<span>{{ $product->details['sku'] }}</span></p>
                         <p class="product-single__description">{{ $product->description }}</p>
                         <p
-                            class="product-price {{ (empty($product->price_updated_at) || $product->price_updated_at->addHours(4)->lt(\Carbon\Carbon::now())) ? 'updatePriceJs' : '' }}"
+                            class="product-price updatePriceJs"
                             data-product-sku="{{ $product->sku }}"
                         >
                             <span>{{ number_format(ceil($product->getDetails('price')),0,'',' ') }}</span>

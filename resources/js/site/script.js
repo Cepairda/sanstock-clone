@@ -68,7 +68,7 @@ window.delay = (() => {
     }
     window.favoriteSelected = () => {
         let favorites = getCookie('favorites'),
-            favoritesMass = favorites === undefined ? '' : favorites.split(','),
+            favoritesMass = (favorites === undefined || favorites === "") ? '' : favorites.split(','),
             leng = favoritesMass.length;
         favoriteLink.textContent = leng;
         if (leng) {
@@ -103,16 +103,19 @@ window.delay = (() => {
                         let card = favorite.closest('.product.product-grid');
                         card.parentElement.classList.add('hideBock')
                         setTimeout(() => card.parentElement.remove(), 355);
+
                         !favoritesMass.length && location.reload();
                     } else {
                         favorite.classList.remove('selected');
                     }
                 }
+
                 document.querySelector('.header-favorites-count').textContent = favoritesMass.length;
                 document.cookie = 'favorites' + "=" + favoritesMass.join(',') + "; path=/; expires=" + date.toUTCString();
             }
         };
         document.addEventListener('click', function(e) {
+            console.log('we here');
             let t = e.target,
                 favorite =  t.closest('[data-add="favorite"]');
             favorite && addRemoveFavorite(favorite);
@@ -171,7 +174,18 @@ window.delay = (() => {
             method: "post",
             credentials: "same-origin",
             body: JSON.stringify({'sku': skuArray}),
-        })
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+                console.log(data);
+            for (let sku of data) {
+                for (let sku of dataSku) {
+                    if (+sku.dataset.productSku == sku) {
+                        sku.innerHtml = "<span>" +  +"</span>";
+                    }
+                }
+            }
+        });
     }
 }());
 

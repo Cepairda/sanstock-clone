@@ -26,7 +26,23 @@ class ProductController extends Controller
         $sku = $request->post('sku');
         $productSku = Product::whereIn('details->sku', $sku)->get()->keyBy('sku')->keys()->toArray();
 
-        PriceImport::import($productSku);
+        $prices = PriceImport::pricesApi($productSku);
+        $newPrices = [];
+
+        foreach ($productSku as $sku) {
+            if ($prices[$sku]['price'] != 'Недоступно') {
+                $newPrices[$sku] = $prices[$sku];
+            }
+        }
+//        foreach ($prices as $sku => $item) {
+//            if ($item['price'] != 'Недоступно' && $sku ==) {
+//                $newPrices[] = $item;
+//            }
+//        }
+//
+//        PriceImport::import($prices);
+
+        return $newPrices;
     }
 
     public function getFirstAdditional(Request $request)
