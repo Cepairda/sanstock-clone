@@ -3726,18 +3726,18 @@
 //    transition: 0.33s all ease;
 //}
 
-.product-img-wrap .icon.linear-icon-heart:before {
-    content: '';
-    background-image: url(/images/site/icons/favorites-grey.svg);
-    background-repeat: no-repeat;
-    width: 28px;
-    height: 28px;
-    transition: 0.33s all ease;
-}
-
-.product-img-wrap .icon.linear-icon-heart:hover:before {
-    background-image: url(/images/site/icons/favorites-black.svg);
-}
+//.product-img-wrap .icon.linear-icon-heart:before {
+//    content: '';
+//    background-image: url(/images/site/icons/favorites-grey.svg);
+//    background-repeat: no-repeat;
+//    width: 28px;
+//    height: 28px;
+//    transition: 0.33s all ease;
+//}
+//
+//.product-img-wrap .icon.linear-icon-heart:hover:before {
+//    background-image: url(/images/site/icons/favorites-black.svg);
+//}
 
 .linear-icon-star:before {
 	content: "\e68d";
