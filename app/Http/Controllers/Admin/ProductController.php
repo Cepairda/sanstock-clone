@@ -43,13 +43,7 @@ class ProductController extends Controller
         ini_set('max_execution_time', 10000);
         set_time_limit(0);
 
-        $sku = $request->post('sku');
-
-        $productSku = !empty($sku)
-            ? Product::whereIn('details->sku', $sku)->get()->keyBy('sku')->keys()->toArray()
-            : Product::get()->keyBy('sku')->keys()->toArray();
-
-        PriceImport::import($productSku);
+        PriceImport::addToQueue();
     }
 
     public function createSearchString() {

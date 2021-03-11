@@ -483,7 +483,7 @@
 
                     <div class="modal-product__price">
 
-                        <div class="product-price text-center {{ (empty($product->price_updated_at) || $product->price_updated_at->addHours(4)->lt(\Carbon\Carbon::now())) ? 'updatePriceJs' : '' }}"
+                        <div class="product-price text-center updatePriceJs"
                             data-product-sku="{{ $product->sku }}">
 
                             <span>{{ number_format(ceil($product->getDetails('price')),0,'',' ') }}</span>
