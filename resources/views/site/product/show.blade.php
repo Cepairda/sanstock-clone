@@ -84,7 +84,19 @@
                         @endforeach
 
                     </div>
-                    <div class="slick-slider" id="child-carousel" data-for=".carousel-parent" data-arrows="false" data-loop="false" data-dots="false" data-swipe="true" data-items="3" data-xs-items="4" data-sm-items="4" data-md-items="4" data-lg-items="5" data-slide-to-scroll="1">
+                    <div class="slick-slider"
+                         id="child-carousel"
+                         data-for=".carousel-parent"
+                         data-arrows="true"
+                         data-loop="false"
+                         data-dots="false"
+                         data-swipe="true"
+                         data-items="2"
+                         data-xs-items="2"
+                         data-sm-items="3"
+                         data-md-items="3"
+                         data-lg-items="4"
+                         data-slide-to-scroll="1">
                         <div class="item">
                             {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 150, 'alt' => $product->name, 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}
                         </div>
