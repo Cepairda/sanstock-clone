@@ -176,12 +176,16 @@ window.delay = (() => {
             body: JSON.stringify({'sku': skuArray}),
         }).then((response) => {
             return response.json();
-        }).then((data) => {
-                console.log(data);
-            for (let sku of data) {
+        }).then((dataApi) => {
+                console.log(dataApi);
+            for (let skuApi in dataApi) {
                 for (let sku of dataSku) {
-                    if (+sku.dataset.productSku == sku) {
-                        sku.innerHtml = "<span>" +  +"</span>";
+                    if (+sku.dataset.productSku == skuApi) {
+                        if (dataApi[skuApi]['discount_price']) {
+                            sku.innerHTML = "<span>" + dataApi[skuApi]['discount_price'] +"</span>  &nbsp;&nbsp;&nbsp;<span>" + dataApi[skuApi]['price'] +"</span>";
+                        } else {
+                            sku.innerHTML = "<span>" + dataApi[skuApi]['price'] +"</span>";
+                        }
                     }
                 }
             }

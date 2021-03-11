@@ -24058,8 +24058,31 @@ window.delay = function () {
       })
     }).then(function (response) {
       return response.json();
-    }).then(function (data) {
-      console.log(data);
+    }).then(function (dataApi) {
+      console.log(dataApi);
+
+      for (var skuApi in dataApi) {
+        var _iterator2 = _createForOfIteratorHelper(dataSku),
+            _step2;
+
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var sku = _step2.value;
+
+            if (+sku.dataset.productSku == skuApi) {
+              if (dataApi[skuApi]['discount_price']) {
+                sku.innerHTML = "<span>" + dataApi[skuApi]['discount_price'] + "</span>  &nbsp;&nbsp;&nbsp;<span>" + dataApi[skuApi]['price'] + "</span>";
+              } else {
+                sku.innerHTML = "<span>" + dataApi[skuApi]['price'] + "</span>";
+              }
+            }
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+      }
     });
   }
 })(); //Reload page checkbox category

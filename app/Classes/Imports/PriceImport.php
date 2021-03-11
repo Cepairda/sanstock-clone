@@ -2,12 +2,24 @@
 
 namespace App\Classes\Imports;
 
+use App\Jobs\ProcessImportPrice;
 use App\Product;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 
 class PriceImport
 {
+    public static function addToQueue($ids = null)
+    {
+        $products = isset($ids)
+            ? Product::where('details->published', 1)->whereIn('details->sku', $ids)->get()
+            : Product::where('details->published', 1)->get();
+
+        foreach ($products as $product) {
+            ProcessImportPrice::dispatch($product->getDetails('sku'))->onQueue('priceImport');
+        }
+    }
+
     public static function import($prices)
     {
         try {
@@ -26,6 +38,14 @@ class PriceImport
         } catch (\Exception $e) {
 
         }
+    }
+
+    public static function importQueue($sku)
+    {
+        $product = [$sku];
+        $prices = PriceImport::pricesApi($product);
+
+        PriceImport::import($prices);
     }
 
     public static function pricesApi($productSku)

@@ -28186,3 +28186,7 @@ lder->pluck()
 #47 /var/www/public/index.php(63): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
 #48 {main}
 "} 
+[2021-03-11 09:40:01] local.ERROR: Cannot declare class App\Console\Commands\ImportImage, because the name is already in use {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot declare class App\\Console\\Commands\\ImportImage, because the name is already in use at /var/www/app/Console/Commands/ImportPrice.php:8)
+[stacktrace]
+#0 {main}
+"} 

@@ -34,13 +34,8 @@ class ProductController extends Controller
                 $newPrices[$sku] = $prices[$sku];
             }
         }
-//        foreach ($prices as $sku => $item) {
-//            if ($item['price'] != 'Недоступно' && $sku ==) {
-//                $newPrices[] = $item;
-//            }
-//        }
-//
-//        PriceImport::import($prices);
+
+        PriceImport::import($newPrices);
 
         return $newPrices;
     }
