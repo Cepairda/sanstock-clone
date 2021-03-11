@@ -37659,6 +37659,10 @@ span.button {
   margin-left: -31px;
 }
 
+.modal .modal-footer .button {
+  font-size: 16px;
+}
+
 .tabs-custom .nav-custom > li, .tabs-custom .nav-custom > li > a {
   display: block;
   position: relative;

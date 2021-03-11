@@ -119,18 +119,18 @@
                         <h4 class="product-single__title">{{ $product->getData('name') ?? 'PRODUCT NAME' }}</h4>
                         <p class="product-single__sku">Код товара:<span>{{ $product->details['sku'] }}</span></p>
                         <p class="product-single__description">{{ $product->description }}</p>
-                        <p
-                            class="product-price {{ (empty($product->price_updated_at) || $product->price_updated_at->addHours(4)->lt(\Carbon\Carbon::now())) ? 'updatePriceJs' : '' }}"
-                            data-product-sku="{{ $product->sku }}"
-                        >
+                        <p class="product-price {{ (empty($product->price_updated_at) || $product->price_updated_at->addHours(4)->lt(\Carbon\Carbon::now())) ? 'updatePriceJs' : '' }}"
+                           data-product-sku="{{ $product->sku }}">
+
                             <span>{{ number_format(ceil($product->getDetails('price')),0,'',' ') }}</span>
 
                             @if ($product->oldPrice)
                                 &nbsp;&nbsp;&nbsp;<span>{{ number_format(ceil($product->oldPrice),0,'',' ') }}</span>
                             @endif
+
                         </p>
                         <div class="mt-5" style="display: flex; align-items: center;">
-                            <button class="button button-primary button-icon" data-toggle="modal" data-target="#exampleModal">
+                            <button class="button button-primary button-icon" data-toggle="modal" data-target="#partnersModal">
                                 <span>{{ __('Where buy') }}</span></button>
 
                             @include('site.product.components.partners')
@@ -494,7 +494,7 @@
 
                         </div>
 
-                        <button class="button button-primary button-icon" id="closeCarousel" data-toggle="modal" data-target="#exampleModal">
+                        <button class="button button-primary button-icon" id="closeCarousel" {{--data-toggle="modal" data-target="#exampleModal"--}}>
                             <span>{{ __('Where buy') }}</span>
                         </button>
 

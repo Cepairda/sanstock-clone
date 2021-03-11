@@ -24126,9 +24126,51 @@ $('div.range').on('mouseenter', '.product-img-wrap', function () {
     });
   }
 });
-$('#closeCarousel').on('click', function () {
+/**
+ * открытие модального окна 'Где купить'
+ */
+
+$('body').on('click', '#closeCarousel', function () {
   $('#modal-product').modal('hide');
+  setTimeout(function () {
+    return $('#partnersModal').modal({
+      show: true
+    });
+  }, 150);
 });
+/**
+ * добавление паддинга для nav
+ * при открытия модального окна bootstrap
+ */
+
+(function () {
+  var $body = $('body');
+
+  function bodyWidthScroll() {
+    var body = document.body,
+        pr1 = body.clientWidth,
+        pr2;
+    body.style.overflow = 'hidden';
+    pr2 = body.clientWidth;
+    body.style.overflow = null;
+    return pr2 - pr1;
+  }
+
+  $body.on('show.bs.modal', function () {
+    var navBar = document.querySelector('.rd-navbar-static'),
+        navBarStuck = navBar ? navBar.classList.contains('rd-navbar--is-stuck') : false;
+
+    if (navBarStuck) {
+      var navBarPadRight = getComputedStyle(navBar).paddingRight;
+      navBar.style.transition = 'none';
+      navBar.style.paddingRight = "calc(".concat(bodyWidthScroll(), "px + ").concat(navBarPadRight, ")");
+    }
+  });
+  $body.on('hidden.bs.modal', function () {
+    var navBar = document.querySelector('.rd-navbar-static');
+    navBar && (navBar.style.paddingRight = null);
+  });
+})();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),

@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="partnersModal" tabindex="-1" role="dialog" aria-labelledby="partnersModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -43,9 +43,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <div class="btn-link-block">
-                    <a class="btn-link-block-g" data-dismiss="modal">Закрыть</a>
-                </div>
+                <a class="button button-default button-sm button-icon font-weight-normal" data-dismiss="modal" style="font-size: 16px">Закрыть</a>
             </div>
         </div>
     </div>
