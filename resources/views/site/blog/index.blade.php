@@ -14,9 +14,7 @@
 
 @if (isset($_GET['page']))
 @section('rel_alternate_pagination')
-    <link rel="canonical"
-          href="{{ strtok(LaravelLocalization::getLocalizedURL(), '?') }}"
-    >
+    <link rel="canonical" href="{{ strtok(LaravelLocalization::getLocalizedURL(), '?') }}">
 @endsection
 @endif
 
@@ -65,25 +63,17 @@
                     </section>
                 </div>
                 <div class="cell-md-5 cell-lg-4 section-divided__aside section-divided__aside-left">
-                    {{--
                     <!-- About-->
                     <section class="section-sm">
-                        <h5>О нас</h5>
-                        <div class="thumbnail-classic-minimal"><img class="img-circle"
-                                                                    src="{{ asset('images/logo.png') }}" alt=""
-                                                                    width="210" height="210"/>
+                        <div class="thumbnail-classic-minimal">
+                            <img class="img-circle" src="{{ asset('images/logo.png') }}" alt="{{ __('Blog about title') }}" width="210" height="210"/>
                             <div class="caption">
-                                <p>Mary's interest in furniture and everything related to it began in her father's local
-                                    chairs & tables store in Virginia... Starting off as his helper and accountant, she
-                                    eventually grew fond of the whole thing and began to consider an option of starting
-                                    her own furniture store in the big city. With her first store in Arlington in 1999,
-                                    Mary's chain began to gradually expand, now consisting of more than 5 furniture
-                                    stores nationwide...</p>
-                                <a class="button button-link" href="about.html">Прочитайте больше</a>
+                                <p>{{ __('Blog about paragraph-1') }}.</p>
+                                <p>{{ __('Blog about paragraph-2') }}.</p>
+                                <p>{{ __('Blog about paragraph-3') }}.</p>
                             </div>
                         </div>
                     </section>
-                    --}}
 
                     {{--
                     <!-- Posts-->

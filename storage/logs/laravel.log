@@ -27590,3 +27590,19 @@ lder->pluck()
 #39 C:\\Project\\OpenServer\\domains\\lidz.ua.local\\public\\index.php(63): Illuminate\\Foundation\\Http\\Kernel->handle()
 #40 {main}
 "} 
+[2021-03-08 15:33:42] local.ERROR: There are no commands defined in the "confige" namespace.
+
+Did you mean this?
+    config {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"confige\" namespace.
+
+Did you mean this?
+    config at C:\\Project\\OpenServer\\domains\\lidz.ua.local\\vendor\\symfony\\console\\Application.php:574)
+[stacktrace]
+#0 C:\\Project\\OpenServer\\domains\\lidz.ua.local\\vendor\\symfony\\console\\Application.php(625): Symfony\\Component\\Console\\Application->findNamespace()
+#1 C:\\Project\\OpenServer\\domains\\lidz.ua.local\\vendor\\symfony\\console\\Application.php(228): Symfony\\Component\\Console\\Application->find()
+#2 C:\\Project\\OpenServer\\domains\\lidz.ua.local\\vendor\\symfony\\console\\Application.php(140): Symfony\\Component\\Console\\Application->doRun()
+#3 C:\\Project\\OpenServer\\domains\\lidz.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(93): Symfony\\Component\\Console\\Application->run()
+#4 C:\\Project\\OpenServer\\domains\\lidz.ua.local\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(129): Illuminate\\Console\\Application->run()
+#5 C:\\Project\\OpenServer\\domains\\lidz.ua.local\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#6 {main}
+"} 
