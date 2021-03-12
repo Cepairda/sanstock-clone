@@ -230,7 +230,7 @@ window.delay = (() => {
     }
 }());
 
-$('div.range').on('mouseenter', '.product-img-wrap', function (){
+$('div.products-wrapper').on('mouseenter', '.product-img-wrap', function (){
     let currentImgWrap = this;
     let images = $(currentImgWrap).find('img').length;
     let sku = $(currentImgWrap).parent().find('.product-price').data('product-sku');
