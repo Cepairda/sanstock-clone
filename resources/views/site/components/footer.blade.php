@@ -35,7 +35,7 @@
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <h5>{{ __('About us') }}</h5>
                 <ul class="list-sm">
-                    <li><a href="/about-us">{{ __('About us') }}</a></li>
+                    <li><a href="/about-us">{{ __('About brand') }}</a></li>
                     <li><a href="/documentation">{{ __('Documentation') }}</a></li>
                     <li><p style="font-size: 20px; color: #000">{{ __('Get in Touch') }}</ps></li>
                     <li><a style="font-size: 20px; color: #000" href="tel:0800212008">0800 210 377</a></li>
