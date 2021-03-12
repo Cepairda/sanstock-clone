@@ -56,7 +56,11 @@
                 <div class="col-sm-12 col-lg-5">
 
                     <!-- Slick Carousel-->
-                    <div class="slick-slider carousel-parent" data-child="#child-carousel" data-for="#child-carousel" data-toggle="modal" data-target="#modal-product">
+                    <div class="slick-slider carousel-parent"
+                         data-child="#child-carousel"
+                         data-for="#child-carousel"
+                         data-toggle="modal"
+                         data-target="#modal-product">
                             <a class="img-thumbnail-variant-2" data-target="#carouselExample" data-slide-to="{{ $j = 0 }}" href="#">
                                   {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 600, 'alt' => $product->name, 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}
                             <div class="caption"><span class="icon icon-lg linear-icon-magnifier"></span></div>
@@ -86,12 +90,13 @@
                     </div>
                     <div class="slick-slider"
                          id="child-carousel"
-                         data-for=".carousel-parent"
-                         data-arrows="true"
-                         data-loop="false"
-                         data-dots="false"
-                         data-swipe="true"
-                         data-items="2"
+                         data-for=".carousel-parent" {{-- Селектор на большую картинку --}}
+                         data-arrows="true"          {{-- Стрелки --}}
+                         data-loop="false"           {{-- Бесконечный цикл скольжения --}}
+                         data-dots="false"           {{-- Точечные индикаторы --}}
+                         data-swipe="true"           {{-- Cмахивания / перетаскивания --}}
+                         data-center-mode="false"    {{-- Центрирование активного слайда--}}
+                         data-items="2"              {{-- Кол-во кратинок в слайдере --}}
                          data-xs-items="2"
                          data-sm-items="3"
                          data-md-items="3"
@@ -137,7 +142,7 @@
                             <span>{{ number_format(ceil($product->getDetails('price')),0,'',' ') }}</span>
 
                             @if ($product->oldPrice)
-                                &nbsp;&nbsp;&nbsp;<span>{{ number_format(ceil($product->oldPrice),0,'',' ') }}</span>
+                                <span class="ml-3">{{ number_format(ceil($product->oldPrice),0,'',' ') }}</span>
                             @endif
 
                         </p>

@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a class="button button-default button-sm button-icon font-weight-normal" data-dismiss="modal" style="font-size: 16px">Закрыть</a>
+                <a class="button button-default button-sm button-icon font-weight-normal" data-dismiss="modal" style="font-size: 16px">{{ __('Close') }}</a>
             </div>
         </div>
     </div>
