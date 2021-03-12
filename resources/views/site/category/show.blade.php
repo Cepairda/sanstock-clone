@@ -39,7 +39,7 @@
 
 @section('content')
 
-    @include('site.components.breadcrumbs', ['title' => $category->getData('name')])
+    @include('site.components.breadcrumbs', ['title' => $category->getData('name'), 'h1' => true])
 
     <form>
         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />

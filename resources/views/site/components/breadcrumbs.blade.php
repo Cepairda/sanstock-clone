@@ -2,8 +2,11 @@
     <div class="shell">
         <div class="breadcrumbs-custom__inner">
 
-            <h1 class="breadcrumbs-custom__title">{{ $title ?? '' }}</h1>
-
+            @if(isset($h1))
+                <h1 class="breadcrumbs-custom__title">{{ $title ?? '' }}</h1>
+            @else
+                <div class="breadcrumbs-custom__title">{{ $title ?? '' }}</div>
+            @endif
             <ul class="breadcrumbs-custom__path" itemscope itemtype="https://schema.org/BreadcrumbList">
                 <li itemprop="itemListElement"
                     itemscope itemtype="https://schema.org/ListItem"

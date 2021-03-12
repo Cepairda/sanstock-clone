@@ -30,7 +30,7 @@
                         <li><a href="{{ route('site.contacts') }}">{{ __('Contacts') }}</a></li>
                         <li><a href="{{ route('site.blog') }}">{{ __('Blog') }}</a></li>
                         <li><a href="{{ route('site.documentations') }}">{{ __('Documentation') }}</a></li>
-                        <li><a href="{{ route('site.resource', ['slug' => 'about-us']) }}">{{ __('About us') }}</a></li>
+                        <li><a href="{{ route('site.resource', ['slug' => 'about-us']) }}">{{ __('About brand') }}</a></li>
                     </ul>
                     {!! view('site.components.categories', ['categories' => $categories, 'ul_class' => 'sitemap']) !!}
                 </div>

@@ -1,11 +1,22 @@
 @extends('layouts.site')
 @section('body_class', 'pages')
-@section('content')
 @section('meta_title', $page->meta_title)
 @section('meta_description', $page->meta_description)
+@section('breadcrumbs')
+    <li class="active"
+        itemprop="itemListElement"
+        itemscope itemtype="https://schema.org/ListItem"
+    >
+        <span itemprop="name">
+            {{  __('About us') }}
+        </span>
+        <meta itemprop="position" content="2" />
+    </li>
+@endsection
+@section('content')
 
 
-    @include('site.components.breadcrumbs')
+    @include('site.components.breadcrumbs', ['title' => __('About us')])
 
     <div class="section-md">
 
