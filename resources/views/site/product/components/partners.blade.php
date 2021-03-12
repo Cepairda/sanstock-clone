@@ -19,7 +19,7 @@
                                 @if (isset($partnerUrl->partner->img))
                                     <img class="img-responsive" alt="partners" src="{{ asset($partnerUrl->partner->img) }}">
                                 @else
-                                    <img class="img-responsive" alt="partners" src="{{ asset('images/site/default.jpg') }}">
+                                    <img class="img-responsive" alt="partners" src="{{ asset('images/site/200-default.jpg') }}">
                                 @endif
 
                                 </div>
