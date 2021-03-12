@@ -4330,7 +4330,7 @@ html[class*="ie"] .dtp-hand, html[class*="ie"] .dtp-hour-hand {
 }
 
 .slick-loading .slick-list {
-	background: #fff url("../../../images/site/ajax-loader.gif") center center no-repeat;
+	background: #fff url("../../images/site/ajax-loader.gif") center center no-repeat;
 }
 
 /* Icons */
@@ -4339,8 +4339,8 @@ html[class*="ie"] .dtp-hand, html[class*="ie"] .dtp-hour-hand {
 .slick-next {
 	position: absolute;
 	display: block;
-	width: 50px;
-	height: 50px;
+	width: 30px;
+	height: 100%;//50px
 	line-height: 48px;
 	vertical-align: middle;
 	text-align: center;
@@ -4348,14 +4348,17 @@ html[class*="ie"] .dtp-hand, html[class*="ie"] .dtp-hour-hand {
 	cursor: pointer;
 	color: transparent;
 	background-color: #fff;
+	background-repeat: no-repeat;
+	background-position: center;
 	top: 50%;
 	-webkit-transform: translate(0, -50%);
 	-ms-transform: translate(0, -50%);
 	transform: translate(0, -50%);
 	transition: 300ms ease-in-out;
 	padding: 0;
-	border: none;
+	border: 1px	solid #dee2e6;
 	outline: none;
+	opacity: .8;
 	z-index: 9;
 }
 
@@ -4365,20 +4368,20 @@ html[class*="ie"] .dtp-hand, html[class*="ie"] .dtp-hour-hand {
 	outline: none;
 }
 
-.slick-prev:hover:before, .slick-prev:focus:before,
-.slick-next:hover:before,
-.slick-next:focus:before {
+.slick-prev:hover,
+.slick-prev:focus,
+.slick-next:hover,
+.slick-next:focus {
 	opacity: 1;
-	color: #000;
 }
 
-.slick-prev.slick-disabled:before,
-.slick-next.slick-disabled:before {
-	opacity: 1;
+.slick-prev.slick-disabled,
+.slick-next.slick-disabled {
+	opacity: .35;
+	cursor: default;
 }
 
 .slick-prev:before, .slick-next:before {
-	font-family: "Linearicons";
 	font-size: 27px;
 	color: #000;
 	opacity: 1;
@@ -4387,51 +4390,14 @@ html[class*="ie"] .dtp-hand, html[class*="ie"] .dtp-hour-hand {
 }
 
 .slick-prev {
-	left: 0;
-	border-radius: 0 4px 4px 0;
-}
-
-[dir="rtl"] .slick-prev {
-	left: auto;
-	right: 0;
-}
-
-.slick-prev:before {
-	content: "";
-}
-
-[dir="rtl"] .slick-prev:before {
-	content: "";
-}
-
-@media (min-width: 1500px) {
-	.slick-prev {
-		left: -75px;
-	}
-}
-
-.slick-next {
-	right: 0;
+	right: 100%;
+	background-image: url("../../images/site/icons/chevron-left.svg");
 	border-radius: 4px 0 0 4px;
 }
-
-[dir="rtl"] .slick-next {
-	left: 0;
-	right: auto;
-}
-
-.slick-next:before {
-	content: "";
-}
-
-[dir="rtl"] .slick-next:before {
-	content: "";
-}
-
-@media (min-width: 1500px) {
-	.slick-next {
-		right: -75px;
-	}
+.slick-next {
+	left: 100%;
+	background-image: url("../../images/site/icons/chevron-right.svg");
+	border-radius: 0 4px 4px 0;
 }
 
 /* Dots */
@@ -4513,8 +4479,11 @@ html[class*="ie"] .dtp-hand, html[class*="ie"] .dtp-hour-hand {
 }
 
 #child-carousel {
-	margin-left: -12px;
-	margin-right: -12px;
+	//smargin-left: -12px;
+	//margin-right: -12px;
+	margin-right: 35px;
+	margin-left: 35px;
+
 }
 
 #child-carousel .item {
