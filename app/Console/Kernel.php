@@ -24,7 +24,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //$schedule->command('import:price')->everyMinute();
+        $schedule->command('import:price')->hourly();
+        $schedule->command('import:image')->hourly();
+        $schedule->command('queue:work --queue=high,priceImport  --stop-when-empty')->withoutOverlapping();
+        $schedule->command('queue:work --queue=high,imageImport  --stop-when-empty')->withoutOverlapping();
     }
 
     /**
