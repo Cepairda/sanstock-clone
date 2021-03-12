@@ -401,6 +401,12 @@ $document.ready(function () {
     for (i = 0; i < plugins.slick.length; i++) {
       var $slickItem = $(plugins.slick[i]);
 
+      $slickItem.on('init', function (event, slick) {
+        let prev = document.querySelector('button.slick-prev');
+
+        return prev && (prev.classList.add('outside-slide'));
+      });
+
       $slickItem.slick({
         slidesToScroll: parseInt($slickItem.attr('data-slide-to-scroll')) || 1,
         asNavFor: $slickItem.attr('data-for') || false,
@@ -414,6 +420,11 @@ $document.ready(function () {
         centerMode: $slickItem.attr("data-center-mode") == "true",
         centerPadding: $slickItem.attr("data-center-padding") ? $slickItem.attr("data-center-padding") : '0.50',
         mobileFirst: true,
+
+        edgeFriction: 5,
+
+        draggable: true,
+
         responsive: [
           {
             breakpoint: 0,
@@ -448,15 +459,42 @@ $document.ready(function () {
           }
         ]
       })
-        .on('afterChange', function (event, slick, currentSlide, nextSlide) {
+        .on('beforeChange', function (event, slick, currentSlide, nextSlide) {
           var $this = $(this),
             childCarousel = $this.attr('data-child');
 
+
+
           if (childCarousel) {
-            $(childCarousel + ' .slick-slide').removeClass('slick-current');
-            $(childCarousel + ' .slick-slide').eq(currentSlide).addClass('slick-current');
-          }
+            let slickTrack = document.querySelector(`${childCarousel} .slick-track`),
+                slickTrackLength = slickTrack ? slickTrack.children.length : false;
+
+            if (slickTrackLength) {
+
+              let prev = document.querySelector(`${childCarousel} .slick-prev`),
+                  next = document.querySelector(`${childCarousel} .slick-next`),
+                  addClass = 'outside-slide';
+
+              if (prev && next) {
+
+                prev.classList.remove(addClass);
+                next.classList.remove(addClass);
+
+                if (nextSlide === slickTrackLength - 1) {
+                  next.classList.add(addClass);
+                }
+                if (nextSlide === 0) {
+                  prev.classList.add(addClass);
+                }
+
+              }
+            }
+
+           }
         });
+
+
+
     }
   }
 

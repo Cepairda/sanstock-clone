@@ -23955,7 +23955,7 @@ window.delay = function () {
   };
 
   document.addEventListener('click', function (e) {
-    console.log('we here');
+    //console.log('we here');
     var t = e.target,
         favorite = t.closest('[data-add="favorite"]');
     favorite && addRemoveFavorite(favorite);
@@ -24199,6 +24199,8 @@ $('body').on('click', '#closeCarousel', function () {
     navBar && (navBar.style.paddingRight = null);
   });
 })();
+
+console.log();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),
@@ -29628,6 +29630,10 @@ $document.ready(function () {
 
     for (i = 0; i < plugins.slick.length; i++) {
       var $slickItem = $(plugins.slick[i]);
+      $slickItem.on('init', function (event, slick) {
+        var prev = document.querySelector('button.slick-prev');
+        return prev && prev.classList.add('outside-slide');
+      });
       $slickItem.slick({
         slidesToScroll: parseInt($slickItem.attr('data-slide-to-scroll')) || 1,
         asNavFor: $slickItem.attr('data-for') || false,
@@ -29641,6 +29647,8 @@ $document.ready(function () {
         centerMode: $slickItem.attr("data-center-mode") == "true",
         centerPadding: $slickItem.attr("data-center-padding") ? $slickItem.attr("data-center-padding") : '0.50',
         mobileFirst: true,
+        edgeFriction: 5,
+        draggable: true,
         responsive: [{
           breakpoint: 0,
           settings: {
@@ -29668,13 +29676,32 @@ $document.ready(function () {
             swipe: false
           }
         }]
-      }).on('afterChange', function (event, slick, currentSlide, nextSlide) {
+      }).on('beforeChange', function (event, slick, currentSlide, nextSlide) {
         var $this = $(this),
             childCarousel = $this.attr('data-child');
 
         if (childCarousel) {
-          $(childCarousel + ' .slick-slide').removeClass('slick-current');
-          $(childCarousel + ' .slick-slide').eq(currentSlide).addClass('slick-current');
+          var slickTrack = document.querySelector("".concat(childCarousel, " .slick-track")),
+              slickTrackLength = slickTrack ? slickTrack.children.length : false;
+
+          if (slickTrackLength) {
+            var prev = document.querySelector("".concat(childCarousel, " .slick-prev")),
+                next = document.querySelector("".concat(childCarousel, " .slick-next")),
+                addClass = 'outside-slide';
+
+            if (prev && next) {
+              prev.classList.remove(addClass);
+              next.classList.remove(addClass);
+
+              if (nextSlide === slickTrackLength - 1) {
+                next.classList.add(addClass);
+              }
+
+              if (nextSlide === 0) {
+                prev.classList.add(addClass);
+              }
+            }
+          }
         }
       });
     }

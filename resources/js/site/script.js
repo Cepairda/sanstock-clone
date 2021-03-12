@@ -115,7 +115,7 @@ window.delay = (() => {
             }
         };
         document.addEventListener('click', function(e) {
-            console.log('we here');
+            //console.log('we here');
             let t = e.target,
                 favorite =  t.closest('[data-add="favorite"]');
             favorite && addRemoveFavorite(favorite);
@@ -294,3 +294,5 @@ $('body').on('click', '#closeCarousel', function (){
         navBar && (navBar.style.paddingRight = null);
     });
 }());
+
+console.log(  );
