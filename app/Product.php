@@ -13,14 +13,6 @@ class Product extends Resource
 
     protected $appends = ['main_image', 'additional_image', 'price_updated_at'];
 
-    public function getMainImageAttribute(){
-
-    }
-
-    public function getAdditionalImageAttribute(){
-
-    }
-
     public function getNameAttribute()
     {
         return $this->getData('name');
