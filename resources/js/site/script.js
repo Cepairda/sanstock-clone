@@ -189,9 +189,9 @@ window.delay = (() => {
                 for (let sku of dataSku) {
                     if (+sku.dataset.productSku == skuApi) {
                         if (dataApi[skuApi]['discount_price']) {
-                            sku.innerHTML = "<span>" + parseInt(dataApi[skuApi]['discount_price']).toLocaleString() +"</span>  &nbsp;&nbsp;&nbsp;<span>" + parseInt(dataApi[skuApi]['price']).toLocaleString() +"</span>";
+                            sku.innerHTML = "<span>" + parseInt(dataApi[skuApi]['discount_price']).toLocaleString('ru-Ru') +"</span>  &nbsp;&nbsp;&nbsp;<span>" + parseInt(dataApi[skuApi]['price']).toLocaleString('ru-Ru') +"</span>";
                         } else {
-                            sku.innerHTML = "<span>" + parseInt(dataApi[skuApi]['price']).toLocaleString() +"</span>";
+                            sku.innerHTML = "<span>" + parseInt(dataApi[skuApi]['price']).toLocaleString('ru-Ru') +"</span>";
                         }
                     }
                 }
