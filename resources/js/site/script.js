@@ -157,6 +157,10 @@ window.delay = (() => {
 
 //update Price
 (function (){
+    // function formatNumber(num) {
+    //     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
+    // }
+
     let url = '/products/update-price',
         dataSku = document.querySelectorAll('[data-product-sku].updatePriceJs'),
         token = document.querySelector('input[name=_token]'),
@@ -185,9 +189,9 @@ window.delay = (() => {
                 for (let sku of dataSku) {
                     if (+sku.dataset.productSku == skuApi) {
                         if (dataApi[skuApi]['discount_price']) {
-                            sku.innerHTML = "<span>" + dataApi[skuApi]['discount_price'] +"</span>  &nbsp;&nbsp;&nbsp;<span>" + dataApi[skuApi]['price'] +"</span>";
+                            sku.innerHTML = "<span>" + parseInt(dataApi[skuApi]['discount_price']).toLocaleString() +"</span>  &nbsp;&nbsp;&nbsp;<span>" + parseInt(dataApi[skuApi]['price']).toLocaleString() +"</span>";
                         } else {
-                            sku.innerHTML = "<span>" + dataApi[skuApi]['price'] +"</span>";
+                            sku.innerHTML = "<span>" + parseInt(dataApi[skuApi]['price']).toLocaleString() +"</span>";
                         }
                     }
                 }
