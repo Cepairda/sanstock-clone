@@ -34,12 +34,13 @@
                         <div class="post-meta">
                             <div class="group">
                                 <time>{{ $post->created_at->format('d.m.Y') }}</time>
-                                {{--
-                                <ul class="list-inline-tag">
-                                    <li><a href="#">#tag-1</a></li>
-                                    <li><a href="#">#tag-2</a></li>
-                                </ul>
-                                --}}
+                                @if ($post->tags)
+                                    <ul class="list-inline-tag">
+                                        @foreach($post->tags as $tag)
+                                            <li><a href="{{ route('site.blog-tag', $tag->id) }}">#{{ $tag->name }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </div>
                         </div>
                         {!! $post->text !!}

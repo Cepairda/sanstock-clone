@@ -112,6 +112,12 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::get('/create-search-string', 'BlogPostController@createSearchString')->name('create-search-string');
         });
 
+        Route::prefix('blog-tags')->as('blog-tags.')->group(function () {
+            Route::resource('/', 'BlogTagController')->parameters(['' => 'blog-tag']);
+
+            Route::get('/create-search-string', 'BlogTagController@createSearchString')->name('create-search-string');
+        });
+
         Route::prefix('pages')->as('pages.')->group(function () {
             Route::resource('/', 'PageController')->parameters(['' => 'page'])->except(['show']);
 
@@ -165,6 +171,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::get('/favorites', 'ResourceController@Favorites')->name('favorites');
 
             Route::get('/blog', 'BlogController@index')->name('blog');
+            Route::get('/blog/tag/{tag}', 'BlogController@index')->where('tag', '[0-9]+')->name('blog-tag');
             Route::get('/blog/{slug}', 'BlogController@post')->name('blog-post');
 
             Route::get('/contacts', 'ContactController@index')->name('contacts');

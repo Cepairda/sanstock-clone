@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Resource\Forms;
 
 use App\BlogCategory;
+use App\BlogTag;
 use Kris\LaravelFormBuilder\Form;
 
 class BlogPostForm extends Form
@@ -13,6 +14,9 @@ class BlogPostForm extends Form
         $blogCategories = BlogCategory::joinLocalization()->with('ancestors')->get()->toFlatTree();
         $blogCategoryChoices = to_select_options($blogCategories);
         $blogCategoryIds = $resource->categories()->get()->keyBy('id')->keys();
+        $tags = BlogTag::joinLocalization()->where('details->published', 1)->get();
+        $tagsChoices = $tags->pluck('data.name', 'id')->toArray();
+        $tagsIds = $resource->tags;
         $controllerClass = get_class(request()->route()->controller);
 
         $this
@@ -46,6 +50,15 @@ class BlogPostForm extends Form
                 'label' => 'Категории',
                 'choices' => $blogCategoryChoices,
                 'selected' => $blogCategoryIds,
+                'attr' => [
+                    'class' => 'select2bs4 form-control',
+                ],
+            ])
+            ->add('relations[App\BlogTag]', 'choice', [
+                'multiple' => true,
+                'label' => 'Теги',
+                'choices' => $tagsChoices,
+                'selected' => $tagsIds,
                 'attr' => [
                     'class' => 'select2bs4 form-control',
                 ],
