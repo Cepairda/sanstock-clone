@@ -24199,8 +24199,6 @@ $('body').on('click', '#closeCarousel', function () {
     navBar && (navBar.style.paddingRight = null);
   });
 })();
-
-console.log();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),
