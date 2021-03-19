@@ -10,7 +10,7 @@
     <section class="home-carousel">
         <div class="owl-carousel owl-theme home__carousel">
             <div class="item">
-                <img class="item__img" src="{{ asset('images/site/home-slider/slide-1.webp') }}" alt="slide-3">
+                <img class="item__img" src="{{ asset('images/site/home-slider/slide-1.webp') }}" alt="slide-1">
                 <div class="container item__desc">
                     <div class="row">
                         <div class="col-12">

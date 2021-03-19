@@ -1,13 +1,16 @@
-$(document).ready(function () {
-    $('.home__carousel').owlCarousel({
-        items: 1,
-        loop: true,
-        margin: 10,
-        nav: true,
-        navElement: 'div',
-        navText: ['<span class=" linear-icon-chevron-left"></span>', '<span class="linear-icon-chevron-right"></span>']
-    });
-});
+// $(document).ready(function () {
+//     $('.home__carousel').owlCarousel({
+//         mouseDrag: false,//Отключаем MouseDrag (Т.к. у нас 1 изображение)
+//         touchDrag: false,//Отключаем MouseDrag (Т.к. у нас 1 изображение)
+//         pullDrag: false,//Отключаем MouseDrag (Т.к. у нас 1 изображение)
+//         items: 1,
+//         loop: false,
+//         margin: 10,
+//         nav: false,
+//         navElement: 'div',
+//         navText: ['<span class=" linear-icon-chevron-left"></span>', '<span class="linear-icon-chevron-right"></span>']
+//     });
+// });
 
 $('body').on('click', '#showMore', function () {
     var $this = $(this);
@@ -154,6 +157,10 @@ window.delay = (() => {
 
 //update Price
 (function (){
+    // function formatNumber(num) {
+    //     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
+    // }
+
     let url = '/products/update-price',
         dataSku = document.querySelectorAll('[data-product-sku].updatePriceJs'),
         token = document.querySelector('input[name=_token]'),
@@ -182,9 +189,9 @@ window.delay = (() => {
                 for (let sku of dataSku) {
                     if (+sku.dataset.productSku == skuApi) {
                         if (dataApi[skuApi]['discount_price']) {
-                            sku.innerHTML = "<span>" + dataApi[skuApi]['discount_price'] +"</span>  &nbsp;&nbsp;&nbsp;<span>" + dataApi[skuApi]['price'] +"</span>";
+                            sku.innerHTML = "<span>" + parseInt(dataApi[skuApi]['discount_price']).toLocaleString('ru-Ru') +"</span>  &nbsp;&nbsp;&nbsp;<span>" + parseInt(dataApi[skuApi]['price']).toLocaleString('ru-Ru') +"</span>";
                         } else {
-                            sku.innerHTML = "<span>" + dataApi[skuApi]['price'] +"</span>";
+                            sku.innerHTML = "<span>" + parseInt(dataApi[skuApi]['price']).toLocaleString('ru-Ru') +"</span>";
                         }
                     }
                 }
@@ -230,7 +237,7 @@ window.delay = (() => {
     }
 }());
 
-$('div.range').on('mouseenter', '.product-img-wrap', function (){
+$('div.products-wrapper').on('mouseenter', '.product-img-wrap', function (){
     let currentImgWrap = this;
     let images = $(currentImgWrap).find('img').length;
     let sku = $(currentImgWrap).parent().find('.product-price').data('product-sku');

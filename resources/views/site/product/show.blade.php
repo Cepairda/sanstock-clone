@@ -275,10 +275,12 @@
                     <table class="table-product-info">
                             <tbody>
                                 @foreach ($product->characteristics as $characteristic)
-                                    <tr>
-                                        <td>{{ $characteristic->name }}</td>
-                                        <td>{{ $characteristic->value }}</td>
-                                    </tr>
+                                    @if ($characteristic->characteristic->published)
+                                        <tr>
+                                            <td>{{ $characteristic->name }}</td>
+                                            <td>{{ $characteristic->value }}</td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                                 </tbody>
                         </table>

@@ -30,8 +30,10 @@ class ProductController extends Controller
         $newPrices = [];
 
         foreach ($productSku as $sku) {
-            if ($prices[$sku]['price'] != 'Недоступно') {
-                $newPrices[$sku] = $prices[$sku];
+            if (isset($prices[$sku])) {
+                if ($prices[$sku]['price'] != 'Недоступно') {
+                    $newPrices[$sku] = $prices[$sku];
+                }
             }
         }
 

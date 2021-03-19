@@ -107,7 +107,7 @@ $document.ready(function () {
       items: 1,
       dotsContainer: c.attr("data-pagination-class") || false,
       navContainer: c.attr("data-navigation-class") || false,
-      mouseDrag: isNoviBuilder ? false : c.attr("data-mouse-drag") !== "false",
+      //mouseDrag: isNoviBuilder ? false : c.attr("data-mouse-drag") !== "false",
       nav: c.attr("data-nav") === "true",
       dots: c.attr("data-dots") === "true",
       dotsEach: c.attr("data-dots-each") ? parseInt(c.attr("data-dots-each")) : false,
@@ -116,6 +116,8 @@ $document.ready(function () {
       responsive: responsive,
       //navText: $.parseJSON(c.attr("data-nav-text")) || [],
       //navClass: $.parseJSON(c.attr("data-nav-class")) || ['owl-prev', 'owl-next']
+      mouseDrag: false,//Отключаем MouseDrag (Т.к. у нас 1 изображение)
+      touchDrag: false,//Отключаем MouseDrag (Т.к. у нас 1 изображение)
     });
   }
 

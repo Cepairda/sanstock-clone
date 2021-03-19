@@ -16,6 +16,14 @@ class BlogPostController extends Controller
         $this->resource = $blogPost;
     }
 
+    public function edit($id)
+    {
+        $this->resource = $this->resource->joinLocalization()->withTags()->find($id);
+        $form = $this->getForm();
+
+        return view('admin.resources.create-or-edit', compact('form'));
+    }
+
     public function createSearchString() {
         $blogPosts = $this->resource
             ->select('id', 'details', 'ua.data as ua_name', 'ru.data as ru_name')
