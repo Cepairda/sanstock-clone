@@ -301,5 +301,3 @@ $('body').on('click', '#closeCarousel', function (){
         navBar && (navBar.style.paddingRight = null);
     });
 }());
-
-console.log(  );

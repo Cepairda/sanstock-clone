@@ -437,7 +437,7 @@
     <div class="modal modal-product fade show" id="modal-product" tabindex="-1" role="dialog" aria-hidden="true">
 
         <div class="modal-dialog modal-product__container" role="document">
-            <div class="modal-content">
+            <div class="modal-content h-100">
 
                 <div class="modal-header">
                     <div class="modal-product__title" id="carouselModalLabel">{{ $product->getData('name') }}</div>
@@ -446,10 +446,10 @@
                     </button>
                 </div>
 
-                <div class="modal-body">
+                <div class="modal-body d-flex flex-column">
 
                     {{-- Carousel markup: https://getbootstrap.com/docs/4.4/components/carousel/ --}}
-                    <div id="carouselExample" class="carousel slide" data-ride="carousel">
+                    <div id="carouselExample" class="carousel slide" data-ride="carousel" data-pause="hover">
 
                         <ol class="carousel-indicators">
 
@@ -461,23 +461,22 @@
 
                         </ol>
 
-
                         <div class="carousel-inner">
 
                             <div class="carousel-item active">
-                              {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 600, 'alt' => $product->name, 'class' => ['lazyload', 'no-src', 'image'], 'data-src' => true]) !!}
+                              {!! img(['type' => 'product', 'sku' => $product->sku, 'size' => 600, 'alt' => $product->name, 'class' => ['lazyload', 'no-src', 'image', 'imageZoom'], 'data-src' => true]) !!}
                             </div>
 
                             @foreach($additional as $key => $uri)
 
-                                <div class="carousel-item height">
+                                <div id="" class="carousel-item height">
                                     <!--img data-src="" class="lazyload no-src" alt="" width="535" height="535"/-->
                                     {!! img([
                                                 'type' => 'product',
                                                 'sku' => $product->sku,
                                                 'size' => 600,
                                                 'alt' => $product->name,
-                                                'class' => ['lazyload', 'no-src', 'image'],
+                                                'class' => ['lazyload', 'no-src', 'image', 'imageZoom'],
                                                 'data-src' => true,
                                                 'additional' => true,
                                                 'key' => $key
@@ -499,7 +498,6 @@
                         </a>
 
                     </div>
-
                     <div class="modal-product__price">
 
                         <div class="product-price text-center updatePriceJs"
@@ -508,11 +506,10 @@
                             <span>{{ number_format(ceil($product->getDetails('price')),0,'',' ') }}</span>
 
                             @if ($product->oldPrice)
-                                &nbsp;&nbsp;&nbsp;<span>{{ number_format(ceil($product->oldPrice),0,'',' ') }}</span>
+                                <span class="ml-3">{{ number_format(ceil($product->oldPrice),0,'',' ') }}</span>
                             @endif
 
                         </div>
-
                         <button class="button button-primary button-icon" id="closeCarousel" {{--data-toggle="modal" data-target="#exampleModal"--}}>
                             <span>{{ __('Where buy') }}</span>
                         </button>
@@ -531,6 +528,8 @@
         </div>
     </div>
     {{-- Карусель --}}
+
+
     <!-- Divider-->
     <div class="shell">
         <div class="divider"></div>
