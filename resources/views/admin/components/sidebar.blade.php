@@ -236,6 +236,22 @@
                                 </a>
                             </li>
                         @endif
+                        @if (contains_access('admin.robots.index'))
+                            <li class="nav-item">
+                                <a href="{{ route('admin.robots.index') }}" class="nav-link">
+                                    <i class="fa fa-robot nav-icon"></i>
+                                    <p>Robots.txt</p>
+                                </a>
+                            </li>
+                        @endif
+                        @if (contains_access('admin.translations.index'))
+                            <li class="nav-item">
+                                <a href="{{ route('admin.translations.index') }}" class="nav-link">
+                                    <i class="fa fa-language nav-icon"></i>
+                                    <p>Файлы переводов</p>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
             </ul>
