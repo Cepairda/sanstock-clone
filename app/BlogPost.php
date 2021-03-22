@@ -19,6 +19,16 @@ class BlogPost extends Resource
         return $this->getData('text');
     }
 
+    public function getMetaTitleAttribute()
+    {
+        return $this->getData('meta_title');
+    }
+
+    public function getMetaDescriptionAttribute()
+    {
+        return $this->getData('meta_description');
+    }
+
     public function scopeWithCategories($query, $joinLocalization = true)
     {
         return $query->with(['categories' => function ($query) use ($joinLocalization) {
