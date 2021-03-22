@@ -1,5 +1,7 @@
 @extends('layouts.site')
 @section('body_class', 'article')
+@section('meta_title', $post->meta_title)
+@section('meta_description', $post->meta_description)
 @section('breadcrumbs')
     <li itemprop="itemListElement"
         itemscope itemtype="https://schema.org/ListItem"
