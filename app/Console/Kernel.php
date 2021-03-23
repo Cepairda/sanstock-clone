@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Http\Controllers\Admin\PriceMonitoringController;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -28,6 +29,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('import:image')->hourly();
         $schedule->command('queue:work --queue=high,priceImport  --stop-when-empty')->withoutOverlapping();
         $schedule->command('queue:work --queue=high,imageImport  --stop-when-empty')->withoutOverlapping();
+        // $schedule->command('price:monitoring')->hourly();
+//        $schedule->call(function () {
+//            $monitoring = new PriceMonitoringController();
+//            $monitoring->getMonitoringListByApi();
+//        })->hourly();
     }
 
     /**
