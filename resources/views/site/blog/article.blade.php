@@ -1,5 +1,7 @@
 @extends('layouts.site')
 @section('body_class', 'article')
+@section('meta_title', $post->meta_title)
+@section('meta_description', $post->meta_description)
 @section('breadcrumbs')
     <li itemprop="itemListElement"
         itemscope itemtype="https://schema.org/ListItem"
@@ -34,12 +36,13 @@
                         <div class="post-meta">
                             <div class="group">
                                 <time>{{ $post->created_at->format('d.m.Y') }}</time>
-                                {{--
-                                <ul class="list-inline-tag">
-                                    <li><a href="#">#tag-1</a></li>
-                                    <li><a href="#">#tag-2</a></li>
-                                </ul>
-                                --}}
+                                @if ($post->tags)
+                                    <ul class="list-inline-tag">
+                                        @foreach($post->tags as $tag)
+                                            <li><a href="{{ route('site.blog-tag', $tag->id) }}">#{{ $tag->name }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </div>
                         </div>
                         {!! $post->text !!}

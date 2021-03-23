@@ -44,13 +44,13 @@
                                     <div class="post-meta">
                                         <div class="group">
                                             <time>{{ $post->created_at->format('d.m.Y') }}</time>
-                                            {{--
-                                            <ul class="list-inline-tag">
-                                                <li><a href="#">#Tag-1</a></li>
-                                                <li><a href="#">#Tag-2</a></li>
-                                                <li><a href="#">#Tag-3</a></li>
-                                            </ul>
-                                            --}}
+                                            @if ($post->tags)
+                                                <ul class="list-inline-tag">
+                                                    @foreach($post->tags as $tag)
+                                                        <li><a href="{{ route('site.blog-tag', $tag->id) }}">#{{ $tag->name }}</a></li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
                                         </div>
                                     </div>
                                     <a class="button button-link mr-4" href="{{ route('site.blog-post', ['slug' => $post->slug]) }}">{{ __('Read more') }}</a>
@@ -129,19 +129,18 @@
                     </section>
                     --}}
 
-                    {{--
-                    <!-- Tags-->
-                    <section class="section-sm">
-                        <h5>Теги</h5>
-                        <ul class="list-tags">
-                            <li><a href="#">Bedroom</a></li>
-                            <li><a href="#">Dining Room</a></li>
-                            <li><a href="#">Kids Room</a></li>
-                            <li><a href="#">Living Room</a></li>
-                            <li><a href="#">Office</a></li>
-                        </ul>
-                    </section>
-                    --}}
+                    @if($tags->isNotEmpty())
+                        <!-- Tags-->
+                        <section class="section-sm">
+                            <h5>Теги</h5>
+                            <ul class="list-tags">
+                                @foreach($tags as $tag)
+                                    <li><a href="{{ route('site.blog-tag', $tag->id) }}">{{ $tag->name }}</a></li>
+                                @endforeach
+                            </ul>
+                        </section>
+                    @endif
+
                     {{--
                     <!-- Follow us-->
                     <section class="section-sm border-transparent">

@@ -29,6 +29,23 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
 
+    $config = array_merge(config('translation-manager.route'), ['namespace' => '\Barryvdh\TranslationManager']);
+    Route::group($config, function($router)
+    {
+        $router->get('view/{groupKey?}', 'Controller@getView')->where('groupKey', '.*')->name('view');
+        $router->get('/{groupKey?}', 'Controller@getIndex')->where('groupKey', '.*')->name('index');
+        $router->post('/add/{groupKey}', 'Controller@postAdd')->where('groupKey', '.*')->name('add');
+        $router->post('/edit/{groupKey}', 'Controller@postEdit')->where('groupKey', '.*')->name('edit');
+        $router->post('/groups/add', 'Controller@postAddGroup')->name('groups.add');
+        $router->post('/delete/{groupKey}/{translationKey}', 'Controller@postDelete')->where('groupKey', '.*')->name('delete');
+        $router->post('/import', 'Controller@postImport')->name('import');
+        $router->post('/find', 'Controller@postFind')->name('find');
+        $router->post('/locales/add', 'Controller@postAddLocale')->name('locales.add');
+        $router->post('/locales/remove', 'Controller@postRemoveLocale')->name('locales.remove');
+        $router->post('/publish/{groupKey}', 'Controller@postPublish')->where('groupKey', '.*')->name('publish');
+        $router->post('/translate-missing', 'Controller@postTranslateMissing')->name('translate-missing');
+    });
+
     Route::prefix('admin')->as('admin.')->middleware(['auth:web', 'checkAccess'])->namespace('Admin')->group(function () {
 
         Route::get('/', 'DashboardController@index')->name('dashboard.index');
@@ -117,6 +134,12 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::get('/create-search-string', 'BlogPostController@createSearchString')->name('create-search-string');
         });
 
+        Route::prefix('blog-tags')->as('blog-tags.')->group(function () {
+            Route::resource('/', 'BlogTagController')->parameters(['' => 'blog-tag']);
+
+            Route::get('/create-search-string', 'BlogTagController@createSearchString')->name('create-search-string');
+        });
+
         Route::prefix('pages')->as('pages.')->group(function () {
             Route::resource('/', 'PageController')->parameters(['' => 'page'])->except(['show']);
 
@@ -141,6 +164,12 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::prefix('icons')->as('icons.')->group(function () {
             Route::resource('/', 'IconController')->parameters(['' => 'icon']);
+
+            Route::get('/create-search-string', 'IconController@createSearchString')->name('create-search-string');
+        });
+
+        Route::prefix('robots')->as('robots.')->group(function () {
+            Route::resource('/', 'RobotsController')->parameters(['' => 'robot']);
 
             Route::get('/create-search-string', 'IconController@createSearchString')->name('create-search-string');
         });
@@ -170,6 +199,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::get('/favorites', 'ResourceController@Favorites')->name('favorites');
 
             Route::get('/blog', 'BlogController@index')->name('blog');
+            Route::get('/blog/tag/{tag}', 'BlogController@index')->where('tag', '[0-9]+')->name('blog-tag');
             Route::get('/blog/{slug}', 'BlogController@post')->name('blog-post');
 
             Route::get('/contacts', 'ContactController@index')->name('contacts');

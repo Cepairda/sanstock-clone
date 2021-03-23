@@ -131,9 +131,29 @@
                 @if (contains_access('admin.partners.index'))
                     <li class="nav-item">
                         <a href="{{ route('admin.partners.index') }}" class="nav-link">
-                            <i class="nav-icon fa fa-list"></i>
+                            <i class="nav-icon fa fa-handshake"></i>
                             <p>
                                 Партнёры
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (contains_access('admin.html-blocks.index'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.html-blocks.index') }}" class="nav-link">
+                            <i class="nav-icon fa fa-code"></i>
+                            <p>
+                                HTML blocks
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if (contains_access('admin.blog-tags.index'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.blog-tags.index') }}" class="nav-link">
+                            <i class="nav-icon fa fa-tags"></i>
+                            <p>
+                                Теги блога
                             </p>
                         </a>
                     </li>
@@ -161,7 +181,7 @@
                 @if (contains_access('admin.pages.index'))
                     <li class="nav-item">
                         <a href="{{ route('admin.pages.index') }}" class="nav-link">
-                            <i class="nav-icon fa fa-list"></i>
+                            <i class="nav-icon fa fa-newspaper"></i>
                             <p>
                                 Страницы
                             </p>
@@ -213,6 +233,22 @@
                                 <a href="{{ route('admin.icons.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Иконки</p>
+                                </a>
+                            </li>
+                        @endif
+                        @if (contains_access('admin.robots.index'))
+                            <li class="nav-item">
+                                <a href="{{ route('admin.robots.index') }}" class="nav-link">
+                                    <i class="fa fa-robot nav-icon"></i>
+                                    <p>Robots.txt</p>
+                                </a>
+                            </li>
+                        @endif
+                        @if (contains_access('admin.translations.index'))
+                            <li class="nav-item">
+                                <a href="{{ route('admin.translations.index') }}" class="nav-link">
+                                    <i class="fa fa-language nav-icon"></i>
+                                    <p>Файлы переводов</p>
                                 </a>
                             </li>
                         @endif

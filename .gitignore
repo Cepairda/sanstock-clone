@@ -1,7 +1,10 @@
 .idea
 /node_modules
+/resources/lang/ru.json
+/resources/lang/uk.json
 /public/hot
 /public/storage
+/public/storage/logs/*.log
 /public/robots.txt
 /storage/*.key
 /vendor

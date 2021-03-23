@@ -111,9 +111,15 @@
   position: relative;
   min-height: 1px;
   //float: left;
-  display: flex;
+  //display: flex;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
+
+  .item__img {
+      display: block;
+      width: 100%;
+      height: auto;
+  }
 }
 
 .owl-carousel .owl-grab {
