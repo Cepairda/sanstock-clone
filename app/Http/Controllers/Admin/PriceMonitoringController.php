@@ -73,7 +73,7 @@ class PriceMonitoringController
                 CURLOPT_CONNECTTIMEOUT => 20,
                 CURLOPT_TIMEOUT => 10000,
                 CURLOPT_HTTPHEADER => array(
-                    'apiKey: ' . env('PRICE_MONITORING_API_KEY'),
+                    'apiKey: ' . config('app.price_monitoring_api_key'),
                     'Content-Type: application/json'
                 )
             )
