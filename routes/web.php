@@ -15,6 +15,11 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
      #Route::get('/blog', function () {return view('site.blog.index');})->name('blog');
      #Route::get('/blog/article', function () {return view('site.blog.article');})->name('article');
 
+
+    // мои маршруты
+    Route::get('/test-api', 'Admin\PriceMonitoringController@getProductPriceMonitoringListByApi')->name('api.test');
+    // конец моих маршрутов
+
     Route::get('/sitemap.xml', 'SitemapController@index');
     Route::get('/sitemap.xml/categories', 'SitemapController@categories');
     Route::get('/sitemap.xml/products', 'SitemapController@products');
