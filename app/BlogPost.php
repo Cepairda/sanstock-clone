@@ -14,6 +14,11 @@ class BlogPost extends Resource
         return $this->getData('description');
     }
 
+    public function getImgAttribute()
+    {
+        return $this->getData('img');
+    }
+
     public function getTextAttribute()
     {
         return $this->getData('text');

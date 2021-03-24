@@ -37,7 +37,7 @@
                                         <a href="{{ route('site.blog-post', ['slug' => $post->slug]) }}">{{ $post->name }}</a>
                                     </h4>
                                 </div>
-                                <img class="lazyload" data-src="{{ asset('images/site/Blog/' . $post->slug . '.jpg') }}" src="{{ asset('images/site/default_white.jpg') }}"
+                                <img class="lazyload" data-src="{{ asset($post->img) }}" src="{{ asset('images/site/default_white.jpg') }}"
                                      alt="{{ $post->name }}" width="886" height="668"/>
 
                                 <div class="post-classic-footer">
