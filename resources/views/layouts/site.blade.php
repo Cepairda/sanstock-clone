@@ -53,14 +53,6 @@
         @include('site.components.footer')
     </div>
     <script type="text/javascript" src="{{ mix('js/site/app.js') }}"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MH95R4F43C"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-MH95R4F43C');
-    </script>
     @yield('javascript')
 </body>
 </html>
