@@ -93,6 +93,10 @@ class ImportController extends Controller
                         'brand_id' => $brand->id ?? null,
                         'category_id' => null,
                         'published' => 0,
+                        'enable_comments' => 1,
+                        'enable_stars_comments' => 1,
+                        'enable_reviews' => 1,
+                        'enable_stars_reviews' => 1,
                     ],
                     'data' => ['name' => $name]
                 ]);

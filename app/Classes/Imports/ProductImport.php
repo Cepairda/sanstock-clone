@@ -32,7 +32,6 @@ class ProductImport implements ToCollection, WithHeadingRow
                 $product = new Product();
                 $requestData['details']['sku'] = $sku;
                 //$requestData['slug'] = (Slug::create(Product::class, $row['name']));
-                dd($product->id);
             }
 
             if (empty($slug)) {
@@ -55,6 +54,10 @@ class ProductImport implements ToCollection, WithHeadingRow
             $requestData['details']['price'] = $product->getDetails('price');
             $requestData['details']['price_updated_at'] = $product->getDetails('price_updated_at');
             $requestData['details']['old_price'] = $product->getDetails('old_price');
+            $requestData['details']['enable_comments'] = $product->getDetails('enable_comments') ?? 1;
+            $requestData['details']['enable_stars_comments'] = $product->getDetails('enable_stars_comments') ?? 1;
+            $requestData['details']['enable_reviews'] = $product->getDetails('enable_reviews') ?? 1;
+            $requestData['details']['enable_stars_reviews'] = $product->getDetails('enable_stars_reviews') ?? 1;
 
             $product->setRequest($requestData);
 
