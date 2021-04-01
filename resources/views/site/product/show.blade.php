@@ -5,29 +5,31 @@
 
 @section('breadcrumbs')
     @php($i = 2)
-    @foreach($product->category->ancestors as $ancestor)
+    @if (isset($product->category))
+        @foreach($product->category->ancestors as $ancestor)
+            <li itemprop="itemListElement"
+                itemscope itemtype="https://schema.org/ListItem"
+            >
+                <a href="{{ route('site.resource', $ancestor->slug) }}" itemprop="item">
+                    <span itemprop="name">
+                        {{ $ancestor->name }}
+                    </span>
+                </a>
+                <meta itemprop="position" content="{{ $i }}" />
+            </li>
+            @php($i++)
+        @endforeach
         <li itemprop="itemListElement"
             itemscope itemtype="https://schema.org/ListItem"
         >
-            <a href="{{ route('site.resource', $ancestor->slug) }}" itemprop="item">
+            <a href="{{ route('site.resource', $product->category->slug) }}" itemprop="item">
                 <span itemprop="name">
-                    {{ $ancestor->name }}
+                     {{ $product->category->name }}
                 </span>
             </a>
-            <meta itemprop="position" content="{{ $i }}" />
+            <meta itemprop="position" content="{{ $i++ }}" />
         </li>
-        @php($i++)
-    @endforeach
-    <li itemprop="itemListElement"
-        itemscope itemtype="https://schema.org/ListItem"
-    >
-        <a href="{{ route('site.resource', $product->category->slug) }}" itemprop="item">
-            <span itemprop="name">
-                 {{ $product->category->name }}
-            </span>
-        </a>
-        <meta itemprop="position" content="{{ $i++ }}" />
-    </li>
+    @endif
     <li class="active"
         itemprop="itemListElement"
         itemscope itemtype="https://schema.org/ListItem"

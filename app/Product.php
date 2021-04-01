@@ -168,7 +168,7 @@ class Product extends Resource
             ->sku($this->sku)
             ->mpn($this->sku)
             ->url(LaravelLocalization::getLocalizedURL())
-            ->category($this->category->name)
+            ->category($this->category->name ?? null)
             //->image(url('image' . $this->sku))
             ->brand(
                 Schema::brand()
