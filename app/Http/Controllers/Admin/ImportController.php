@@ -27,8 +27,9 @@ class ImportController extends Controller
         $data = $this->importB2B->getDataJson('brand/' . 'a0ca0cab-c450-11e7-82f5-00155dacf604');
         $this->importB2B->setData($data);
 
-        $brand = $this->importB2B->firstOrCreateBrand();
-        $this->importB2B->firstOrCreateProducts($brand);
+        //$brand = $this->importB2B->firstOrCreateBrand();
+        //$this->importB2B->firstOrCreateProducts($brand);
+        $this->importB2B->addToQueue();
 
         $t['end'] = \Carbon\Carbon::now()->format('H:i:s');
         //dd($t);
