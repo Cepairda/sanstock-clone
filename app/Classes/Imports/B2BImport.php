@@ -21,14 +21,13 @@ class B2BImport
         if (self::$data === null) {
             $client = new Client();
             $res = $client->request('GET', 'https://b2b-sandi.com.ua/api/content/' . $resource . '?token=' . $this->token);
-
-            return json_decode($res->getBody(), true);
+            $this->setData(json_decode($res->getBody(), true));
         }
 
         return self::$data;
     }
 
-    public function setData($data)
+    private function setData($data)
     {
         self::$data = $data;
     }
@@ -57,45 +56,7 @@ class B2BImport
     public function firstOrCreateProducts($brand = null)
     {
         foreach (self::$data['products'] as $productRef => $productData) {
-            $product = Product::where('details->ref', $productRef)->first();
-
-            if (!isset($product)) {
-                $product = new Product();
-                $name = trim($productData['description']);
-                $categoryName = (self::$data['categories'][$productData['category_ref']]['description'] ?? 'uncategorized');
-                $slug = (Str::slug($categoryName) . '/' . Str::slug($name));
-
-                $product->setRequest([
-                    'slug' => $slug,
-                    'details' => [
-                        'ref' => $productRef,
-                        'sku' => $productData['old_base_code'],
-                        'brand_id' => $brand->id ?? null,
-                        'category_id' => null,
-                        'published' => 0,
-                        'enable_comments' => 1,
-                        'enable_stars_comments' => 1,
-                        'enable_reviews' => 1,
-                        'enable_stars_reviews' => 1,
-                    ],
-                    'data' => ['name' => $name]
-                ]);
-
-                LaravelLocalization::setLocale('ru');
-                $product->storeOrUpdate();
-            }
-
-            if (isset(self::$data['characteristics'][$productRef])) {
-                $product->setRequest([
-                    'relations' => [
-                        CharacteristicValue::class => $this->updateOrCreateCharacteristics(self::$data['characteristics'][$productRef])
-                    ]
-                ]);
-            }
-
-            $product->updateRelations();
-
-            break;
+            $this->product($brand->id, $productRef);
         }
     }
 

@@ -76,25 +76,31 @@
                     </form>
                     <hr>
                     @endif
-
+                    <div>
                     @if (contains_access('admin.import'))
                         <a href="{{ route('admin.import') }}" class="btn btn-success">Импорт(Бренды, Товары, Характеристики)</a>
                     @endif
                     @if (contains_access('admin.products.import-price'))
-                        <form class="d-inline" method="post" action="{{ route('admin.products.import-price') }}">
-                        {{ csrf_field() }}
-                        {{ method_field('POST') }}
-                        <button type="submit" class="btn btn-success">Обновить цены</button>
-                    </form>
+                            <form class="d-inline" method="post" action="{{ route('admin.products.import-price') }}">
+                            {{ csrf_field() }}
+                            {{ method_field('POST') }}
+                            <button type="submit" class="btn btn-success">Обновить цены</button>
+                            </form>
+                    @endif
+                    </div>
+                    <div class="mt-2">
+                    @if (contains_access('admin.import-queue'))
+                            <a href="{{ route('admin.import-queue') }}" class="btn btn-success">Импорт(Бренды, Товары, Характеристики) Очередь</a>
                     @endif
                     @if (contains_access('admin.import-image.store'))
-                        <form class="d-inline" method="post" action="{{ route('admin.import-image.store') }}">
-                        {{ csrf_field() }}
-                        {{ method_field('POST') }}
-                        <button type="submit" class="btn btn-success">Импорт изображений</button>
-                    </form>
+                            <form class="d-inline" method="post" action="{{ route('admin.import-image.store') }}">
+                            {{ csrf_field() }}
+                            {{ method_field('POST') }}
+                            <button type="submit" class="btn btn-success">Импорт изображений</button>
+                            </form>
                     @endif
-                </div>
+                    </div>
+                    </div>
             </div>
         </div>
     </div>

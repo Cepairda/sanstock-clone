@@ -43,11 +43,8 @@ class ProcessImportB2B implements ShouldQueue
     public function handle(B2BImport $importB2B)
     {
         set_time_limit(0);
-
         ini_set('memory_limit', '1024M');
-        $data = $importB2B->getDataJson('brand/' . 'a0ca0cab-c450-11e7-82f5-00155dacf604');
-        $importB2B->setData($data);
+        $importB2B->getDataJson('brand/' . 'a0ca0cab-c450-11e7-82f5-00155dacf604');
         $importB2B->importQueue($this->brandId, $this->productRef);
-        //PriceImport::importQueue($this->productSku);
     }
 }

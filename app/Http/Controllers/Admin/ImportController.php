@@ -18,20 +18,21 @@ class ImportController extends Controller
         set_time_limit(0);
 
         $this->importB2B = $b2BImport;
+        $this->importB2B->getDataJson('brand/' . 'a0ca0cab-c450-11e7-82f5-00155dacf604');
     }
 
-    public function updateOrCreate($brandRef = null)
+    public function updateOrCreate()
     {
         $t['start'] = \Carbon\Carbon::now()->format('H:i:s');
 
-        $data = $this->importB2B->getDataJson('brand/' . 'a0ca0cab-c450-11e7-82f5-00155dacf604');
-        $this->importB2B->setData($data);
-
-        //$brand = $this->importB2B->firstOrCreateBrand();
-        //$this->importB2B->firstOrCreateProducts($brand);
-        $this->importB2B->addToQueue();
+        $brand = $this->importB2B->firstOrCreateBrand();
+        $this->importB2B->firstOrCreateProducts($brand);
 
         $t['end'] = \Carbon\Carbon::now()->format('H:i:s');
         //dd($t);
+    }
+    public function updateOrCreateOnQueue()
+    {
+        $this->importB2B->addToQueue();
     }
 }

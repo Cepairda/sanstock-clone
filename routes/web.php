@@ -51,6 +51,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::get('/', 'DashboardController@index')->name('dashboard.index');
 
         Route::get('/import', 'ImportController@updateOrCreate')->name('import');
+        Route::get('/import-queue', 'ImportController@updateOrCreateOnQueue')->name('import-queue');
         Route::get('/import-export', 'ImportExportController@index')->name('import-export');
 
         Route::prefix('brands')->as('brands.')->group(function () {
