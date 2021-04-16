@@ -25,17 +25,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('queue:work --queue=high,b2bImport  --stop-when-empty')->withoutOverlapping();
+        $schedule->command('queue:work --queue=high,b2bImport  --stop-when-empty')->name('b2bImport')-ЮwithoutOverlapping();
 
         $schedule->command('import:price')->hourly();
         $schedule->command('import:image')->hourly();
-        $schedule->command('queue:work --queue=high,priceImport  --stop-when-empty')->withoutOverlapping();
-        $schedule->command('queue:work --queue=high,imageImport  --stop-when-empty')->withoutOverlapping();
+        $schedule->command('queue:work --queue=high,priceImport  --stop-when-empty')->name('priceImport')->withoutOverlapping();
+        $schedule->command('queue:work --queue=high,imageImport  --stop-when-empty')->name('imageImport')->withoutOverlapping();
         // $schedule->command('price:monitoring')->hourly();
-//        $schedule->call(function () {
-//            $monitoring = new PriceMonitoringController();
-//            $monitoring->getMonitoringListByApi();
-//        })->hourly();
+        $schedule->call(function () {
+            $monitoring = new PriceMonitoringController();
+            $monitoring->getMonitoringListByApi();
+        })->hourly();
     }
 
     /**
