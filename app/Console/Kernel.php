@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('queue:work --queue=high,b2bImport  --stop-when-empty')->name('b2bImport')-ЮwithoutOverlapping();
+        $schedule->command('queue:work --queue=high,b2bImport  --stop-when-empty')->name('b2bImport')->withoutOverlapping();
 
         $schedule->command('import:price')->hourly();
         $schedule->command('import:image')->hourly();

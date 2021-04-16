@@ -189,33 +189,34 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
     });
 
     Route::as('site.')->namespace('Site')->group(function () {
+        Route::get('/telegram-bot', 'TelegramBotController@index')->name('telegram-bot');
+        Route::post('/telegram-bot', 'TelegramBotController@index')->name('telegram-bot');
+
         Route::get('live-search', 'ProductController@search')->name('products.live-search');
 
-        //Route::middleware(['cacheResponse'])->group(function () {
-            Route::get('/', 'HomeController@index')->name('/');
+        Route::get('/', 'HomeController@index')->name('/');
 
-            Route::get('search', 'SearchController@search')->name('products.search');
-            Route::post('products/update-price', 'ProductController@updatePrice')->name('products.update-price');
-            Route::post('products/get-first-additional', 'ProductController@getFirstAdditional')->name('products.get-first-additional');
-            Route::get('/favorites', 'ResourceController@Favorites')->name('favorites');
+        Route::get('search', 'SearchController@search')->name('products.search');
+        Route::post('products/update-price', 'ProductController@updatePrice')->name('products.update-price');
+        Route::post('products/get-first-additional', 'ProductController@getFirstAdditional')->name('products.get-first-additional');
+        Route::get('/favorites', 'ResourceController@Favorites')->name('favorites');
 
-            Route::get('/blog', 'BlogController@index')->name('blog');
-            Route::get('/blog/tag/{tag}', 'BlogController@index')->where('tag', '[0-9]+')->name('blog-tag');
-            Route::get('/blog/{slug}', 'BlogController@post')->name('blog-post');
+        Route::get('/blog', 'BlogController@index')->name('blog');
+        Route::get('/blog/tag/{tag}', 'BlogController@index')->where('tag', '[0-9]+')->name('blog-tag');
+        Route::get('/blog/{slug}', 'BlogController@post')->name('blog-post');
 
-            Route::get('/contacts', 'ContactController@index')->name('contacts');
-            Route::post('/contacts', 'ContactController@contactForm')->name('contact-form');
+        Route::get('/contacts', 'ContactController@index')->name('contacts');
+        Route::post('/contacts', 'ContactController@contactForm')->name('contact-form');
 
-            Route::get('/documentation', function () {return view('site.page.documentation');})->name('documentations');
-            Route::get('/documents/certificates', function () {return view('site.page.certificates');})->name('certificates');
+        Route::get('/documentation', function () {return view('site.page.documentation');})->name('documentations');
+        Route::get('/documents/certificates', function () {return view('site.page.certificates');})->name('certificates');
 
-            Route::post('/comments', 'CommentController@store')->name('comments.store');
+        Route::post('/comments', 'CommentController@store')->name('comments.store');
 
-            Route::get('/sitemap', function () {return view('site.page.sitemap');})->name('sitemap');
+        Route::get('/sitemap', function () {return view('site.page.sitemap');})->name('sitemap');
 
-            Route::post('/show-more', 'ResourceController@showMore');
+        Route::post('/show-more', 'ResourceController@showMore');
 
-            Route::get('/{slug}', 'ResourceController@getResource')->where('slug', '.*')->name('resource');
-        //});
+        Route::get('/{slug}', 'ResourceController@getResource')->where('slug', '.*')->name('resource');
     });
 });
