@@ -6,6 +6,7 @@ use App\Jobs\ProcessImportPrice;
 use App\Product;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Cache;
 
 class PriceImport
 {
@@ -15,9 +16,17 @@ class PriceImport
             ? Product::where('details->published', 1)->whereIn('details->sku', $ids)->get()
             : Product::where('details->published', 1)->get();
 
+        $jobId = null;
+
         foreach ($products as $product) {
-            ProcessImportPrice::dispatch($product->getDetails('sku'))->onQueue('priceImport');
+            //$id = ProcessImportPrice::dispatch($product->getDetails('sku'))->onQueue('priceImport');
+
+            $job = (new ProcessImportPrice($product->getDetails('sku')))->onQueue('priceImport');
+            //$jobId = dispatch($job);
+            $jobId = app(\Illuminate\Contracts\Bus\Dispatcher::class)->dispatch($job);
         }
+
+        Cache::put('lastIdPriceImport', $jobId);
     }
 
     public static function import($prices)
