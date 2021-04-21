@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Cache;
 
 class PriceImport
 {
+    private static $priceFromAPI;
+
     public static function addToQueue($ids = null)
     {
         $products = isset($ids)
@@ -52,9 +54,19 @@ class PriceImport
     public static function importQueue($sku)
     {
         $product = [$sku];
-        $prices = PriceImport::pricesApi($product);
 
-        PriceImport::import($prices);
+        if (empty(self::$priceFromAPI)) {
+            $productSku = Product::get()->keyBy('sku')->keys()->toArray();
+            self::$priceFromAPI = PriceImport::pricesApi($productSku);
+        }
+
+        $productSingle = [];
+
+        if (isset(self::$priceFromAPI[$sku])) {
+            $productSingle[$sku] = self::$priceFromAPI[$sku];
+        }
+
+        PriceImport::import($productSingle);
     }
 
     public static function pricesApi($productSku)

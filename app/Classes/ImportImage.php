@@ -34,7 +34,10 @@ class ImportImage
     private static function init()
     {
         set_time_limit(0);
+        ini_set('max_execution_time', 0);
         ini_set('memory_limit','5024M');
+
+        //phpinfo();
 
         self::$params['sizeMainImg'] = config('settings-file.import_image.main.size');
         self::$params['sizePreviewImg'] = config('settings-file.import_image.preview.size');
@@ -80,6 +83,7 @@ class ImportImage
         $product = Product::where('details->published', 1)->where('details->sku', $sku)->first();
 
         if (!empty($product)) {
+            info('Ins Img');
             self::$apiProductImage = self::$imageRegister[$sku];
             self::$dbProductImage = ProductImage::where('details->product_sku', $sku)->first();
 
@@ -185,13 +189,17 @@ class ImportImage
 
         if (isset(self::$apiProductImage['main'])) {
             $url = self::$imageRegisterUrl . self::$apiProductImage['main']['path'];
+            $pathMainImg = public_path('storage/product/' . $product->getDetails('sku')) . '.' . self::$formatImg['jpg'];
+            //$testPathImg = "/var/www/public/storage/product/22151.jpg";
 
-            if (md5(self::$apiProductImage['main']['filemtime']) != (self::$dbProductImage['details']['main']['filemtime_md5'] ?? null)) {
-                $contents = @Image::make($url)->contrast(5);
+            if (md5(self::$apiProductImage['main']['filemtime']) != (self::$dbProductImage['details']['main']['filemtime_md5'] ?? null)
+                || !file_exists($pathMainImg)
+            ) {
+                $contents = Image::make($url)->contrast(5);
                 $contents->trim(null, null, 5, 50)->resize($size, $size, function ($constraint) {
                     $constraint->aspectRatio();
                 })->resizeCanvas($size, $size, 'center', false, [255, 255, 255, 0]);
-                $contents->save(public_path('storage/product/' . $product->getDetails('sku')) . '.' . self::$formatImg['jpg']); // save original
+                $contents->save($pathMainImg); // save original
 
                 self::$requestProductImage['details']['main']['filemtime'] = self::$apiProductImage['main']['filemtime'];
                 self::$requestProductImage['details']['main']['filemtime_md5'] = md5(self::$apiProductImage['main']['filemtime']);
@@ -207,10 +215,14 @@ class ImportImage
     {
         if (isset(self::$apiProductImage['additional'])) {
             foreach (self::$apiProductImage['additional'] as $key => $additional) {
-                if (md5($additional['filemtime']) != (self::$dbProductImage['details']['additional'][$key]['filemtime_md5'] ?? null)) {
+                $path = 'storage/product/' . $product->getDetails('sku') . '/';
+                $pathAddImg = public_path($path . $product->getDetails('sku') . '_' . $key) . '.' . self::$formatImg['jpg'];
+
+                if (md5($additional['filemtime']) != (self::$dbProductImage['details']['additional'][$key]['filemtime_md5'] ?? null)
+                    || !file_exists($pathAddImg)
+                ) {
                     $url = self::$imageRegisterUrl . $additional['path'];
-                    $contents = @Image::make($url);
-                    $path = 'storage/product/' . $product->getDetails('sku') . '/';
+                    $contents = Image::make($url);
                     $savePath = public_path($path);
 
                     if (!file_exists($savePath)) {
@@ -218,7 +230,7 @@ class ImportImage
 
                     }
 
-                    $contents->save(public_path($path . $product->getDetails('sku') . '_' . $key) . '.' . self::$formatImg['jpg']); // save additional
+                    $contents->save($pathAddImg); // save additional
 
                     self::$requestProductImage['details']['additional'][$key]['filemtime'] = $additional['filemtime'];
                     self::$requestProductImage['details']['additional'][$key]['filemtime_md5'] = md5($additional['filemtime']);
