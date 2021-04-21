@@ -30,9 +30,9 @@ class Kernel extends ConsoleKernel
         //$schedule->command('queue:work --queue=high,b2bImport  --stop-when-empty')->name('b2bImport')->withoutOverlapping();
 
         $schedule->command('import:price')->hourly();
-        //$schedule->command('import:image')->hourly();
+        $schedule->command('import:image')->hourly();
         $schedule->command('queue:work --queue=high,priceImport  --stop-when-empty')->name('priceImport')->withoutOverlapping();
-        //$schedule->command('queue:work --queue=high,imageImport  --stop-when-empty')->name('imageImport')->withoutOverlapping();
+        $schedule->command('queue:work --queue=high,imageImport  --stop-when-empty')->name('imageImport')->withoutOverlapping();
 
         if ($cache = Cache::get('lastIdPriceImport')) {
             info('PRICEIMPORTCACHE' . $cache);
