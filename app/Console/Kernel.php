@@ -27,9 +27,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        info('Schedule Work');
         //$schedule->command('queue:work --queue=high,b2bImport  --stop-when-empty')->name('b2bImport')->withoutOverlapping();
 
-        $schedule->command('import:price')->hourly();
+        /*$schedule->command('import:price')->hourly();
         $schedule->command('import:image')->hourly();
         $schedule->command('queue:work --queue=high,priceImport  --stop-when-empty')->name('priceImport')->withoutOverlapping();
         $schedule->command('queue:work --queue=high,imageImport  --stop-when-empty --timeout=600')->name('imageImport')->withoutOverlapping();
@@ -48,7 +49,7 @@ class Kernel extends ConsoleKernel
                 $monitoring->getMonitoringListByApi();
                 Cache::forget('lastIdPriceImport');
             })->everyThirtyMinutes();
-        }
+        }*/
     }
 
     /**
