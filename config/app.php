@@ -2,7 +2,6 @@
 
 return [
 
-    'price_monitoring_api_key' => env('PRICE_MONITORING_API_KEY'),
     /*
     |--------------------------------------------------------------------------
     | Application Name
