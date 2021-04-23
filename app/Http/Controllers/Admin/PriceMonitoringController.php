@@ -230,7 +230,7 @@ class PriceMonitoringController
 
             endforeach;
         else:
-            $bot->sendSubscribes('sendMessage', 'Z-price. Не пришёл ответ с API. Код ошибки: ' . $this->info);
+            $bot->sendSubscribes('sendMessage', 'Z-price. Не пришёл ответ с API. Код ошибки: ' . $this->info . '.' . $response);
         endif;
 
         return $sdList;
