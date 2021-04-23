@@ -7,10 +7,12 @@ use App\Product;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Contracts\Bus\Dispatcher;
 
 class PriceImport
 {
     private static $priceFromAPI;
+    private static $lastTimeDataAPI;
 
     public static function addToQueue($ids = null)
     {
@@ -22,10 +24,8 @@ class PriceImport
 
         foreach ($products as $product) {
             //$id = ProcessImportPrice::dispatch($product->getDetails('sku'))->onQueue('priceImport');
-
             $job = (new ProcessImportPrice($product->getDetails('sku')))->onQueue('priceImport');
-            //$jobId = dispatch($job);
-            $jobId = app(\Illuminate\Contracts\Bus\Dispatcher::class)->dispatch($job);
+            $jobId = app(Dispatcher::class)->dispatch($job);
         }
 
         Cache::put('lastIdPriceImport', $jobId);
@@ -55,9 +55,13 @@ class PriceImport
     {
         $product = [$sku];
 
-        if (empty(self::$priceFromAPI)) {
+        /*
+         * If more than 30 minutes have passed, we have to update $priceFromApi
+         */
+        if (empty(self::$priceFromAPI) || time() - self::$lastTimeDataAPI >= 180) {
             $productSku = Product::get()->keyBy('sku')->keys()->toArray();
             self::$priceFromAPI = PriceImport::pricesApi($productSku);
+            self::$lastTimeDataAPI = time();
         }
 
         $productSingle = [];
