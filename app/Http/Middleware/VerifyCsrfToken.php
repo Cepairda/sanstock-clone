@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Classes\TelegramBot;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
 
 class VerifyCsrfToken extends Middleware
@@ -12,6 +13,6 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        '/telegram-bot',
     ];
 }

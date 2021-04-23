@@ -2,7 +2,6 @@
 
 namespace App\Classes;
 
-use App\Resource;
 use Illuminate\Support\Str;
 
 class Slug

@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Classes\TelegramBot;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Queue;
+use Illuminate\Queue\Events\JobFailed;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,8 +24,10 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(TelegramBot $bot)
     {
-        //
+        Queue::failing(function (JobFailed $event) use ($bot) {
+            $bot->sendSubscribes('sendMessage', class_basename($event->job));
+        });
     }
 }

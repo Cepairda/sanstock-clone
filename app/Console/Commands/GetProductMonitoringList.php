@@ -13,7 +13,7 @@ class GetProductMonitoringList extends Command
      *
      * @var string
      */
-    protected $signature = 'api:test';
+    protected $signature = 'price:monitoring';
 
     /**
      * The console command description.

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Brand;
+use App\Classes\TelegramBot;
 use App\Http\Controllers\Admin\Resource\isResource;
 use App\Partner;
 use App\PartnerUrl;
@@ -17,6 +18,7 @@ class PriceMonitoringController
     private $monitoringData = [];
 
     private $partners = [];
+    protected $info;
 
     /**
      * Мониторинг ценовой политики по api
@@ -29,7 +31,7 @@ class PriceMonitoringController
 
         $response = $this->sentRequest($brands, $partners);
 
-        $sdList = $this->parseResponseByApi(json_decode($response, true ));
+        $sdList = $this->parseResponseByApi(json_decode($response, true ), new TelegramBot());
 
         $skuList = $this->getProductIdBySdCode($sdList);
 
@@ -81,11 +83,11 @@ class PriceMonitoringController
 
         $response = curl_exec($curl);
         $err = curl_error($curl);
-        $info = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $this->info = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         curl_close($curl);
 
-        if($info !== 200) Log::info('[ API ] Время запроса: ' . (time() - $start) . 'с.; Код ответа: ' . $info);
+        if($this->info !== 200) Log::info('[ API ] Время запроса: ' . (time() - $start) . 'с.; Код ответа: ' . $this->info);
 
 //        var_dump('Время работы скрипта: ' . (time() - $start));
 //        var_dump('Код ответа: ' . $info);
@@ -214,7 +216,7 @@ class PriceMonitoringController
      * @param $response
      * @return array
      */
-    public function parseResponseByApi($response) {
+    public function parseResponseByApi($response, TelegramBot $bot) {
 
         $sdList = [];
 
@@ -227,7 +229,8 @@ class PriceMonitoringController
                 $this->monitoringData[$item["ClientCode"]] = $item;
 
             endforeach;
-
+        else:
+            $bot->sendSubscribes('sendMessage', 'Z-price. Не пришёл ответ с API. Код ошибки: ' . $this->info);
         endif;
 
         return $sdList;
