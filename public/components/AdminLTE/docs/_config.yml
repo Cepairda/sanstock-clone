@@ -46,7 +46,7 @@ navigation:
       url: components/main-sidebar.html
     - title: Control Sidebar
       url: components/control-sidebar.html
-    - title: Card
+    - title: Cart
       url: components/cards.html
     - title: Small-/ Info-Box
       url: components/boxes.html
@@ -70,7 +70,7 @@ navigation:
       url: javascript/push-menu.html
     - title: Treeview
       url: javascript/treeview.html
-    - title: Card Widget
+    - title: Cart Widget
       url: javascript/card-widget.html
     - title: CardRefresh
       url: javascript/card-refresh.html
