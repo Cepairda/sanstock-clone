@@ -12,16 +12,8 @@ window.$ = window.jQuery = require('jquery');
 //bootstrap
 require('bootstrap');
 
-// template
-require('./template/core.min.js');
-require('./template/script');
 
-// plugins
-require('./plugins/rd-navbar');
-//require('./plugins/jquery.filer');
-window.owlCarousel = require('owl.carousel');
-
-require('lazysizes');
+//require('lazysizes');
 // import a plugin
 //require('lazysizes/plugins/parent-fit/ls.parent-fit')
 

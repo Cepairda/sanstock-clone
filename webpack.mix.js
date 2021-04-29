@@ -12,18 +12,17 @@ require('laravel-mix-purgecss');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .copyDirectory('node_modules/tinymce/skins', 'public/tinymce/skins')
-    .js('resources/js/admin/resourses/*', 'public/js/admin/resourses')
-    .sass('resources/sass/app.scss', 'public/css')
+mix
+    //.copyDirectory('node_modules/tinymce/skins', 'public/tinymce/skins')
+    //.js('resources/js/admin/resourses/*', 'public/js/admin/resourses')
 
     // Assembly for site
     .sass('resources/sass/site/app.scss', 'public/css/site')
     .options({
         processCssUrls: false
     })
+
     .js('resources/js/site/app.js', 'public/js/site')
-    .js('resources/js/site/plugins/jquery.filer.js', 'public/js/site/plugins')
     .purgeCss({
         extend: {
             content: [path.join(__dirname, 'node_modules/**/*.js')],

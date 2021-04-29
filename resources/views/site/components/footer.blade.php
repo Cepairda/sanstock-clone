@@ -1,58 +1,76 @@
-<!-- Page Footer -->
-<section class="pre-footer-corporate">
-
-    <div class="container">
+<footer class="footer-grad">
+    <div class="container footer">
         <div class="row">
-
-            <div class="col-sm-6 col-md-10 col-lg-3">
-                <img src="{{ asset('images/site/logo.svg') }}" alt="" width="125">
-                <p style="padding-top: 35px;font-size: 14px">{!! __('footer desc') !!}</p>
-            </div>
-
-            <div class="col-sm-6 col-md-3 col-lg-3">
-                <h5>{{ __('Categories') }}</h5>
-                <ul class="list-sm">
-                    @php($categories = $categories ?? \App\Category::joinLocalization()->get()->toTree())
-
-                    @foreach($categories as $category)
-                        <li>
-                            <a href="{{ route('site.resource', $category->slug) }}">{!! $category->getData('name') !!}</a>
-                        </li>
-                    @endforeach
+            <div class="col-lg-3 footer__element">
+                <span class="footer__element__title">@lang('site.content.categories')</span>
+                <ul>
+                    <li><a class="footer__element--item" href="{{ asset('/') }}">Категория 1</a></li>
+                    <li><a class="footer__element--item" href="{{ asset('/') }}">Категория 2</a></li>
+                    <li><a class="footer__element--item" href="{{ asset('/') }}">Категория 3</a></li>
+                    <li><a class="footer__element--item" href="{{ asset('/') }}">Категория 4</a></li>
                 </ul>
             </div>
-
-            <div class="col-sm-6 col-md-5 col-lg-3">
-                <h5>{{ __('Information') }}</h5>
-                <ul class="list-sm">
-                    {{--<li><a href="/for-user">{{ __('For user') }}</a></li>--}}
-                    <li><a href="{{ route('site.sitemap') }}">{{ __('Sitemap') }}</a></li>
-                    <li><a href="{{ route('site.blog') }}">{{ __('Blog') }}</a></li>
-                    <li><a href="{{ route('site.contacts') }}">{{ __('Contacts') }}</a></li>
+            <div class="col-lg-3 footer__element">
+                <span class="footer__element__title">@lang('site.footer.mt2')</span>
+                <ul>
+                    <li><a class="footer__element--item" href="{{ asset('for-user') }}">@lang('site.content.for-user')</a></li>
+                    <li><a class="footer__element--item" href="{{ asset('sale-points') }}">@lang('site.footer.ml5')</a></li>
+                    <li><a class="footer__element--item" href="{{ asset('sitemap') }}">@lang('site.footer.ml11')</a></li>
+                    <li><a class="footer__element--item" href="{{ asset('blog') }}">@lang('site.content.blog')</a></li>
+                    <li><a class="footer__element--item" href="{{ asset('contacts') }}">@lang('site.footer.ml6')</a></li>
                 </ul>
             </div>
-
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <h5>{{ __('About us') }}</h5>
-                <ul class="list-sm">
-                    <li><a href="{{ route('site.resource', 'about-us') }}">{{ __('About brand') }}</a></li>
-                    <li><a href="{{ route('site.documentations') }}">{{ __('Documentation') }}</a></li>
-                    <li><p style="font-size: 20px; color: #000">{{ __('Get in Touch') }}</p></li>
-                    <li><a style="font-size: 20px; color: #000" href="tel:0800212008">0800 210 377</a></li>
+            <div class="col-lg-3 footer__element">
+                <span class="footer__element__title">@lang('site.footer.mt3')</span>
+                <ul>
+                    <li><a class="footer__element--item" href="{{ asset('about') }}">@lang('site.footer.ml7')</a></li>
+                    <li><a class="footer__element--item" href="{{ asset('documents') }}">@lang('site.footer.ml8')</a></li>
+                    <li><a class="footer__element--item" href="{{ asset('videos') }}">@lang('site.footer.ml10')</a></li>
+                    <li><a class="footer__element--item" href="{{ asset('/site/doc/catalog-2019.pdf') }}" target="_blank">@lang('site.footer.mt1')</a></li>
                 </ul>
             </div>
-
+            <div class="col-lg-3 footer__element">
+                <div>
+                    <span class="footer__element__title">@lang('site.footer.mt4')</span>
+                    <ul>
+                        <li class="footer__element--item-tel">Call-центр:</li>
+                        <li><a class="footer__element-phone" href="tel:0800212124">0-800-21-21-24</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-
-</section>
-<!-- Footer -->
-<footer class="footer-corporate" style="border-top: 1px solid #888; background-color: #f8f8f8; color: #000;">
-    <div class="container">
-        <div class="row">
-            <div class="footer-corporate__inner">
-                <p class="rights">©&nbsp;{{ date('Y') }} LIDZ. {{ __('copy') }}</p>
+    <div class="footer_mb-vr">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <span class="footer__element__title">@lang('site.content.hotline')</span>
+                    <ul>
+                        <li><a class="footer__phone" href="tel:0800212124">0-800-21-21-24</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 footer_mb-vr__connect">
+                    <span class="footer__element__title">@lang('site.content.callback')</span>
+                    <ul>
+                        <li>
+                            <a href="#"><i class="icon-instagram"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="copyright--lg  col-sm-12">
+                    <i class="icon-copyright"></i>
+                    <span>©&nbsp;{{ date('Y') }} SanStock. {{ __('copy') }}</span>
+                </div>
             </div>
         </div>
     </div>
 </footer>
+<a href="#" class="link-to-top" hidden>
+    <i class="to-top"></i>
+</a>

@@ -27,9 +27,7 @@
     "lg-thumbnail.js": "^1.2.0",
     "lg-zoom.js": "^1.3.0",
     "lightgallery.js": "^1.4.0",
-    "owl.carousel": "^2.3.4",
     "popper": "^1.0.1",
-    "popper.js": "^1.14.3",
-    "tinymce": "^5.4.1"
+    "popper.js": "^1.14.3"
   }
 }
