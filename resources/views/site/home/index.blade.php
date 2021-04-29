@@ -39,6 +39,7 @@
                             </div>
                         </div>
                     </div>
+                    {{----}}
                     {{--<div class="col-6 col-lg-4 mb-contain">--}}
                         {{--<div class="main-ideas__wrapper jsLink" data-href="{{ asset('smesiteli-dlya-mojki') }}">--}}
                             {{--<div class="main-ideas__img ideas-img-2"></div>--}}
