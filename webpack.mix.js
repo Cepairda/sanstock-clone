@@ -23,13 +23,8 @@ mix
     })
 
     .js('resources/js/site/app.js', 'public/js/site')
-    .purgeCss({
-        extend: {
-            content: [path.join(__dirname, 'node_modules/**/*.js')],
-            safelist: { deep: [/hljs/] },
-        },
-    });
 
+    .version();
 
 mix.autoload({
     jquery: ['$', 'window.jQuery', "jQuery", "window.$", "jquery", "window.jquery"]

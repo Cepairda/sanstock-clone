@@ -17,6 +17,8 @@ require('bootstrap');
 // import a plugin
 //require('lazysizes/plugins/parent-fit/ls.parent-fit')
 
+//plugin
+require('./plugins/swipeGallery');
 
 //custom script
-require('./script');
+//require('./script');

@@ -5,14 +5,12 @@
 <div class="col-12 col-lg-6 col-xl-4 product__wrapper">
     <div class="product__wrapper-lg">
         <div class="product__img jsLink" data-href="#">
-
-            {{--{!! img(['type' => 'product', 'name' => $product->sku, 'format' => 'jpg', 'size' => 237, 'class' => 'product__img-lg', 'lazy' => true, 'alt' => $product->name]) !!}--}}
-
+            <img class="product__img-lg" src="https://b2b-sandi.com.ua/img/no_img.jpg" title="{{ $product->name }}">
         </div>
         <div class="d-flex product-description">
             <div class="product-description__item jsLink"
                  data-href="#">
-                <span class="product-title">Lorem ipsum dolor.</span>
+                <span class="product-title">{{ $product->name }}</span>
             </div>
             <div class="product-icon">
                 <i id="comparison_123" class="comparison" data-attribute="comparison"
@@ -23,7 +21,7 @@
         </div>
 
         <div class="product-wrapper">
-            <p class="product-description--item">Lorem ipsum.</p>
+            <a href="{{ route('site.resource', $product->category->slug) }}" class="product-description--item">{{ $product->category->getData('name') }}</a>
             <div class="product-price">
                 <div class="product-price__item">
                     <p>
