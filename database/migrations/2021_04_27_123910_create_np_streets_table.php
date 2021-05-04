@@ -15,9 +15,10 @@ class CreateNpStreetsTable extends Migration
     {
         Schema::create('np_streets', function (Blueprint $table) {
             $table->id();
-            $table->string('ref', 36);
-            $table->string('streets_type_ref', 36);
-            $table->string('city_ref', 36);
+            $table->char('ref', 36);
+            $table->char('streets_type_ref', 36);
+            $table->char('city_ref', 36);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

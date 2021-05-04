@@ -2,14 +2,16 @@
 
 namespace App;
 
-class NewPostSettlements extends Resource
+use Illuminate\Database\Eloquent\Model;
+
+class NewPostSettlements extends Model
 {
-    protected $table = 'np_areas';
+    protected $table = 'np_settlements';
 
     protected $fillable = [
         'ref',
-        'areas_center',
-        'status',
+        'area_ref',
+        'settlement_type',
     ];
 
     public $timestamps = true;

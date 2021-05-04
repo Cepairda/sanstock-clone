@@ -17,7 +17,20 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
 
     // мои маршруты
-    Route::get('/test-api', 'Admin\PriceMonitoringController@getProductPriceMonitoringListByApi')->name('api.test');
+    // Route::get('/test-api', 'Admin\PriceMonitoringController@getProductPriceMonitoringListByApi')->name('api.test');
+
+    // New Post
+    Route::prefix('new-post')->group(function () {
+
+        Route::get('/areas', 'Admin\NewPost\NewPostController@getAreas')->name('get-areas');
+
+        Route::get('/settlements', 'Admin\NewPost\NewPostController@getSettlements')->name('get-settlements');
+
+        Route::get('/streets', 'Admin\NewPost\NewPostController@getStreets')->name('get-streets');
+
+        Route::get('/warehouses', 'Admin\NewPost\NewPostController@getWarehouses')->name('get-warehouses');
+    });
+
     // конец моих маршрутов
 
     Route::get('/sitemap.xml', 'SitemapController@index');
@@ -186,7 +199,11 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
             Route::get('/create-search-string', 'SettingController@createSearchString')->name('create-search-string');
         });
+
     });
+
+    // New Post
+    Route::get('admin/test-request', '\App\Http\Controllers\Admin\NewPost\NewPostController@sentRequest')->name('sent-request-new-post');
 
     Route::as('site.')->namespace('Site')->group(function () {
         Route::get('/telegram-bot', 'TelegramBotController@index')->name('telegram-bot');

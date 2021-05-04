@@ -17,8 +17,11 @@ class CreateNpDescriptionsTable extends Migration
             $table->id();
             $table->string('locale', 2);
             $table->bigInteger('affiliated_id');
-            $table->string('group');
-            $table->json('details');
+            $table->string('group', 20);
+            $table->string('name', 100);
+            $table->string('type', 50);
+            $table->string('search', 255);
+            $table->softDeletes();
         });
     }
 

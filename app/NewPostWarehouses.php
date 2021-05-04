@@ -5,16 +5,17 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class NewPostAreas extends Model
+class NewPostWarehouses extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'np_areas';
+    protected $table = 'np_warehouses';
 
     protected $fillable = [
         'ref',
-        'areas_center',
-        'status',
+        'city_ref',
+        'site_key',
+        'type_of_warehouse'
     ];
 
     public $timestamps = true;

@@ -18,6 +18,7 @@ class CreateNpAreasTable extends Migration
             $table->string('ref', 36);
             $table->string('areas_center', 36);
             $table->smallInteger('status');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

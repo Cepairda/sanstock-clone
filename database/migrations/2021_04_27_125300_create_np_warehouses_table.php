@@ -15,8 +15,11 @@ class CreateNpWarehousesTable extends Migration
     {
         Schema::create('np_warehouses', function (Blueprint $table) {
             $table->id();
-            $table->string('ref', 36);
-            $table->string('city_ref', 36);
+            $table->char('ref', 36);
+            $table->char('city_ref', 36);
+            $table->char('site_key', 36);
+            $table->char('type_of_warehouse', 36);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
