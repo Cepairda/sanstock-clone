@@ -12,19 +12,19 @@ window.$ = window.jQuery = require('jquery');
 //bootstrap
 require('bootstrap');
 
-// template
-require('./template/core.min.js');
-require('./template/script');
 
-// plugins
-require('./plugins/rd-navbar');
-//require('./plugins/jquery.filer');
-window.owlCarousel = require('owl.carousel');
-
-require('lazysizes');
+//require('lazysizes');
 // import a plugin
 //require('lazysizes/plugins/parent-fit/ls.parent-fit')
 
+//plugin
+require('lightgallery.js');
+require('lg-zoom.js');
+require('lg-fullscreen.js');
+require('lg-thumbnail.js');
+require('./plugins/swipeGallery');
+require('./plugins/characteristicsLists');
+
 
 //custom script
-require('./script');
+//require('./script');

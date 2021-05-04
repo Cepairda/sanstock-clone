@@ -1,0 +1,95 @@
+$border-bottom-style: 1px dotted #ddd;
+$transition-block: all .35s ease-in-out;
+$transition-icon: transform .35s ease-in-out;
+
+.info-block {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 4px;
+  border-bottom: $border-bottom-style;
+
+  &--collapsing {
+    height: 0;
+    overflow: hidden;
+    transition: $transition-block;
+  }
+
+  &--name,
+  &--value {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &--name {
+    min-width: 50%;
+    max-width: 75%;
+    padding-right: 16px;
+  }
+
+  &--value {
+    max-width: 50%;
+    padding-left: 16px;
+    text-align: right;
+  }
+
+  &--close {
+    cursor: pointer;
+  }
+
+  &--icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    width: 20px;
+    margin: 10px 0;
+    transition: $transition-icon;
+    cursor: pointer;
+  }
+
+  &:not(.show)[data-dropdown="true"] {
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f7f7f7;
+    }
+  }
+
+  &[data-dropdown="true"] {
+
+    .info-block--value {
+      padding-right: 16px;
+    }
+  }
+
+  &.show {
+    display: block;
+
+    .info-block--name,
+    .info-block--value {
+      flex-basis: 100%;
+      max-width: 100%;
+      white-space: normal;
+      overflow: visible;
+    }
+
+    .info-block--name {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .info-block--value {
+      text-align: justify;
+      padding-right: 1rem;
+    }
+
+    .info-block--icon {
+      transform: rotate(180deg);
+    }
+  }
+}

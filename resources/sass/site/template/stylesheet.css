@@ -1,0 +1,43 @@
+@font-face {
+    font-family: 'Open Sans Regular';
+    src: url('/libs/font/OpenSans/OpenSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Open Sans Semibold';
+    src: url('/libs/font/OpenSans/OpenSans-Semibold.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans Bold';
+    src: url('/libs/font/OpenSans/OpenSans-Bold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Proxima Nova Cn Rg';
+    src: url('/libs/font/ProximaNova/ProximaNova-Bold.eot');
+    src: url('/libs/font/ProximaNova/ProximaNova-Bold.eot') format('embedded-opentype'),
+    url('/libs/font/ProximaNova/ProximaNova-Bold.woff') format('woff'),
+    url('/libs/font/ProximaNova/ProximaNova-Bold.ttf') format('truetype');
+    url('/libs/font/ProximaNova/ProximaNova-Bold.svg#webfont') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Proxima Nova Cn Lt';
+    src: url('/libs/font/ProximaNova/ProximaNova-Semibold.eot');
+    src: url('/libs/font/ProximaNova/ProximaNova-Semibold.eot?#iefix') format('embedded-opentype'),
+    url('/libs/font/ProximaNova/ProximaNova-Semibold.woff') format('woff'),
+    url('/libs/font/ProximaNova/ProximaNova-Semibold.ttf') format('truetype');
+    url('/libs/font/ProximaNova/ProximaNova-Semibold.svg#webfont') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

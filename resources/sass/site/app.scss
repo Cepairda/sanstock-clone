@@ -7,42 +7,13 @@
 // bootstrap (v4.5.3)
 @import '~bootstrap/scss/bootstrap';
 
+//plugins
+@import "~lightgallery.js/src/sass/lightgallery";
+@import 'plugins/swipe-gallery',
+        'plugins/characteristics-lists';
 
-
-// template (buy)
-@import
-	'template/components',
-	'template/helpers',
-	'template/modules',
-	'template/plugins',
-	'template/fonts';
-//plugins font
-@import "plugins/fonts/jquery-filer-fonts";
-
-// plugins
-@import
-	'plugins/rd-navbar',
-	'plugins/owl-carousel',
-	'plugins/jquery.filer',
-    'plugins/lazyload',
-	'plugins/slick-slider';
-@import   '~lightgallery.js/src/sass/lightgallery';
+//old template
+//'template/fontawesome', 'template/stylesheet',
+@import 'template/style.all', 'template/stylemedia';
 
 @import 'common';
-
-// components
-@import
-	'components/buttons',
-	'components/header',
-	'components/footer',
-	'components/breadcrumbs',
-	'components/product',
-	'components/tabs',
-	'components/checkbox',
-	'components/stars-list',
-    'components/comment';
-// page
-@import
-	'page/home',
-	'page/category',
-	'page/product';

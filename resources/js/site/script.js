@@ -1,16 +1,3 @@
-// $(document).ready(function () {
-//     $('.home__carousel').owlCarousel({
-//         mouseDrag: false,//Отключаем MouseDrag (Т.к. у нас 1 изображение)
-//         touchDrag: false,//Отключаем MouseDrag (Т.к. у нас 1 изображение)
-//         pullDrag: false,//Отключаем MouseDrag (Т.к. у нас 1 изображение)
-//         items: 1,
-//         loop: false,
-//         margin: 10,
-//         nav: false,
-//         navElement: 'div',
-//         navText: ['<span class=" linear-icon-chevron-left"></span>', '<span class="linear-icon-chevron-right"></span>']
-//     });
-// });
 
 $('body').on('click', '#showMore', function () {
     var $this = $(this);
