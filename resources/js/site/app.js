@@ -18,7 +18,13 @@ require('bootstrap');
 //require('lazysizes/plugins/parent-fit/ls.parent-fit')
 
 //plugin
+require('lightgallery.js');
+require('lg-zoom.js');
+require('lg-fullscreen.js');
+require('lg-thumbnail.js');
 require('./plugins/swipeGallery');
+require('./plugins/characteristicsLists');
+
 
 //custom script
 //require('./script');

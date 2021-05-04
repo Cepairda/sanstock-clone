@@ -196,12 +196,15 @@
                 //subHtmlSelectorRelative: true,
             });
             lgl.addEventListener('onAfterOpen', function () {
-                let btnZoom = document.querySelector('#lg-zoom-in'),
-                    customBtm = document.createElement('button');
-                customBtm.className = 'lg-icon';
-                customBtm.id = 'lg-zoom-full';
-                !document.querySelector('#lg-zoom-full') && btnZoom.after(customBtm);
-                btnZoom.hidden = true;
+                const zoom = false;
+                if (zoom) {
+                    let btnZoom = document.querySelector('#lg-zoom-in'),
+                        customBtm = document.createElement('button');
+                    customBtm.className = 'lg-icon';
+                    customBtm.id = 'lg-zoom-full';
+                    !document.querySelector('#lg-zoom-full') && btnZoom.after(customBtm);
+                    btnZoom.hidden = true;
+                }
             }, false);
 
 
@@ -334,7 +337,7 @@
 
                 let gi = this.titleGalleryImages.querySelectorAll(`.${galleryImageItemClassName}`);
                 if (gi) {
-                    const h = this.titleGalleryImages.offsetWidth;
+                    const h = this.titleImagesContainer.offsetWidth;
                     gi.forEach(el => {
                         el.style.minWidth = h + 'px';
                     });

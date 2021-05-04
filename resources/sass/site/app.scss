@@ -8,7 +8,9 @@
 @import '~bootstrap/scss/bootstrap';
 
 //plugins
-@import 'plugins/swipe-gallery';
+@import "~lightgallery.js/src/sass/lightgallery";
+@import 'plugins/swipe-gallery',
+        'plugins/characteristics-lists';
 
 //old template
 //'template/fontawesome', 'template/stylesheet',
