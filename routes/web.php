@@ -235,5 +235,12 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::post('/show-more', 'ResourceController@showMore');
 
         Route::get('/{slug}', 'ResourceController@getResource')->where('slug', '.*')->name('resource');
+
+        // корзина
+        Route::get('/cart', 'Cart/ContactController@loadCartView')->name('cart');
+
+        Route::get('/order-shipping', 'Cart/ContactController@loadOrderShippingView')->name('order-shipping');
+
+        Route::get('/checkout', 'Cart/ContactController@checkout')->name('checkout');
     });
 });

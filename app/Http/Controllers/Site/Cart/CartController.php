@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Cart;
+namespace App\Http\Controllers\Site\Cart;
 
 use App\Orders;
 use App\OrderShipping;
@@ -22,7 +22,7 @@ class CartController
      * @param null $input
      * @return mixed
      */
-    public function loadCheckoutView()
+    public function loadOrderShippingView()
     {
 
 
