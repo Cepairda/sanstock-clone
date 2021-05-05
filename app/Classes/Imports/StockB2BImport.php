@@ -36,164 +36,6 @@ class StockB2BImport
         self::$data = $data;
     }
 
-    public function firstOrCreateBrand()
-    {
-        $brand = Brand::where('details->ref', self::$data['brand']['ref'])->first();
-
-        if (!isset($brand)) {
-            $brand = new Brand();
-            $name = trim(self::$data['brand']['description']);
-
-            $brand->setRequest([
-                'slug' => Str::slug(str_replace('/', '', $name)),
-                'details' => ['ref' => self::$data['brand']['ref']],
-                'data' => ['name' => $name]
-            ]);
-
-            LaravelLocalization::setLocale('ru');
-            $brand->storeOrUpdate();
-        }
-
-        return $brand;
-    }
-
-    public function firstOrCreateProducts($brand = null)
-    {
-        foreach (self::$data['products'] as $productRef => $productData) {
-            $this->product($brand->id, $productRef);
-        }
-    }
-
-    public function updateOrCreateCharacteristics($characteristics)
-    {
-        $characteristicValueIds = [];
-
-        foreach ($characteristics as $characteristic) {
-            $characteristicDataName = mb_ucfirst(trim(mb_ereg_replace('/\s+/', ' ', mb_convert_encoding($characteristic['description_characteristic'], 'UTF-8'))));
-            $characteristicValueDataValue = trim(mb_ereg_replace('/\s+/', ' ', mb_convert_encoding($characteristic['value'], 'UTF-8')));
-
-            if (!empty($characteristicDataName) && !empty($characteristicValueDataValue)) {
-                $characteristicDataNameUk = mb_ucfirst(trim(mb_ereg_replace('/\s+/', ' ', mb_convert_encoding($characteristic['description_characteristic_uk'], 'UTF-8'))));
-                $characteristicId = $this->characteristic($characteristicDataName, $characteristicDataNameUk);
-
-                $characteristicValueDataValueUk = trim(mb_ereg_replace('/\s+/', ' ', mb_convert_encoding($characteristic['value_uk'], 'UTF-8')));
-                $characteristicValueId = $this->characteristicValue(
-                    $characteristicId,
-                    $characteristicValueDataValue,
-                    $characteristicValueDataValueUk
-                );
-
-                array_push($characteristicValueIds, $characteristicValueId);
-            }
-        }
-
-        return $characteristicValueIds;
-    }
-
-    protected function product($brandId, $productRef)
-    {
-        $product = Product::where('details->ref', $productRef)->first();
-
-        if (!isset($product)) {
-            $product = new Product();
-            $productData = self::$data['products'][$productRef];
-            $name = trim($productData['description']);
-            $categoryName = (self::$data['categories'][$productData['category_ref']]['description'] ?? 'uncategorized');
-            $slug = (Str::slug($categoryName) . '/' . Str::slug($name));
-
-            $product->setRequest([
-                'slug' => $slug,
-                'details' => [
-                    'ref' => $productRef,
-                    'sku' => $productData['old_base_code'],
-                    'brand_id' => $brandId ?? null,
-                    'category_id' => null,
-                    'published' => 0,
-                    'enable_comments' => 1,
-                    'enable_stars_comments' => 1,
-                    'enable_reviews' => 1,
-                    'enable_stars_reviews' => 1,
-                ],
-                'data' => ['name' => $name]
-            ]);
-
-            LaravelLocalization::setLocale('ru');
-            $product->storeOrUpdate();
-        }
-
-        if (isset(self::$data['characteristics'][$productRef])) {
-            $product->setRequest([
-                'relations' => [
-                    CharacteristicValue::class => $this->updateOrCreateCharacteristics(self::$data['characteristics'][$productRef])
-                ]
-            ]);
-        }
-
-        $product->updateRelations();
-    }
-
-    protected function characteristic($characteristicDataName): int
-    {
-        $c = Characteristic::where('data->name', $characteristicDataName)->joinLocalization('ru')->first();
-
-        if (!isset($c)) {
-            $c = new Characteristic();
-
-            $c->setRequest([
-                'data' => ['name' => $characteristicDataName]
-            ]);
-
-            LaravelLocalization::setLocale('ru');
-            $c->storeOrUpdate();
-        }
-
-        if (!empty($characteristicDataNameUk)) {
-            $c->setRequest([
-                'details' => [
-                    'is_filter' => 1,
-                    'published' => 1,
-                    'sort' => 0
-                ],
-                'data' => ['name' => $characteristicDataNameUk],
-            ]);
-
-            LaravelLocalization::setLocale('uk');
-            $c->storeOrUpdate();
-        }
-
-        return $c->id;
-    }
-
-    protected function characteristicValue($characteristicId, $characteristicValueDataValue, $characteristicValueDataValueUk): int
-    {
-        $cV = CharacteristicValue::where('details->characteristic_id', $characteristicId)
-            ->where('data->value', $characteristicValueDataValue)->joinLocalization('ru')->first();
-
-        if (!isset($cV)) {
-            $cV = new CharacteristicValue();
-
-            $cV->setRequest([
-                'details' => ['characteristic_id' => $characteristicId],
-                'data' => ['value' => $characteristicValueDataValue]
-            ]);
-
-            LaravelLocalization::setLocale('ru');
-            $cV->storeOrUpdate();
-        }
-
-        if (!empty($characteristicValueDataValueUk)) {
-            $cV->setRequest([
-                'details' => ['characteristic_id' => $characteristicId],
-                'data' => ['value' => $characteristicValueDataValueUk]
-            ]);
-
-            LaravelLocalization::setLocale('uk');
-            $cV->storeOrUpdate();
-        }
-
-        return $cV->id;
-    }
-
     public function addToQueue()
     {
         $brand = $this->firstOrCreateBrand();
@@ -211,16 +53,19 @@ class StockB2BImport
     public function parse()
     {
         $jsonData = self::$data;
+        do {
 
-        foreach ($jsonData['data'] as $sku => $dataProduct) {
-            $main = $dataProduct['main'];
-            $attributes = $dataProduct['attributes'];
-            //$this->stockBrand($main['brand']['ref'], $main['brand']['name']);
-            //$this->stockCategory($main['category']['ref'], $main['category']['name']);
-            //$this->stockProduct($sku, $main);
-            //$this->stockAttributes($sku, $attributes);
-            //break;
-        }
+
+            foreach ($jsonData['data'] as $sku => $dataProduct) {
+                $main = $dataProduct['main'];
+                $attributes = $dataProduct['attributes'];
+                //$this->stockBrand($main['brand']['ref'], $main['brand']['name']);
+                //$this->stockCategory($main['category']['ref'], $main['category']['name']);
+                //$this->stockProduct($sku, $main);
+                $this->stockAttributes($sku, $attributes);
+                break;
+            }
+        } while (isset($jsonData['next_page_url']));
     }
 
     /**
@@ -338,29 +183,35 @@ class StockB2BImport
         }
     }
 
-    public function stockCharacteristic()
+    /**
+     * @param string $nameRu
+     * @param string|null $nameUk
+     *
+     * @return int
+     */
+    public function stockCharacteristic(string $nameRu, ?string $nameUk) : int
     {
-        $c = Characteristic::where('data->name', $characteristicDataName)->joinLocalization('ru')->first();
+        $c = Characteristic::where('data->name', $nameRu)->joinLocalization('ru')->first();
 
         if (!isset($c)) {
             $c = new Characteristic();
 
             $c->setRequest([
-                'data' => ['name' => $characteristicDataName]
+                'data' => ['name' => $nameRu]
             ]);
 
             LaravelLocalization::setLocale('ru');
             $c->storeOrUpdate();
         }
 
-        if (!empty($characteristicDataNameUk)) {
+        if (!empty($nameUk)) {
             $c->setRequest([
                 'details' => [
                     'is_filter' => 1,
                     'published' => 1,
                     'sort' => 0
                 ],
-                'data' => ['name' => $characteristicDataNameUk],
+                'data' => ['name' => $nameUk],
             ]);
 
             LaravelLocalization::setLocale('uk');
@@ -370,27 +221,34 @@ class StockB2BImport
         return $c->id;
     }
 
-    public function stockCharacteristicValue()
+    /**
+     * @param int $characteristicId
+     * @param string $nameRu
+     * @param string $nameUk
+     *
+     * @return int
+     */
+    public function stockCharacteristicValue(int $characteristicId, string $valueRu, string $valueUk) : int
     {
         $cV = CharacteristicValue::where('details->characteristic_id', $characteristicId)
-            ->where('data->value', $characteristicValueDataValue)->joinLocalization('ru')->first();
+            ->where('data->value', $valueRu)->joinLocalization('ru')->first();
 
         if (!isset($cV)) {
             $cV = new CharacteristicValue();
 
             $cV->setRequest([
                 'details' => ['characteristic_id' => $characteristicId],
-                'data' => ['value' => $characteristicValueDataValue]
+                'data' => ['value' => $valueRu]
             ]);
 
             LaravelLocalization::setLocale('ru');
             $cV->storeOrUpdate();
         }
 
-        if (!empty($characteristicValueDataValueUk)) {
+        if (!empty($valueUk)) {
             $cV->setRequest([
                 'details' => ['characteristic_id' => $characteristicId],
-                'data' => ['value' => $characteristicValueDataValueUk]
+                'data' => ['value' => $valueUk]
             ]);
 
             LaravelLocalization::setLocale('uk');
@@ -423,13 +281,19 @@ class StockB2BImport
         }
     }
 
-    public function stockUpdateOrCreateCharacteristics($characteristics)
+
+    /**
+     * @param array $characteristics
+     *
+     * @return array
+     */
+    public function stockUpdateOrCreateCharacteristics(array $characteristics) : array
     {
         $characteristicValueIds = [];
 
         foreach ($characteristics as ['name' => $name, 'value' => $value]) {
-            $characteristicId = $this->characteristic($name['ru'], $name['uk']);
-            $characteristicValueId = $this->characteristicValue(
+            $characteristicId = $this->stockCharacteristic($name['ru'], $name['uk']);
+            $characteristicValueId = $this->stockCharacteristicValue(
                 $characteristicId,
                 $value['ru'],
                 $value['uk']
@@ -439,5 +303,22 @@ class StockB2BImport
         }
 
         return $characteristicValueIds;
+    }
+
+    public function stockUpdatePriceAndBalance(array $sku = null)
+    {
+        $jsonData = self::$data;
+
+        $products = isset($sku)
+            ? Product::where('details->published', 1)->whereIn('details->sku', $sku)->get()
+            : Product::where('details->published', 1)->get();
+
+        foreach ($products['data'] as $product) {
+            Product::where('details->sku', $product->sku)->update([
+                'details->price' => $product['price'],
+                'details->old_price' => $product['old_price'],
+                'details->old_price' => $product['balance']
+            ]);
+        }
     }
 }
