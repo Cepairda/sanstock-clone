@@ -16,15 +16,16 @@ class CreateOrderShippingTable extends Migration
         Schema::create('order_shipping', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('order_id');
-            $table->string('areas_ref', 36);
-            $table->string('settlement_ref', 36);
-            $table->string('street_ref', 36);
-            $table->string('warehouse_ref', 36);
+            $table->char('areas_ref', 36);
+            $table->char('settlement_ref', 36);
+            $table->char('street_ref', 36);
+            $table->string('house', 36);
+            $table->string('apartment', 36);
+            $table->char('warehouse_ref', 36);
             $table->string('first_name', 36);
             $table->string('middle_name', 36);
             $table->string('last_name', 36);
             $table->string('phone', 36);
-            $table->string('email', 36);
             $table->smallInteger('cashless_payment');
             $table->string('payments_form', 36);
             $table->float('cash_sum', 20);

@@ -11,7 +11,7 @@ class Product extends Resource
 {
     use Commentable;
 
-    protected $appends = ['main_image', 'additional_image', 'price_updated_at'];
+    protected $appends = ['price_updated_at'];
 
     public function getNameAttribute()
     {

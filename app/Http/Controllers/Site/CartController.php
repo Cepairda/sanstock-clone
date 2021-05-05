@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Site\Cart;
+namespace App\Http\Controllers\Site;
 
 use App\Orders;
 use App\OrderShipping;
@@ -11,24 +11,39 @@ class CartController
 {
 
     /**
-     * Отправка данных о товарах в корзине
+     * Получение данных о товарах в корзине
      */
-    public function getCartProducts() {
-
-    }
-
-    /**
-     * Show checkout view
-     * @return mixed
-     */
-    public function loadOrderShippingView()
+    public function getCartProducts(): array
     {
-        $np = new \App\Http\Controllers\Admin\NewPost\NewPostController();
-        $areas = $np->getAreas();
 
-        return view('site.home.index', [
-            'areas' => $areas,
-        ]);
+        $orderProducts = (isset($_COOKIE["products_cart"])) ? json_decode($_COOKIE["products_cart"], true) : [];
+
+        $sku = array_keys($orderProducts);
+
+        $products = Product::joinLocalization()->whereIn('details->sku', $sku)->get()->keyBy('sku');
+
+        // получаем товары из базы и формируем данные для отображения корзины
+        foreach($products as $product):
+
+            $orderItem = [];
+
+            $orderItem['sku'] = $product->getDetails('sku');
+
+            $orderItem['name'] = $product->name;
+
+            $orderItem['quantity'] = $orderProducts[$product->getDetails('sku')];
+
+            $orderItem['price'] = $product->getPriceAttribute();
+
+            // $orderItem['max_quantity'] = $product->getDetails('quantity');
+
+            $orderItem['max_quantity'] = 1;
+
+            $orderProducts[$product->getDetails('sku')] = $orderItem;
+
+        endforeach;
+
+        return $orderProducts;
     }
 
     /**
@@ -36,39 +51,16 @@ class CartController
      */
     public function loadCartView() {
 
-        $orderedProducts = json_decode($_COOKIE["products_cart"], true);
+        $np = new \App\Http\Controllers\Admin\NewPost\NewPostController();
 
-        $orderProducts = [];
+        $areas = $np->getAreas();
 
-        $sku = [];
+        $orderProducts = $this->getCartProducts();
 
-        $products = Product::whereIn('details->sku', $sku)->get()->keyBy('sku')->keys()->toArray();
-
-        // получаем товары из базы и формируем данные для отображения корзины
-        foreach($products as $sku => $product):
-
-            $orderItem = [];
-
-            $orderItem['sku'] = $sku;
-
-            $orderItem['name'] = '';
-
-            $orderItem['image'] = '';
-
-            $orderItem['quantity'] = '';
-
-            $orderItem['price'] = '';
-
-            $orderItem['max_quantity'] = '';
-
-            $orderProducts[] = $orderItem;
-
-        endforeach;
-
-        // возвращаем view с данными о товарах
-
-        return view('site.home.index', [
-            'products' => $orderProducts,
+        // возвращаем view с данными о заказанных товарах
+        return view('site.orders.cart', [
+            'orderProducts' => $orderProducts,
+            'areas' => $areas,
         ]);
     }
 
@@ -209,13 +201,13 @@ class CartController
                 'areas_ref' => $data['new_mail_region'],
                 'settlement_ref' => $data['new_mail_city'],
                 'street_ref' => $data['new_mail_street'],
-                'house' => $data['new_mail_house'],                             // <= ?
-                'apartment' => $data['new_mail_apartment'],                     // <= ?
+                'house' => $data['new_mail_house'],
+                'apartment' => $data['new_mail_apartment'],
                 'warehouse_ref' => $data['new_mail_warehouse'],
                 'first_name' => $data['new_mail_name'],
                 'middle_name' => $data['new_mail_patronymic'],
                 'last_name' => $data['new_mail_surname'],
-                'phone' => $data['new_mail_phone'],                             // <= email in database
+                'phone' => $data['new_mail_phone'],
                 'cashless_payment' => $data['new_mail_non_cash_payment'],
                 'payments_form' => $data['new_mail_payment_type'],
                 'cash_sum' => $data['new_mail_payment_sum'],
