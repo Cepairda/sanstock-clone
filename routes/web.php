@@ -205,6 +205,8 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
     // New Post
     Route::get('admin/test-request', '\App\Http\Controllers\Admin\NewPost\NewPostController@sentRequest')->name('sent-request-new-post');
 
+
+    //Site
     Route::as('site.')->namespace('Site')->group(function () {
         Route::get('/telegram-bot', 'TelegramBotController@index')->name('telegram-bot');
         Route::post('/telegram-bot', 'TelegramBotController@index')->name('telegram-bot');
@@ -212,6 +214,10 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::get('live-search', 'ProductController@search')->name('products.live-search');
 
         Route::get('/', 'HomeController@index')->name('/');
+
+        Route::get('cart', function(){
+            return view('site.orders.cart');
+        });
 
         Route::get('search', 'SearchController@search')->name('products.search');
         Route::post('products/update-price', 'ProductController@updatePrice')->name('products.update-price');

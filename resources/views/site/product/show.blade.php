@@ -82,8 +82,6 @@
 
                             <h1 class="card__title">{!! $product->name !!}</h1>
 
-                            {!! isset($json_ld) ? $json_ld : '' !!}
-
                             <p class="card__code">Код товара:<span class="card__code-id ml-1">{{ $product->sku }}</span></p>
 
                             <div class="card__price--wrapp">
@@ -94,83 +92,19 @@
                                     <span>грн.</span>
                                 </p>
 
-                                @if($product->presence == 0)
-                                    <p class="card__code"><span class="card__code-id">@lang('site.content.not_available')</span>
-                                    </p>
-                                @elseif($product->presence == 1)
-                                    <p class="card__code"><span class="card__code-id">@lang('site.content.available')</span></p>
-                                @elseif($product->presence == 2)
-                                    <p class="card__code"><span
-                                                class="card__code-id">@lang('site.content.out_of_production')</span></p>
-                                @endif
+                                    <p class="card__code"><span class="card__code-id">есть в наличаи</span></p>
 
-                                <div class="card__btn">
+                                <div class="card__btn d-flex product-to-cart" data-sku="{{ $product->sku }}">
 
-                                    <div class="btn-link-block">
-
-                                        @if($product->presence == 1)
-
-                                            @if( !empty($partners) )
-
-                                                <a class="btn-link-block-g" href="#" data-toggle="modal"
-                                                   data-target="#exampleModal">@lang('site.content.buy')</a>
-
-                                            @else
-
-                                                <a class="btn-link-block-g"
-                                                   href="{{ asset('/sale-points/') }}">@lang('site.content.buy')</a>
-
-                                            @endif
-
-                                        @endif
-
+                                    <div style="display: flex; width: 150px">
+                                        <button>-</button>
+                                        <input type="text" value="1" style="text-align: center; width: 100px;"
+                                               readonly>
+                                        <button>+</button>
                                     </div>
-
-                                    <div class="card__btn--icon">
-                                        @if( (Request::ip() == '93.183.206.50') || (Request::ip() == '127.0.0.1') )
-                                            <i id="comparison_{{ $product->sku }}" class="comparison"
-                                               data-attribute="comparison"
-                                               data-sku="{{ $product->sku }}"></i>
-                                        @endif
-                                        <i id="favorites_{{ $product->sku }}" class="far icon-favorites ml-0"
-                                           data-attribute="favorites" data-sku="{{ $product->sku }}"></i>
+                                    <div class="btn-link-block add-to-cart">
+                                        <span alt="{{ $product->name }}" class="btn-link-block-g">Добавить в козину</span>
                                     </div>
-
-                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-
-                                    <script>
-                                        function demoFromHTML() {
-
-                                            var img = new Image();
-
-                                            img.src = '/storage/product/585-{{ $product->sku }}.webp';
-
-                                            var doc = new jsPDF('p', 'mm', 'a4');
-
-                                            doc.addImage(img, 'PNG', 25, 0);
-
-                                            doc.setTextColor(239, 111, 32);
-
-                                            doc.setFontSize(14);
-
-                                            doc.text(20, 200, 'Product code: {{$product->sku}}');
-
-                                            doc.setTextColor(0, 0, 0);
-
-                                            doc.setFontSize(11);
-
-                                            doc.text(20, 220, window.location.href);
-
-                                            doc.save('Q-tap-{{$product->sku}}.pdf');
-
-                                        }
-                                    </script>
-
-                                    {{--<div class="btn-link-block btn-favorites">--}}
-                                    {{--<div class="btn-link-block-g btn-favorites--lg">Избранное--}}
-                                    {{--<div class="far fa-heart"></div>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
 
                                 </div>
                             </div>

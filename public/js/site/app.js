@@ -20986,9 +20986,104 @@ __webpack_require__(/*! lg-thumbnail.js */ "./node_modules/lg-thumbnail.js/dist/
 
 __webpack_require__(/*! ./plugins/swipeGallery */ "./resources/js/site/plugins/swipeGallery.js");
 
-__webpack_require__(/*! ./plugins/characteristicsLists */ "./resources/js/site/plugins/characteristicsLists.js"); //custom script
-//require('./script');
+__webpack_require__(/*! ./plugins/characteristicsLists */ "./resources/js/site/plugins/characteristicsLists.js"); //components
+
+
+__webpack_require__(/*! ./components/addToCart */ "./resources/js/site/components/addToCart.js"); //custom script
+
+
+__webpack_require__(/*! ./script */ "./resources/js/site/script.js");
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"), __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
+/***/ "./resources/js/site/components/addToCart.js":
+/*!***************************************************!*\
+  !*** ./resources/js/site/components/addToCart.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function () {
+  var cookieKeyCart = 'products_cart';
+  var cartCounterId = 'cart-count';
+  var productToCartContainerClassName = 'product-to-cart';
+  var addToCart = 'add-to-cart';
+  var cartCounterNode = document.getElementById("".concat(cartCounterId));
+
+  if (!cartCounterNode) {
+    return;
+  }
+
+  function getCookie(name) {
+    var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
+
+  function checkCookieCart() {
+    var cartData = getCookie(cookieKeyCart);
+    var count = 0;
+
+    if (!(cartData === undefined || cartData === "")) {
+      var toObj = JSON.parse(cartData);
+      count = Object.keys(toObj).length;
+    }
+
+    cartCounterNode.textContent = "".concat(count);
+    cartCounterNode.hidden = false;
+  }
+
+  function upDataCart(addToCartBtn) {
+    var container = addToCartBtn.closest(".".concat(productToCartContainerClassName));
+
+    if (!container) {
+      console.warn('@BeCrutch: not container!');
+      return false;
+    }
+
+    var date = new Date();
+    var productSku = container.dataset.sku;
+    var value = container.querySelector('input').value;
+    var addProductData = {};
+    var cartData = getCookie(cookieKeyCart);
+    date.setDate(date.getDate() + 1); //жизнь куки
+
+    if (!cartData) {
+      addProductData[productSku] = value;
+      document.cookie = 'products_cart' + "=" + JSON.stringify(addProductData) + "; path=/; expires=" + date.toUTCString();
+      cartCounterNode.textContent = "".concat(Object.keys(addProductData).length);
+    } else {
+      var toObj = JSON.parse(cartData);
+      toObj[productSku] = value;
+      document.cookie = 'products_cart' + "=" + JSON.stringify(toObj) + "; path=/; expires=" + date.toUTCString();
+      var count = Object.keys(toObj).length;
+      cartCounterNode.textContent = "".concat(count);
+    }
+  }
+
+  document.addEventListener('click', function (_ref) {
+    var target = _ref.target;
+    var cartBtn = target.closest(".".concat(addToCart));
+    cartBtn && upDataCart(cartBtn);
+  }, false);
+  document.addEventListener('DOMContentLoaded', checkCookieCart, false);
+})(); // $(document).ready(function(){
+//     $('.toast').toast('show');
+// });
+// <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+//     <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+//     <div class="toast-header">
+//     <strong class="mr-auto">Bootstrap</strong>
+//     <small>11 мин назад</small>
+// <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+//     <span aria-hidden="true">&times;</span>
+// </button>
+// </div>
+// <div class="toast-body">
+//     Привет, мир! Это тост-сообщение.
+// </div>
+// </div>
+// </div>
 
 /***/ }),
 
@@ -21772,6 +21867,87 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     });
   }
 })();
+
+/***/ }),
+
+/***/ "./resources/js/site/script.js":
+/*!*************************************!*\
+  !*** ./resources/js/site/script.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {$('body').on('click', '#showMore', function () {
+  var $this = $(this);
+  var page = $this.data('page');
+  $.ajax({
+    method: 'post',
+    url: $this.data('url'),
+    dataType: 'json',
+    data: {
+      page: page,
+      slug: $this.data('slug'),
+      _token: $this.data('token')
+    },
+    beforeSend: function beforeSend() {},
+    success: function success(data) {
+      $('.products-wrapper').append(data.products);
+
+      if (data.show_more) {
+        $this.data('page', data.show_more['page']);
+        $this.data('parameters', data.show_more['parameters']);
+      } else {
+        $this.remove();
+      }
+
+      var pagination = $('.pagination li');
+
+      if (pagination.length - page - 1) {
+        $('.pagination li').eq(+page).addClass('active');
+        $('.pagination li').eq(+page).empty().append('<span>' + page + '</span>').addClass('page-item');
+      }
+    },
+    error: function error(jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR, textStatus, errorThrown);
+    }
+  });
+});
+
+window.delay = function () {
+  var timer = 0;
+  return function (callback, ms) {
+    clearTimeout(timer);
+    timer = setTimeout(callback, ms);
+  };
+}(); // //liveSearch
+// (function (){
+//     const inputSearch = document.querySelector('#rd-navbar-search-form-input'),
+//           searchResult = document.querySelector('.rd-search-results-live');
+//     async function xhrLiveSearch (value) {
+//         const xhrUrl = `${location.origin}/live-search?query=${value}`,
+//             response = await fetch(xhrUrl, {});
+//         if (response.status === 200) {
+//             let data = await response.text();
+//             searchResult.textContent = '';
+//             searchResult.insertAdjacentHTML('afterbegin', data);
+//             favoriteSelected();
+//
+//             let val  = document.querySelector('.search_error .search');
+//             val ? val.textContent = value : undefined;
+//         }
+//     }
+//
+//     inputSearch.oninput = function () {
+//         let value = this.value.trim();
+//
+//         delay(function () {
+//             if (value.length >= 3) {
+//                 xhrLiveSearch(value)
+//             }
+//         }, 500);
+//     }
+// }());
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),
 
