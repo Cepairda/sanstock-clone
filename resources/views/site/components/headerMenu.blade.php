@@ -6,7 +6,7 @@
         Каталог товаров
     </p>
 
-    <div class="head-menu">
+    <div class="head-menu head-menu--container">
 
         <div class="level-1">
 
@@ -28,48 +28,56 @@
                             <div class="level-2">
 
                                 <div class="level-2__wrap">
+                                    <ul class="test">
+                                        @foreach($category->children as $cat)
+                                            <li>
+                                                <div class="head-menu__subcategory">
 
-                                    @foreach($category->children as $cat)
+                                                    <div class="head-menu__subcategory--name-wrap category-arrow">
 
-                                        <div class="head-menu__subcategory">
+                                                        <a class="head-menu__subcategory--name"
+                                                           href="#">{!! $cat->name !!}</a>
 
-                                            <div class="head-menu__subcategory--name-wrap category-arrow">
+                                                    </div>
 
-                                                <a class="head-menu__subcategory--name"
-                                                   href="#">{!! $cat->name !!}</a>
+                                                    <div class="level-3">
 
-                                            </div>
+                                                        <div class="level-3__wrap">
 
-                                            <div class="level-3">
+                                                            <div class="head-menu__subcategory">
 
-                                                <div class="level-3__wrap">
+                                                                <div class="head-menu__subcategory--name-wrap category-arrow">
 
-                                                    @foreach($cat->children as $c)
+                                                                    <a class="head-menu__subcategory--name" href="#">Lorem
+                                                                        ipsum.</a>
 
-                                                        <a class="level-3__link"
-                                                           href="#"
-                                                           alt="{{ $c->name }}">
+                                                                </div>
 
-                                                            <div class="level-3__link--img">
+                                                                <div class="head-menu__subcategory--name-wrap category-arrow">
 
-                                                                {!! img(['type' => 'category', 'name' => $c->id, 'original' => 'site/img/img_menu/' . $c->id . '.jpg', 'format' => 'webp', 'size' => 120, 'alt' => $c->name]) !!}
+                                                                    <a class="head-menu__subcategory--name" href="#">Lorem
+                                                                        ipsum.</a>
+
+                                                                </div>
+
+                                                                <div class="head-menu__subcategory--name-wrap category-arrow">
+
+                                                                    <a class="head-menu__subcategory--name" href="#">Lorem
+                                                                        ipsum.</a>
+
+                                                                </div>
 
                                                             </div>
 
-                                                            <span class="head-menu__subcategory--link">{!! $c->name !!}</span>
+                                                        </div>
 
-                                                        </a>
+                                                    </div>
 
-                                                    @endforeach
 
                                                 </div>
-
-                                            </div>
-
-
-                                        </div>
-
-                                    @endforeach
+                                            </li>
+                                        @endforeach
+                                    </ul>
 
                                 </div>
 
