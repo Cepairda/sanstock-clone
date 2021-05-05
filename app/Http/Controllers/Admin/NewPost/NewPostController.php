@@ -239,12 +239,12 @@ class NewPostController
 
     /**
      * Get New Post Areas
-     * @param Request $request
+     * @param Request|null $request
      * @return array
      */
-    public function getAreas(Request $request): array
+    public function getAreas(Request $request = null): array
     {
-        $search = $request->input('search');
+        $search = (!empty($request)) ? $request->input('search') : null;
 
         $areas = NewPostAreas::where('status', 1)->get();
 

@@ -19,15 +19,15 @@ class CartController
 
     /**
      * Show checkout view
-     * @param null $input
      * @return mixed
      */
     public function loadOrderShippingView()
     {
-
+        $np = new \App\Http\Controllers\Admin\NewPost\NewPostController();
+        $areas = $np->getAreas();
 
         return view('site.home.index', [
-            'areas' => [],
+            'areas' => $areas,
         ]);
     }
 
@@ -36,7 +36,7 @@ class CartController
      */
     public function loadCartView() {
 
-        $products = $_COOKIE["products_cart"];
+        $orderedProducts = json_decode($_COOKIE["products_cart"], true);
 
         $orderProducts = [];
 
@@ -68,7 +68,7 @@ class CartController
         // возвращаем view с данными о товарах
 
         return view('site.home.index', [
-            'products' => [],
+            'products' => $orderProducts,
         ]);
     }
 
@@ -199,7 +199,7 @@ class CartController
     public function saveNewOrder($data) {
 
         $order = Orders::create([
-            'status' => 1,
+            'status' => 0,
         ]);
 
         if(!empty($order)) {
