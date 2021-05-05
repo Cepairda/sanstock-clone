@@ -243,10 +243,10 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::get('/{slug}', 'ResourceController@getResource')->where('slug', '.*')->name('resource');
 
         // корзина
-        Route::get('/cart', 'Cart/ContactController@loadCartView')->name('cart');
+        Route::get('/cart', 'CartController@loadCartView')->name('cart');
 
-        Route::get('/order-shipping', 'Cart/ContactController@loadOrderShippingView')->name('order-shipping');
+        Route::get('/order-products', 'CartController@getCartProducts')->name('order-products');
 
-        Route::get('/checkout', 'Cart/ContactController@checkout')->name('checkout');
+        Route::get('/checkout', 'CartController@checkout')->name('checkout');
     });
 });
