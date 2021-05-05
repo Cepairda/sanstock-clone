@@ -25,6 +25,8 @@ require('lg-thumbnail.js');
 require('./plugins/swipeGallery');
 require('./plugins/characteristicsLists');
 
+//components
+require('./components/addToCart');
 
 //custom script
-//require('./script');
+require('./script');
