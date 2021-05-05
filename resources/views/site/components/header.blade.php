@@ -10,7 +10,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <a class="navbar-brand" href="{{ asset('/') }}">
-                        <img src="{{ asset('images/logo.png') }}" alt="SanStock" title="SanStock">
+                        <img class="w-100"  src="{{ asset('images/logo.png') }}" alt="SanStock" title="SanStock">
                     </a>
                     <div class="navbar-mb__lf-cont">
                         <form class="header-menu__form" action="#" method="post">

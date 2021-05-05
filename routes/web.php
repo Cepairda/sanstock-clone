@@ -215,9 +215,10 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::get('/', 'HomeController@index')->name('/');
 
-        Route::get('cart', function(){
-            return view('site.orders.cart');
-        });
+        // корзина
+        Route::get('/cart', 'CartController@loadCartView')->name('cart');
+        Route::get('/order-products', 'CartController@getCartProducts')->name('order-products');
+        Route::get('/checkout', 'CartController@checkout')->name('checkout');
 
         Route::get('search', 'SearchController@search')->name('products.search');
         Route::post('products/update-price', 'ProductController@updatePrice')->name('products.update-price');
@@ -242,11 +243,6 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::get('/{slug}', 'ResourceController@getResource')->where('slug', '.*')->name('resource');
 
-        // корзина
-        Route::get('/cart', 'CartController@loadCartView')->name('cart');
 
-        Route::get('/order-products', 'CartController@getCartProducts')->name('order-products');
-
-        Route::get('/checkout', 'CartController@checkout')->name('checkout');
     });
 });
