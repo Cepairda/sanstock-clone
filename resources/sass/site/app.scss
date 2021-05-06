@@ -9,7 +9,8 @@
 
 //plugins
 @import "~lightgallery.js/src/sass/lightgallery";
-@import 'plugins/swipe-gallery',
+@import 'plugins/bootstrap-slider.min.css',
+        'plugins/swipe-gallery',
         'plugins/characteristics-lists';
 
 //old template
@@ -17,6 +18,11 @@
 @import 'template/style.all', 'template/stylemedia';
 
 //components
-@import "components/header-menu";
+@import 'components/breadcrumbs',
+        'components/header',
+        'components/header-menu';
+
+//page
+@import 'page/cart';
 
 @import 'common';

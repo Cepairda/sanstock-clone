@@ -45,10 +45,15 @@
                                         @endif
                                     @endforeach
                                 </li>
-                                <li class="nav-item nav-cart">
-                                    <a class="nav-link icon- nav-link-favorites pr-0" href="{{ asset('/cart') }}">
-                                        <span class="favorites-item">Корзина</span>
-                                        <span class="favorites-lg" id="cart-count" hidden>-</span>
+                                <li class="nav-item nav__actions">
+                                    <a class="nav__actions--link" href="{{ asset('/cart') }}">
+                                        <span class="action-icon">
+                                            <span class="action-counter" id="cart-count" hidden>-</span>
+                                        </span>
+                                        <span class="action-name">
+                                            Корзина
+                                        </span>
+
                                     </a>
                                 </li>
 

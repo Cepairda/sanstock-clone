@@ -1,8 +1,7 @@
 (function() {
     const cookieKeyCart = 'products_cart';
     const cartCounterId = 'cart-count';
-    const productToCartContainerClassName = 'product-to-cart';
-    const addToCart = 'add-to-cart';
+    const productToCartContainerClassName = '[data-target="add"]';
     const cartCounterNode = document.getElementById(`${cartCounterId}`);
     if(!cartCounterNode) {
         return;
@@ -20,24 +19,29 @@
         if(!(cartData === undefined || cartData === "")) {
             const toObj = JSON.parse(cartData);
             count = Object.keys(toObj).length;
+
+            const barcodeList = Object.getOwnPropertyNames(toObj);
+
+            barcodeList.forEach( item => {
+             const btn = document.querySelector(`${productToCartContainerClassName}[data-barcode="${item}"]`);
+             btn && btn.classList.add('added')
+            })
         }
         cartCounterNode.textContent = `${count}`;
         cartCounterNode.hidden= false;
     }
 
     function upDataCart (addToCartBtn) {
-        const container = addToCartBtn.closest(`.${productToCartContainerClassName}`);
-        if(!container) {
+        if(!addToCartBtn) {
             console.warn('@BeCrutch: not container!');
             return false;
         }
         const date = new Date();
-        const productSku = container.dataset.sku;
-        const value = container.querySelector('input').value;
+        const productSku = addToCartBtn.dataset.barcode;
+        const value = 1; //кол-во
         const addProductData = {};
         const cartData = getCookie(cookieKeyCart);
         date.setDate(date.getDate() + 1); //жизнь куки
-
         if(!cartData) {
             addProductData[productSku] = value;
             document.cookie = 'products_cart' + "=" + JSON.stringify(addProductData) + "; path=/; expires=" + date.toUTCString();
@@ -53,7 +57,7 @@
     }
 
     document.addEventListener('click', ({target}) => {
-        const cartBtn = target.closest(`.${addToCart}`);
+        const cartBtn = target.closest(`${productToCartContainerClassName}`);
         cartBtn && upDataCart(cartBtn);
     }, false);
     document.addEventListener('DOMContentLoaded', checkCookieCart, false);

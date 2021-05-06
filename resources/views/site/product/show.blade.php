@@ -85,28 +85,14 @@
                             <p class="card__code">Код товара:<span class="card__code-id ml-1">{{ $product->sku }}</span></p>
 
                             <div class="card__price--wrapp">
+
                                 @php($addClassToPrice = !isset($product->price_updated_at) || $product->price_updated_at->addHours(8)->lt(\Carbon\Carbon::now()) ? 'updatePriceJs' : '')
                                 <p class="card__price">
                                     <span>Цена:</span>
-                                    <span data-product-sku="{{ $product->sku }}" class="{{ $addClassToPrice }}">{{ number_format(ceil($product->price),0,'',' ')}}</span>
+                                    <span data-product-sku="{{ $product->sku }}"
+                                          class="{{ $addClassToPrice }}">{{ number_format(ceil($product->price),0,'',' ')}}</span>
                                     <span>грн.</span>
                                 </p>
-
-                                    <p class="card__code"><span class="card__code-id">есть в наличаи</span></p>
-
-                                <div class="card__btn d-flex product-to-cart" data-sku="{{ $product->sku }}">
-
-                                    <div style="display: flex; width: 150px">
-                                        <button>-</button>
-                                        <input type="text" value="1" style="text-align: center; width: 100px;"
-                                               readonly>
-                                        <button>+</button>
-                                    </div>
-                                    <div class="btn-link-block add-to-cart">
-                                        <span alt="{{ $product->name }}" class="btn-link-block-g">Добавить в козину</span>
-                                    </div>
-
-                                </div>
                             </div>
 
                             {{--@isset($serie_data)
@@ -133,13 +119,13 @@
                 <div class="row">
                     <ul class="col-12 nav nav-pills" id="pills-tab" role="tablist" style="padding-left: 15px;">
                         <li class="nav-item" role="presentation" style="width: 50%;">
-                            <a class="nav-link-i active" id="characteristics-tab" data-toggle="pill"
-                               href="#characteristics" role="tab" aria-controls="characteristics" aria-selected="true">Технисческие
-                                характеристики</a>
+                            <a class="nav-link-i active" id="tab2-tab" data-toggle="pill" href="#tab2" role="tab"
+                               aria-controls="tab2" aria-selected="false">Сорт</a>
                         </li>
                         <li class="nav-item" role="presentation" style="width: 50%;">
-                            <a class="nav-link-i" id="tab2-tab" data-toggle="pill" href="#tab2" role="tab"
-                               aria-controls="tab2" aria-selected="false">Дефекты</a>
+                            <a class="nav-link-i" id="characteristics-tab" data-toggle="pill"
+                               href="#characteristics" role="tab" aria-controls="characteristics" aria-selected="true">Технисческие
+                                характеристики</a>
                         </li>
                     </ul>
                 </div>
@@ -149,7 +135,7 @@
             <div class="container main__tab-content">
                 <div class="row">
                     <div class="col-12 tab-content">
-                        <div class="tab-pane fade show active" id="characteristics" role="tabpanel"
+                        <div class="tab-pane fade" id="characteristics" role="tabpanel"
                              aria-labelledby="characteristics-tab">
                             <div class="row tab-content__container">
                                 @foreach($product->characteristics->chunk(ceil($product->characteristics->count() / 2)) as $characteristics)
@@ -164,14 +150,65 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                        <div class="tab-pane fade show active" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
 
-                            <ul>
-                                <li>Lorem ipsum.</li>
-                                <li>Lorem ipsum dolor sit amet.</li>
-                                <li>Lorem ipsum dolor sit amet.</li>
-                                <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, velit.</li>
-                            </ul>
+                            <nav>
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                    <a class="nav-link w-25 text-center active" id="sort-0-tab" data-toggle="tab" href="#sort-0" role="tab" aria-controls="nav-home" aria-selected="true">Сорт-0</a>
+                                    <a class="nav-link w-25 text-center" id="sort-1-tab" data-toggle="tab" href="#sort-1" role="tab" aria-controls="nav-profile" aria-selected="false">Сорт-1</a>
+                                    <a class="nav-link w-25 text-center" id="sort-2-tab" data-toggle="tab" href="#sort-2" role="tab" aria-controls="nav-contact" aria-selected="false">Сорт-2</a>
+                                    <a class="nav-link w-25 text-center" id="sort-3-tab" data-toggle="tab" href="#sort-3" role="tab" aria-controls="nav-contact" aria-selected="false">Сорт-3</a>
+                                </div>
+                            </nav>
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="sort-0" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <div class="table-responsive cart__table">
+                                        <table class="table table-hover">
+                                            <caption></caption>
+                                            <thead>
+                                            <tr>
+                                                <td>Фото</td>
+                                                <td>Описание</td>
+                                                <td>Цена</td>
+                                                <td></td>
+                                            </tr>
+                                            </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <img width="150" src="{{'https://isw.b2b-sandi.com.ua/imagecache/150x150/' . strval($product["sku"])[0] . '/' . strval($product["sku"])[1] . '/' .  $product["sku"] . '.jpg'}}" alt="">
+                                                    </td>
+
+                                                    <td>
+                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae est illo laborum minus similique tempora.
+                                                    </td>
+
+                                                    <td>
+                                                        <p class="text-nowrap">
+                                                        <span data-product-sku="{{ $product->sku }}"
+                                                              class="{{ $addClassToPrice }}">{{ number_format(ceil($product->price),0,'',' ')}}</span>
+                                                        <span>грн.</span>
+                                                        </p>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="btn-link-block"
+                                                             data-target="add"
+                                                             data-barcode="{{ $product->sku }}">
+                                                            <span class="btn-link-block-g">Купить</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="sort-1" role="tabpanel" aria-labelledby="nav-profile-tab">sort-1</div>
+                                <div class="tab-pane fade" id="sort-2" role="tabpanel" aria-labelledby="nav-contact-tab">sort-2</div>
+                                <div class="tab-pane fade" id="sort-3" role="tabpanel" aria-labelledby="nav-contact-tab">sort-3</div>
+                            </div>
+
+
 
                         </div>
                     </div>

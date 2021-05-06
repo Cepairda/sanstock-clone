@@ -1,51 +1,21 @@
-
-$('body').on('click', '#showMore', function () {
-    var $this = $(this);
-    let page = $this.data('page');
-
-    $.ajax({
-        method: 'post',
-        url: $this.data('url'),
-        dataType: 'json',
-        data: {
-            page: page,
-            slug: $this.data('slug'),
-            _token: $this.data('token')
-        },
-        beforeSend: function () {
-        },
-        success: function (data) {
-
-            $('.products-wrapper').append(data.products);
-            if (data.show_more) {
-                $this.data('page', data.show_more['page']);
-                $this.data('parameters', data.show_more['parameters']);
-            } else {
-                $this.remove();
+$(document).ready(function () {
+    var priceRangeSlider = $('#priceRangeSlider');
+    if (priceRangeSlider.length) {
+        priceRangeSlider.slider().on({
+            slide: (slideEvt) => {
+                $('.inp-price-min').val(slideEvt.value[0]);
+                $('.inp-price-max').val(slideEvt.value[1]);
+            },
+            slideStart: (slideEvt) => {
+                $('.inp-price-min').val(slideEvt.value[0]);
+                $('.inp-price-max').val(slideEvt.value[1]);
             }
+        });
+        $('#inp-price-min').val($('.min-slider-handle').attr('aria-valuenow'));
+        $('#inp-price-max').val($('.max-slider-handle').attr('aria-valuenow'));
+    }
 
-            let pagination = $('.pagination li');
-
-            if (pagination.length - page - 1) {
-                $('.pagination li').eq(+page).addClass('active');
-                $('.pagination li').eq(+page).empty().append('<span>' + (page) + '</span>').addClass('page-item');
-            }
-
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        }
-    });
 });
-
-window.delay = (() => {
-    let timer = 0;
-    return (callback, ms) => {
-        clearTimeout(timer);
-        timer = setTimeout(callback, ms);
-    };
-})();
-
 
 
 // //liveSearch
