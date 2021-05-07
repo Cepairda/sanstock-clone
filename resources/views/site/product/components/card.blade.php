@@ -36,10 +36,11 @@
                         {{--<p><span>@lang('site.content.out_of_production')</span></p>--}}
                     {{--@endif--}}
                 </div>
-                <div class="btn-link-block">
-                    <a href="{{ route('site.resource', $product->slug) }}" alt="{{ $product->name }}"
-                       class="btn-link-block-g">{{ __('Where buy')}}</a>
-                </div>
+                {{--<div class="btn-link-block">--}}
+                    {{--<a href="{{ route('site.resource', $product->slug) }}" alt="{{ $product->name }}"--}}
+                       {{--class="btn-link-block-g">{{ __('Where buy')}}</a>--}}
+                {{--</div>--}}
+                <a class="button" href="{{ route('site.resource', $product->slug) }}" alt="{{ $product->name }}" >{{ __('Where buy')}}</a>
             </div>
         </div>
 

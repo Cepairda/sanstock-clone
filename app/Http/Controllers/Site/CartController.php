@@ -42,8 +42,12 @@ class CartController
             $orderProducts[$product->getDetails('sku')] = $orderItem;
 
         endforeach;
-
         return $orderProducts;
+    }
+
+    public function getCartProductsTable() {
+        $orderProducts = $this->getCartProducts();
+        return view('site.components.productsTable', compact('orderProducts'))->render();
     }
 
     /**

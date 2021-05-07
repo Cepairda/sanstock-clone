@@ -218,6 +218,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         // корзина
         Route::get('/cart', 'CartController@loadCartView')->name('cart');
         Route::get('/order-products', 'CartController@getCartProducts')->name('order-products');
+        Route::get('/order-products-table', 'CartController@getCartProductsTable')->name('order-products');
         Route::get('/checkout', 'CartController@checkout')->name('checkout');
 
         Route::get('search', 'SearchController@search')->name('products.search');

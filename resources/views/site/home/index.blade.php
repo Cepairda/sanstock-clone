@@ -85,6 +85,12 @@
                 </div>
             </div>
         </div>
+        {{--<div class="m-5">--}}
+            {{--<button class="button">{{ __('Where buy')}}</button>--}}
+            {{--<a href="#" class="button">{{ __('Where buy')}}</a>--}}
+        {{--</div>--}}
+
+
     </main>
 
 @endsection

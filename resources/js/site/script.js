@@ -17,6 +17,50 @@ $(document).ready(function () {
 
 });
 
+const btn = 'e';
+
+function eff({offsetX, offsetY, target}) {
+    const btn = target.closest('.button');
+    if(!btn) {
+     return;
+    }
+    const el = document.createElement('span');
+    const r = {
+        x: offsetX - btn.offsetWidth,
+        y: offsetY - btn.offsetHeight
+    };
+
+
+    
+
+    console.log({
+        offsetX: offsetX,
+        offsetY: offsetY,
+        x: r.x,
+        y: r.y,
+    });
+    el.style.setProperty('transform', `translate3d(${r.x}px, ${r.y}px, 0px)`);
+
+    console.log(`translate3d(${r.x}px, ${r.y}px, 0px)`);
+
+
+
+    btn.insertAdjacentElement('afterbegin', el);
+    const el1 = btn.querySelector('span');
+    //el1.style.setProperty('transform', null)
+    setTimeout( ()=> {el1.classList.add('xx');}, 160);
+}
+function effEnd({target}) {
+    const btn = target.closest('.button');
+    if(!btn) {
+        return;
+    }
+    const el = btn.querySelectorAll('span');
+    el.forEach(elem => elem.remove());
+}
+
+document.addEventListener('mouseover', eff, false);
+document.addEventListener('mouseout', effEnd, false);
 
 // //liveSearch
 // (function (){
