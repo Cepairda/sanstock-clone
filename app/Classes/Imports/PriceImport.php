@@ -4,48 +4,40 @@ namespace App\Classes\Imports;
 
 use App\Jobs\ProcessImportPrice;
 use App\Product;
-use Carbon\Carbon;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Contracts\Bus\Dispatcher;
 
 class PriceImport
 {
-    private static $priceFromAPI;
-    private static $lastTimeDataAPI;
+    private const DEFAULT_API_URL = 'http://94.131.241.126/api/products?token=368dbc0bf4008db706576eb624e14abf&only_defectives=1';
 
     public static function addToQueue($ids = null)
     {
         $products = isset($ids)
-            ? Product::where('details->published', 1)->whereIn('details->sku', $ids)->get()
-            : Product::where('details->published', 1)->get();
-
-        $jobId = null;
+            ? Product::whereIn('details->sku', $ids)->get()
+            : Product::get();
 
         foreach ($products as $product) {
-            //$id = ProcessImportPrice::dispatch($product->getDetails('sku'))->onQueue('priceImport');
-            $job = (new ProcessImportPrice($product->getDetails('sku')))->onQueue('priceImport');
-            $jobId = app(Dispatcher::class)->dispatch($job);
+            ProcessImportPrice::dispatch($product->getDetails('sku'))->onQueue('priceImport');
         }
-
-        Cache::put('lastIdPriceImport', $jobId);
     }
 
-    public static function import($prices)
+    public static function import($jsonData)
     {
         try {
-
-            foreach ($prices as $sku => $item) {
-                if ($item['price'] != 'Недоступно') {
-                    Product::where('details->sku', $item['sku'])->update([
-                        'details->price' => $item['discount_price'] ?? $item['price'],
-                        'details->price_updated_at' => Carbon::now(),
-                        'details->old_price' => isset($item['discount_price']) ? $item['price'] : null
-                    ]);
-                }
+            foreach ($jsonData['data'] as [
+                     'main' => [
+                     'sku' => $sku,
+                     'price' => $price,
+                     'old_price' => $oldPrice,
+                     'balance' => $balance
+            ]
+            ]) {
+                Product::where('details->sku', $sku)->update([
+                    'details->price' => $price,
+                    'details->old_price' => $oldPrice,
+                    'details->balance' => $balance
+                ]);
             }
-
-            //return redirect()->back();
         } catch (\Exception $e) {
 
         }
@@ -53,36 +45,16 @@ class PriceImport
 
     public static function importQueue($sku)
     {
-        $product = [$sku];
+        $apiUrl = self::DEFAULT_API_URL . "&sku_in={$sku}";
+        $dataJson = PriceImport::pricesApi($apiUrl);
 
-        /*
-         * If more than 30 minutes have passed, we have to update $priceFromApi
-         */
-        if (empty(self::$priceFromAPI) || time() - self::$lastTimeDataAPI >= 180) {
-            $productSku = Product::get()->keyBy('sku')->keys()->toArray();
-            self::$priceFromAPI = PriceImport::pricesApi($productSku);
-            self::$lastTimeDataAPI = time();
-        }
-
-        $productSingle = [];
-
-        if (isset(self::$priceFromAPI[$sku])) {
-            $productSingle[$sku] = self::$priceFromAPI[$sku];
-        }
-
-        PriceImport::import($productSingle);
+        PriceImport::import($dataJson);
     }
 
-    public static function pricesApi($productSku)
+    public static function pricesApi($apiUrl)
     {
         $client = new Client();
-        $res = $client->request('POST', 'https://b2b-sandi.com.ua/api/price-center', [
-            'form_params' => [
-                'action' => 'get_ir_prices',
-                'sku_list' => $productSku,
-            ]
-        ]);
-
+        $res = $client->request('GET', $apiUrl);
         $prices = json_decode($res->getBody(), true);
 
         return $prices;

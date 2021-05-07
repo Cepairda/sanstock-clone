@@ -15,16 +15,15 @@ use App\Classes\Slug;
 
 class StockB2BImport
 {
-    private $apiUrl = 'http://94.131.241.126/api/products?token=368dbc0bf4008db706576eb624e14abf&only_defectives=1';
+    private const DEFAULT_API_URL = 'http://94.131.241.126/api/products?token=368dbc0bf4008db706576eb624e14abf&only_defectives=1';
+    protected $apiUrl;
     private static $data;
 
-    private $categoryApiUrl = 'http://94.131.241.126/api/categories';
-
-    public function getDataJson()
+    public function getDataJson($apiUrl = self::DEFAULT_API_URL, array $queryString = [])
     {
         if (self::$data === null) {
             $client = new Client();
-            $res = $client->request('GET', $this->apiUrl);
+            $res = $client->request('GET', $apiUrl, $queryString);
             $this->setData(json_decode($res->getBody(), true));
         }
 
@@ -38,34 +37,45 @@ class StockB2BImport
 
     public function addToQueue()
     {
-        $brand = $this->firstOrCreateBrand();
+        $this->apiUrl = self::DEFAULT_API_URL;
 
-        foreach (self::$data['products'] as $productRef => $productData) {
-            ProcessImportB2B::dispatch($brand->id, $productRef)->onQueue('b2bImport');
-        }
+        do {
+            $this->getDataJson($this->apiUrl);
+            $jsonData = self::$data;
+
+            foreach ($jsonData['data'] as $sku => $dataProduct) {
+                ProcessImportB2B::dispatch($sku)->onQueue('b2bImport');
+            }
+        } while ($this->apiUrl = $jsonData['next_page_url'] ?? null);
     }
 
-    public function importQueue($brandId, $productRef)
+    public function importQueue($sku)
     {
-        $this->product($brandId, $productRef);
+        $apiUrl = self::DEFAULT_API_URL . "&sku_in={$sku}";
+        $this->getDataJson($apiUrl);
+        ['data' => [$sku => ['main' => $main]]] = self::$data;
+
+        $this->stockProduct($sku, $main);
+        $this->stockAttributes($sku, $attributes);
     }
 
     public function parse()
     {
-        $jsonData = self::$data;
-        do {
+        $this->apiUrl = self::DEFAULT_API_URL;
 
+        do {
+            $this->getDataJson($this->apiUrl);
+            $jsonData = self::$data;
 
             foreach ($jsonData['data'] as $sku => $dataProduct) {
                 $main = $dataProduct['main'];
                 $attributes = $dataProduct['attributes'];
                 //$this->stockBrand($main['brand']['ref'], $main['brand']['name']);
                 //$this->stockCategory($main['category']['ref'], $main['category']['name']);
-                //$this->stockProduct($sku, $main);
+                $this->stockProduct($sku, $main);
                 $this->stockAttributes($sku, $attributes);
-                break;
             }
-        } while (isset($jsonData['next_page_url']));
+        } while ($this->apiUrl = $jsonData['next_page_url'] ?? null);
     }
 
     /**
@@ -305,20 +315,32 @@ class StockB2BImport
         return $characteristicValueIds;
     }
 
-    public function stockUpdatePriceAndBalance(array $sku = null)
+    public function stockUpdatePriceAndBalance(PriceImport $price, array $skuT = [])
     {
-        $jsonData = self::$data;
+        /**
+         * For testing
+         */
+        $sku = [2250000005477, 2250000005279];
 
-        $products = isset($sku)
-            ? Product::where('details->published', 1)->whereIn('details->sku', $sku)->get()
-            : Product::where('details->published', 1)->get();
+        $this->apiUrl = self::DEFAULT_API_URL;
+        $skuString = implode(',', $sku);
 
-        foreach ($products['data'] as $product) {
-            Product::where('details->sku', $product->sku)->update([
-                'details->price' => $product['price'],
-                'details->old_price' => $product['old_price'],
-                'details->old_price' => $product['balance']
-            ]);
-        }
+        $urlData = parse_url(self::DEFAULT_API_URL);
+        $params = [];
+        parse_str($urlData['query'], $params);
+        $params['sku_in'] = $skuString;
+
+        $queryString = [
+            'query' => $params
+        ];
+
+        do {
+            $sku
+                ? $this->getDataJson($this->apiUrl, $queryString)
+                : $this->getDataJson($this->apiUrl);
+
+            $jsonData = self::$data;
+            $price->import($jsonData);
+        } while ($this->apiUrl = $jsonData['next_page_url'] ?? null);
     }
 }

@@ -21,18 +21,16 @@ class ProcessImportB2B implements ShouldQueue
      */
     public $tries = 5;
 
-    private $brandId;
-    private $productRef;
+    private $sku;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($brandId, $productRef)
+    public function __construct($sku)
     {
-        $this->brandId = $brandId;
-        $this->productRef = $productRef;
+        $this->sku = $sku;
     }
 
     /**
@@ -44,7 +42,7 @@ class ProcessImportB2B implements ShouldQueue
     {
         set_time_limit(0);
         ini_set('memory_limit', '1024M');
-        $importB2B->getDataJson('brand/' . 'a0ca0cab-c450-11e7-82f5-00155dacf604');
-        $importB2B->importQueue($this->brandId, $this->productRef);
+
+        $importB2B->importQueue($this->sku);
     }
 }

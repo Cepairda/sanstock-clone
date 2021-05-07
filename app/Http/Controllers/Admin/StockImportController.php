@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Classes\Imports\PriceImport;
 use App\Http\Controllers\Controller;
 use App\Classes\Imports\StockB2BImport;
 
@@ -18,7 +19,7 @@ class StockImportController extends Controller
         set_time_limit(0);
 
         $this->importB2B = $b2BImport;
-        $this->importB2B->getDataJson();
+        //$this->importB2B->getDataJson();
     }
 
     public function updateOrCreate()
@@ -36,5 +37,10 @@ class StockImportController extends Controller
     public function updateOrCreateOnQueue()
     {
         $this->importB2B->addToQueue();
+    }
+
+    public function importPrice(PriceImport $price)
+    {
+        $this->importB2B->stockUpdatePriceAndBalance($price);
     }
 }
