@@ -21,11 +21,9 @@ class StockB2BImport
 
     public function getDataJson($apiUrl = self::DEFAULT_API_URL, array $queryString = [])
     {
-        if (self::$data === null) {
-            $client = new Client();
-            $res = $client->request('GET', $apiUrl, $queryString);
-            $this->setData(json_decode($res->getBody(), true));
-        }
+        $client = new Client();
+        $res = $client->request('GET', $apiUrl, $queryString);
+        $this->setData(json_decode($res->getBody(), true));
 
         return self::$data;
     }
@@ -42,39 +40,35 @@ class StockB2BImport
         do {
             $this->getDataJson($this->apiUrl);
             $jsonData = self::$data;
+            $tenPartJsonDate = array_chunk($jsonData['data'], 10, true);
 
-            foreach ($jsonData['data'] as $sku => $dataProduct) {
-                ProcessImportB2B::dispatch($sku)->onQueue('b2bImport');
+            foreach ($tenPartJsonDate as $key => $products) {
+                $skuArray = [];
+
+                foreach ($products as $sku => $product) {
+                    $skuArray[] = $sku;
+                }
+
+                ProcessImportB2B::dispatch($skuArray)->onQueue('b2bImport');
             }
+
         } while ($this->apiUrl = $jsonData['next_page_url'] ?? null);
     }
 
-    public function importQueue($sku)
+    public function importQueue(array $skuArray)
     {
-        $apiUrl = self::DEFAULT_API_URL . "&sku_in={$sku}";
-        $this->getDataJson($apiUrl);
-        ['data' => [$sku => ['main' => $main]]] = self::$data;
+        $skuStr = implode(',', $skuArray);
+        $apiUrl = self::DEFAULT_API_URL . "&sku_in={$skuStr}";
 
-        $this->stockProduct($sku, $main);
-        $this->stockAttributes($sku, $attributes);
+        $this->importProductWithAttributes($apiUrl);
     }
 
     public function parse()
     {
-        $this->apiUrl = self::DEFAULT_API_URL;
+            $this->apiUrl = self::DEFAULT_API_URL;
 
         do {
-            $this->getDataJson($this->apiUrl);
-            $jsonData = self::$data;
-
-            foreach ($jsonData['data'] as $sku => $dataProduct) {
-                $main = $dataProduct['main'];
-                $attributes = $dataProduct['attributes'];
-                //$this->stockBrand($main['brand']['ref'], $main['brand']['name']);
-                //$this->stockCategory($main['category']['ref'], $main['category']['name']);
-                $this->stockProduct($sku, $main);
-                $this->stockAttributes($sku, $attributes);
-            }
+            $this->importProductWithAttributes($this->apiUrl);
         } while ($this->apiUrl = $jsonData['next_page_url'] ?? null);
     }
 
@@ -315,7 +309,33 @@ class StockB2BImport
         return $characteristicValueIds;
     }
 
-    public function stockUpdatePriceAndBalance(PriceImport $price, array $skuT = [])
+    /**
+     * @param string $apiUrl
+     *
+     * @return void
+     */
+    protected function importProductWithAttributes(string $apiUrl) : void
+    {
+        $this->getDataJson($apiUrl);
+        $jsonData = self::$data;
+
+        foreach ($jsonData['data'] as $sku => $dataProduct) {
+            $main = $dataProduct['main'];
+            $attributes = $dataProduct['attributes'];
+            //$this->stockBrand($main['brand']['ref'], $main['brand']['name']);
+            //$this->stockCategory($main['category']['ref'], $main['category']['name']);
+            $this->stockProduct($sku, $main);
+            $this->stockAttributes($sku, $attributes);
+        }
+    }
+
+    /**
+     * @param PriceImport $price
+     * @param array $skuT
+     *
+     * @return void
+     */
+    public function stockUpdatePriceAndBalance(PriceImport $price, array $skuT = []) : void
     {
         /**
          * For testing

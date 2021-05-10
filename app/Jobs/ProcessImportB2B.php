@@ -2,7 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Classes\Imports\B2BImport;
+use App\Access;
+use App\Classes\Imports\StockB2BImport;
 use App\Http\Controllers\ImageController;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -21,16 +22,16 @@ class ProcessImportB2B implements ShouldQueue
      */
     public $tries = 5;
 
-    private $sku;
+    private $skuArray;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($sku)
+    public function __construct(array $skuArray)
     {
-        $this->sku = $sku;
+        $this->skuArray = $skuArray;
     }
 
     /**
@@ -38,11 +39,11 @@ class ProcessImportB2B implements ShouldQueue
      *
      * @return void
      */
-    public function handle(B2BImport $importB2B)
+    public function handle(StockB2BImport $importB2B)
     {
         set_time_limit(0);
         ini_set('memory_limit', '1024M');
 
-        $importB2B->importQueue($this->sku);
+        $importB2B->importQueue($this->skuArray);
     }
 }

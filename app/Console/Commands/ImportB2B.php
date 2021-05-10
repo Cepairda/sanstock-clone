@@ -26,10 +26,10 @@ class ImportB2B extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(StockB2BImport $stockB2BImport)
     {
         try {
-            StockB2BImport::addToQueue();
+            $stockB2BImport->addToQueue();
 
             $this->info('Prices have been successfully added to the queue');
         } catch (\Exception $exception) {
