@@ -63,6 +63,24 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::get('/', 'DashboardController@index')->name('dashboard.index');
 
+        //StockImport
+        Route::get('/stock-import', 'StockImportController@updateOrCreate')->name('stock-import');
+
+        /**
+         * Brands Import B2B
+         */
+        Route::get('/brand-import', 'BrandB2BImportController@import')->name('brand-import');
+
+        /**
+         * Category Import B2B
+         */
+        Route::get('/category-import', 'CategoryB2BImportController@import')->name('category-import');
+
+        /**
+         * Price and Balance Import B2B
+         */
+        Route::get('/price-import', 'StockImportController@importPrice')->name('price-import');
+
         Route::get('/import', 'ImportController@updateOrCreate')->name('import');
         Route::get('/import-queue', 'ImportController@updateOrCreateOnQueue')->name('import-queue');
         Route::get('/import-export', 'ImportExportController@index')->name('import-export');
