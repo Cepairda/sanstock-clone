@@ -11101,13 +11101,6 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
   transform: rotate(180deg);
 }
 
-html {
-  height: 100%;
-  width: 100%;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
-}
-
 body {
   position: relative;
   font-family: "Open Sans Regular", sans-serif;
@@ -11116,7 +11109,6 @@ body {
   background-color: #fafafa;
   padding: 0;
   margin: 0;
-  height: 100%;
 }
 
 ul {
@@ -11164,20 +11156,6 @@ button:active {
 
 input:focus {
   outline: none;
-}
-
-.body {
-  height: 100%;
-  overflow: hidden;
-}
-
-.body:after {
-  content: "";
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 150%;
-  background: rgba(0, 0, 0, 0.5);
 }
 
 .jsLink {
@@ -17645,12 +17623,14 @@ a:not([href]) {
 .button {
   position: relative;
   display: inline-block;
+  min-width: 120px;
   padding: 12px 24px;
   background-image: linear-gradient(90deg, #ef6f20, #ec900f);
   font-family: Open Sans Bold, sans-serif;
   font-size: 14px;
   color: #ffffff;
   border-radius: 50px;
+  border: none;
   overflow: hidden;
   transition: all 0.35s ease 0s;
 }
@@ -17679,21 +17659,33 @@ a:not([href]) {
   z-index: -1;
   transition: all 300ms ease;
 }
-.button:hover {
+.button:hover, .button.added {
   color: #ef6f20;
   box-shadow: none;
   z-index: 1;
 }
-.button:hover::after {
+.button:hover::after, .button.added::after {
   z-index: auto;
 }
-.button:hover span {
+.button:hover span, .button.added span {
   position: absolute;
   width: 100%;
   height: 100%;
   background: #fff;
 }
-.button:hover span.xx {
+.button:hover span.xx, .button.added span.xx {
+  transform: translate3d(0px, 0px, 0px) !important;
+}
+.button.added::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  top: 0;
+  left: 0;
+  border-radius: 50px;
+  z-index: -1;
   transform: translate3d(0px, 0px, 0px) !important;
 }
 

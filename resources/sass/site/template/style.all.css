@@ -1,8 +1,4 @@
 html {
-    height: 100%;
-    width: 100%;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
 }
 
 body {
@@ -13,7 +9,6 @@ body {
     background-color: #fafafa;
     padding: 0;
     margin: 0;
-    height: 100%;
 }
 
 ul {
@@ -63,19 +58,6 @@ button:active{
 
 input:focus {
     outline: none;
-}
-
-.body {
-    height: 100%;
-    overflow: hidden;
-}
-.body:after {
-    content: "";
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 150%;
-    background: rgba(0, 0, 0, 0.5);
 }
 
 .jsLink {

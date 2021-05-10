@@ -47,7 +47,11 @@ class CartController
 
     public function getCartProductsTable() {
         $orderProducts = $this->getCartProducts();
-        return view('site.components.productsTable', compact('orderProducts'))->render();
+        return response()->json(
+            [
+                'body' => view('site.orders.components.modal', compact('orderProducts'))->render()
+            ]
+        );
     }
 
     /**

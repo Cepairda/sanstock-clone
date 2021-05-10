@@ -162,53 +162,18 @@
                             </nav>
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="sort-0" role="tabpanel" aria-labelledby="nav-home-tab">
-                                    <div class="table-responsive cart__table">
-                                        <table class="table table-hover">
-                                            <caption></caption>
-                                            <thead>
-                                            <tr>
-                                                <td>Фото</td>
-                                                <td>Описание</td>
-                                                <td>Цена</td>
-                                                <td></td>
-                                            </tr>
-                                            </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <img width="150" src="{{'https://isw.b2b-sandi.com.ua/imagecache/150x150/' . strval($product["sku"])[0] . '/' . strval($product["sku"])[1] . '/' .  $product["sku"] . '.jpg'}}" alt="">
-                                                    </td>
-
-                                                    <td>
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae est illo laborum minus similique tempora.
-                                                    </td>
-
-                                                    <td>
-                                                        <p class="text-nowrap">
-                                                        <span data-product-sku="{{ $product->sku }}"
-                                                              class="{{ $addClassToPrice }}">{{ number_format(ceil($product->price),0,'',' ')}}</span>
-                                                        <span>грн.</span>
-                                                        </p>
-                                                    </td>
-
-                                                    <td>
-                                                        <div class="btn-link-block"
-                                                             data-target="add"
-                                                             data-barcode="{{ $product->sku }}">
-                                                            <span class="btn-link-block-g">Купить</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                        </table>
-                                    </div>
+                                   @include('site.product.components.productsTable')
                                 </div>
-                                <div class="tab-pane fade" id="sort-1" role="tabpanel" aria-labelledby="nav-profile-tab">sort-1</div>
-                                <div class="tab-pane fade" id="sort-2" role="tabpanel" aria-labelledby="nav-contact-tab">sort-2</div>
-                                <div class="tab-pane fade" id="sort-3" role="tabpanel" aria-labelledby="nav-contact-tab">sort-3</div>
+                                <div class="tab-pane fade" id="sort-1" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                    @include('site.product.components.productsTable')
+                                </div>
+                                <div class="tab-pane fade" id="sort-2" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                    @include('site.product.components.productsTable')
+                                </div>
+                                <div class="tab-pane fade" id="sort-3" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                    нет товара
+                                </div>
                             </div>
-
-
 
                         </div>
                     </div>

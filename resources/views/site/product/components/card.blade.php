@@ -28,19 +28,8 @@
                         <span data-product-sku="123">{{ number_format(ceil($product->price),0,'',' ') }}</span>
                         <span>грн.</span>
                     </p>
-                    {{--@if($product->presence == 0)--}}
-                        {{--<p><span>@lang('site.content.not_available')</span></p>--}}
-                    {{--@elseif($product->presence == 1)--}}
-                        {{--<p><span>@lang('site.content.available')</span></p>--}}
-                    {{--@elseif($product->presence == 2)--}}
-                        {{--<p><span>@lang('site.content.out_of_production')</span></p>--}}
-                    {{--@endif--}}
                 </div>
-                {{--<div class="btn-link-block">--}}
-                    {{--<a href="{{ route('site.resource', $product->slug) }}" alt="{{ $product->name }}"--}}
-                       {{--class="btn-link-block-g">{{ __('Where buy')}}</a>--}}
-                {{--</div>--}}
-                <a class="button" href="{{ route('site.resource', $product->slug) }}" alt="{{ $product->name }}" >{{ __('Where buy')}}</a>
+                <a class="button" href="{{ route('site.resource', $product->slug) }}" alt="{{ $product->name }}" data-target="add" data-barcode="{{ $product->sku }}">{{ __('Where buy')}}</a>
             </div>
         </div>
 

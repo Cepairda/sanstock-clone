@@ -25,29 +25,25 @@
 
                 <!-- Navigations -->
                 <div class="col-12 d-flex justify-content-end py-4">
-                    <div class="btn-link-block">
-                        <span class="btn-link-block-g" data-toggle="modal" data-target="#exampleModal">Оформить</span>
-                    </div>
+                    <a class="button" href="{{ asset('/checkout') }}">Оформить</a>
                 </div>
 
                 <!-- Products -->
                 <div class="col-12">
-                   @include('site.components.productsTable')
+                    @if(count($orderProducts))
+                        @include('site.components.cartProductsTable')
+                    @else
+                        Корзина пуста
+                    @endif
                 </div>
 
                 <!-- Navigations -->
                 <div class="col-12 d-flex justify-content-end py-4">
-
-                    <div class="btn-link-block">
-                        <span class="btn-link-block-g" data-toggle="modal" data-target="#exampleModal">Оформить</span>
-                    </div>
-
+                    <a class="button" href="{{ asset('/checkout') }}">Оформить</a>
                 </div>
 
             </div>
         </div>
-
-        @include('site.orders.checkout')
 
     </main>
 

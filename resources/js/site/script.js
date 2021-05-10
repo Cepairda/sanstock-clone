@@ -17,8 +17,6 @@ $(document).ready(function () {
 
 });
 
-const btn = 'e';
-
 function eff({offsetX, offsetY, target}) {
     const btn = target.closest('.button');
     if(!btn) {
@@ -26,28 +24,12 @@ function eff({offsetX, offsetY, target}) {
     }
     const el = document.createElement('span');
     const r = {
-        x: offsetX - btn.offsetWidth,
-        y: offsetY - btn.offsetHeight
+        x: - btn.offsetWidth,
+        y: 0
     };
-
-
-    
-
-    console.log({
-        offsetX: offsetX,
-        offsetY: offsetY,
-        x: r.x,
-        y: r.y,
-    });
     el.style.setProperty('transform', `translate3d(${r.x}px, ${r.y}px, 0px)`);
-
-    console.log(`translate3d(${r.x}px, ${r.y}px, 0px)`);
-
-
-
     btn.insertAdjacentElement('afterbegin', el);
     const el1 = btn.querySelector('span');
-    //el1.style.setProperty('transform', null)
     setTimeout( ()=> {el1.classList.add('xx');}, 160);
 }
 function effEnd({target}) {

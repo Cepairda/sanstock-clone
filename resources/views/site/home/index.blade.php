@@ -77,9 +77,7 @@
                         <div class="col-12 col-xl-6 main__ceramics__descriptions">
                             <h3 class="descriptions__title-lg color-black">@lang('site.content.b9')</h3>
                             <p class="descriptions-lg">@lang('site.content.b10')</p>
-                            <div class="btn-link-block btn-n">
-                                <a href="{{ asset('/keramika-dlya-vannoj/') }}" class="btn-link-block-g">@lang('site.content.b11')</a>
-                            </div>
+                            <a href="{{ asset('/keramika-dlya-vannoj/') }}" class="button">Перейти</a>
                         </div>
                     </div>
                 </div>
@@ -89,8 +87,6 @@
             {{--<button class="button">{{ __('Where buy')}}</button>--}}
             {{--<a href="#" class="button">{{ __('Where buy')}}</a>--}}
         {{--</div>--}}
-
-
     </main>
 
 @endsection
