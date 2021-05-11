@@ -258,12 +258,9 @@ class NewPostController
 
         $arrId = array_keys($result);
 
-        //$locale = str_replace("uk", "ua", LaravelLocalization::getCurrentLocale());
-
         $result = $this->descriptionMap('area', LaravelLocalization::getCurrentLocale(), $arrId, $result);
 
         $result = $this->searchResourceBySubstring($result, $search);
-        // dd($result);
 
         return $result;
     }
