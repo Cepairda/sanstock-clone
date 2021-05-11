@@ -86,6 +86,18 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/@babel/runtime/regenerator/index.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime.js");
+
+
+/***/ }),
+
 /***/ "./node_modules/bootstrap/dist/js/bootstrap.js":
 /*!*****************************************************!*\
   !*** ./node_modules/bootstrap/dist/js/bootstrap.js ***!
@@ -20923,6 +20935,765 @@ Popper.Defaults = Defaults;
 
 /***/ }),
 
+/***/ "./node_modules/regenerator-runtime/runtime.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+var runtime = (function (exports) {
+  "use strict";
+
+  var Op = Object.prototype;
+  var hasOwn = Op.hasOwnProperty;
+  var undefined; // More compressible than void 0.
+  var $Symbol = typeof Symbol === "function" ? Symbol : {};
+  var iteratorSymbol = $Symbol.iterator || "@@iterator";
+  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
+  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+
+  function define(obj, key, value) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+    return obj[key];
+  }
+  try {
+    // IE 8 has a broken Object.defineProperty that only works on DOM objects.
+    define({}, "");
+  } catch (err) {
+    define = function(obj, key, value) {
+      return obj[key] = value;
+    };
+  }
+
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+    var generator = Object.create(protoGenerator.prototype);
+    var context = new Context(tryLocsList || []);
+
+    // The ._invoke method unifies the implementations of the .next,
+    // .throw, and .return methods.
+    generator._invoke = makeInvokeMethod(innerFn, self, context);
+
+    return generator;
+  }
+  exports.wrap = wrap;
+
+  // Try/catch helper to minimize deoptimizations. Returns a completion
+  // record like context.tryEntries[i].completion. This interface could
+  // have been (and was previously) designed to take a closure to be
+  // invoked without arguments, but in all the cases we care about we
+  // already have an existing method we want to call, so there's no need
+  // to create a new function object. We can even get away with assuming
+  // the method takes exactly one argument, since that happens to be true
+  // in every case, so we don't have to touch the arguments object. The
+  // only additional allocation required is the completion record, which
+  // has a stable shape and so hopefully should be cheap to allocate.
+  function tryCatch(fn, obj, arg) {
+    try {
+      return { type: "normal", arg: fn.call(obj, arg) };
+    } catch (err) {
+      return { type: "throw", arg: err };
+    }
+  }
+
+  var GenStateSuspendedStart = "suspendedStart";
+  var GenStateSuspendedYield = "suspendedYield";
+  var GenStateExecuting = "executing";
+  var GenStateCompleted = "completed";
+
+  // Returning this object from the innerFn has the same effect as
+  // breaking out of the dispatch switch statement.
+  var ContinueSentinel = {};
+
+  // Dummy constructor functions that we use as the .constructor and
+  // .constructor.prototype properties for functions that return Generator
+  // objects. For full spec compliance, you may wish to configure your
+  // minifier not to mangle the names of these two functions.
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+
+  // This is a polyfill for %IteratorPrototype% for environments that
+  // don't natively support it.
+  var IteratorPrototype = {};
+  IteratorPrototype[iteratorSymbol] = function () {
+    return this;
+  };
+
+  var getProto = Object.getPrototypeOf;
+  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  if (NativeIteratorPrototype &&
+      NativeIteratorPrototype !== Op &&
+      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
+    // This environment has a native %IteratorPrototype%; use it instead
+    // of the polyfill.
+    IteratorPrototype = NativeIteratorPrototype;
+  }
+
+  var Gp = GeneratorFunctionPrototype.prototype =
+    Generator.prototype = Object.create(IteratorPrototype);
+  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunction.displayName = define(
+    GeneratorFunctionPrototype,
+    toStringTagSymbol,
+    "GeneratorFunction"
+  );
+
+  // Helper for defining the .next, .throw, and .return methods of the
+  // Iterator interface in terms of a single ._invoke method.
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function(method) {
+      define(prototype, method, function(arg) {
+        return this._invoke(method, arg);
+      });
+    });
+  }
+
+  exports.isGeneratorFunction = function(genFun) {
+    var ctor = typeof genFun === "function" && genFun.constructor;
+    return ctor
+      ? ctor === GeneratorFunction ||
+        // For the native GeneratorFunction constructor, the best we can
+        // do is to check its .name property.
+        (ctor.displayName || ctor.name) === "GeneratorFunction"
+      : false;
+  };
+
+  exports.mark = function(genFun) {
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+    } else {
+      genFun.__proto__ = GeneratorFunctionPrototype;
+      define(genFun, toStringTagSymbol, "GeneratorFunction");
+    }
+    genFun.prototype = Object.create(Gp);
+    return genFun;
+  };
+
+  // Within the body of any async function, `await x` is transformed to
+  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+  // `hasOwn.call(value, "__await")` to determine if the yielded value is
+  // meant to be awaited.
+  exports.awrap = function(arg) {
+    return { __await: arg };
+  };
+
+  function AsyncIterator(generator, PromiseImpl) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if (record.type === "throw") {
+        reject(record.arg);
+      } else {
+        var result = record.arg;
+        var value = result.value;
+        if (value &&
+            typeof value === "object" &&
+            hasOwn.call(value, "__await")) {
+          return PromiseImpl.resolve(value.__await).then(function(value) {
+            invoke("next", value, resolve, reject);
+          }, function(err) {
+            invoke("throw", err, resolve, reject);
+          });
+        }
+
+        return PromiseImpl.resolve(value).then(function(unwrapped) {
+          // When a yielded Promise is resolved, its final value becomes
+          // the .value of the Promise<{value,done}> result for the
+          // current iteration.
+          result.value = unwrapped;
+          resolve(result);
+        }, function(error) {
+          // If a rejected Promise was yielded, throw the rejection back
+          // into the async generator function so it can be handled there.
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+    }
+
+    var previousPromise;
+
+    function enqueue(method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new PromiseImpl(function(resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
+      }
+
+      return previousPromise =
+        // If enqueue has been called before, then we want to wait until
+        // all previous Promises have been resolved before calling invoke,
+        // so that results are always delivered in the correct order. If
+        // enqueue has not been called before, then it is important to
+        // call invoke immediately, without waiting on a callback to fire,
+        // so that the async generator function has the opportunity to do
+        // any necessary setup in a predictable way. This predictability
+        // is why the Promise constructor synchronously invokes its
+        // executor callback, and why async functions synchronously
+        // execute code before the first await. Since we implement simple
+        // async functions in terms of async generators, it is especially
+        // important to get this right, even though it requires care.
+        previousPromise ? previousPromise.then(
+          callInvokeWithMethodAndArg,
+          // Avoid propagating failures to Promises returned by later
+          // invocations of the iterator.
+          callInvokeWithMethodAndArg
+        ) : callInvokeWithMethodAndArg();
+    }
+
+    // Define the unified helper method that is used to implement .next,
+    // .throw, and .return (see defineIteratorMethods).
+    this._invoke = enqueue;
+  }
+
+  defineIteratorMethods(AsyncIterator.prototype);
+  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+    return this;
+  };
+  exports.AsyncIterator = AsyncIterator;
+
+  // Note that simple async functions are implemented on top of
+  // AsyncIterator objects; they just return a Promise for the value of
+  // the final result produced by the iterator.
+  exports.async = function(innerFn, outerFn, self, tryLocsList, PromiseImpl) {
+    if (PromiseImpl === void 0) PromiseImpl = Promise;
+
+    var iter = new AsyncIterator(
+      wrap(innerFn, outerFn, self, tryLocsList),
+      PromiseImpl
+    );
+
+    return exports.isGeneratorFunction(outerFn)
+      ? iter // If outerFn is a generator, return the full iterator.
+      : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next();
+        });
+  };
+
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
+
+    return function invoke(method, arg) {
+      if (state === GenStateExecuting) {
+        throw new Error("Generator is already running");
+      }
+
+      if (state === GenStateCompleted) {
+        if (method === "throw") {
+          throw arg;
+        }
+
+        // Be forgiving, per 25.3.3.3.3 of the spec:
+        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+        return doneResult();
+      }
+
+      context.method = method;
+      context.arg = arg;
+
+      while (true) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+
+        if (context.method === "next") {
+          // Setting context._sent for legacy support of Babel's
+          // function.sent implementation.
+          context.sent = context._sent = context.arg;
+
+        } else if (context.method === "throw") {
+          if (state === GenStateSuspendedStart) {
+            state = GenStateCompleted;
+            throw context.arg;
+          }
+
+          context.dispatchException(context.arg);
+
+        } else if (context.method === "return") {
+          context.abrupt("return", context.arg);
+        }
+
+        state = GenStateExecuting;
+
+        var record = tryCatch(innerFn, self, context);
+        if (record.type === "normal") {
+          // If an exception is thrown from innerFn, we leave state ===
+          // GenStateExecuting and loop back for another invocation.
+          state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+
+          if (record.arg === ContinueSentinel) {
+            continue;
+          }
+
+          return {
+            value: record.arg,
+            done: context.done
+          };
+
+        } else if (record.type === "throw") {
+          state = GenStateCompleted;
+          // Dispatch the exception by looping back around to the
+          // context.dispatchException(context.arg) call above.
+          context.method = "throw";
+          context.arg = record.arg;
+        }
+      }
+    };
+  }
+
+  // Call delegate.iterator[context.method](context.arg) and handle the
+  // result, either by returning a { value, done } result from the
+  // delegate iterator, or by modifying context.method and context.arg,
+  // setting context.delegate to null, and returning the ContinueSentinel.
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+    if (method === undefined) {
+      // A .throw or .return when the delegate iterator has no .throw
+      // method always terminates the yield* loop.
+      context.delegate = null;
+
+      if (context.method === "throw") {
+        // Note: ["return"] must be used for ES3 parsing compatibility.
+        if (delegate.iterator["return"]) {
+          // If the delegate iterator has a return method, give it a
+          // chance to clean up.
+          context.method = "return";
+          context.arg = undefined;
+          maybeInvokeDelegate(delegate, context);
+
+          if (context.method === "throw") {
+            // If maybeInvokeDelegate(context) changed context.method from
+            // "return" to "throw", let that override the TypeError below.
+            return ContinueSentinel;
+          }
+        }
+
+        context.method = "throw";
+        context.arg = new TypeError(
+          "The iterator does not provide a 'throw' method");
+      }
+
+      return ContinueSentinel;
+    }
+
+    var record = tryCatch(method, delegate.iterator, context.arg);
+
+    if (record.type === "throw") {
+      context.method = "throw";
+      context.arg = record.arg;
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    var info = record.arg;
+
+    if (! info) {
+      context.method = "throw";
+      context.arg = new TypeError("iterator result is not an object");
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    if (info.done) {
+      // Assign the result of the finished delegate to the temporary
+      // variable specified by delegate.resultName (see delegateYield).
+      context[delegate.resultName] = info.value;
+
+      // Resume execution at the desired location (see delegateYield).
+      context.next = delegate.nextLoc;
+
+      // If context.method was "throw" but the delegate handled the
+      // exception, let the outer generator proceed normally. If
+      // context.method was "next", forget context.arg since it has been
+      // "consumed" by the delegate iterator. If context.method was
+      // "return", allow the original .return call to continue in the
+      // outer generator.
+      if (context.method !== "return") {
+        context.method = "next";
+        context.arg = undefined;
+      }
+
+    } else {
+      // Re-yield the result returned by the delegate method.
+      return info;
+    }
+
+    // The delegate iterator is finished, so forget it and continue with
+    // the outer generator.
+    context.delegate = null;
+    return ContinueSentinel;
+  }
+
+  // Define Generator.prototype.{next,throw,return} in terms of the
+  // unified ._invoke helper method.
+  defineIteratorMethods(Gp);
+
+  define(Gp, toStringTagSymbol, "Generator");
+
+  // A Generator should always return itself as the iterator object when the
+  // @@iterator function is called on it. Some browsers' implementations of the
+  // iterator prototype chain incorrectly implement this, causing the Generator
+  // object to not be returned from this call. This ensures that doesn't happen.
+  // See https://github.com/facebook/regenerator/issues/274 for more details.
+  Gp[iteratorSymbol] = function() {
+    return this;
+  };
+
+  Gp.toString = function() {
+    return "[object Generator]";
+  };
+
+  function pushTryEntry(locs) {
+    var entry = { tryLoc: locs[0] };
+
+    if (1 in locs) {
+      entry.catchLoc = locs[1];
+    }
+
+    if (2 in locs) {
+      entry.finallyLoc = locs[2];
+      entry.afterLoc = locs[3];
+    }
+
+    this.tryEntries.push(entry);
+  }
+
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal";
+    delete record.arg;
+    entry.completion = record;
+  }
+
+  function Context(tryLocsList) {
+    // The root entry object (effectively a try statement without a catch
+    // or a finally block) gives us a place to store values thrown from
+    // locations where there is no enclosing try statement.
+    this.tryEntries = [{ tryLoc: "root" }];
+    tryLocsList.forEach(pushTryEntry, this);
+    this.reset(true);
+  }
+
+  exports.keys = function(object) {
+    var keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    keys.reverse();
+
+    // Rather than returning an object with a next method, we keep
+    // things simple and return the next function itself.
+    return function next() {
+      while (keys.length) {
+        var key = keys.pop();
+        if (key in object) {
+          next.value = key;
+          next.done = false;
+          return next;
+        }
+      }
+
+      // To avoid creating an additional object, we just hang the .value
+      // and .done properties off the next function object itself. This
+      // also ensures that the minifier will not anonymize the function.
+      next.done = true;
+      return next;
+    };
+  };
+
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) {
+        return iteratorMethod.call(iterable);
+      }
+
+      if (typeof iterable.next === "function") {
+        return iterable;
+      }
+
+      if (!isNaN(iterable.length)) {
+        var i = -1, next = function next() {
+          while (++i < iterable.length) {
+            if (hasOwn.call(iterable, i)) {
+              next.value = iterable[i];
+              next.done = false;
+              return next;
+            }
+          }
+
+          next.value = undefined;
+          next.done = true;
+
+          return next;
+        };
+
+        return next.next = next;
+      }
+    }
+
+    // Return an iterator with no values.
+    return { next: doneResult };
+  }
+  exports.values = values;
+
+  function doneResult() {
+    return { value: undefined, done: true };
+  }
+
+  Context.prototype = {
+    constructor: Context,
+
+    reset: function(skipTempReset) {
+      this.prev = 0;
+      this.next = 0;
+      // Resetting context._sent for legacy support of Babel's
+      // function.sent implementation.
+      this.sent = this._sent = undefined;
+      this.done = false;
+      this.delegate = null;
+
+      this.method = "next";
+      this.arg = undefined;
+
+      this.tryEntries.forEach(resetTryEntry);
+
+      if (!skipTempReset) {
+        for (var name in this) {
+          // Not sure about the optimal order of these conditions:
+          if (name.charAt(0) === "t" &&
+              hasOwn.call(this, name) &&
+              !isNaN(+name.slice(1))) {
+            this[name] = undefined;
+          }
+        }
+      }
+    },
+
+    stop: function() {
+      this.done = true;
+
+      var rootEntry = this.tryEntries[0];
+      var rootRecord = rootEntry.completion;
+      if (rootRecord.type === "throw") {
+        throw rootRecord.arg;
+      }
+
+      return this.rval;
+    },
+
+    dispatchException: function(exception) {
+      if (this.done) {
+        throw exception;
+      }
+
+      var context = this;
+      function handle(loc, caught) {
+        record.type = "throw";
+        record.arg = exception;
+        context.next = loc;
+
+        if (caught) {
+          // If the dispatched exception was caught by a catch block,
+          // then let that catch block handle the exception normally.
+          context.method = "next";
+          context.arg = undefined;
+        }
+
+        return !! caught;
+      }
+
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        var record = entry.completion;
+
+        if (entry.tryLoc === "root") {
+          // Exception thrown outside of any try block that could handle
+          // it, so set the completion value of the entire function to
+          // throw the exception.
+          return handle("end");
+        }
+
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc");
+          var hasFinally = hasOwn.call(entry, "finallyLoc");
+
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            } else if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            }
+
+          } else if (hasFinally) {
+            if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else {
+            throw new Error("try statement without catch or finally");
+          }
+        }
+      }
+    },
+
+    abrupt: function(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev &&
+            hasOwn.call(entry, "finallyLoc") &&
+            this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+
+      if (finallyEntry &&
+          (type === "break" ||
+           type === "continue") &&
+          finallyEntry.tryLoc <= arg &&
+          arg <= finallyEntry.finallyLoc) {
+        // Ignore the finally entry if control is not jumping to a
+        // location outside the try/catch block.
+        finallyEntry = null;
+      }
+
+      var record = finallyEntry ? finallyEntry.completion : {};
+      record.type = type;
+      record.arg = arg;
+
+      if (finallyEntry) {
+        this.method = "next";
+        this.next = finallyEntry.finallyLoc;
+        return ContinueSentinel;
+      }
+
+      return this.complete(record);
+    },
+
+    complete: function(record, afterLoc) {
+      if (record.type === "throw") {
+        throw record.arg;
+      }
+
+      if (record.type === "break" ||
+          record.type === "continue") {
+        this.next = record.arg;
+      } else if (record.type === "return") {
+        this.rval = this.arg = record.arg;
+        this.method = "return";
+        this.next = "end";
+      } else if (record.type === "normal" && afterLoc) {
+        this.next = afterLoc;
+      }
+
+      return ContinueSentinel;
+    },
+
+    finish: function(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) {
+          this.complete(entry.completion, entry.afterLoc);
+          resetTryEntry(entry);
+          return ContinueSentinel;
+        }
+      }
+    },
+
+    "catch": function(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if (record.type === "throw") {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+
+      // The context.catch method must only be called with a location
+      // argument that corresponds to a known catch block.
+      throw new Error("illegal catch attempt");
+    },
+
+    delegateYield: function(iterable, resultName, nextLoc) {
+      this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      };
+
+      if (this.method === "next") {
+        // Deliberately forget the last sent value so that we don't
+        // accidentally pass it on to the delegate.
+        this.arg = undefined;
+      }
+
+      return ContinueSentinel;
+    }
+  };
+
+  // Regardless of whether this script is executing as a CommonJS module
+  // or not, return the runtime object so that we can declare the variable
+  // regeneratorRuntime in the outer scope, which allows this module to be
+  // injected easily by `bin/regenerator --include-runtime script.js`.
+  return exports;
+
+}(
+  // If this script is executing as a CommonJS module, use module.exports
+  // as the regeneratorRuntime namespace. Otherwise create a new empty
+  // object. Either way, the resulting object will be used to initialize
+  // the regeneratorRuntime variable at the top of this file.
+   true ? module.exports : undefined
+));
+
+try {
+  regeneratorRuntime = runtime;
+} catch (accidentalStrictMode) {
+  // This module should not be running in strict mode, so the above
+  // assignment should always work unless something is misconfigured. Just
+  // in case runtime.js accidentally runs in strict mode, we can escape
+  // strict mode using a global Function call. This could conceivably fail
+  // if a Content Security Policy forbids using Function, but in that case
+  // the proper solution is to fix the accidental strict mode problem. If
+  // you've misconfigured your bundler to force strict mode and applied a
+  // CSP to forbid Function, and you're not willing to fix either of those
+  // problems, please detail your unique predicament in a GitHub issue.
+  Function("r", "regeneratorRuntime = r")(runtime);
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/webpack/buildin/global.js":
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -20976,6 +21747,8 @@ __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap
 //plugin
 
 
+__webpack_require__(/*! ./plugins/bootstrap-slider.min */ "./resources/js/site/plugins/bootstrap-slider.min.js");
+
 __webpack_require__(/*! lightgallery.js */ "./node_modules/lightgallery.js/lib/js/lightgallery.js");
 
 __webpack_require__(/*! lg-zoom.js */ "./node_modules/lg-zoom.js/dist/lg-zoom.js");
@@ -20989,7 +21762,10 @@ __webpack_require__(/*! ./plugins/swipeGallery */ "./resources/js/site/plugins/s
 __webpack_require__(/*! ./plugins/characteristicsLists */ "./resources/js/site/plugins/characteristicsLists.js"); //components
 
 
-__webpack_require__(/*! ./components/addToCart */ "./resources/js/site/components/addToCart.js"); //custom script
+__webpack_require__(/*! ./components/addToCart */ "./resources/js/site/components/addToCart.js"); //page
+
+
+__webpack_require__(/*! ./page/cardProduct */ "./resources/js/site/page/cardProduct.js"); //custom script
 
 
 __webpack_require__(/*! ./script */ "./resources/js/site/script.js");
@@ -21001,89 +21777,1183 @@ __webpack_require__(/*! ./script */ "./resources/js/site/script.js");
 /*!***************************************************!*\
   !*** ./resources/js/site/components/addToCart.js ***!
   \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+/**
+ * data-target="add"  -  event
+ * data-barcode="00000"  -   code
+ *
+ */
 (function () {
+  "use strict";
+
   var cookieKeyCart = 'products_cart';
   var cartCounterId = 'cart-count';
-  var productToCartContainerClassName = 'product-to-cart';
-  var addToCart = 'add-to-cart';
+  var productUpDateToCartSelector = '[data-add="upDate"]';
+  var productToCartModalSelector = '[data-add="modal"]';
+  var productDeleteCartSelector = '[data-add="delete"]';
+  var cartModalId = 'cartModal';
   var cartCounterNode = document.getElementById("".concat(cartCounterId));
+  var toast = "<div class=\"toast hide\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-delay=\"2500\">\n                    <div class=\"toast-header\">\n                        <strong class=\"mr-auto\">Bootstrap</strong>\n                        <small>11 \u043C\u0438\u043D \u043D\u0430\u0437\u0430\u0434</small>\n                        <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"toast\" aria-label=\"Close\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                    </div>\n                    <div class=\"toast-body\">\n                        \u041F\u0440\u0438\u0432\u0435\u0442, \u043C\u0438\u0440! \u042D\u0442\u043E \u0442\u043E\u0441\u0442-\u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435.\n                    </div>\n                </div>";
 
-  if (!cartCounterNode) {
-    return;
-  }
+  var Cart = /*#__PURE__*/function () {
+    function Cart() {
+      _classCallCheck(this, Cart);
 
-  function getCookie(name) {
-    var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-  }
-
-  function checkCookieCart() {
-    var cartData = getCookie(cookieKeyCart);
-    var count = 0;
-
-    if (!(cartData === undefined || cartData === "")) {
-      var toObj = JSON.parse(cartData);
-      count = Object.keys(toObj).length;
+      this.cookieKeyCart = 'products_cart';
+      this.cartCounterId = 'cart-count';
+      this.productToCartContainerClassName = '[data-add="to-add"]';
+      this.cartCounterNode = document.getElementById("".concat(cartCounterId));
+      this.i18n = {
+        ru: {
+          'button-add': 'Купить',
+          'button-added': 'В корзине'
+        },
+        uk: {
+          'button-add': 'Купити',
+          'button-added': 'В кошику'
+        }
+      };
+      this.getLocalization = this.getLocalization.bind(this);
+      this.getCookie = this.getCookie.bind(this);
+      this.checkCookieCart = this.checkCookieCart.bind(this);
+      this.openModal = this.openModal.bind(this);
+      this.localization = this.getLocalization();
+      this.run();
     }
 
-    cartCounterNode.textContent = "".concat(count);
-    cartCounterNode.hidden = false;
+    _createClass(Cart, [{
+      key: "getLocalization",
+      value: function getLocalization() {
+        var markup = document.documentElement;
+        var localizationDocument = markup.getAttribute('lang');
+
+        var localization = function localization(lang) {
+          var handl = {
+            'ru-UA': 'ru',
+            'uk-UA': 'uk'
+          };
+          return handl[lang];
+        };
+
+        return localization(localizationDocument);
+      }
+    }, {
+      key: "getCookie",
+      value: function getCookie(name) {
+        var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+      }
+    }, {
+      key: "setCookie",
+      value: function setCookie(products) {
+        var date = new Date();
+        date.setDate(date.getDate() + 1); //жизнь куки
+
+        document.cookie = 'products_cart' + "=" + JSON.stringify(products) + "; path=/; expires=" + date.toUTCString();
+        this.setCount(products); //this.setToast();
+      }
+    }, {
+      key: "setCount",
+      value: function setCount() {
+        var products = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+        var count;
+
+        if (products != null) {
+          count = Object.keys(products).length;
+        } else {
+          var cartData = this.getCookie(cookieKeyCart);
+          count = Object.keys(cartData).length;
+        }
+
+        cartCounterNode.textContent = "".concat(count);
+      }
+    }, {
+      key: "buttonsChange",
+      value: function buttonsChange(sku) {
+        var _this = this;
+
+        var cartData = this.getCookie(cookieKeyCart);
+        var availability = false;
+
+        if (!(cartData === undefined || cartData === "")) {
+          var products = JSON.parse(cartData);
+          availability = products.hasOwnProperty(sku);
+        }
+
+        var buttons = document.querySelectorAll("".concat(productUpDateToCartSelector, "[data-barcode=\"").concat(sku, "\"]"));
+        buttons && buttons.forEach(function (btn) {
+          if (availability) {
+            btn.classList.add('added');
+            btn.textContent = _this.i18n[_this.getLocalization()]['button-added'];
+          } else {
+            btn.classList.remove('added');
+            btn.textContent = _this.i18n[_this.getLocalization()]['button-add'];
+          }
+        });
+      }
+    }, {
+      key: "delete",
+      value: function _delete(button) {
+        var productSku = button.dataset.barcode;
+        var cartData = this.getCookie(cookieKeyCart);
+
+        if (cartData) {
+          var products = JSON.parse(cartData);
+          delete products[productSku];
+          this.setCookie(products);
+          var tr = button.closest('tr');
+          tr && tr.remove();
+          this.buttonsChange(productSku);
+        }
+      }
+    }, {
+      key: "checkCookieCart",
+      value: function checkCookieCart() {
+        var cartData = this.getCookie(cookieKeyCart);
+        var count = 0;
+
+        if (!(cartData === undefined || cartData === "")) {
+          var products = JSON.parse(cartData);
+          count = Object.keys(products).length;
+
+          for (var _i = 0, _Object$entries = Object.entries(products); _i < _Object$entries.length; _i++) {
+            var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 1),
+                key = _Object$entries$_i[0];
+
+            this.buttonsChange(key);
+          }
+        }
+
+        cartCounterNode.textContent = "".concat(count);
+        cartCounterNode.hidden = false;
+      }
+    }, {
+      key: "upDateCart",
+      value: function upDateCart(addToCartBtn) {
+        var productSku = addToCartBtn.dataset.barcode;
+        var value = 1; //кол-во
+
+        var products = {};
+        var cartData = this.getCookie(cookieKeyCart);
+
+        if (!cartData) {
+          products[productSku] = value;
+          this.setCookie(products);
+        } else {
+          products = JSON.parse(cartData);
+
+          if (addToCartBtn.classList.contains('added')) {
+            delete products[productSku];
+            this.setCookie(products);
+            this.buttonsChange(productSku);
+          } else {
+            products[productSku] = value;
+            this.setCookie(products);
+            this.buttonsChange(productSku);
+            this.openModal();
+          }
+        }
+      }
+    }, {
+      key: "openModal",
+      value: function openModal() {
+        var modalNode = document.getElementById("".concat(cartModalId));
+
+        function postData() {
+          return _postData.apply(this, arguments);
+        }
+
+        function _postData() {
+          _postData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+            var url,
+                data,
+                response,
+                _args = arguments;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    url = _args.length > 0 && _args[0] !== undefined ? _args[0] : '';
+                    data = _args.length > 1 && _args[1] !== undefined ? _args[1] : {};
+                    _context.next = 4;
+                    return fetch(url, {
+                      method: 'GET',
+                      // *GET, POST, PUT, DELETE, etc.
+                      //mode: 'cors', // no-cors, *cors, same-origin
+                      //cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                      //credentials: 'same-origin', // include, *same-origin, omit
+                      headers: {
+                        //'Content-Type': 'application/json',
+                        'csrf-token': document.querySelector('#csrf-token').value
+                      } //redirect: 'follow', // manual, *follow, error
+                      //referrerPolicy: 'no-referrer', // no-referrer, *client
+
+                    });
+
+                  case 4:
+                    response = _context.sent;
+                    _context.next = 7;
+                    return response.json(data);
+
+                  case 7:
+                    return _context.abrupt("return", _context.sent);
+
+                  case 8:
+                  case "end":
+                    return _context.stop();
+                }
+              }
+            }, _callee);
+          }));
+          return _postData.apply(this, arguments);
+        }
+
+        postData('/order-products-table').then(function (data) {
+          var table = data.body; // JSON data parsed by `response.json()` call
+
+          document.body.insertAdjacentHTML('beforeend', table);
+          $("#".concat(cartModalId)).modal('show');
+          $("#".concat(cartModalId)).on('hidden.bs.modal', function (e) {
+            $(this).remove();
+          });
+        });
+      }
+    }, {
+      key: "setToast",
+      value: function setToast() {
+        var tt = document.querySelector('#tt'); //tt.innerHTML = '';
+
+        tt.insertAdjacentHTML('beforeend', toast);
+        $('.toast').on('hidden.bs.toast', function () {
+          $(this).remove();
+        });
+        $('.toast').toast('show');
+      }
+    }, {
+      key: "setEvent",
+      value: function setEvent() {
+        var _this2 = this;
+
+        document.addEventListener('click', function (_ref) {
+          var target = _ref.target;
+          var upDateBtn = target.closest("".concat(productUpDateToCartSelector));
+          var openModal = target.closest("".concat(productToCartModalSelector));
+          var deleteBtn = target.closest("".concat(productDeleteCartSelector));
+          upDateBtn && _this2.upDateCart(upDateBtn);
+          openModal && _this2.openModal();
+          deleteBtn && _this2["delete"](deleteBtn);
+        }, false);
+        document.addEventListener('DOMContentLoaded', this.checkCookieCart, false);
+      }
+    }, {
+      key: "run",
+      value: function run() {
+        this.setEvent();
+        var obj = {
+          'localization': this.localization
+        };
+        console.log(obj);
+      }
+    }]);
+
+    return Cart;
+  }();
+
+  window.cart = new Cart();
+})();
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
+/***/ "./resources/js/site/page/cardProduct.js":
+/*!***********************************************!*\
+  !*** ./resources/js/site/page/cardProduct.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {(function () {
+  "use strict";
+
+  var pageProduct = document.body.classList.contains('product');
+
+  if (!pageProduct) {
+    return false;
   }
 
-  function upDataCart(addToCartBtn) {
-    var container = addToCartBtn.closest(".".concat(productToCartContainerClassName));
+  var nameGetParam = 'sort';
+  var paramsString = window.location.search;
+  var searchParams = new URLSearchParams(paramsString);
+  var tabSelector = '';
 
-    if (!container) {
-      console.warn('@BeCrutch: not container!');
-      return false;
-    }
+  if (searchParams.has(nameGetParam)) {
+    tabSelector = "a[data-toggle=\"tab\"][data-sort=\"".concat(searchParams.get(nameGetParam), "\"]");
+  } else {
+    var tableContainer = 'table-products';
+    var idContainerTabs = 'product-tabs';
+    var containetTabs = document.querySelector("#".concat(idContainerTabs));
 
-    var date = new Date();
-    var productSku = container.dataset.sku;
-    var value = container.querySelector('input').value;
-    var addProductData = {};
-    var cartData = getCookie(cookieKeyCart);
-    date.setDate(date.getDate() + 1); //жизнь куки
+    if (containetTabs) {
+      var s1 = function s1(id) {
+        var container = containetTabs.querySelector("#sort-".concat(id));
 
-    if (!cartData) {
-      addProductData[productSku] = value;
-      document.cookie = 'products_cart' + "=" + JSON.stringify(addProductData) + "; path=/; expires=" + date.toUTCString();
-      cartCounterNode.textContent = "".concat(Object.keys(addProductData).length);
-    } else {
-      var toObj = JSON.parse(cartData);
-      toObj[productSku] = value;
-      document.cookie = 'products_cart' + "=" + JSON.stringify(toObj) + "; path=/; expires=" + date.toUTCString();
-      var count = Object.keys(toObj).length;
-      cartCounterNode.textContent = "".concat(count);
+        if (!container) {
+          return false;
+        } else {
+          var tabTable = container.querySelector(".table-products");
+
+          if (tabTable) {
+            return "a[data-toggle=\"tab\"][data-sort=\"".concat(id, "\"]");
+          } else {
+            return s1(++id);
+          }
+        }
+      };
+
+      var result = s1(0);
+      tabSelector = result ? result : '';
+      console.log(result);
     }
   }
 
-  document.addEventListener('click', function (_ref) {
+  $(tabSelector).tab('show');
+  $('a[data-toggle="tab"][data-sort]').on('shown.bs.tab', function (_ref) {
     var target = _ref.target;
-    var cartBtn = target.closest(".".concat(addToCart));
-    cartBtn && upDataCart(cartBtn);
-  }, false);
-  document.addEventListener('DOMContentLoaded', checkCookieCart, false);
-})(); // $(document).ready(function(){
-//     $('.toast').toast('show');
-// });
-// <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
-//     <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
-//     <div class="toast-header">
-//     <strong class="mr-auto">Bootstrap</strong>
-//     <small>11 мин назад</small>
-// <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-//     <span aria-hidden="true">&times;</span>
-// </button>
-// </div>
-// <div class="toast-body">
-//     Привет, мир! Это тост-сообщение.
-// </div>
-// </div>
-// </div>
+    var sortNumber = target.dataset.sort;
+    window.history.pushState({}, 'Title', "?sort=".concat(sortNumber));
+  });
+})();
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
+/***/ "./resources/js/site/plugins/bootstrap-slider.min.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/site/plugins/bootstrap-slider.min.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
+
+function _typeof2(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
+
+var _typeof = "function" == typeof Symbol && "symbol" == _typeof2(Symbol.iterator) ? function (a) {
+  return _typeof2(a);
+} : function (a) {
+  return a && "function" == typeof Symbol && a.constructor === Symbol && a !== Symbol.prototype ? "symbol" : _typeof2(a);
+},
+    windowIsDefined = "object" === ("undefined" == typeof window ? "undefined" : _typeof(window));
+
+!function (a) {
+  if (true) !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")], __WEBPACK_AMD_DEFINE_FACTORY__ = (a),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));else { var b; }
+}(function (a) {
+  var b = "slider",
+      c = "bootstrapSlider";
+  windowIsDefined && !window.console && (window.console = {}), windowIsDefined && !window.console.log && (window.console.log = function () {}), windowIsDefined && !window.console.warn && (window.console.warn = function () {});
+  var d;
+  return function (a) {
+    function b() {}
+
+    function c(a) {
+      function c(b) {
+        b.prototype.option || (b.prototype.option = function (b) {
+          a.isPlainObject(b) && (this.options = a.extend(!0, this.options, b));
+        });
+      }
+
+      function e(b, c) {
+        a.fn[b] = function (e) {
+          if ("string" == typeof e) {
+            for (var g = d.call(arguments, 1), h = 0, i = this.length; i > h; h++) {
+              var j = this[h],
+                  k = a.data(j, b);
+              if (k) {
+                if (a.isFunction(k[e]) && "_" !== e.charAt(0)) {
+                  var l = k[e].apply(k, g);
+                  if (void 0 !== l && l !== k) return l;
+                } else f("no such method '" + e + "' for " + b + " instance");
+              } else f("cannot call methods on " + b + " prior to initialization; attempted to call '" + e + "'");
+            }
+
+            return this;
+          }
+
+          var m = this.map(function () {
+            var d = a.data(this, b);
+            return d ? (d.option(e), d._init()) : (d = new c(this, e), a.data(this, b, d)), a(this);
+          });
+          return !m || m.length > 1 ? m : m[0];
+        };
+      }
+
+      if (a) {
+        var f = "undefined" == typeof console ? b : function (a) {
+          console.error(a);
+        };
+        return a.bridget = function (a, b) {
+          c(b), e(a, b);
+        }, a.bridget;
+      }
+    }
+
+    var d = Array.prototype.slice;
+    c(a);
+  }(a), function (a) {
+    function e(b, c) {
+      function d(a, b) {
+        var c = "data-slider-" + b.replace(/_/g, "-"),
+            d = a.getAttribute(c);
+
+        try {
+          return JSON.parse(d);
+        } catch (e) {
+          return d;
+        }
+      }
+
+      this._state = {
+        value: null,
+        enabled: null,
+        offset: null,
+        size: null,
+        percentage: null,
+        inDrag: !1,
+        over: !1,
+        tickIndex: null
+      }, this.ticksCallbackMap = {}, this.handleCallbackMap = {}, "string" == typeof b ? this.element = document.querySelector(b) : b instanceof HTMLElement && (this.element = b), c = c ? c : {};
+
+      for (var e = Object.keys(this.defaultOptions), f = c.hasOwnProperty("min"), g = c.hasOwnProperty("max"), i = 0; i < e.length; i++) {
+        var j = e[i],
+            k = c[j];
+        k = "undefined" != typeof k ? k : d(this.element, j), k = null !== k ? k : this.defaultOptions[j], this.options || (this.options = {}), this.options[j] = k;
+      }
+
+      if (this.ticksAreValid = Array.isArray(this.options.ticks) && this.options.ticks.length > 0, this.ticksAreValid || (this.options.lock_to_ticks = !1), "auto" === this.options.rtl) {
+        var l = window.getComputedStyle(this.element);
+        null != l ? this.options.rtl = "rtl" === l.direction : this.options.rtl = "rtl" === this.element.style.direction;
+      }
+
+      "vertical" !== this.options.orientation || "top" !== this.options.tooltip_position && "bottom" !== this.options.tooltip_position ? "horizontal" !== this.options.orientation || "left" !== this.options.tooltip_position && "right" !== this.options.tooltip_position || (this.options.tooltip_position = "top") : this.options.rtl ? this.options.tooltip_position = "left" : this.options.tooltip_position = "right";
+      var m,
+          n,
+          o,
+          p,
+          q,
+          r = this.element.style.width,
+          s = !1,
+          t = this.element.parentNode;
+      if (this.sliderElem) s = !0;else {
+        this.sliderElem = document.createElement("div"), this.sliderElem.className = "slider";
+        var u = document.createElement("div");
+        u.className = "slider-track", n = document.createElement("div"), n.className = "slider-track-low", m = document.createElement("div"), m.className = "slider-selection", o = document.createElement("div"), o.className = "slider-track-high", p = document.createElement("div"), p.className = "slider-handle min-slider-handle", p.setAttribute("role", "slider"), p.setAttribute("aria-valuemin", this.options.min), p.setAttribute("aria-valuemax", this.options.max), q = document.createElement("div"), q.className = "slider-handle max-slider-handle", q.setAttribute("role", "slider"), q.setAttribute("aria-valuemin", this.options.min), q.setAttribute("aria-valuemax", this.options.max), u.appendChild(n), u.appendChild(m), u.appendChild(o), this.rangeHighlightElements = [];
+        var v = this.options.rangeHighlights;
+        if (Array.isArray(v) && v.length > 0) for (var w = 0; w < v.length; w++) {
+          var x = document.createElement("div"),
+              y = v[w]["class"] || "";
+          x.className = "slider-rangeHighlight slider-selection " + y, this.rangeHighlightElements.push(x), u.appendChild(x);
+        }
+        var z = Array.isArray(this.options.labelledby);
+
+        if (z && this.options.labelledby[0] && p.setAttribute("aria-labelledby", this.options.labelledby[0]), z && this.options.labelledby[1] && q.setAttribute("aria-labelledby", this.options.labelledby[1]), !z && this.options.labelledby && (p.setAttribute("aria-labelledby", this.options.labelledby), q.setAttribute("aria-labelledby", this.options.labelledby)), this.ticks = [], Array.isArray(this.options.ticks) && this.options.ticks.length > 0) {
+          for (this.ticksContainer = document.createElement("div"), this.ticksContainer.className = "slider-tick-container", i = 0; i < this.options.ticks.length; i++) {
+            var A = document.createElement("div");
+
+            if (A.className = "slider-tick", this.options.ticks_tooltip) {
+              var B = this._addTickListener(),
+                  C = B.addMouseEnter(this, A, i),
+                  D = B.addMouseLeave(this, A);
+
+              this.ticksCallbackMap[i] = {
+                mouseEnter: C,
+                mouseLeave: D
+              };
+            }
+
+            this.ticks.push(A), this.ticksContainer.appendChild(A);
+          }
+
+          m.className += " tick-slider-selection";
+        }
+
+        if (this.tickLabels = [], Array.isArray(this.options.ticks_labels) && this.options.ticks_labels.length > 0) for (this.tickLabelContainer = document.createElement("div"), this.tickLabelContainer.className = "slider-tick-label-container", i = 0; i < this.options.ticks_labels.length; i++) {
+          var E = document.createElement("div"),
+              F = 0 === this.options.ticks_positions.length,
+              G = this.options.reversed && F ? this.options.ticks_labels.length - (i + 1) : i;
+          E.className = "slider-tick-label", E.innerHTML = this.options.ticks_labels[G], this.tickLabels.push(E), this.tickLabelContainer.appendChild(E);
+        }
+
+        var H = function H(a) {
+          var b = document.createElement("div");
+          b.className = "tooltip-arrow";
+          var c = document.createElement("div");
+          c.className = "tooltip-inner", a.appendChild(b), a.appendChild(c);
+        },
+            I = document.createElement("div");
+
+        I.className = "tooltip tooltip-main", I.setAttribute("role", "presentation"), H(I);
+        var J = document.createElement("div");
+        J.className = "tooltip tooltip-min", J.setAttribute("role", "presentation"), H(J);
+        var K = document.createElement("div");
+        K.className = "tooltip tooltip-max", K.setAttribute("role", "presentation"), H(K), this.sliderElem.appendChild(u), this.sliderElem.appendChild(I), this.sliderElem.appendChild(J), this.sliderElem.appendChild(K), this.tickLabelContainer && this.sliderElem.appendChild(this.tickLabelContainer), this.ticksContainer && this.sliderElem.appendChild(this.ticksContainer), this.sliderElem.appendChild(p), this.sliderElem.appendChild(q), t.insertBefore(this.sliderElem, this.element), this.element.style.display = "none";
+      }
+      if (a && (this.$element = a(this.element), this.$sliderElem = a(this.sliderElem)), this.eventToCallbackMap = {}, this.sliderElem.id = this.options.id, this.touchCapable = "ontouchstart" in window || window.DocumentTouch && document instanceof window.DocumentTouch, this.touchX = 0, this.touchY = 0, this.tooltip = this.sliderElem.querySelector(".tooltip-main"), this.tooltipInner = this.tooltip.querySelector(".tooltip-inner"), this.tooltip_min = this.sliderElem.querySelector(".tooltip-min"), this.tooltipInner_min = this.tooltip_min.querySelector(".tooltip-inner"), this.tooltip_max = this.sliderElem.querySelector(".tooltip-max"), this.tooltipInner_max = this.tooltip_max.querySelector(".tooltip-inner"), h[this.options.scale] && (this.options.scale = h[this.options.scale]), s === !0 && (this._removeClass(this.sliderElem, "slider-horizontal"), this._removeClass(this.sliderElem, "slider-vertical"), this._removeClass(this.sliderElem, "slider-rtl"), this._removeClass(this.tooltip, "hide"), this._removeClass(this.tooltip_min, "hide"), this._removeClass(this.tooltip_max, "hide"), ["left", "right", "top", "width", "height"].forEach(function (a) {
+        this._removeProperty(this.trackLow, a), this._removeProperty(this.trackSelection, a), this._removeProperty(this.trackHigh, a);
+      }, this), [this.handle1, this.handle2].forEach(function (a) {
+        this._removeProperty(a, "left"), this._removeProperty(a, "right"), this._removeProperty(a, "top");
+      }, this), [this.tooltip, this.tooltip_min, this.tooltip_max].forEach(function (a) {
+        this._removeProperty(a, "left"), this._removeProperty(a, "right"), this._removeProperty(a, "top"), this._removeClass(a, "right"), this._removeClass(a, "left"), this._removeClass(a, "top");
+      }, this)), "vertical" === this.options.orientation ? (this._addClass(this.sliderElem, "slider-vertical"), this.stylePos = "top", this.mousePos = "pageY", this.sizePos = "offsetHeight") : (this._addClass(this.sliderElem, "slider-horizontal"), this.sliderElem.style.width = r, this.options.orientation = "horizontal", this.options.rtl ? this.stylePos = "right" : this.stylePos = "left", this.mousePos = "clientX", this.sizePos = "offsetWidth"), this.options.rtl && this._addClass(this.sliderElem, "slider-rtl"), this._setTooltipPosition(), Array.isArray(this.options.ticks) && this.options.ticks.length > 0 && (g || (this.options.max = Math.max.apply(Math, this.options.ticks)), f || (this.options.min = Math.min.apply(Math, this.options.ticks))), Array.isArray(this.options.value) ? (this.options.range = !0, this._state.value = this.options.value) : this.options.range ? this._state.value = [this.options.value, this.options.max] : this._state.value = this.options.value, this.trackLow = n || this.trackLow, this.trackSelection = m || this.trackSelection, this.trackHigh = o || this.trackHigh, "none" === this.options.selection ? (this._addClass(this.trackLow, "hide"), this._addClass(this.trackSelection, "hide"), this._addClass(this.trackHigh, "hide")) : ("after" === this.options.selection || "before" === this.options.selection) && (this._removeClass(this.trackLow, "hide"), this._removeClass(this.trackSelection, "hide"), this._removeClass(this.trackHigh, "hide")), this.handle1 = p || this.handle1, this.handle2 = q || this.handle2, s === !0) for (this._removeClass(this.handle1, "round triangle"), this._removeClass(this.handle2, "round triangle hide"), i = 0; i < this.ticks.length; i++) {
+        this._removeClass(this.ticks[i], "round triangle hide");
+      }
+      var L = ["round", "triangle", "custom"],
+          M = -1 !== L.indexOf(this.options.handle);
+      if (M) for (this._addClass(this.handle1, this.options.handle), this._addClass(this.handle2, this.options.handle), i = 0; i < this.ticks.length; i++) {
+        this._addClass(this.ticks[i], this.options.handle);
+      }
+      if (this._state.offset = this._offset(this.sliderElem), this._state.size = this.sliderElem[this.sizePos], this.setValue(this._state.value), this.handle1Keydown = this._keydown.bind(this, 0), this.handle1.addEventListener("keydown", this.handle1Keydown, !1), this.handle2Keydown = this._keydown.bind(this, 1), this.handle2.addEventListener("keydown", this.handle2Keydown, !1), this.mousedown = this._mousedown.bind(this), this.touchstart = this._touchstart.bind(this), this.touchmove = this._touchmove.bind(this), this.touchCapable && (this.sliderElem.addEventListener("touchstart", this.touchstart, !1), this.sliderElem.addEventListener("touchmove", this.touchmove, !1)), this.sliderElem.addEventListener("mousedown", this.mousedown, !1), this.resize = this._resize.bind(this), window.addEventListener("resize", this.resize, !1), "hide" === this.options.tooltip) this._addClass(this.tooltip, "hide"), this._addClass(this.tooltip_min, "hide"), this._addClass(this.tooltip_max, "hide");else if ("always" === this.options.tooltip) this._showTooltip(), this._alwaysShowTooltip = !0;else {
+        if (this.showTooltip = this._showTooltip.bind(this), this.hideTooltip = this._hideTooltip.bind(this), this.options.ticks_tooltip) {
+          var N = this._addTickListener(),
+              O = N.addMouseEnter(this, this.handle1),
+              P = N.addMouseLeave(this, this.handle1);
+
+          this.handleCallbackMap.handle1 = {
+            mouseEnter: O,
+            mouseLeave: P
+          }, O = N.addMouseEnter(this, this.handle2), P = N.addMouseLeave(this, this.handle2), this.handleCallbackMap.handle2 = {
+            mouseEnter: O,
+            mouseLeave: P
+          };
+        } else this.sliderElem.addEventListener("mouseenter", this.showTooltip, !1), this.sliderElem.addEventListener("mouseleave", this.hideTooltip, !1), this.touchCapable && (this.sliderElem.addEventListener("touchstart", this.showTooltip, !1), this.sliderElem.addEventListener("touchmove", this.showTooltip, !1), this.sliderElem.addEventListener("touchend", this.hideTooltip, !1));
+
+        this.handle1.addEventListener("focus", this.showTooltip, !1), this.handle1.addEventListener("blur", this.hideTooltip, !1), this.handle2.addEventListener("focus", this.showTooltip, !1), this.handle2.addEventListener("blur", this.hideTooltip, !1), this.touchCapable && (this.handle1.addEventListener("touchstart", this.showTooltip, !1), this.handle1.addEventListener("touchmove", this.showTooltip, !1), this.handle1.addEventListener("touchend", this.hideTooltip, !1), this.handle2.addEventListener("touchstart", this.showTooltip, !1), this.handle2.addEventListener("touchmove", this.showTooltip, !1), this.handle2.addEventListener("touchend", this.hideTooltip, !1));
+      }
+      this.options.enabled ? this.enable() : this.disable();
+    }
+
+    var f = void 0,
+        g = {
+      formatInvalidInputErrorMsg: function formatInvalidInputErrorMsg(a) {
+        return "Invalid input value '" + a + "' passed in";
+      },
+      callingContextNotSliderInstance: "Calling context element does not have instance of Slider bound to it. Check your code to make sure the JQuery object returned from the call to the slider() initializer is calling the method"
+    },
+        h = {
+      linear: {
+        getValue: function getValue(a, b) {
+          return a < b.min ? b.min : a > b.max ? b.max : a;
+        },
+        toValue: function toValue(a) {
+          var b = a / 100 * (this.options.max - this.options.min),
+              c = !0;
+
+          if (this.options.ticks_positions.length > 0) {
+            for (var d, e, f, g = 0, i = 1; i < this.options.ticks_positions.length; i++) {
+              if (a <= this.options.ticks_positions[i]) {
+                d = this.options.ticks[i - 1], f = this.options.ticks_positions[i - 1], e = this.options.ticks[i], g = this.options.ticks_positions[i];
+                break;
+              }
+            }
+
+            var j = (a - f) / (g - f);
+            b = d + j * (e - d), c = !1;
+          }
+
+          var k = c ? this.options.min : 0,
+              l = k + Math.round(b / this.options.step) * this.options.step;
+          return h.linear.getValue(l, this.options);
+        },
+        toPercentage: function toPercentage(a) {
+          if (this.options.max === this.options.min) return 0;
+
+          if (this.options.ticks_positions.length > 0) {
+            for (var b, c, d, e = 0, f = 0; f < this.options.ticks.length; f++) {
+              if (a <= this.options.ticks[f]) {
+                b = f > 0 ? this.options.ticks[f - 1] : 0, d = f > 0 ? this.options.ticks_positions[f - 1] : 0, c = this.options.ticks[f], e = this.options.ticks_positions[f];
+                break;
+              }
+            }
+
+            if (f > 0) {
+              var g = (a - b) / (c - b);
+              return d + g * (e - d);
+            }
+          }
+
+          return 100 * (a - this.options.min) / (this.options.max - this.options.min);
+        }
+      },
+      logarithmic: {
+        toValue: function toValue(a) {
+          var b = 1 - this.options.min,
+              c = Math.log(this.options.min + b),
+              d = Math.log(this.options.max + b),
+              e = Math.exp(c + (d - c) * a / 100) - b;
+          return Math.round(e) === d ? d : (e = this.options.min + Math.round((e - this.options.min) / this.options.step) * this.options.step, h.linear.getValue(e, this.options));
+        },
+        toPercentage: function toPercentage(a) {
+          if (this.options.max === this.options.min) return 0;
+          var b = 1 - this.options.min,
+              c = Math.log(this.options.max + b),
+              d = Math.log(this.options.min + b),
+              e = Math.log(a + b);
+          return 100 * (e - d) / (c - d);
+        }
+      }
+    };
+    d = function d(a, b) {
+      return e.call(this, a, b), this;
+    }, d.prototype = {
+      _init: function _init() {},
+      constructor: d,
+      defaultOptions: {
+        id: "",
+        min: 0,
+        max: 10,
+        step: 1,
+        precision: 0,
+        orientation: "horizontal",
+        value: 5,
+        range: !1,
+        selection: "before",
+        tooltip: "show",
+        tooltip_split: !1,
+        lock_to_ticks: !1,
+        handle: "round",
+        reversed: !1,
+        rtl: "auto",
+        enabled: !0,
+        formatter: function formatter(a) {
+          return Array.isArray(a) ? a[0] + " : " + a[1] : a;
+        },
+        natural_arrow_keys: !1,
+        ticks: [],
+        ticks_positions: [],
+        ticks_labels: [],
+        ticks_snap_bounds: 0,
+        ticks_tooltip: !1,
+        scale: "linear",
+        focus: !1,
+        tooltip_position: null,
+        labelledby: null,
+        rangeHighlights: []
+      },
+      getElement: function getElement() {
+        return this.sliderElem;
+      },
+      getValue: function getValue() {
+        return this.options.range ? this._state.value : this._state.value[0];
+      },
+      setValue: function setValue(a, b, c) {
+        a || (a = 0);
+        var d = this.getValue();
+        this._state.value = this._validateInputValue(a);
+
+        var e = this._applyPrecision.bind(this);
+
+        this.options.range ? (this._state.value[0] = e(this._state.value[0]), this._state.value[1] = e(this._state.value[1]), this.ticksAreValid && this.options.lock_to_ticks && (this._state.value[0] = this.options.ticks[this._getClosestTickIndex(this._state.value[0])], this._state.value[1] = this.options.ticks[this._getClosestTickIndex(this._state.value[1])]), this._state.value[0] = Math.max(this.options.min, Math.min(this.options.max, this._state.value[0])), this._state.value[1] = Math.max(this.options.min, Math.min(this.options.max, this._state.value[1]))) : (this._state.value = e(this._state.value), this.ticksAreValid && this.options.lock_to_ticks && (this._state.value = this.options.ticks[this._getClosestTickIndex(this._state.value)]), this._state.value = [Math.max(this.options.min, Math.min(this.options.max, this._state.value))], this._addClass(this.handle2, "hide"), "after" === this.options.selection ? this._state.value[1] = this.options.max : this._state.value[1] = this.options.min), this._setTickIndex(), this.options.max > this.options.min ? this._state.percentage = [this._toPercentage(this._state.value[0]), this._toPercentage(this._state.value[1]), 100 * this.options.step / (this.options.max - this.options.min)] : this._state.percentage = [0, 0, 100], this._layout();
+        var f = this.options.range ? this._state.value : this._state.value[0];
+        this._setDataVal(f), b === !0 && this._trigger("slide", f);
+        var g = !1;
+        return g = Array.isArray(f) ? d[0] !== f[0] || d[1] !== f[1] : d !== f, g && c === !0 && this._trigger("change", {
+          oldValue: d,
+          newValue: f
+        }), this;
+      },
+      destroy: function destroy() {
+        this._removeSliderEventHandlers(), this.sliderElem.parentNode.removeChild(this.sliderElem), this.element.style.display = "", this._cleanUpEventCallbacksMap(), this.element.removeAttribute("data"), a && (this._unbindJQueryEventHandlers(), f === b && this.$element.removeData(f), this.$element.removeData(c));
+      },
+      disable: function disable() {
+        return this._state.enabled = !1, this.handle1.removeAttribute("tabindex"), this.handle2.removeAttribute("tabindex"), this._addClass(this.sliderElem, "slider-disabled"), this._trigger("slideDisabled"), this;
+      },
+      enable: function enable() {
+        return this._state.enabled = !0, this.handle1.setAttribute("tabindex", 0), this.handle2.setAttribute("tabindex", 0), this._removeClass(this.sliderElem, "slider-disabled"), this._trigger("slideEnabled"), this;
+      },
+      toggle: function toggle() {
+        return this._state.enabled ? this.disable() : this.enable(), this;
+      },
+      isEnabled: function isEnabled() {
+        return this._state.enabled;
+      },
+      on: function on(a, b) {
+        return this._bindNonQueryEventHandler(a, b), this;
+      },
+      off: function off(b, c) {
+        a ? (this.$element.off(b, c), this.$sliderElem.off(b, c)) : this._unbindNonQueryEventHandler(b, c);
+      },
+      getAttribute: function getAttribute(a) {
+        return a ? this.options[a] : this.options;
+      },
+      setAttribute: function setAttribute(a, b) {
+        return this.options[a] = b, this;
+      },
+      refresh: function refresh(d) {
+        var g = this.getValue();
+        return this._removeSliderEventHandlers(), e.call(this, this.element, this.options), d && d.useCurrentValue === !0 && this.setValue(g), a && (f === b ? (a.data(this.element, b, this), a.data(this.element, c, this)) : a.data(this.element, c, this)), this;
+      },
+      relayout: function relayout() {
+        return this._resize(), this;
+      },
+      _removeTooltipListener: function _removeTooltipListener(a, b) {
+        this.handle1.removeEventListener(a, b, !1), this.handle2.removeEventListener(a, b, !1);
+      },
+      _removeSliderEventHandlers: function _removeSliderEventHandlers() {
+        if (this.handle1.removeEventListener("keydown", this.handle1Keydown, !1), this.handle2.removeEventListener("keydown", this.handle2Keydown, !1), this.options.ticks_tooltip) {
+          for (var a = this.ticksContainer.getElementsByClassName("slider-tick"), b = 0; b < a.length; b++) {
+            a[b].removeEventListener("mouseenter", this.ticksCallbackMap[b].mouseEnter, !1), a[b].removeEventListener("mouseleave", this.ticksCallbackMap[b].mouseLeave, !1);
+          }
+
+          this.handleCallbackMap.handle1 && this.handleCallbackMap.handle2 && (this.handle1.removeEventListener("mouseenter", this.handleCallbackMap.handle1.mouseEnter, !1), this.handle2.removeEventListener("mouseenter", this.handleCallbackMap.handle2.mouseEnter, !1), this.handle1.removeEventListener("mouseleave", this.handleCallbackMap.handle1.mouseLeave, !1), this.handle2.removeEventListener("mouseleave", this.handleCallbackMap.handle2.mouseLeave, !1));
+        }
+
+        this.handleCallbackMap = null, this.ticksCallbackMap = null, this.showTooltip && this._removeTooltipListener("focus", this.showTooltip), this.hideTooltip && this._removeTooltipListener("blur", this.hideTooltip), this.showTooltip && this.sliderElem.removeEventListener("mouseenter", this.showTooltip, !1), this.hideTooltip && this.sliderElem.removeEventListener("mouseleave", this.hideTooltip, !1), this.sliderElem.removeEventListener("mousedown", this.mousedown, !1), this.touchCapable && (this.showTooltip && (this.handle1.removeEventListener("touchstart", this.showTooltip, !1), this.handle1.removeEventListener("touchmove", this.showTooltip, !1), this.handle2.removeEventListener("touchstart", this.showTooltip, !1), this.handle2.removeEventListener("touchmove", this.showTooltip, !1)), this.hideTooltip && (this.handle1.removeEventListener("touchend", this.hideTooltip, !1), this.handle2.removeEventListener("touchend", this.hideTooltip, !1)), this.showTooltip && (this.sliderElem.removeEventListener("touchstart", this.showTooltip, !1), this.sliderElem.removeEventListener("touchmove", this.showTooltip, !1)), this.hideTooltip && this.sliderElem.removeEventListener("touchend", this.hideTooltip, !1), this.sliderElem.removeEventListener("touchstart", this.touchstart, !1), this.sliderElem.removeEventListener("touchmove", this.touchmove, !1)), window.removeEventListener("resize", this.resize, !1);
+      },
+      _bindNonQueryEventHandler: function _bindNonQueryEventHandler(a, b) {
+        void 0 === this.eventToCallbackMap[a] && (this.eventToCallbackMap[a] = []), this.eventToCallbackMap[a].push(b);
+      },
+      _unbindNonQueryEventHandler: function _unbindNonQueryEventHandler(a, b) {
+        var c = this.eventToCallbackMap[a];
+        if (void 0 !== c) for (var d = 0; d < c.length; d++) {
+          if (c[d] === b) {
+            c.splice(d, 1);
+            break;
+          }
+        }
+      },
+      _cleanUpEventCallbacksMap: function _cleanUpEventCallbacksMap() {
+        for (var a = Object.keys(this.eventToCallbackMap), b = 0; b < a.length; b++) {
+          var c = a[b];
+          delete this.eventToCallbackMap[c];
+        }
+      },
+      _showTooltip: function _showTooltip() {
+        this.options.tooltip_split === !1 ? (this._addClass(this.tooltip, "in"), this.tooltip_min.style.display = "none", this.tooltip_max.style.display = "none") : (this._addClass(this.tooltip_min, "in"), this._addClass(this.tooltip_max, "in"), this.tooltip.style.display = "none"), this._state.over = !0;
+      },
+      _hideTooltip: function _hideTooltip() {
+        this._state.inDrag === !1 && this._alwaysShowTooltip !== !0 && (this._removeClass(this.tooltip, "in"), this._removeClass(this.tooltip_min, "in"), this._removeClass(this.tooltip_max, "in")), this._state.over = !1;
+      },
+      _setToolTipOnMouseOver: function _setToolTipOnMouseOver(a) {
+        function b(a, b) {
+          return b ? [100 - a.percentage[0], c.options.range ? 100 - a.percentage[1] : a.percentage[1]] : [a.percentage[0], a.percentage[1]];
+        }
+
+        var c = this,
+            d = this.options.formatter(a ? a.value[0] : this._state.value[0]),
+            e = a ? b(a, this.options.reversed) : b(this._state, this.options.reversed);
+        this._setText(this.tooltipInner, d), this.tooltip.style[this.stylePos] = e[0] + "%";
+      },
+      _copyState: function _copyState() {
+        return {
+          value: [this._state.value[0], this._state.value[1]],
+          enabled: this._state.enabled,
+          offset: this._state.offset,
+          size: this._state.size,
+          percentage: [this._state.percentage[0], this._state.percentage[1], this._state.percentage[2]],
+          inDrag: this._state.inDrag,
+          over: this._state.over,
+          dragged: this._state.dragged,
+          keyCtrl: this._state.keyCtrl
+        };
+      },
+      _addTickListener: function _addTickListener() {
+        return {
+          addMouseEnter: function addMouseEnter(a, b, c) {
+            var d = function d() {
+              var d = a._copyState(),
+                  e = b === a.handle1 ? d.value[0] : d.value[1],
+                  f = void 0;
+
+              void 0 !== c ? (e = a.options.ticks[c], f = a.options.ticks_positions.length > 0 && a.options.ticks_positions[c] || a._toPercentage(a.options.ticks[c])) : f = a._toPercentage(e), d.value[0] = e, d.percentage[0] = f, a._setToolTipOnMouseOver(d), a._showTooltip();
+            };
+
+            return b.addEventListener("mouseenter", d, !1), d;
+          },
+          addMouseLeave: function addMouseLeave(a, b) {
+            var c = function c() {
+              a._hideTooltip();
+            };
+
+            return b.addEventListener("mouseleave", c, !1), c;
+          }
+        };
+      },
+      _layout: function _layout() {
+        var a, b;
+        if (a = this.options.reversed ? [100 - this._state.percentage[0], this.options.range ? 100 - this._state.percentage[1] : this._state.percentage[1]] : [this._state.percentage[0], this._state.percentage[1]], this.handle1.style[this.stylePos] = a[0] + "%", this.handle1.setAttribute("aria-valuenow", this._state.value[0]), b = this.options.formatter(this._state.value[0]), isNaN(b) ? this.handle1.setAttribute("aria-valuetext", b) : this.handle1.removeAttribute("aria-valuetext"), this.handle2.style[this.stylePos] = a[1] + "%", this.handle2.setAttribute("aria-valuenow", this._state.value[1]), b = this.options.formatter(this._state.value[1]), isNaN(b) ? this.handle2.setAttribute("aria-valuetext", b) : this.handle2.removeAttribute("aria-valuetext"), this.rangeHighlightElements.length > 0 && Array.isArray(this.options.rangeHighlights) && this.options.rangeHighlights.length > 0) for (var c = 0; c < this.options.rangeHighlights.length; c++) {
+          var d = this._toPercentage(this.options.rangeHighlights[c].start),
+              e = this._toPercentage(this.options.rangeHighlights[c].end);
+
+          if (this.options.reversed) {
+            var f = 100 - e;
+            e = 100 - d, d = f;
+          }
+
+          var g = this._createHighlightRange(d, e);
+
+          g ? "vertical" === this.options.orientation ? (this.rangeHighlightElements[c].style.top = g.start + "%", this.rangeHighlightElements[c].style.height = g.size + "%") : (this.options.rtl ? this.rangeHighlightElements[c].style.right = g.start + "%" : this.rangeHighlightElements[c].style.left = g.start + "%", this.rangeHighlightElements[c].style.width = g.size + "%") : this.rangeHighlightElements[c].style.display = "none";
+        }
+
+        if (Array.isArray(this.options.ticks) && this.options.ticks.length > 0) {
+          var h,
+              i = "vertical" === this.options.orientation ? "height" : "width";
+          h = "vertical" === this.options.orientation ? "marginTop" : this.options.rtl ? "marginRight" : "marginLeft";
+          var j = this._state.size / (this.options.ticks.length - 1);
+
+          if (this.tickLabelContainer) {
+            var k = 0;
+            if (0 === this.options.ticks_positions.length) "vertical" !== this.options.orientation && (this.tickLabelContainer.style[h] = -j / 2 + "px"), k = this.tickLabelContainer.offsetHeight;else for (l = 0; l < this.tickLabelContainer.childNodes.length; l++) {
+              this.tickLabelContainer.childNodes[l].offsetHeight > k && (k = this.tickLabelContainer.childNodes[l].offsetHeight);
+            }
+            "horizontal" === this.options.orientation && (this.sliderElem.style.marginBottom = k + "px");
+          }
+
+          for (var l = 0; l < this.options.ticks.length; l++) {
+            var m = this.options.ticks_positions[l] || this._toPercentage(this.options.ticks[l]);
+
+            this.options.reversed && (m = 100 - m), this.ticks[l].style[this.stylePos] = m + "%", this._removeClass(this.ticks[l], "in-selection"), this.options.range ? m >= a[0] && m <= a[1] && this._addClass(this.ticks[l], "in-selection") : "after" === this.options.selection && m >= a[0] ? this._addClass(this.ticks[l], "in-selection") : "before" === this.options.selection && m <= a[0] && this._addClass(this.ticks[l], "in-selection"), this.tickLabels[l] && (this.tickLabels[l].style[i] = j + "px", "vertical" !== this.options.orientation && void 0 !== this.options.ticks_positions[l] ? (this.tickLabels[l].style.position = "absolute", this.tickLabels[l].style[this.stylePos] = m + "%", this.tickLabels[l].style[h] = -j / 2 + "px") : "vertical" === this.options.orientation && (this.options.rtl ? this.tickLabels[l].style.marginRight = this.sliderElem.offsetWidth + "px" : this.tickLabels[l].style.marginLeft = this.sliderElem.offsetWidth + "px", this.tickLabelContainer.style[h] = this.sliderElem.offsetWidth / 2 * -1 + "px"), this._removeClass(this.tickLabels[l], "label-in-selection label-is-selection"), this.options.range ? m >= a[0] && m <= a[1] && (this._addClass(this.tickLabels[l], "label-in-selection"), (m === a[0] || a[1]) && this._addClass(this.tickLabels[l], "label-is-selection")) : ("after" === this.options.selection && m >= a[0] ? this._addClass(this.tickLabels[l], "label-in-selection") : "before" === this.options.selection && m <= a[0] && this._addClass(this.tickLabels[l], "label-in-selection"), m === a[0] && this._addClass(this.tickLabels[l], "label-is-selection")));
+          }
+        }
+
+        var n;
+
+        if (this.options.range) {
+          n = this.options.formatter(this._state.value), this._setText(this.tooltipInner, n), this.tooltip.style[this.stylePos] = (a[1] + a[0]) / 2 + "%";
+          var o = this.options.formatter(this._state.value[0]);
+
+          this._setText(this.tooltipInner_min, o);
+
+          var p = this.options.formatter(this._state.value[1]);
+          this._setText(this.tooltipInner_max, p), this.tooltip_min.style[this.stylePos] = a[0] + "%", this.tooltip_max.style[this.stylePos] = a[1] + "%";
+        } else n = this.options.formatter(this._state.value[0]), this._setText(this.tooltipInner, n), this.tooltip.style[this.stylePos] = a[0] + "%";
+
+        if ("vertical" === this.options.orientation) this.trackLow.style.top = "0", this.trackLow.style.height = Math.min(a[0], a[1]) + "%", this.trackSelection.style.top = Math.min(a[0], a[1]) + "%", this.trackSelection.style.height = Math.abs(a[0] - a[1]) + "%", this.trackHigh.style.bottom = "0", this.trackHigh.style.height = 100 - Math.min(a[0], a[1]) - Math.abs(a[0] - a[1]) + "%";else {
+          "right" === this.stylePos ? this.trackLow.style.right = "0" : this.trackLow.style.left = "0", this.trackLow.style.width = Math.min(a[0], a[1]) + "%", "right" === this.stylePos ? this.trackSelection.style.right = Math.min(a[0], a[1]) + "%" : this.trackSelection.style.left = Math.min(a[0], a[1]) + "%", this.trackSelection.style.width = Math.abs(a[0] - a[1]) + "%", "right" === this.stylePos ? this.trackHigh.style.left = "0" : this.trackHigh.style.right = "0", this.trackHigh.style.width = 100 - Math.min(a[0], a[1]) - Math.abs(a[0] - a[1]) + "%";
+          var q = this.tooltip_min.getBoundingClientRect(),
+              r = this.tooltip_max.getBoundingClientRect();
+          "bottom" === this.options.tooltip_position ? q.right > r.left ? (this._removeClass(this.tooltip_max, "bottom"), this._addClass(this.tooltip_max, "top"), this.tooltip_max.style.top = "", this.tooltip_max.style.bottom = "22px") : (this._removeClass(this.tooltip_max, "top"), this._addClass(this.tooltip_max, "bottom"), this.tooltip_max.style.top = this.tooltip_min.style.top, this.tooltip_max.style.bottom = "") : q.right > r.left ? (this._removeClass(this.tooltip_max, "top"), this._addClass(this.tooltip_max, "bottom"), this.tooltip_max.style.top = "18px") : (this._removeClass(this.tooltip_max, "bottom"), this._addClass(this.tooltip_max, "top"), this.tooltip_max.style.top = this.tooltip_min.style.top);
+        }
+      },
+      _createHighlightRange: function _createHighlightRange(a, b) {
+        return this._isHighlightRange(a, b) ? a > b ? {
+          start: b,
+          size: a - b
+        } : {
+          start: a,
+          size: b - a
+        } : null;
+      },
+      _isHighlightRange: function _isHighlightRange(a, b) {
+        return a >= 0 && 100 >= a && b >= 0 && 100 >= b ? !0 : !1;
+      },
+      _resize: function _resize(a) {
+        this._state.offset = this._offset(this.sliderElem), this._state.size = this.sliderElem[this.sizePos], this._layout();
+      },
+      _removeProperty: function _removeProperty(a, b) {
+        a.style.removeProperty ? a.style.removeProperty(b) : a.style.removeAttribute(b);
+      },
+      _mousedown: function _mousedown(a) {
+        if (!this._state.enabled) return !1;
+        a.preventDefault && a.preventDefault(), this._state.offset = this._offset(this.sliderElem), this._state.size = this.sliderElem[this.sizePos];
+
+        var b = this._getPercentage(a);
+
+        if (this.options.range) {
+          var c = Math.abs(this._state.percentage[0] - b),
+              d = Math.abs(this._state.percentage[1] - b);
+          this._state.dragged = d > c ? 0 : 1, this._adjustPercentageForRangeSliders(b);
+        } else this._state.dragged = 0;
+
+        this._state.percentage[this._state.dragged] = b, this.touchCapable && (document.removeEventListener("touchmove", this.mousemove, !1), document.removeEventListener("touchend", this.mouseup, !1)), this.mousemove && document.removeEventListener("mousemove", this.mousemove, !1), this.mouseup && document.removeEventListener("mouseup", this.mouseup, !1), this.mousemove = this._mousemove.bind(this), this.mouseup = this._mouseup.bind(this), this.touchCapable && (document.addEventListener("touchmove", this.mousemove, !1), document.addEventListener("touchend", this.mouseup, !1)), document.addEventListener("mousemove", this.mousemove, !1), document.addEventListener("mouseup", this.mouseup, !1), this._state.inDrag = !0;
+
+        var e = this._calculateValue();
+
+        return this._trigger("slideStart", e), this.setValue(e, !1, !0), a.returnValue = !1, this.options.focus && this._triggerFocusOnHandle(this._state.dragged), !0;
+      },
+      _touchstart: function _touchstart(a) {
+        this._mousedown(a);
+      },
+      _triggerFocusOnHandle: function _triggerFocusOnHandle(a) {
+        0 === a && this.handle1.focus(), 1 === a && this.handle2.focus();
+      },
+      _keydown: function _keydown(a, b) {
+        if (!this._state.enabled) return !1;
+        var c;
+
+        switch (b.keyCode) {
+          case 37:
+          case 40:
+            c = -1;
+            break;
+
+          case 39:
+          case 38:
+            c = 1;
+        }
+
+        if (c) {
+          if (this.options.natural_arrow_keys) {
+            var d = "horizontal" === this.options.orientation,
+                e = "vertical" === this.options.orientation,
+                f = this.options.rtl,
+                g = this.options.reversed;
+            d ? f ? g || (c = -c) : g && (c = -c) : e && (g || (c = -c));
+          }
+
+          var h;
+
+          if (this.ticksAreValid && this.options.lock_to_ticks) {
+            var i = void 0;
+            i = this.options.ticks.indexOf(this._state.value[a]), -1 === i && (i = 0, window.console.warn("(lock_to_ticks) _keydown: index should not be -1")), i += c, i = Math.max(0, Math.min(this.options.ticks.length - 1, i)), h = this.options.ticks[i];
+          } else h = this._state.value[a] + c * this.options.step;
+
+          var j = this._toPercentage(h);
+
+          if (this._state.keyCtrl = a, this.options.range) {
+            this._adjustPercentageForRangeSliders(j);
+
+            var k = this._state.keyCtrl ? this._state.value[0] : h,
+                l = this._state.keyCtrl ? h : this._state.value[1];
+            h = [Math.max(this.options.min, Math.min(this.options.max, k)), Math.max(this.options.min, Math.min(this.options.max, l))];
+          } else h = Math.max(this.options.min, Math.min(this.options.max, h));
+
+          return this._trigger("slideStart", h), this.setValue(h, !0, !0), this._trigger("slideStop", h), this._pauseEvent(b), delete this._state.keyCtrl, !1;
+        }
+      },
+      _pauseEvent: function _pauseEvent(a) {
+        a.stopPropagation && a.stopPropagation(), a.preventDefault && a.preventDefault(), a.cancelBubble = !0, a.returnValue = !1;
+      },
+      _mousemove: function _mousemove(a) {
+        if (!this._state.enabled) return !1;
+
+        var b = this._getPercentage(a);
+
+        this._adjustPercentageForRangeSliders(b), this._state.percentage[this._state.dragged] = b;
+
+        var c = this._calculateValue(!0);
+
+        return this.setValue(c, !0, !0), !1;
+      },
+      _touchmove: function _touchmove(a) {
+        void 0 !== a.changedTouches && a.preventDefault && a.preventDefault();
+      },
+      _adjustPercentageForRangeSliders: function _adjustPercentageForRangeSliders(a) {
+        if (this.options.range) {
+          var b = this._getNumDigitsAfterDecimalPlace(a);
+
+          b = b ? b - 1 : 0;
+
+          var c = this._applyToFixedAndParseFloat(a, b);
+
+          0 === this._state.dragged && this._applyToFixedAndParseFloat(this._state.percentage[1], b) < c ? (this._state.percentage[0] = this._state.percentage[1], this._state.dragged = 1) : 1 === this._state.dragged && this._applyToFixedAndParseFloat(this._state.percentage[0], b) > c ? (this._state.percentage[1] = this._state.percentage[0], this._state.dragged = 0) : 0 === this._state.keyCtrl && this._toPercentage(this._state.value[1]) < a ? (this._state.percentage[0] = this._state.percentage[1], this._state.keyCtrl = 1, this.handle2.focus()) : 1 === this._state.keyCtrl && this._toPercentage(this._state.value[0]) > a && (this._state.percentage[1] = this._state.percentage[0], this._state.keyCtrl = 0, this.handle1.focus());
+        }
+      },
+      _mouseup: function _mouseup(a) {
+        if (!this._state.enabled) return !1;
+
+        var b = this._getPercentage(a);
+
+        this._adjustPercentageForRangeSliders(b), this._state.percentage[this._state.dragged] = b, this.touchCapable && (document.removeEventListener("touchmove", this.mousemove, !1), document.removeEventListener("touchend", this.mouseup, !1)), document.removeEventListener("mousemove", this.mousemove, !1), document.removeEventListener("mouseup", this.mouseup, !1), this._state.inDrag = !1, this._state.over === !1 && this._hideTooltip();
+
+        var c = this._calculateValue(!0);
+
+        return this.setValue(c, !1, !0), this._trigger("slideStop", c), this._state.dragged = null, !1;
+      },
+      _setValues: function _setValues(a, b) {
+        var c = 0 === a ? 0 : 100;
+        this._state.percentage[a] !== c && (b.data[a] = this._toValue(this._state.percentage[a]), b.data[a] = this._applyPrecision(b.data[a]));
+      },
+      _calculateValue: function _calculateValue(a) {
+        var b = {};
+        return this.options.range ? (b.data = [this.options.min, this.options.max], this._setValues(0, b), this._setValues(1, b), a && (b.data[0] = this._snapToClosestTick(b.data[0]), b.data[1] = this._snapToClosestTick(b.data[1]))) : (b.data = this._toValue(this._state.percentage[0]), b.data = parseFloat(b.data), b.data = this._applyPrecision(b.data), a && (b.data = this._snapToClosestTick(b.data))), b.data;
+      },
+      _snapToClosestTick: function _snapToClosestTick(a) {
+        for (var b = [a, 1 / 0], c = 0; c < this.options.ticks.length; c++) {
+          var d = Math.abs(this.options.ticks[c] - a);
+          d <= b[1] && (b = [this.options.ticks[c], d]);
+        }
+
+        return b[1] <= this.options.ticks_snap_bounds ? b[0] : a;
+      },
+      _applyPrecision: function _applyPrecision(a) {
+        var b = this.options.precision || this._getNumDigitsAfterDecimalPlace(this.options.step);
+
+        return this._applyToFixedAndParseFloat(a, b);
+      },
+      _getNumDigitsAfterDecimalPlace: function _getNumDigitsAfterDecimalPlace(a) {
+        var b = ("" + a).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
+        return b ? Math.max(0, (b[1] ? b[1].length : 0) - (b[2] ? +b[2] : 0)) : 0;
+      },
+      _applyToFixedAndParseFloat: function _applyToFixedAndParseFloat(a, b) {
+        var c = a.toFixed(b);
+        return parseFloat(c);
+      },
+      _getPercentage: function _getPercentage(a) {
+        !this.touchCapable || "touchstart" !== a.type && "touchmove" !== a.type && "touchend" !== a.type || (a = a.changedTouches[0]);
+        var b = a[this.mousePos],
+            c = this._state.offset[this.stylePos],
+            d = b - c;
+        "right" === this.stylePos && (d = -d);
+        var e = d / this._state.size * 100;
+        return e = Math.round(e / this._state.percentage[2]) * this._state.percentage[2], this.options.reversed && (e = 100 - e), Math.max(0, Math.min(100, e));
+      },
+      _validateInputValue: function _validateInputValue(a) {
+        if (isNaN(+a)) {
+          if (Array.isArray(a)) return this._validateArray(a), a;
+          throw new Error(g.formatInvalidInputErrorMsg(a));
+        }
+
+        return +a;
+      },
+      _validateArray: function _validateArray(a) {
+        for (var b = 0; b < a.length; b++) {
+          var c = a[b];
+          if ("number" != typeof c) throw new Error(g.formatInvalidInputErrorMsg(c));
+        }
+      },
+      _setDataVal: function _setDataVal(a) {
+        this.element.setAttribute("data-value", a), this.element.setAttribute("value", a), this.element.value = a;
+      },
+      _trigger: function _trigger(b, c) {
+        c = c || 0 === c ? c : void 0;
+        var d = this.eventToCallbackMap[b];
+        if (d && d.length) for (var e = 0; e < d.length; e++) {
+          var f = d[e];
+          f(c);
+        }
+        a && this._triggerJQueryEvent(b, c);
+      },
+      _triggerJQueryEvent: function _triggerJQueryEvent(a, b) {
+        var c = {
+          type: a,
+          value: b
+        };
+        this.$element.trigger(c), this.$sliderElem.trigger(c);
+      },
+      _unbindJQueryEventHandlers: function _unbindJQueryEventHandlers() {
+        this.$element.off(), this.$sliderElem.off();
+      },
+      _setText: function _setText(a, b) {
+        "undefined" != typeof a.textContent ? a.textContent = b : "undefined" != typeof a.innerText && (a.innerText = b);
+      },
+      _removeClass: function _removeClass(a, b) {
+        for (var c = b.split(" "), d = a.className, e = 0; e < c.length; e++) {
+          var f = c[e],
+              g = new RegExp("(?:\\s|^)" + f + "(?:\\s|$)");
+          d = d.replace(g, " ");
+        }
+
+        a.className = d.trim();
+      },
+      _addClass: function _addClass(a, b) {
+        for (var c = b.split(" "), d = a.className, e = 0; e < c.length; e++) {
+          var f = c[e],
+              g = new RegExp("(?:\\s|^)" + f + "(?:\\s|$)"),
+              h = g.test(d);
+          h || (d += " " + f);
+        }
+
+        a.className = d.trim();
+      },
+      _offsetLeft: function _offsetLeft(a) {
+        return a.getBoundingClientRect().left;
+      },
+      _offsetRight: function _offsetRight(a) {
+        return a.getBoundingClientRect().right;
+      },
+      _offsetTop: function _offsetTop(a) {
+        for (var b = a.offsetTop; (a = a.offsetParent) && !isNaN(a.offsetTop);) {
+          b += a.offsetTop, "BODY" !== a.tagName && (b -= a.scrollTop);
+        }
+
+        return b;
+      },
+      _offset: function _offset(a) {
+        return {
+          left: this._offsetLeft(a),
+          right: this._offsetRight(a),
+          top: this._offsetTop(a)
+        };
+      },
+      _css: function _css(b, c, d) {
+        if (a) a.style(b, c, d);else {
+          var e = c.replace(/^-ms-/, "ms-").replace(/-([\da-z])/gi, function (a, b) {
+            return b.toUpperCase();
+          });
+          b.style[e] = d;
+        }
+      },
+      _toValue: function _toValue(a) {
+        return this.options.scale.toValue.apply(this, [a]);
+      },
+      _toPercentage: function _toPercentage(a) {
+        return this.options.scale.toPercentage.apply(this, [a]);
+      },
+      _setTooltipPosition: function _setTooltipPosition() {
+        var a = [this.tooltip, this.tooltip_min, this.tooltip_max];
+
+        if ("vertical" === this.options.orientation) {
+          var b;
+          b = this.options.tooltip_position ? this.options.tooltip_position : this.options.rtl ? "left" : "right";
+          var c = "left" === b ? "right" : "left";
+          a.forEach(function (a) {
+            this._addClass(a, b), a.style[c] = "100%";
+          }.bind(this));
+        } else "bottom" === this.options.tooltip_position ? a.forEach(function (a) {
+          this._addClass(a, "bottom"), a.style.top = "22px";
+        }.bind(this)) : a.forEach(function (a) {
+          this._addClass(a, "top"), a.style.top = -this.tooltip.outerHeight - 14 + "px";
+        }.bind(this));
+      },
+      _getClosestTickIndex: function _getClosestTickIndex(a) {
+        for (var b = Math.abs(a - this.options.ticks[0]), c = 0, d = 0; d < this.options.ticks.length; ++d) {
+          var e = Math.abs(a - this.options.ticks[d]);
+          b > e && (b = e, c = d);
+        }
+
+        return c;
+      },
+      _setTickIndex: function _setTickIndex() {
+        this.ticksAreValid && (this._state.tickIndex = [this.options.ticks.indexOf(this._state.value[0]), this.options.ticks.indexOf(this._state.value[1])]);
+      }
+    }, a && a.fn && (a.fn.slider ? (windowIsDefined && window.console.warn("bootstrap-slider.js - WARNING: $.fn.slider namespace is already bound. Use the $.fn.bootstrapSlider namespace instead."), f = c) : (a.bridget(b, d), f = b), a.bridget(c, d), a(function () {
+      a("input[data-provide=slider]")[f]();
+    }));
+  }(a), d;
+});
 
 /***/ }),
 
@@ -21877,49 +23747,64 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function($) {$('body').on('click', '#showMore', function () {
-  var $this = $(this);
-  var page = $this.data('page');
-  $.ajax({
-    method: 'post',
-    url: $this.data('url'),
-    dataType: 'json',
-    data: {
-      page: page,
-      slug: $this.data('slug'),
-      _token: $this.data('token')
-    },
-    beforeSend: function beforeSend() {},
-    success: function success(data) {
-      $('.products-wrapper').append(data.products);
+/* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {
+  var priceRangeSlider = $('#priceRangeSlider');
 
-      if (data.show_more) {
-        $this.data('page', data.show_more['page']);
-        $this.data('parameters', data.show_more['parameters']);
-      } else {
-        $this.remove();
+  if (priceRangeSlider.length) {
+    priceRangeSlider.slider().on({
+      slide: function slide(slideEvt) {
+        $('.inp-price-min').val(slideEvt.value[0]);
+        $('.inp-price-max').val(slideEvt.value[1]);
+      },
+      slideStart: function slideStart(slideEvt) {
+        $('.inp-price-min').val(slideEvt.value[0]);
+        $('.inp-price-max').val(slideEvt.value[1]);
       }
-
-      var pagination = $('.pagination li');
-
-      if (pagination.length - page - 1) {
-        $('.pagination li').eq(+page).addClass('active');
-        $('.pagination li').eq(+page).empty().append('<span>' + page + '</span>').addClass('page-item');
-      }
-    },
-    error: function error(jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR, textStatus, errorThrown);
-    }
-  });
+    });
+    $('#inp-price-min').val($('.min-slider-handle').attr('aria-valuenow'));
+    $('#inp-price-max').val($('.max-slider-handle').attr('aria-valuenow'));
+  }
 });
 
-window.delay = function () {
-  var timer = 0;
-  return function (callback, ms) {
-    clearTimeout(timer);
-    timer = setTimeout(callback, ms);
+function eff(_ref) {
+  var offsetX = _ref.offsetX,
+      offsetY = _ref.offsetY,
+      target = _ref.target;
+  var btn = target.closest('.button');
+
+  if (!btn) {
+    return;
+  }
+
+  var el = document.createElement('span');
+  var r = {
+    x: -btn.offsetWidth,
+    y: 0
   };
-}(); // //liveSearch
+  el.style.setProperty('transform', "translate3d(".concat(r.x, "px, ").concat(r.y, "px, 0px)"));
+  btn.insertAdjacentElement('afterbegin', el);
+  var el1 = btn.querySelector('span');
+  setTimeout(function () {
+    el1.classList.add('xx');
+  }, 160);
+}
+
+function effEnd(_ref2) {
+  var target = _ref2.target;
+  var btn = target.closest('.button');
+
+  if (!btn) {
+    return;
+  }
+
+  var el = btn.querySelectorAll('span');
+  el.forEach(function (elem) {
+    return elem.remove();
+  });
+}
+
+document.addEventListener('mouseover', eff, false);
+document.addEventListener('mouseout', effEnd, false); // //liveSearch
 // (function (){
 //     const inputSearch = document.querySelector('#rd-navbar-search-form-input'),
 //           searchResult = document.querySelector('.rd-search-results-live');

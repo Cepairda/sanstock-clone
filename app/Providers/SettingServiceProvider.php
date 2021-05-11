@@ -25,15 +25,10 @@ class SettingServiceProvider extends ServiceProvider
      */
     public function boot(Factory $cache, Setting $settings)
     {
-        //dd(Setting::pluck('details')->first());
-        //config()->set('setting', Setting::pluck('details')->first());
-        //dd(config('setting.comments.files.count'));
-
-        $settings = $cache->remember('settings', 60 * 24, function() use ($settings) {
-            return $settings->pluck('details')->first();
-        });
-
-        config()->set('settings', $settings);
-        //dd(config('settings.comments.files.size'));
+//        $settings = $cache->remember('settings', 60 * 24, function() use ($settings) {
+//            return $settings->pluck('details')->first();
+//        });
+//
+//        config()->set('settings', $settings);
     }
 }

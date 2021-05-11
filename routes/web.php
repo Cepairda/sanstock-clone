@@ -63,6 +63,24 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::get('/', 'DashboardController@index')->name('dashboard.index');
 
+        //StockImport
+        Route::get('/stock-import', 'StockImportController@updateOrCreate')->name('stock-import');
+
+        /**
+         * Brands Import B2B
+         */
+        Route::get('/brand-import', 'BrandB2BImportController@import')->name('brand-import');
+
+        /**
+         * Category Import B2B
+         */
+        Route::get('/category-import', 'CategoryB2BImportController@import')->name('category-import');
+
+        /**
+         * Price and Balance Import B2B
+         */
+        Route::get('/price-import', 'StockImportController@importPrice')->name('price-import');
+
         Route::get('/import', 'ImportController@updateOrCreate')->name('import');
         Route::get('/import-queue', 'ImportController@updateOrCreateOnQueue')->name('import-queue');
         Route::get('/import-export', 'ImportExportController@index')->name('import-export');
@@ -215,9 +233,11 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::get('/', 'HomeController@index')->name('/');
 
-        Route::get('cart', function(){
-            return view('site.orders.cart');
-        });
+        // корзина
+        Route::get('/cart', 'CartController@loadCartView')->name('cart');
+        Route::get('/order-products', 'CartController@getCartProducts')->name('order-products');
+        Route::get('/order-products-table', 'CartController@getCartProductsTable')->name('order-products');
+        Route::get('/checkout', 'CartController@checkout')->name('checkout');
 
         Route::get('search', 'SearchController@search')->name('products.search');
         Route::post('products/update-price', 'ProductController@updatePrice')->name('products.update-price');
@@ -242,11 +262,6 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::get('/{slug}', 'ResourceController@getResource')->where('slug', '.*')->name('resource');
 
-        // корзина
-        Route::get('/cart', 'CartController@loadCartView')->name('cart');
 
-        Route::get('/order-products', 'CartController@getCartProducts')->name('order-products');
-
-        Route::get('/checkout', 'CartController@checkout')->name('checkout');
     });
 });

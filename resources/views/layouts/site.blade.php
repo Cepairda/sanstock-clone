@@ -30,10 +30,13 @@
                 <div class="cssload-speeding-wheel"></div>
             </div>
         </div>
-        @include('site.components.header')
-        @yield('content')
+        <div class="content">
+            @include('site.components.header')
+            @yield('content')
+        </div>
         @include('site.components.footer')
-    </div>
+        <div id="tt" class="position-fixed bottom-0 right-0 p-3" style="z-index: 1055; top: 150px; right: 0;"></div>
+        </div>
     <script type="text/javascript" src="{{ mix('js/site/app.js') }}"></script>
     @yield('javascript')
 </body>

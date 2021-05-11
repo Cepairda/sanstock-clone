@@ -4,85 +4,88 @@ namespace App\Classes\Imports;
 
 use App\Jobs\ProcessImportPrice;
 use App\Product;
-use Carbon\Carbon;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Contracts\Bus\Dispatcher;
 
 class PriceImport
 {
-    private static $priceFromAPI;
-    private static $lastTimeDataAPI;
+    private const DEFAULT_API_URL = 'http://94.131.241.126/api/products?token=368dbc0bf4008db706576eb624e14abf&only_defectives=1';
 
-    public static function addToQueue($ids = null)
+    /**
+     * @param int|null $ids
+     *
+     * @return void
+     */
+    public static function addToQueue( int $ids = null) : void
     {
         $products = isset($ids)
-            ? Product::where('details->published', 1)->whereIn('details->sku', $ids)->get()
-            : Product::where('details->published', 1)->get();
+            ? Product::whereIn('details->sku', $ids)->get()
+            : Product::get();
 
-        $jobId = null;
+        $tenPartJsonDate = $products->chunk(10);
 
-        foreach ($products as $product) {
-            //$id = ProcessImportPrice::dispatch($product->getDetails('sku'))->onQueue('priceImport');
-            $job = (new ProcessImportPrice($product->getDetails('sku')))->onQueue('priceImport');
-            $jobId = app(Dispatcher::class)->dispatch($job);
-        }
+        foreach ($tenPartJsonDate as $key => $products) {
+            $skuArray = [];
 
-        Cache::put('lastIdPriceImport', $jobId);
-    }
-
-    public static function import($prices)
-    {
-        try {
-
-            foreach ($prices as $sku => $item) {
-                if ($item['price'] != 'Недоступно') {
-                    Product::where('details->sku', $item['sku'])->update([
-                        'details->price' => $item['discount_price'] ?? $item['price'],
-                        'details->price_updated_at' => Carbon::now(),
-                        'details->old_price' => isset($item['discount_price']) ? $item['price'] : null
-                    ]);
-                }
+            foreach ($products as $sku => $product) {
+                $skuArray[] = $product->getDetails('sku');
             }
 
-            //return redirect()->back();
+            ProcessImportPrice::dispatch($skuArray)->onQueue('priceImport');
+        }
+    }
+
+    /**
+     * @param array $jsonData
+     *
+     * @return void
+     */
+    public static function import(array $jsonData) : void
+    {
+        try {
+            foreach ($jsonData['data'] as $sku => [
+                     'main' => [
+                     //'sku' => $sku,
+                     'price' => $price,
+                     'old_price' => $oldPrice,
+                     'balance' => $balance
+            ]
+            ]) {
+                Product::where('details->sku', $sku)->update([
+                    'details->price' => $price,
+                    'details->old_price' => $oldPrice,
+                    'details->balance' => $balance
+                ]);
+            }
         } catch (\Exception $e) {
 
         }
     }
 
-    public static function importQueue($sku)
+    /**
+     * @param array $skuArray
+     *
+     * @return void
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public static function importQueue(array $skuArray) : void
     {
-        $product = [$sku];
+        $skuStr = implode(',', $skuArray);
+        $apiUrl = self::DEFAULT_API_URL . "&sku_in={$skuStr}";
+        $dataJson = PriceImport::pricesApi($apiUrl);
 
-        /*
-         * If more than 30 minutes have passed, we have to update $priceFromApi
-         */
-        if (empty(self::$priceFromAPI) || time() - self::$lastTimeDataAPI >= 180) {
-            $productSku = Product::get()->keyBy('sku')->keys()->toArray();
-            self::$priceFromAPI = PriceImport::pricesApi($productSku);
-            self::$lastTimeDataAPI = time();
-        }
-
-        $productSingle = [];
-
-        if (isset(self::$priceFromAPI[$sku])) {
-            $productSingle[$sku] = self::$priceFromAPI[$sku];
-        }
-
-        PriceImport::import($productSingle);
+        PriceImport::import($dataJson);
     }
 
-    public static function pricesApi($productSku)
+    /**
+     * @param string $apiUrl
+     *
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public static function pricesApi(string $apiUrl) : array
     {
         $client = new Client();
-        $res = $client->request('POST', 'https://b2b-sandi.com.ua/api/price-center', [
-            'form_params' => [
-                'action' => 'get_ir_prices',
-                'sku_list' => $productSku,
-            ]
-        ]);
-
+        $res = $client->request('GET', $apiUrl);
         $prices = json_decode($res->getBody(), true);
 
         return $prices;

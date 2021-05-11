@@ -18,6 +18,7 @@ require('bootstrap');
 //require('lazysizes/plugins/parent-fit/ls.parent-fit')
 
 //plugin
+require('./plugins/bootstrap-slider.min');
 require('lightgallery.js');
 require('lg-zoom.js');
 require('lg-fullscreen.js');
@@ -27,6 +28,9 @@ require('./plugins/characteristicsLists');
 
 //components
 require('./components/addToCart');
+
+//page
+require('./page/cardProduct');
 
 //custom script
 require('./script');

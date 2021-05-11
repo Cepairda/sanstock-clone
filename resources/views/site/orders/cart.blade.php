@@ -1,38 +1,50 @@
 @extends('layouts.site')
-@section('body_class', 'Cart')
+@section('body_class', 'cart')
 @section('meta_title', __('Cart title'))
 @section('meta_description',  __('Cart description'))
 
+@section('breadcrumbs')
+    @php($i = 2)
+    <li class="breadcrumb-item active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name">
+           Корзина
+        </span>
+        <meta itemprop="position" content="{{ $i }}"/>
+    </li>
+@endsection
+
 @section('content')
 
-   <main class="main-container"><h1>Корзина</h1></main>
+    <main class="main-container">
 
-   <table>
-       <tr>
-           <td>Sku</td>
-           <td>Name</td>
-           <td>Image</td>
-           <td>Quantity</td>
-           <td>Price</td>
-           <td>Max Quantity</td>
-       </tr>
+        @include('site.components.breadcrumbs', ['title' => 'Cart', 'h1' => true])
 
-       @foreach($orderProducts as $sku => $product):
+        <div class="container">
 
-       <tr>
-           <td>{{ $product["sku"] }}</td>
-           <td>{{ $product["name"] }}</td>
-           <td>{!! img(['type' => 'product', 'sku' => $product["sku"], 'size' => 70, 'alt' => $product["name"], 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}</td>
-           <td>{{ $product["quantity"] }}</td>
-           <td>{{ $product["price"] }}</td>
-           <td>{{ $product["max_quantity"] }}</td>
-       </tr>
+            <div class="row">
 
-       @endforeach
-   </table>
+                <!-- Navigations -->
+                <div class="col-12 d-flex justify-content-end py-4">
+                    <a class="button" href="{{ asset('/checkout') }}">Оформить</a>
+                </div>
 
+                <!-- Products -->
+                <div class="col-12">
+                    @if(count($orderProducts))
+                        @include('site.components.cartProductsTable')
+                    @else
+                        Корзина пуста
+                    @endif
+                </div>
 
+                <!-- Navigations -->
+                <div class="col-12 d-flex justify-content-end py-4">
+                    <a class="button" href="{{ asset('/checkout') }}">Оформить</a>
+                </div>
 
+            </div>
+        </div>
 
-    {{ dd($areas) }}
+    </main>
+
 @endsection

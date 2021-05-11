@@ -10,7 +10,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <a class="navbar-brand" href="{{ asset('/') }}">
-                        <img src="{{ asset('images/logo.png') }}" alt="SanStock" title="SanStock">
+                        <img class="w-100"  src="{{ asset('images/logo.png') }}" alt="SanStock" title="SanStock">
                     </a>
                     <div class="navbar-mb__lf-cont">
                         <form class="header-menu__form" action="#" method="post">
@@ -45,10 +45,15 @@
                                         @endif
                                     @endforeach
                                 </li>
-                                <li class="nav-item nav-cart">
-                                    <a class="nav-link icon- nav-link-favorites pr-0" href="{{ asset('/cart') }}">
-                                        <span class="favorites-item">Корзина</span>
-                                        <span class="favorites-lg" id="cart-count" hidden>-</span>
+                                <li class="nav-item nav__actions">
+                                    <a class="nav__actions--link" href="{{ asset('/cart') }}">
+                                        <span class="action-icon">
+                                            <span class="action-counter" id="cart-count" hidden>-</span>
+                                        </span>
+                                        <span class="action-name">
+                                            Корзина
+                                        </span>
+
                                     </a>
                                 </li>
 
@@ -91,4 +96,5 @@
             </nav>
         </div>
     </div>
+
 </header>

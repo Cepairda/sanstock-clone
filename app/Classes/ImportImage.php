@@ -46,12 +46,12 @@ class ImportImage
 
         self::$formatImg = array_combine(self::FORMAT_IMG_ORIGINAL, self::FORMAT_IMG_ORIGINAL);
 
-        self::$imageRegisterUrl = 'https://isw.b2b-sandi.com.ua/imagecache/full';
+        ///self::$imageRegisterUrl = 'https://isw.b2b-sandi.com.ua/imagecache/full';
 
-        $client = new Client();
-        $res = $client->request('GET', 'https://b2b-sandi.com.ua/api/products/images/register');
+        //$client = new Client();
+        //$res = $client->request('GET', 'https://b2b-sandi.com.ua/api/products/images/register');
 
-        self::$imageRegister = json_decode($res->getBody(), true);
+        //self::$imageRegister = json_decode($res->getBody(), true);
     }
 
     public static function __callStatic($name, $arguments)
@@ -71,7 +71,7 @@ class ImportImage
     {
         $products = isset($ids)
             ? Product::where('details->published', 1)->whereIn('details->sku', explode(',', $ids))->get()
-            : Product::where('details->published', 1)->get();
+            : Product::where('details->published', 0)->get();
 
         foreach ($products as $product) {
             ProcessImportImage::dispatch($product->getDetails('sku'))->onQueue('imageImport');
@@ -80,10 +80,12 @@ class ImportImage
 
     private static function import($sku)
     {
-        $product = Product::where('details->published', 1)->where('details->sku', $sku)->first();
+        $product = Product::where('details->published', 0)->where('details->sku', $sku)->first();
 
         if (!empty($product)) {
             info('Ins Img');
+            $apiUrl = self::DEFAULT_API_URL . "&sku_in={$sku}";
+            self::$imageRegister = self::getDataJson($apiUrl);
             self::$apiProductImage = self::$imageRegister[$sku];
             self::$dbProductImage = ProductImage::where('details->product_sku', $sku)->first();
 
@@ -98,7 +100,7 @@ class ImportImage
             }
 
             self::downloadMainImage($product);
-            self::downloadAdditional($product);
+            //self::downloadAdditional($product);
             //self::generateAdditionalPreview($product);
 
             self::$requestProductImage['details']['product_sku'] = $sku;
@@ -320,5 +322,14 @@ class ImportImage
                 }
             //}
         //}
+    }
+
+    public static function getDataJson(string $apiUrl) : array
+    {
+        $client = new Client();
+        $res = $client->request('GET', $apiUrl);
+        $prices = json_decode($res->getBody(), true);
+
+        return $prices;
     }
 }

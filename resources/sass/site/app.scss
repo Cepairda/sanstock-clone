@@ -9,11 +9,21 @@
 
 //plugins
 @import "~lightgallery.js/src/sass/lightgallery";
-@import 'plugins/swipe-gallery',
+@import 'plugins/bootstrap-slider.min.css',
+        'plugins/swipe-gallery',
         'plugins/characteristics-lists';
 
 //old template
 //'template/fontawesome', 'template/stylesheet',
 @import 'template/style.all', 'template/stylemedia';
+
+//components
+@import 'components/breadcrumbs',
+        'components/header',
+        'components/header-menu',
+        'components/buttons';
+
+//page
+@import 'page/cart';
 
 @import 'common';
