@@ -5,7 +5,7 @@
  */
 
 (function() {
-
+    "use strict";
     const cookieKeyCart = 'products_cart';
     const cartCounterId = 'cart-count';
     const productUpDateToCartSelector = '[data-add="upDate"]';
@@ -14,7 +14,7 @@
     const cartModalId = 'cartModal';
     const cartCounterNode = document.getElementById(`${cartCounterId}`);
     const toast =
-            `<div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2500">
+            `<div class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2500">
                     <div class="toast-header">
                         <strong class="mr-auto">Bootstrap</strong>
                         <small>11 мин назад</small>
@@ -79,9 +79,8 @@
             const date = new Date();
             date.setDate(date.getDate() + 1); //жизнь куки
             document.cookie = 'products_cart' + "=" + JSON.stringify(products) + "; path=/; expires=" + date.toUTCString();
-
             this.setCount(products);
-            this.setToste();
+            //this.setToast();
 
         }
 
@@ -230,9 +229,13 @@
                 });
         }
 
-        setToste() {
+        setToast() {
             const tt = document.querySelector('#tt');
+            //tt.innerHTML = '';
             tt.insertAdjacentHTML('beforeend', toast);
+            $('.toast').on('hidden.bs.toast', function () {
+                $(this).remove();
+            });
             $('.toast').toast('show');
         }
 

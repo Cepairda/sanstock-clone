@@ -29,5 +29,8 @@ require('./plugins/characteristicsLists');
 //components
 require('./components/addToCart');
 
+//page
+require('./page/cardProduct');
+
 //custom script
 require('./script');

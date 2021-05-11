@@ -21762,7 +21762,10 @@ __webpack_require__(/*! ./plugins/swipeGallery */ "./resources/js/site/plugins/s
 __webpack_require__(/*! ./plugins/characteristicsLists */ "./resources/js/site/plugins/characteristicsLists.js"); //components
 
 
-__webpack_require__(/*! ./components/addToCart */ "./resources/js/site/components/addToCart.js"); //custom script
+__webpack_require__(/*! ./components/addToCart */ "./resources/js/site/components/addToCart.js"); //page
+
+
+__webpack_require__(/*! ./page/cardProduct */ "./resources/js/site/page/cardProduct.js"); //custom script
 
 
 __webpack_require__(/*! ./script */ "./resources/js/site/script.js");
@@ -21811,6 +21814,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  *
  */
 (function () {
+  "use strict";
+
   var cookieKeyCart = 'products_cart';
   var cartCounterId = 'cart-count';
   var productUpDateToCartSelector = '[data-add="upDate"]';
@@ -21818,7 +21823,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   var productDeleteCartSelector = '[data-add="delete"]';
   var cartModalId = 'cartModal';
   var cartCounterNode = document.getElementById("".concat(cartCounterId));
-  var toast = "<div id=\"liveToast\" class=\"toast hide\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-delay=\"2500\">\n                    <div class=\"toast-header\">\n                        <strong class=\"mr-auto\">Bootstrap</strong>\n                        <small>11 \u043C\u0438\u043D \u043D\u0430\u0437\u0430\u0434</small>\n                        <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"toast\" aria-label=\"Close\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                    </div>\n                    <div class=\"toast-body\">\n                        \u041F\u0440\u0438\u0432\u0435\u0442, \u043C\u0438\u0440! \u042D\u0442\u043E \u0442\u043E\u0441\u0442-\u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435.\n                    </div>\n                </div>";
+  var toast = "<div class=\"toast hide\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-delay=\"2500\">\n                    <div class=\"toast-header\">\n                        <strong class=\"mr-auto\">Bootstrap</strong>\n                        <small>11 \u043C\u0438\u043D \u043D\u0430\u0437\u0430\u0434</small>\n                        <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"toast\" aria-label=\"Close\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                    </div>\n                    <div class=\"toast-body\">\n                        \u041F\u0440\u0438\u0432\u0435\u0442, \u043C\u0438\u0440! \u042D\u0442\u043E \u0442\u043E\u0441\u0442-\u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435.\n                    </div>\n                </div>";
 
   var Cart = /*#__PURE__*/function () {
     function Cart() {
@@ -21875,8 +21880,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         date.setDate(date.getDate() + 1); //жизнь куки
 
         document.cookie = 'products_cart' + "=" + JSON.stringify(products) + "; path=/; expires=" + date.toUTCString();
-        this.setCount(products);
-        this.setToste();
+        this.setCount(products); //this.setToast();
       }
     }, {
       key: "setCount",
@@ -22045,10 +22049,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         });
       }
     }, {
-      key: "setToste",
-      value: function setToste() {
-        var tt = document.querySelector('#tt');
+      key: "setToast",
+      value: function setToast() {
+        var tt = document.querySelector('#tt'); //tt.innerHTML = '';
+
         tt.insertAdjacentHTML('beforeend', toast);
+        $('.toast').on('hidden.bs.toast', function () {
+          $(this).remove();
+        });
         $('.toast').toast('show');
       }
     }, {
@@ -22082,6 +22090,36 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   }();
 
   window.cart = new Cart();
+})();
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
+/***/ "./resources/js/site/page/cardProduct.js":
+/*!***********************************************!*\
+  !*** ./resources/js/site/page/cardProduct.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {(function () {
+  "use strict";
+
+  var pageProduct = document.body.classList.contains('product');
+
+  if (!pageProduct) {
+    return false;
+  }
+
+  var nameGetParam = 'sort';
+  var paramsString = window.location.search;
+  var searchParams = new URLSearchParams(paramsString);
+
+  if (searchParams.has(nameGetParam)) {
+    var id = nameGetParam + '-' + searchParams.get(nameGetParam) + '-tab';
+    var tabSelector = "a[data-toggle=\"tab\"]#".concat(id);
+    $(tabSelector).tab('show');
+  }
 })();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
