@@ -42,8 +42,8 @@ class ResourceController extends Controller
 
                 break;
             case 'category':
-                $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->where('details->published', 1)->firstOrFail();
-                $products = Product::whereExistsCategoryIds($category->id)->where('details->published', 1)->where('details->price', '>' , 0)->get()->keyBy('id')->keys();
+                $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->firstOrFail();
+                $products = Product::where('details->category_id', $category->getDetails('ref'))->where('details->price', '>' , 0)->get()->keyBy('id')->keys();
                 $productsTotal = $products->count();
 
                 $characteristics = isset($category->characteristic_group[0])

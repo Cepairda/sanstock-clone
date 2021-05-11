@@ -22,16 +22,16 @@ class ProcessImportPrice implements ShouldQueue
      */
     public $tries = 5;
 
-    private $productSku;
+    private $skuArray;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($productSku)
+    public function __construct($skuArray)
     {
-        $this->productSku = $productSku;
+        $this->skuArray = $skuArray;
     }
 
     /**
@@ -45,6 +45,6 @@ class ProcessImportPrice implements ShouldQueue
 
         ini_set('memory_limit', '1024M');
 
-        PriceImport::importQueue($this->productSku);
+        PriceImport::importQueue($this->skuArray);
     }
 }

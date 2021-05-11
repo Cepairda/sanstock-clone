@@ -6,7 +6,14 @@ use Illuminate\Support\Str;
 
 class Slug
 {
-    public static function create($resource, $name, $id = null)
+    /**
+     * @param string $resource full namespace to class. Example 'App\Brand'
+     * @param string $name name for new slug
+     * @param int|null $id id from Resource Table
+     *
+     * @return string
+     */
+    public static function create(string $resource, string $name, int $id = null)
     {
         $originalSlug = '';
         $slugs = explode('/', $name);
