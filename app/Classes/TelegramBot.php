@@ -63,10 +63,6 @@ class TelegramBot
      */
     public function sendSubscribes($methodName, $content)
     {
-        //$subscribes = TelegramChat::get();
-
-        //foreach ($subscribes as $subscribe) {
-        $this->$methodName(self::CHAT_ID, $content);
-        //}
+        //$this->$methodName(self::CHAT_ID, $content);
     }
 }

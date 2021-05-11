@@ -1,4 +1,4 @@
-@php($categories = $categories ?? \App\Category::joinLocalization()->where('details->published', 1)->where('details->is_menu_item', 1)->get()->toTree())
+@php($categories = $categories ?? \App\Category::joinLocalization()->get()->toTree())
 
 <li class="nav-menu--item nav-head-menu">
 
@@ -21,7 +21,7 @@
                             <div class="head-menu__category--name-wrap category-arrow" data-id="{{ $category->id }}">
 
                                 <a class="head-menu__category--name"
-                                   href="#">{{ $category->name }}</a>
+                                   href="{{ route('site.resource', $category->slug) }}">{{ $category->name }}</a>
 
                             </div>
 
@@ -36,7 +36,7 @@
                                                     <div class="head-menu__subcategory--name-wrap category-arrow">
 
                                                         <a class="head-menu__subcategory--name"
-                                                           href="#">{!! $cat->name !!}</a>
+                                                           href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
 
                                                     </div>
 
@@ -46,26 +46,15 @@
 
                                                             <div class="head-menu__subcategory">
 
-                                                                <div class="head-menu__subcategory--name-wrap category-arrow">
+                                                                @foreach($cat->children as $c)
+                                                                    <div class="head-menu__subcategory--name-wrap category-arrow">
 
-                                                                    <a class="head-menu__subcategory--name" href="#">Lorem
-                                                                        ipsum.</a>
+                                                                        <a class="head-menu__subcategory--name" href="{{ route('site.resource', $c->slug) }}">
+                                                                            {{ $c->name }}
+                                                                        </a>
 
-                                                                </div>
-
-                                                                <div class="head-menu__subcategory--name-wrap category-arrow">
-
-                                                                    <a class="head-menu__subcategory--name" href="#">Lorem
-                                                                        ipsum.</a>
-
-                                                                </div>
-
-                                                                <div class="head-menu__subcategory--name-wrap category-arrow">
-
-                                                                    <a class="head-menu__subcategory--name" href="#">Lorem
-                                                                        ipsum.</a>
-
-                                                                </div>
+                                                                    </div>
+                                                                @endforeach
 
                                                             </div>
 
