@@ -23085,24 +23085,29 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  * LazyLoadingImage (with lightgallery.js)
  *
  * 1. Класс по каторому запускаеться ленивая подгрузка: "img.lazy".
+ *
+ * // если нету ".img-data-path" то брать у элемента data-src
  * 2. Класс контеинера в котором хранить пути: ".img-data-path"
  *          - Путь к миниатюре храниться в атрибуте: "data-exthumbimage="
  *          - Путь к большой картинка храниться в атрибуте: "data-src="
+ *
  * 3. В процессе выполнения скрипта устанавливаеться классы:
  *          - ".lazyLoading" - загрузка;
  *          - ".lazyLoaded" - успешная загрузка;
  *          - ".lazyError" - завершено, но произошла ошибка;
+ *
  * 4. Сосотояние титульной картинки (Для галлереи):
  *          - успешно - ".title-image-add";
  *          - дефолтная ("../no_img.jpg" - static) или ошибка от сервера - ".title-image-not"
- * 5. Проверка ну существование => добавление прелодера-спиннера с задержкой 250мс.
+ *
+ * 5. Проверка нa существование => добавление прелодера-спиннера с задержкой 250мс.
  *
  * и т.д.
  * */
 (function () {
   var options = {
     noImg: 'no_img.jpg',
-    defaultImg: window.location.origin + '/img/no_img.jpg',
+    defaultImg: window.location.origin + '/images/no_img.jpg',
     //альтернатива: 'https://b2b-sandi.com.ua/imagecache/150x150/no_img.jpg'
     defaultLargeImg: 'http://b2b-sandi.com.ua/imagecache/large/no_img.jpg'
   };
@@ -23288,8 +23293,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           var imgExthumb = this.getSrc(elemDataPath, 'small');
           titleImg(imgExthumb, imgSrc);
         } else {
-          console.warn("@BeCrutch: lazyLoading.js - not data path(.".concat(this.props.dataPathsClassName, ")"));
-          image.src = options.defaultImg;
+          titleImg(this.getSrc(image, 'large'), ''); //console.warn(`@BeCrutch: lazyLoading.js - not data path(.${this.props.dataPathsClassName})`);
+          //image.src = options.defaultImg;
+
           this.constructor.removeSpinnerLazy(image);
         }
       }
@@ -23394,7 +23400,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           parent.children[i].classList.contains('preloader-spinner') && (existsPreloader = true);
 
           if (!existsPreloader) {
-            console.log(i);
             image.insertAdjacentHTML('beforebegin', "<div class=\"preloader-spinner text-success\" uk-spinner=\"ratio: 2\"></div>");
             return;
           }

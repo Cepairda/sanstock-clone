@@ -4,19 +4,25 @@
 @section('meta_description',  __('Checkout description'))
 
 @section('breadcrumbs')
-    @php($i = 2)
-    <li class="breadcrumb-item active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <li class="breadcrumb-custom__item" itemprop="itemListElement"
+        itemscope itemtype="https://schema.org/ListItem">
+        <a href="{{ asset('/cart') }}" itemprop="item" content="{{ asset('/cart') }}">
+            <span itemprop="name">{{ __('Cart') }}</span>
+        </a>
+        <meta itemprop="position" content="2"/>
+    </li>
+    <li class="breadcrumb-custom__item active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
         <span itemprop="name">
-           Корзина
+           {{ __('Checkout') }}
         </span>
-        <meta itemprop="position" content="{{ $i }}"/>
+        <meta itemprop="position" content="3"/>
     </li>
 @endsection
 
 @section('content')
 
     <main class="main-container">
-        @include('site.components.breadcrumbs', ['title' => 'Cart', 'h1' => true])
+        @include('site.components.breadcrumbs')
         <div class="container">
             <div class="row">
 

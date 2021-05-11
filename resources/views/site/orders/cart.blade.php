@@ -25,7 +25,7 @@
 
                 <!-- Navigations -->
                 <div class="col-12 d-flex justify-content-end py-4">
-                    <a class="button" href="{{ asset('/checkout') }}">Оформить</a>
+                    <a class="button" href="{{ asset('/cart/checkout') }}">Оформить</a>
                 </div>
 
                 <!-- Products -->
@@ -39,7 +39,7 @@
 
                 <!-- Navigations -->
                 <div class="col-12 d-flex justify-content-end py-4">
-                    <a class="button" href="{{ asset('/checkout') }}">Оформить</a>
+                    <a class="button" href="{{ asset('/cart/checkout') }}">Оформить</a>
                 </div>
 
             </div>
