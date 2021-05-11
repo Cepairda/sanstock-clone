@@ -21,7 +21,7 @@
         </div>
 
         <div class="product-wrapper">
-            <a href="{{ route('site.resource', $product->category->slug) }}" class="product-description--item">{{ $product->category->getData('name') }}</a>
+            <a href="{{-- route('site.resource', $product->category->slug) --}}" class="product-description--item">Category{{-- $product->category->getData('name') --}}</a>
             <div class="product-price">
                 <div class="product-price__item">
                     <p>

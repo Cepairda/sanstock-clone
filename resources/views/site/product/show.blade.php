@@ -45,7 +45,7 @@
 
 
 
-    <main class="main-container pd-bt{{ $product->category->dark_theme ? ' bgc-grad' : ' bgc-white' }}">
+    <main class="main-container pd-bt{{ false ? ' bgc-grad' : ' bgc-white' }}">
 
         @include('site.components.breadcrumbs', ['title' => $product->getData('name')])
 

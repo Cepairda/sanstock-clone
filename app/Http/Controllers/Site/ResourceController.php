@@ -30,7 +30,7 @@ class ResourceController extends Controller
                     'product' => $resource->type::joinLocalization()
                         ->withCharacteristics()
                         ->whereId($resource->id)
-                        ->where('details->published', 1)
+                        //->where('details->published', 1)
                         ->withCategory()
                         ->withRelateProducts()
                         ->withComments()

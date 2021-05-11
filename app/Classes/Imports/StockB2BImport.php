@@ -85,6 +85,7 @@ class StockB2BImport
         if (!isset($product)) {
             $product = new Product();
 
+            $sdCode = $dataProduct['sku'];
             $name = $dataProduct['name'];
             $description = $dataProduct['description'];
             $brand = $dataProduct['brand'];
@@ -103,6 +104,7 @@ class StockB2BImport
                 'slug' => $slug,
                 'details' => [
                     'sku' => $ref,
+                    'sd_code' => $sdCode,
                     'brand_id' => $brand['ref'],
                     'category_id' => $category['ref'],
                     'published' => 0,
