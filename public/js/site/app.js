@@ -21759,7 +21759,9 @@ __webpack_require__(/*! lg-thumbnail.js */ "./node_modules/lg-thumbnail.js/dist/
 
 __webpack_require__(/*! ./plugins/swipeGallery */ "./resources/js/site/plugins/swipeGallery.js");
 
-__webpack_require__(/*! ./plugins/characteristicsLists */ "./resources/js/site/plugins/characteristicsLists.js"); //components
+__webpack_require__(/*! ./plugins/characteristicsLists */ "./resources/js/site/plugins/characteristicsLists.js");
+
+__webpack_require__(/*! ./plugins/lazyLoadImg */ "./resources/js/site/plugins/lazyLoadImg.js"); //components
 
 
 __webpack_require__(/*! ./components/addToCart */ "./resources/js/site/components/addToCart.js"); //page
@@ -23051,6 +23053,373 @@ window.showHideCharacteristic = function () {
 };
 
 showHideCharacteristic();
+
+/***/ }),
+
+/***/ "./resources/js/site/plugins/lazyLoadImg.js":
+/*!**************************************************!*\
+  !*** ./resources/js/site/plugins/lazyLoadImg.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+/**
+ * LazyLoadingImage (with lightgallery.js)
+ *
+ * 1. Класс по каторому запускаеться ленивая подгрузка: "img.lazy".
+ * 2. Класс контеинера в котором хранить пути: ".img-data-path"
+ *          - Путь к миниатюре храниться в атрибуте: "data-exthumbimage="
+ *          - Путь к большой картинка храниться в атрибуте: "data-src="
+ * 3. В процессе выполнения скрипта устанавливаеться классы:
+ *          - ".lazyLoading" - загрузка;
+ *          - ".lazyLoaded" - успешная загрузка;
+ *          - ".lazyError" - завершено, но произошла ошибка;
+ * 4. Сосотояние титульной картинки (Для галлереи):
+ *          - успешно - ".title-image-add";
+ *          - дефолтная ("../no_img.jpg" - static) или ошибка от сервера - ".title-image-not"
+ * 5. Проверка ну существование => добавление прелодера-спиннера с задержкой 250мс.
+ *
+ * и т.д.
+ * */
+(function () {
+  var options = {
+    noImg: 'no_img.jpg',
+    defaultImg: window.location.origin + '/img/no_img.jpg',
+    //альтернатива: 'https://b2b-sandi.com.ua/imagecache/150x150/no_img.jpg'
+    defaultLargeImg: 'http://b2b-sandi.com.ua/imagecache/large/no_img.jpg'
+  };
+
+  var LazyLoadingImages = /*#__PURE__*/function () {
+    function LazyLoadingImages() {
+      var properteis = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+      _classCallCheck(this, LazyLoadingImages);
+
+      this.props = {
+        imageClassName: properteis.classImage || 'lazy',
+        imageLoadingClassName: properteis.imageLoadingClassName || 'lazyLoading',
+        imageLoadedClassName: properteis.imageLoadedClassName || 'lazyLoaded',
+        imageErrorClassName: properteis.imageErrorClassName || 'lazyError',
+        dataPathsClassName: properteis.dataPathsClassName || 'img-data-path',
+        exthumbImageDataAttribute: properteis.exthumbImageDataAttribute || 'data-exthumbimage',
+        largeImageDataAttribute: properteis.largeImageDataAttribute || 'data-src',
+        galleryTitleImgAddClassName: properteis.galleryTitleImgAddClassName || 'title-image-add',
+        galleryTitleImgEmptyClassName: properteis.galleryTitleImgEmptyClassName || 'title-image-not',
+        imageAnimate: {
+          keyframes: [{
+            opacity: 0
+          }, {
+            opacity: 1
+          }],
+          options: {
+            duration: 500
+          }
+        },
+        delayPreloader: properteis.delayPreloader || 250,
+        coefficientAreaVisibility: properteis.coefficientAreaVisibility || 1.5,
+        logging: false
+      };
+      this.toRun = this.toRun.bind(this);
+      this.main = this.main.bind(this);
+      this.setEvents = this.setEvents.bind(this);
+      this.visibilityImage = this.visibilityImage.bind(this);
+      this.handlerImage = this.handlerImage.bind(this);
+      this.getSrc = this.getSrc.bind(this);
+      this.searchImageLazy = this.searchImageLazy.bind(this);
+      this.addLightGallery = this.addLightGallery.bind(this);
+      this.logging = this.logging.bind(this);
+      this.defaultEvent = false;
+    }
+
+    _createClass(LazyLoadingImages, [{
+      key: "logging",
+      value: function logging(message) {
+        this.props.logging && console.log("".concat(message));
+      }
+    }, {
+      key: "addLightGallery",
+      value: function addLightGallery(productImgList) {
+        var el = productImgList;
+        var productPercent = el.parentElement.parentElement.querySelector('.product-percent');
+
+        if (el) {
+          //на клик создаем динамическую галлерею
+          el.addEventListener('click', function (_ref) {
+            var target = _ref.target;
+            //src => large
+            //exthumbimage => 150x150
+            var imgList = el.querySelectorAll('.images-list'),
+                urlImages = [];
+            imgList.forEach(function (element) {
+              var obj = {
+                'src': element.dataset.src,
+                'thumb': element.dataset.exthumbimage
+              };
+              element.dataset.subHtml && (obj['subHtml'] = element.dataset.subHtml);
+              return urlImages.push(obj);
+            });
+            lightGallery(el, {
+              thumbnail: true,
+              showThumbByDefault: false,
+              dynamic: true,
+              dynamicEl: urlImages
+            });
+          });
+          el.classList.add('addImgList');
+          el.addEventListener('onAfterOpen', function (event) {
+            var btnZoom = document.querySelector('#lg-zoom-in'),
+                customBtm = document.createElement('button'); //<button type="button" aria-label="Zoom in" id="lg-zoom-in" class="lg-icon"></button>
+
+            customBtm.className = 'lg-icon';
+            customBtm.id = 'lg-zoom-full';
+            !document.querySelector('#lg-zoom-full') && btnZoom.after(customBtm);
+            btnZoom.hidden = true;
+
+            if (productPercent) {
+              var per = productPercent.cloneNode(true);
+              document.querySelector('.lg-toolbar').append(per);
+            }
+          }, false);
+        }
+      }
+    }, {
+      key: "searchImageLazy",
+      value: function searchImageLazy() {
+        return this.imagesMassiv = _toConsumableArray(document.querySelectorAll("img.".concat(this.props.imageClassName)));
+      }
+    }, {
+      key: "getSrc",
+      value: function getSrc(elem) {
+        var _this = this;
+
+        var imgSize = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'default';
+        var path = {
+          'small': function small() {
+            return elem.getAttribute(_this.props.exthumbImageDataAttribute);
+          },
+          'large': function large() {
+            return elem.getAttribute(_this.props.largeImageDataAttribute);
+          },
+          'default': function _default() {
+            return console.warn("not size image, lazyLoading.js");
+          }
+        };
+        return path[imgSize]();
+      }
+    }, {
+      key: "handlerImage",
+      value: function handlerImage(image) {
+        var _this2 = this;
+
+        var delay = setTimeout(function () {
+          _this2.constructor.getSpinnerLazy(image);
+        }, this.props.delayPreloader);
+
+        var elemDataPath = image.closest(".".concat(this.props.dataPathsClassName)),
+            titleImg = function titleImg(imgExthumb, imgSrc) {
+          image.classList.remove(_this2.props.imageClassName);
+          image.classList.add(_this2.props.imageLoadingClassName);
+          var showGallery = image.dataset.gallery === 'true' || false,
+              path = showGallery ? imgExthumb : imgSrc,
+              nameImage = path && path.split('/'),
+              imagePath = new Image();
+
+          if (path) {
+            imagePath.src = path; //для спиннера
+
+            clearTimeout(delay);
+
+            _this2.constructor.removeSpinnerLazy(image);
+          } else {
+            console.warn("no validate path in dataAttribute");
+            image.src = options.defaultImg;
+            image.classList.remove(_this2.props.imageLoadingClassName);
+            image.classList.add(_this2.props.imageLoadedClassName);
+          }
+
+          imagePath.onload = function () {
+            image.src = path;
+            image.animate(_this2.props.imageAnimate.keyframes, _this2.props.imageAnimate.options);
+
+            if (showGallery) {
+              var parentElem = image.closest('ul.product__img--list');
+
+              if (nameImage[nameImage.length - 1] === options.noImg) {
+                parentElem.classList.add(_this2.props.galleryTitleImgEmptyClassName);
+              } else {
+                parentElem.classList.add(_this2.props.galleryTitleImgAddClassName);
+
+                _this2.addLightGallery(parentElem);
+              }
+            }
+
+            image.classList.remove(_this2.props.imageLoadingClassName);
+            image.classList.add(_this2.props.imageLoadedClassName);
+          };
+
+          imagePath.onerror = function () {
+            console.warn("@BeCrutch: lazyLoading.js - no image form server: \"".concat(path, "\""));
+            image.src = options.defaultImg;
+            image.classList.remove(_this2.props.imageLoadingClassName);
+            image.classList.add(_this2.props.imageErrorClassName);
+          };
+        };
+
+        if (elemDataPath) {
+          var imgSrc = this.getSrc(elemDataPath, 'large');
+          var imgExthumb = this.getSrc(elemDataPath, 'small');
+          titleImg(imgExthumb, imgSrc);
+        } else {
+          console.warn("@BeCrutch: lazyLoading.js - not data path(.".concat(this.props.dataPathsClassName, ")"));
+          image.src = options.defaultImg;
+          this.constructor.removeSpinnerLazy(image);
+        }
+      }
+    }, {
+      key: "visibilityImage",
+      value: function visibilityImage(image) {
+        var imageLazy = image.classList.contains("".concat(this.props.imageClassName)),
+            imgTop = image.getBoundingClientRect().top,
+            windowHeight = window.innerHeight,
+            downloadImg = image.dataset.download === 'true',
+            areaVisibility = windowHeight / this.props.coefficientAreaVisibility;
+
+        if (-areaVisibility < imgTop && imgTop - areaVisibility < windowHeight && imageLazy || downloadImg) {
+          this.handlerImage(image);
+        }
+      }
+    }, {
+      key: "setEvents",
+      value: function setEvents() {
+        var _this3 = this;
+
+        var act = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'default';
+        var action = {
+          'modal': function modal() {
+            _this3.logging('setEvents() => modal');
+
+            document.querySelector('.modal.show') && document.querySelector('.modal.show').addEventListener("scroll", _this3.main, false);
+          },
+          'default': function _default() {
+            if (!_this3.defaultEvent) {
+              _this3.logging('setEvents() => default');
+
+              document.addEventListener("scroll", _this3.main, false);
+              window.addEventListener("resize", _this3.main, false);
+              window.addEventListener("orientationChange", _this3.main, false);
+              _this3.defaultEvent = true;
+            }
+          }
+        };
+        return action[act]();
+      }
+    }, {
+      key: "destroyEvents",
+      value: function destroyEvents() {
+        var _this4 = this;
+
+        var act = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'default';
+        var action = {
+          'modal': function modal() {
+            _this4.logging('destroyEvents() => modal');
+
+            document.querySelector('.modal.show') && document.querySelector('.modal.show').removeEventListener("scroll", _this4.main, false);
+          },
+          'default': function _default() {
+            if (_this4.defaultEvent) {
+              _this4.logging('destroyEvents() => default');
+
+              document.removeEventListener("scroll", _this4.main, false);
+              window.removeEventListener("resize", _this4.main, false);
+              window.removeEventListener("orientationChange", _this4.main, false);
+              _this4.defaultEvent = false;
+            }
+          }
+        };
+        return action[act]();
+      }
+    }, {
+      key: "main",
+      value: function main() {
+        var _this5 = this;
+
+        this.logging('main()');
+        this.searchImageLazy();
+
+        if (this.imagesMassiv.length) {
+          this.imagesMassiv.forEach(function (image) {
+            _this5.visibilityImage(image);
+          });
+        }
+      }
+    }, {
+      key: "toRun",
+      value: function toRun() {
+        this.logging('toRun()');
+        this.main();
+        this.setEvents();
+      }
+    }], [{
+      key: "removeSpinnerLazy",
+      value: function removeSpinnerLazy(image) {
+        var spinner = image.previousElementSibling;
+        if (spinner) spinner.classList.contains('preloader-spinner') && image.previousElementSibling.remove();
+      }
+    }, {
+      key: "getSpinnerLazy",
+      value: function getSpinnerLazy(image) {
+        var parent = image.parentElement;
+        var existsPreloader = false,
+            i = 0;
+
+        while (i < parent.childElementCount) {
+          parent.children[i].classList.contains('preloader-spinner') && (existsPreloader = true);
+
+          if (!existsPreloader) {
+            console.log(i);
+            image.insertAdjacentHTML('beforebegin', "<div class=\"preloader-spinner text-success\" uk-spinner=\"ratio: 2\"></div>");
+            return;
+          }
+
+          i++;
+        }
+      }
+    }]);
+
+    return LazyLoadingImages;
+  }();
+
+  window.lazyLoadImg = new LazyLoadingImages();
+  document.addEventListener("DOMContentLoaded", function () {
+    lazyLoadImg.toRun();
+  }, false);
+  $('body').on('shown.bs.modal', function (e) {
+    lazyLoadImg.main();
+    lazyLoadImg.setEvents('modal');
+  });
+  $('body').on('hidden.bs.modal', function (e) {
+    lazyLoadImg.destroyEvents('modal');
+  });
+})();
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),
 

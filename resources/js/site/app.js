@@ -25,6 +25,7 @@ require('lg-fullscreen.js');
 require('lg-thumbnail.js');
 require('./plugins/swipeGallery');
 require('./plugins/characteristicsLists');
+require('./plugins/lazyLoadImg');
 
 //components
 require('./components/addToCart');
