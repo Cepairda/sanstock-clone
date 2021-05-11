@@ -7,6 +7,7 @@ use App\Category;
 use App\Characteristic;
 use App\CharacteristicValue;
 use App\Product;
+use App\ProductGroup;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 use LaravelLocalization;
@@ -78,6 +79,56 @@ class StockB2BImport
      *
      * @return void
      */
+    protected function stockProductGroup(string $ref, array $dataProduct) : void
+    {
+        $product = ProductGroup::where('details->sd_code', $ref)->first();
+
+        if (!isset($product)) {
+            $product = new ProductGroup();
+
+            $sdCode = $dataProduct['sku'];
+            $name = $dataProduct['name'];
+            $description = $dataProduct['description'];
+            $brand = $dataProduct['brand'];
+            $category = $dataProduct['category'];
+
+            $slug = Slug::create(ProductGroup::class, $category['name']['ru'] . '/' . $name['ru']);
+
+            $product->setRequest([
+                'slug' => $slug,
+                'details' => [
+                    'sd_code' => $sdCode,
+                    'brand_id' => $brand['ref'],
+                    'category_id' => $category['ref'],
+                    'published' => 0,
+                ],
+                'data' => [
+                    'name' => $name['ru'],
+                    'description' => $description['ru'],
+                ]
+            ]);
+
+            LaravelLocalization::setLocale('ru');
+            $product->storeOrUpdate();
+
+            $product->setRequest([
+                'data' => [
+                    'name' => $name['uk'],
+                    'description' => $description['uk'],
+                ]
+            ]);
+
+            LaravelLocalization::setLocale('uk');
+            $product->storeOrUpdate();
+        }
+    }
+
+    /**
+     * @param $ref
+     * @param $dataProduct
+     *
+     * @return void
+     */
     protected function stockProduct(string $ref, array $dataProduct) : void
     {
         $product = Product::where('details->sku', $ref)->first();
@@ -98,10 +149,10 @@ class StockB2BImport
             $defectiveDescriptionRu = $dataProduct['defective_attributes']['descriptions']['ru'];
             $defectiveDescriptionUk = $dataProduct['defective_attributes']['descriptions']['uk'];
 
-            $slug = Slug::create(Product::class, $category['name']['ru'] . '/' . $name['ru']);
+            //$slug = Slug::create(Product::class, $category['name']['ru'] . '/' . $name['ru']);
 
             $product->setRequest([
-                'slug' => $slug,
+                //'slug' => $slug,
                 'details' => [
                     'sku' => $ref,
                     'sd_code' => $sdCode,
@@ -277,20 +328,20 @@ class StockB2BImport
      *
      * @return void
      */
-    public function stockAttributes(int $sku, array $attributes) : void
+    public function stockAttributes(int $sdCode, array $attributes) : void
     {
-        $product = Product::where('details->sku', $sku)->first();
+        $productGroup = ProductGroup::where('details->sd_сode', $sdCode)->first();
 
-        if (isset($product)) {
+        if (isset($productGroup)) {
             if (isset($attributes)) {
-                $product->setRequest([
+                $productGroup->setRequest([
                     'relations' => [
                         CharacteristicValue::class => $this->stockUpdateOrCreateCharacteristics($attributes)
                     ]
                 ]);
             }
 
-            $product->updateRelations();
+            $productGroup->updateRelations();
         }
     }
 
@@ -331,10 +382,12 @@ class StockB2BImport
         foreach ($jsonData['data'] as $sku => $dataProduct) {
             $main = $dataProduct['main'];
             $attributes = $dataProduct['attributes'];
+            $sdCode = $dataProduct['sku'];
             //$this->stockBrand($main['brand']['ref'], $main['brand']['name']);
             //$this->stockCategory($main['category']['ref'], $main['category']['name']);
+            $this->stockProductGroup($sdCode, $main);
             $this->stockProduct($sku, $main);
-            $this->stockAttributes($sku, $attributes);
+            $this->stockAttributes($sdCode, $attributes);
         }
     }
 

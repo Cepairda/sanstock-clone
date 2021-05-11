@@ -7,7 +7,7 @@ use LaravelLocalization;
 use Carbon\Carbon;
 use Spatie\SchemaOrg\Schema;
 
-class Product extends Resource
+class ProductGroup extends Resource
 {
     use Commentable;
 
