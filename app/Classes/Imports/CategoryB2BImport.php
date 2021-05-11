@@ -105,20 +105,20 @@ class CategoryB2BImport
 
     public function fixParent()
     {
-//        $categories = Category::get();
-//
-//        foreach ($categories as $key => [
-//            'id' => $id,
-//            'details' => [
-//                'ref' => $ref,
-//                'parent_ref' => $parentRef
-//            ]
-//        ]) {
-//            if (!is_null($parentRef)) {
-//                $parentCategory = Category::where('details->ref', $parentRef)->first();
-//                Category::where('id', $id)->update(['parent_id' => $parentCategory->id]);
-//            }
-//        }
+        $categories = Category::get();
+
+        foreach ($categories as $key => [
+            'id' => $id,
+            'details' => [
+                'ref' => $ref,
+                'parent_ref' => $parentRef
+            ]
+        ]) {
+            if (!is_null($parentRef)) {
+                $parentCategory = Category::where('details->ref', $parentRef)->first();
+                Category::where('id', $id)->update(['parent_id' => $parentCategory->id]);
+            }
+        }
 
         Category::fixTree();
     }
@@ -130,7 +130,7 @@ class CategoryB2BImport
      *
      * @return bool
      */
-    function recursiveCheck($categories)
+    function recursiveCheck($categories) : bool
     {
         $isEmpty = true;
         $isEmptyDeep = true;
@@ -139,9 +139,12 @@ class CategoryB2BImport
             $children = $category->children;
 
             if ($children->isNotEmpty()) {
-                $isEmpty = recursiveCheck($children);
+                $isEmpty = $this->recursiveCheck($children);
+
+                if ($isEmpty == false) {
+                    $isEmptyDeep = false;
+                }
             } else {
-                $ref = $category->getDetails('ref');
                 $product = Product::where('details->category_id', $category->getDetails('ref'))->first();
                 $isEmpty = !$product;
 

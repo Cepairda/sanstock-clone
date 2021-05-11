@@ -92,6 +92,10 @@ class StockB2BImport
             $price = $dataProduct['price'];
             $oldPrice = $dataProduct['old_price'];
             $balance = $dataProduct['balance'];
+            $grade = $dataProduct['defective_attributes']['grade'];
+
+            $defectiveDescriptionRu = $dataProduct['defective_attributes']['descriptions']['ru'];
+            $defectiveDescriptionUk = $dataProduct['defective_attributes']['descriptions']['uk'];
 
             $slug = Slug::create(Product::class, $category['name']['ru'] . '/' . $name['ru']);
 
@@ -105,10 +109,12 @@ class StockB2BImport
                     'price' => $price,
                     'old_price' => $oldPrice,
                     'balance' => $balance,
+                    'grade' => $grade
                 ],
                 'data' => [
                     'name' => $name['ru'],
                     'description' => $description['ru'],
+                    'defective_attributes' => $defectiveDescriptionRu
                 ]
             ]);
 
@@ -119,6 +125,7 @@ class StockB2BImport
                 'data' => [
                     'name' => $name['uk'],
                     'description' => $description['uk'],
+                    'defective_attributes' => $defectiveDescriptionUk
                 ]
             ]);
 
