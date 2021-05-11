@@ -134,7 +134,7 @@
 
             <div class="container main__tab-content">
                 <div class="row">
-                    <div class="col-12 tab-content">
+                    <div id="product-tabs" class="col-12 tab-content">
                         <div class="tab-pane fade" id="characteristics" role="tabpanel"
                              aria-labelledby="characteristics-tab">
                             <div class="row tab-content__container">
@@ -154,18 +154,18 @@
 
                             <nav>
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    <a class="nav-link w-25 text-center active" id="sort-0-tab" data-toggle="tab" href="#sort-0" role="tab" aria-controls="nav-home" aria-selected="true">Сорт-0</a>
-                                    <a class="nav-link w-25 text-center" id="sort-1-tab" data-toggle="tab" href="#sort-1" role="tab" aria-controls="nav-profile" aria-selected="false">Сорт-1</a>
-                                    <a class="nav-link w-25 text-center" id="sort-2-tab" data-toggle="tab" href="#sort-2" role="tab" aria-controls="nav-contact" aria-selected="false">Сорт-2</a>
-                                    <a class="nav-link w-25 text-center" id="sort-3-tab" data-toggle="tab" href="#sort-3" role="tab" aria-controls="nav-contact" aria-selected="false">Сорт-3</a>
+                                    <a class="nav-link w-25 text-center" data-sort="0" data-toggle="tab" href="#sort-0" role="tab" aria-controls="nav-home" aria-selected="true">Сорт-0</a>
+                                    <a class="nav-link w-25 text-center" data-sort="1" data-toggle="tab" href="#sort-1" role="tab" aria-controls="nav-profile" aria-selected="false">Сорт-1</a>
+                                    <a class="nav-link w-25 text-center" data-sort="2" data-toggle="tab" href="#sort-2" role="tab" aria-controls="nav-contact" aria-selected="false">Сорт-2</a>
+                                    <a class="nav-link w-25 text-center" data-sort="3" data-toggle="tab" href="#sort-3" role="tab" aria-controls="nav-contact" aria-selected="false">Сорт-3</a>
                                 </div>
                             </nav>
                             <div class="tab-content" id="nav-tabContent">
-                                <div class="tab-pane fade show active" id="sort-0" role="tabpanel" aria-labelledby="nav-home-tab">
-                                   @include('site.product.components.productsTable')
+                                <div class="tab-pane fade" id="sort-0" role="tabpanel" aria-labelledby="nav-home-tab">
+                                   {{--@include('site.product.components.productsTable')--}}
                                 </div>
                                 <div class="tab-pane fade" id="sort-1" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                    @include('site.product.components.productsTable')
+                                    {{--@include('site.product.components.productsTable')--}}
                                 </div>
                                 <div class="tab-pane fade" id="sort-2" role="tabpanel" aria-labelledby="nav-contact-tab">
                                     @include('site.product.components.productsTable')

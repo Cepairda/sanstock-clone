@@ -22114,12 +22114,44 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   var nameGetParam = 'sort';
   var paramsString = window.location.search;
   var searchParams = new URLSearchParams(paramsString);
+  var tabSelector = '';
 
   if (searchParams.has(nameGetParam)) {
-    var id = nameGetParam + '-' + searchParams.get(nameGetParam) + '-tab';
-    var tabSelector = "a[data-toggle=\"tab\"]#".concat(id);
-    $(tabSelector).tab('show');
+    tabSelector = "a[data-toggle=\"tab\"][data-sort=\"".concat(searchParams.get(nameGetParam), "\"]");
+  } else {
+    var tableContainer = 'table-products';
+    var idContainerTabs = 'product-tabs';
+    var containetTabs = document.querySelector("#".concat(idContainerTabs));
+
+    if (containetTabs) {
+      var s1 = function s1(id) {
+        var container = containetTabs.querySelector("#sort-".concat(id));
+
+        if (!container) {
+          return false;
+        } else {
+          var tabTable = container.querySelector(".table-products");
+
+          if (tabTable) {
+            return "a[data-toggle=\"tab\"][data-sort=\"".concat(id, "\"]");
+          } else {
+            return s1(++id);
+          }
+        }
+      };
+
+      var result = s1(0);
+      tabSelector = result ? result : '';
+      console.log(result);
+    }
   }
+
+  $(tabSelector).tab('show');
+  $('a[data-toggle="tab"][data-sort]').on('shown.bs.tab', function (_ref) {
+    var target = _ref.target;
+    var sortNumber = target.dataset.sort;
+    window.history.pushState({}, 'Title', "?sort=".concat(sortNumber));
+  });
 })();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 

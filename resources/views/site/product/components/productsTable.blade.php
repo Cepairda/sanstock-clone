@@ -1,7 +1,7 @@
 @php($products = $products = \App\Product::joinLocalization()->whereIn('details->sku', [21650, 21899, 22008])->withCategory()->get() )
 
 
-<div class="table-responsive cart__table">
+<div class="table-responsive table-products cart__table">
     <table class="table table-hover">
         <caption>Корзина товаров</caption>
         <thead>
@@ -14,14 +14,15 @@
             <td>Добавить корзину</td>
         </tr>
         </thead>
-
+        <tbody>
         @foreach($products as $sku => $product)
-            <tbody>
             <tr>
                 <td>{{ $product["sku"] }}</td>
                 <td>
                     {{--{!! img(['type' => 'product', 'sku' => $product["sku"], 'size' => 70, 'alt' => $product["name"], 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}--}}
-                    <img width="150" src="{{'https://isw.b2b-sandi.com.ua/imagecache/150x150/' . strval($product["sku"])[0] . '/' . strval($product["sku"])[1] . '/' .  $product["sku"] . '.jpg'}}" alt="">
+                    <img width="150"
+                         src="{{'https://isw.b2b-sandi.com.ua/imagecache/150x150/' . strval($product["sku"])[0] . '/' . strval($product["sku"])[1] . '/' .  $product["sku"] . '.jpg'}}"
+                         alt="">
                 </td>
                 <td>{{ $product->name }}</td>
 
@@ -37,7 +38,8 @@
                     <button class="button" data-add="upDate" data-barcode="{{ $product->sku }}">Купить</button>
                 </td>
             </tr>
-            </tbody>
+
         @endforeach
+        </tbody>
     </table>
 </div>
