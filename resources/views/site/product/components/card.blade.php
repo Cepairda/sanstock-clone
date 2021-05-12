@@ -4,7 +4,7 @@
             <div class="product__img jsLink" data-href="#">
                 <img class="product__img-lg img-data-path lazy"
                      data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462.jpg"
-                     src="{{'https://isw.b2b-sandi.com.ua/imagecache/large/' . strval($product->sku)[0] . '/' . strval($product->sku)[1] . '/' .  $product->sku . '.jpg'}}"
+                     src="{{'https://isw.b2b-sandi.com.ua/imagecache/large/' . strval($product->sd_code)[0] . '/' . strval($product->sd_code)[1] . '/' .  $product->sd_code . '.jpg'}}"
                      title="{{ $product->name }}">
             </div>
             <div class="d-flex product-description">
@@ -29,7 +29,7 @@
                             <span>грн.</span>
                         </p>
                     </div>
-                    <a class="button" href="{{ route('site.resource', $product->slug) }}" alt="{{ $product->name }}"
+                    <a class="button" href="{{ route('site.resource', $product->productGroup->slug) }}" alt="{{ $product->name }}"
                        data-target="add" data-barcode="{{ $product->sku }}">{{ __('Where buy')}}</a>
                 </div>
             </div>

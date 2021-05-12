@@ -30,7 +30,7 @@ class ResourceController extends Controller
         switch ($type) {
             case 'product_group':
                 $data = [
-                    'product' => $resource->type::joinLocalization()
+                    'productGroup' => $resource->type::joinLocalization()
                         ->withCharacteristics()
                         ->whereId($resource->id)
                         //->where('details->published', 1)
@@ -41,7 +41,7 @@ class ResourceController extends Controller
                         ->withPartnerUrl()
                         ->firstOrFail(),
                 ];
-                $data['additional'] = temp_additional($data['product']->sku);
+                $data['additional'] = temp_additional($data['productGroup']->sku);
 
                 //dd($data['product']['data']);
 
