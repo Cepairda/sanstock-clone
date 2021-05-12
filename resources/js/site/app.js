@@ -24,6 +24,7 @@ require('lg-zoom.js');
 require('lg-fullscreen.js');
 require('lg-thumbnail.js');
 require('owl.carousel');
+require('select2/dist/js/select2.full.min');
 require('./plugins/swipeGallery');
 require('./plugins/characteristicsLists');
 require('./plugins/lazyLoadImg');

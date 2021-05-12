@@ -3,7 +3,7 @@
 @section('meta_title', __('Contacts'))
 @section('meta_description', __('Contacts'))
 @section('breadcrumbs')
-    <li class="active"
+    <li class="breadcrumb-item active"
         itemprop="itemListElement"
         itemscope itemtype="https://schema.org/ListItem"
     >
@@ -15,149 +15,78 @@
 @endsection
 @section('content')
 
-    @include('site.components.breadcrumbs', ['title' => __('Contacts')])
-{{--    <section>--}}
-{{--        <div class="container-fluid">--}}
-{{--            <div class="row">--}}
-{{--                <div id="map" class="col-12" style="height: 500px; background-color: #999;"></div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </section>--}}
-{{--    <section>--}}
-{{--        <div class="container py-5">--}}
-{{--            <div class="row">--}}
-{{--                <div class="col-6">--}}
-{{--                    <h5 class="">Контакты</h5>--}}
-{{--                    <ul>--}}
-{{--                        <li><span class="mr-1">Адрес:</span>Украина</li>--}}
-{{--                        <li><span class="mr-1">Телефон:</span><a href="tel:08001230045">0 (800) 123-00-45</a></li>--}}
-{{--                        <li><span class="mr-1">E-mail:</span><a href="mail:info@sandiplus.com.ua">info@sandiplus.com.ua</a></li>--}}
-{{--                        <li><span class="mr-1">Режим работы:</span>Пн-Пт 10 am-8 pm</li>--}}
-{{--                    </ul>--}}
-{{--                </div>--}}
-{{--                <div class="col-6">--}}
-{{--                    <form action="">--}}
-{{--                        <h5>Свяжитесь с нами</h5>--}}
-{{--                        <div class="form-wrap">--}}
-{{--                            <input class="form-input" id="contact-name" type="text" name="name" data-constraints="@Required">--}}
-{{--                            <label class="form-label" for="contact-name">Ваше Имя *</label>--}}
-{{--                        </div>--}}
-{{--                        <div class="form-wrap">--}}
-{{--                            <input class="form-input" id="contact-email" type="email" name="email" data-constraints="@Email @Required">--}}
-{{--                            <label class="form-label" for="contact-email">Ваш e-mail *</label>--}}
-{{--                        </div>--}}
-{{--                        <div class="form-wrap">--}}
-{{--                            <input class="form-input" id="contact-phone" type="text" name="phone" data-constraints="@Numeric">--}}
-{{--                            <label class="form-label" for="contact-phone">Ваш телефон *</label>--}}
-{{--                        </div>--}}
-{{--                        <div class="form-wrap">--}}
-{{--                            <textarea class="form-input" id="contact-message" name="message" data-constraints="@Required"></textarea>--}}
-{{--                            <label class="form-label" for="contact-message">Сообщение *</label>--}}
-{{--                        </div>--}}
-{{--                        <button class="button button-primary" type="submit">Отправить</button>--}}
-{{--                    </form>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </section>--}}
 
+    <main class="main-container bgc-gray">
 
-{{--    <section>--}}
-{{--        <!-- RD Google Map-->--}}
-{{--        <div class="rd-google-map rd-google-map__model" data-zoom="15" data-y="40.643180" data-x="-73.9874068" data-styles="[{&quot;featureType&quot;:&quot;water&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#e9e9e9&quot;},{&quot;lightness&quot;:17}]},{&quot;featureType&quot;:&quot;landscape&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#f5f5f5&quot;},{&quot;lightness&quot;:20}]},{&quot;featureType&quot;:&quot;road.highway&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#ffffff&quot;},{&quot;lightness&quot;:17}]},{&quot;featureType&quot;:&quot;road.highway&quot;,&quot;elementType&quot;:&quot;geometry.stroke&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#ffffff&quot;},{&quot;lightness&quot;:29},{&quot;weight&quot;:0.2}]},{&quot;featureType&quot;:&quot;road.arterial&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#ffffff&quot;},{&quot;lightness&quot;:18}]},{&quot;featureType&quot;:&quot;road.local&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#ffffff&quot;},{&quot;lightness&quot;:16}]},{&quot;featureType&quot;:&quot;poi&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#f5f5f5&quot;},{&quot;lightness&quot;:21}]},{&quot;featureType&quot;:&quot;poi.park&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#dedede&quot;},{&quot;lightness&quot;:21}]},{&quot;elementType&quot;:&quot;labels.text.stroke&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;on&quot;},{&quot;color&quot;:&quot;#ffffff&quot;},{&quot;lightness&quot;:16}]},{&quot;elementType&quot;:&quot;labels.text.fill&quot;,&quot;stylers&quot;:[{&quot;saturation&quot;:36},{&quot;color&quot;:&quot;#333333&quot;},{&quot;lightness&quot;:40}]},{&quot;elementType&quot;:&quot;labels.icon&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;off&quot;}]},{&quot;featureType&quot;:&quot;transit&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#f2f2f2&quot;},{&quot;lightness&quot;:19}]},{&quot;featureType&quot;:&quot;administrative&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#fefefe&quot;},{&quot;lightness&quot;:20}]},{&quot;featureType&quot;:&quot;administrative&quot;,&quot;elementType&quot;:&quot;geometry.stroke&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#fefefe&quot;},{&quot;lightness&quot;:17},{&quot;weight&quot;:1.2}]}]">--}}
-{{--            <ul class="map_locations">--}}
-{{--                <li data-y="40.643180" data-x="-73.9874068">--}}
-{{--                    <dl>--}}
-{{--                        <dt>Address:</dt>--}}
-{{--                        <dd>4578 Marmora Road, Glasgow, D04 89GR</dd>--}}
-{{--                    </dl>--}}
-{{--                    <dl>--}}
-{{--                        <dt>Phones:</dt>--}}
-{{--                        <dd><a href="callto:#">(800) 123-0045</a>; <a href="callto:#">(800) 123-0046</a>--}}
-{{--                        </dd>--}}
-{{--                    </dl>--}}
-{{--                    <dl>--}}
-{{--                        <dt>We are open:</dt>--}}
-{{--                        <dd>Mn-Fr: 10 am-8 pm</dd>--}}
-{{--                    </dl>--}}
-{{--                </li>--}}
-{{--            </ul>--}}
-{{--        </div>--}}
-{{--    </section>--}}
+        @include('site.components.breadcrumbs', ['title' => __('Contacts')])
 
+        <div class="container">
 
-    <section class="section-md bg-white">
-        <div class="shell">
-            <div class="range range-50">
+            <div class="row justify-content-center">
 
-                <div class="cell-sm-5 cell-md-4">
-                    <h3>{{ __('Contacts') }}</h3>
-                    <ul class="list-xs contact-info">
-                        {{--<li>
-                            <dl class="list-terms-minimal">
-                                <dt>{{ __('Address') }}</dt>
-                                <dd>Вулиця Шевченка, 327, корп. 2-2, Харків, Харківська область, 61000</dd>
-                            </dl>
-                        </li>--}}
-                        <li>
-                            <dl class="list-terms-minimal">
-                                <dt>{{ __('Phone') }}</dt>
-                                <dd>
-                                    <ul class="list-semicolon">
-                                        <li><a href="callto:0800210377">0-800-210-377</a></li>
-                                        {{--<li><a href="callto:#">+380 (97) 917-94-94</a></li>--}}
-                                        {{--<li><a href="callto:#">+380 (95) 917-94-94</a></li>--}}
-                                        {{--<li><a href="callto:#">+380 (93) 917-94-94</a></li>--}}
-                                    </ul>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl class="list-terms-minimal">
-                                <dt>E-mail</dt>
-                                <dd><a href="mailto:#">info@lidz.ua</a></dd>
-                            </dl>
-                        </li>
-
-                        {{--<li>
-                            <ul class="list-inline-sm">
-                                <li><a class="icon icon-gray-4 icon-sm fa-facebook" href="#"></a></li>
-                                <li><a class="icon icon-gray-4 icon-sm fa-twitter" href="#"></a></li>
-                                <li><a class="icon icon-gray-4 icon-sm fa-google-plus" href="#"></a></li>
-                                <li><a class="icon icon-gray-4 icon-sm fa-vimeo" href="#"></a></li>
-                                <li><a class="icon icon-gray-4 icon-sm fa-youtube" href="#"></a></li>
-                                <li><a class="icon icon-gray-4 icon-sm fa-pinterest-p" href="#"></a></li>
-                            </ul>
-                        </li>--}}
-                    </ul>
+                <div class="col-12">
+                    <div class="main-container__title">
+                        <h1>Контакты</h1>
+                    </div>
                 </div>
 
-                <div class="cell-sm-7 cell-md-8">
-                    <h3>{{ __('Get in Touch') }}</h3>
-                    <!-- RD Mailform-->
-                    <form class="rd-mailform rd-mailform_style-1" data-form-output="form-output-global" data-form-type="contact" method="post" action="{{ route('site.contact-form') }}">
-                        @method('post')
+                <div class="col-sm-5  main__contacts-form">
+
+                    <p class="main__contacts-form--title">Написати на Email</p>
+
+                    <form class="contacts-form--lg" action="{{-- url('contact-form') --}}" method="post">
                         {{ csrf_field() }}
-                        <div class="form-wrap">
-                            <input class="form-input" id="contact-name" type="text" name="name" data-constraints="@Required">
-                            <label class="form-label" for="contact-name">{{ __('Name') }}</label>
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" required>
+                            <label for="name">Ваше ім'я</label>
+
                         </div>
-                        <div class="form-wrap">
-                            <input class="form-input" id="contact-email" type="email" name="email" data-constraints="@Email @Required">
-                            <label class="form-label" for="contact-email">E-mail</label>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" required>
+                            <label for="email">Ваш E-mail</label>
                         </div>
-                        <div class="form-wrap">
-                            <input class="form-input" id="contact-phone" type="text" name="phone" data-constraints="@Numeric">
-                            <label class="form-label" for="contact-phone">{{ __('Phone') }}</label>
+                        <div class="form-group form-group-static">
+                            <textarea type="text" class="" id="message" name="message" required placeholder="Ваше повідомлення"></textarea>
+                            <p class="message_count"><span class="message_count-lg">0</span>/300</p>
+                            <label for="message">Ваше повідомлення</label>
                         </div>
-                        <div class="form-wrap">
-                            <textarea class="form-input" id="contact-message" name="message" data-constraints="@Required"></textarea>
-                            <label class="form-label" for="contact-message">{{ __('Message') }}</label>
+
+                        <div class="form-btn pt-4">
+                            <button class="button" type="submit">Надіслати</button>
                         </div>
-                        <button class="button button-primary" type="submit">{{ __('Send') }}</button>
                     </form>
                 </div>
+
+                <div class="col-sm-5 main__contacts-dest mb-5">
+                    <div class="contacts-dest__title">Гаряча лінія</div>
+                    <p class="contacts-dest__descriptipon">З питань співпраці та ідеям поліпшення роботи компанії звертайтеся до Єдиного Call-Центру:</p>
+                    <a class="footer__element-phone" href="tel:0800212124">0-800-21-21-24</a>
+                </div>
+
             </div>
+
         </div>
-    </section>
+
+        {{--<div class="container-fluid map-container">--}}
+
+        {{--<div class="row">--}}
+
+        {{--<div class="col-sm-12">--}}
+
+        {{--<h2 class="text-center">@lang('site.pages.points') <br></h2>--}}
+
+        {{--</div>--}}
+
+        {{--<div id="map" style="height:500px; width: 100%;"></div>--}}
+
+        {{--<script type="text/javascript">function initMap(){var map=new google.maps.Map(document.getElementById('map'),{zoom:11,center:{lat:41.876,lng:-87.624},styles:[ { "featureType": "administrative.locality", "elementType": "all", "stylers": [ { "hue": "#2c2e33" }, { "saturation": 7 }, { "lightness": 19 }, { "visibility": "on" } ] }, { "featureType": "administrative.locality", "elementType": "labels.text", "stylers": [ { "visibility": "on" }, { "saturation": "-3" } ] }, { "featureType": "administrative.locality", "elementType": "labels.text.fill", "stylers": [ { "color": "#f39247" } ] }, { "featureType": "landscape", "elementType": "all", "stylers": [ { "hue": "#ffffff" }, { "saturation": -100 }, { "lightness": 100 }, { "visibility": "simplified" } ] }, { "featureType": "poi", "elementType": "all", "stylers": [ { "hue": "#ee6e1f" }, { "saturation": -100 }, { "lightness": 100 }, { "visibility": "off" } ] }, { "featureType": "poi.school", "elementType": "geometry.fill", "stylers": [ { "color": "#f39247" }, { "saturation": "0" }, { "visibility": "on" } ] }, { "featureType": "road", "elementType": "geometry", "stylers": [ { "hue": "#ff6f00" }, { "saturation": "100" }, { "lightness": 31 }, { "visibility": "simplified" } ] }, { "featureType": "road", "elementType": "geometry.stroke", "stylers": [ { "color": "#f39247" }, { "saturation": "0" } ] }, { "featureType": "road", "elementType": "labels", "stylers": [ { "hue": "#008eff" }, { "saturation": -93 }, { "lightness": 31 }, { "visibility": "on" } ] }, { "featureType": "road.arterial", "elementType": "geometry.stroke", "stylers": [ { "visibility": "on" }, { "color": "#f3dbc8" }, { "saturation": "0" } ] }, { "featureType": "road.arterial", "elementType": "labels", "stylers": [ { "hue": "#bbc0c4" }, { "saturation": -93 }, { "lightness": -2 }, { "visibility": "simplified" } ] }, { "featureType": "road.arterial", "elementType": "labels.text", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.local", "elementType": "geometry", "stylers": [ { "hue": "#e9ebed" }, { "saturation": -90 }, { "lightness": -8 }, { "visibility": "simplified" } ] }, { "featureType": "transit", "elementType": "all", "stylers": [ { "hue": "#e9ebed" }, { "saturation": 10 }, { "lightness": 69 }, { "visibility": "on" } ] }, { "featureType": "water", "elementType": "all", "stylers": [ { "hue": "#e9ebed" }, { "saturation": -78 }, { "lightness": 67 }, { "visibility": "simplified" } ] } ]});var ctaLayer=new google.maps.KmlLayer({url:'http://www.google.com/maps/d/kml?forcekml=1&mid=1-ZPMN7fkigpXBNrHO9vIfYKa_Mejf0g7',map:map,})}</script>--}}
+
+        {{--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXU3B31cEHr3fU2yGiUBMInbjSg4KelcI&callback=initMap&ver=asdaertsdasd"></script>--}}
+
+        {{--</div>--}}
+
+        {{--</div>--}}
+
+    </main>
+
 @endsection

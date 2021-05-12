@@ -97,49 +97,6 @@ input:focus {
     color: #ee6e1f;
 }
 
-.comparison {
-    margin-top: 5px;
-    margin-right: 5px;
-}
-
-.comparison.active::before {
-    background-image: url("../libs/icon/comparison-active.svg");
-}
-
-.comparison::before {
-    content: "";
-    display: block;
-    min-width: 20px;
-    min-height: 20px;
-    background-image: url("../libs/icon/comparison-gray.svg");
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.comparison.comparison-remove::before {
-    content: "\e002";
-    font-family: 'icon Q-tap';
-    font-weight: normal;
-    font-style: normal;
-    background-image: none;
-}
-
-.nav-link-comparison {
-    position: relative;
-
-}
-
-a.nav-link-comparison::before {
-    content: "";
-    display: block;
-    min-width: 18px;
-    min-height: 14px;
-    background-image: url("../libs/icon/comparison-black.svg");
-    background-size: 14px;
-    background-repeat: no-repeat;
-    margin-right: 10px;
-}
-
 /*background color*/
 .bgc-gray {
     background-color: #fafafa;
@@ -2100,13 +2057,6 @@ table.tab-cr > tbody > tr > td {
     padding-top: 60px;
 }
 
-.main__contacts--title {
-    font-family: Proxima Nova Cn Lt, sans-serif;
-    font-size: 44px;
-    padding-bottom: 70px;
-    text-align: center;
-}
-
 .main__contacts-form {
     background-color: #ffffff;
     padding: 35px 80px 45px;
@@ -2119,74 +2069,6 @@ table.tab-cr > tbody > tr > td {
     font-weight: 700;
     text-align: center;
     color: #ef6e20;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
-.form-group label {
-    font-family: Open Sans Bold, sans-serif;
-    font-size: 16px;
-}
-
-.form-group input {
-    background: transparent;
-    border: none;
-    outline: none;
-    border-bottom: 1px solid #b6b6b6;
-    font-size: 16px;
-    color: #b6b6b6;
-}
-
-.form-group input:focus {
-    background: transparent;
-    color: #b6b6b6;
-}
-
-.form-group input:active {
-    background: transparent;
-    color: #b6b6b6;
-}
-
-.form-group textarea {
-    min-height: 70px;
-    max-height: 70px;
-    resize: none;
-    border: none;
-    border-bottom: 1px solid #b6b6b6;
-}
-
-.bgc-grad .form-group textarea {
-    background-image: linear-gradient(0deg, #232e37, #27323c);
-    color: #b6b6b6;
-}
-
-.form-group textarea:focus {
-    outline: none;
-}
-
-.message_count {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    font-size: 12px;
-    color: #b6b6b6;
-}
-
-.form-btn {
-    text-align: center;
-}
-.form-btn-right {
-    text-align: right;
-}
-
-.btn-link-input {
-    background-color: transparent;
-    border: none;
-    outline: none;
 }
 
 .main__contacts-dest {
@@ -2787,24 +2669,6 @@ li.footer__element--item-tel {
     margin-bottom: 70px;
 }
 
-@media (min-width: 992px) {
-    .certificate--item,
-    .main-contacts,
-    .main__company,
-    .main__card {
-        padding-top: 70px;
-    }
-}
-
-@media (max-width: 991.98px) {
-    .certificate--item,
-    .main-contacts,
-    .main__company,
-    .main__card {
-        padding-top: 30px;
-    }
-}
-
 .main-contacts input, .main-contacts textarea {font-size: 14px; color: #000;}
 
 .main-contacts input:active, .main-contacts:active textarea {color: #ef6e20 !important;}
@@ -2854,10 +2718,7 @@ li.footer__element--item-tel {
 .main__company {
     padding-bottom: 35px;
 }
-.main-contacts,
-.main-video__container{
-    padding-bottom: 70px;
-}
+
 
 .map-container h2 {
     margin: 50px 0;
