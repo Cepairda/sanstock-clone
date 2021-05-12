@@ -285,6 +285,7 @@
     </main>
 
     @section('javascript')
+        <script type="text/javascript" src="{{ asset('js/site/page/checkout.js') }}"></script>
     @endsection
 
 

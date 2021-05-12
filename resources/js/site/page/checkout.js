@@ -1,6 +1,6 @@
 (function(){
     "use strict";
+    const xp = 1;
 
-    alert('work!');
 
 }());
