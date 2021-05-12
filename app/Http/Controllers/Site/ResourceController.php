@@ -26,6 +26,8 @@ class ResourceController extends Controller
 
         switch ($type) {
             case 'product':
+                //$pr = $resource->type::where('details->sd_code', 'SD00042589')->joinLocalization()->get();
+
                 $data = [
                     'product' => $resource->type::joinLocalization()
                         ->withCharacteristics()
