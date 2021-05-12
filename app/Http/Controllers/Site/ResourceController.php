@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\ProductGroup;
+use App\ProductSort;
 use App\Resource;
 use App\ResourceResource;
 use App\Characteristic;
@@ -21,13 +23,12 @@ class ResourceController extends Controller
             ->where('slug', $slug)
             ->where('deleted_at', null)
             ->firstOrFail();
-
-        $type = Str::lower(class_basename($resource->type));
+        $originalType = class_basename($resource->type);
+        $type = Str::snake($originalType);
+        //$templateName = Str::snake($originalType);
 
         switch ($type) {
-            case 'product':
-                //$pr = $resource->type::where('details->sd_code', 'SD00042589')->joinLocalization()->get();
-
+            case 'product_group':
                 $data = [
                     'product' => $resource->type::joinLocalization()
                         ->withCharacteristics()
@@ -45,7 +46,11 @@ class ResourceController extends Controller
                 break;
             case 'category':
                 $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->firstOrFail();
-                $products = Product::where('details->category_id', $category->getDetails('ref'))->where('details->price', '>' , 0)->get()->keyBy('id')->keys();
+                //$products = ProductGroup::where('details->category_id', $category->getDetails('ref'))->where('details->price', '>' , 0)->get()->keyBy('id')->keys();
+                //$productGroup = ProductGroup::where('details->category_id', $category->getDetails('ref'))->firstOrFail();
+                $productGroup = ProductGroup::where('details->category_id', $category->getDetails('ref'))->get()->keyBy('details->sd_code')->keys();
+                $productGroupKeys = ProductGroup::where('details->category_id', $category->getDetails('ref'))->get()->keyBy('id')->keys();
+                $products = ProductSort::whereIn('details->sd_code', $productGroup)->get()->keyBy('id')->keys();
                 $productsTotal = $products->count();
 
                 $characteristics = isset($category->characteristic_group[0])
@@ -63,7 +68,7 @@ class ResourceController extends Controller
                     }
                 }
 
-                $characteristicValueIds = ResourceResource::whereIn('resource_id', $products)
+                $characteristicValueIds = ResourceResource::whereIn('resource_id', $productGroupKeys)
                     ->where('relation_type', 'App\CharacteristicValue')
                     ->get()
                     ->keyBy('relation_id')
@@ -71,21 +76,20 @@ class ResourceController extends Controller
                 $characteristicsValue = CharacteristicValue::joinLocalization()
                     ->whereCharacteristicIsFilter($characteristicIds)
                     ->whereIn('id', $characteristicValueIds)->get();
-
                 $valuesForView = [];
 
                 foreach ($characteristicsValue as $value) {
-                    if (!isset($valuesForView[$value->getDetails('characteristic_id')])) {
+                    /*if (!isset($valuesForView[$value->getDetails('characteristic_id')])) {
                         $valuesForView[$value->attribute_id] = [];
-                    }
+                        $a = $value->attribute_id;
+                    }*/
 
                     $valuesForView[$value->getDetails('characteristic_id')][] = $value;
                 }
 
                 $characteristicsIds = array_keys($valuesForView);
 
-                $products = Product::joinLocalization()->withIcons()->whereIn('id', $products)->withCategory();
-                //$productsTotal = $products->
+                $products = ProductSort::joinLocalization()->withIcons()->whereIn('id', $products)->withCategory();
 
                 $mixMaxPriceQuery = (clone $products)->selectRaw("MIN(CAST(JSON_EXTRACT(`details`, '$.price') AS FLOAT)) AS minPrice, MAX(CAST(JSON_EXTRACT(`details`, '$.price') AS FLOAT)) AS maxPrice")->first();
                 $minPrice = $mixMaxPriceQuery->minPrice;

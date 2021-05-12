@@ -151,6 +151,7 @@
                             </div>
                             <div class="row filter-wrapper">
                                 @foreach($products as $product)
+
                                     @include('site.product.components.card')
                                 @endforeach
                             </div>
