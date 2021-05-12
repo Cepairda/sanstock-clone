@@ -12,7 +12,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="button added" data-dismiss="modal">Закрыть</button>
-                <a href="{{ asset('/checkout') }}" type="button" class="button">Перейти к оформлению</a>
+                <a href="{{ asset('/cart/checkout') }}" type="button" class="button">Перейти к оформлению</a>
             </div>
         </div>
     </div>
