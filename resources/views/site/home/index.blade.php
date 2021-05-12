@@ -48,7 +48,7 @@
                         <h2 class="main-pops__title">Lorem ipsum dolor sit.</h2>
                         <p class="main-pops__mb-title">sub Title</p>
 
-                        @php($products = \App\Product::joinLocalization()->get())
+                        @php($products = \App\ProductSort::joinLocalization()->get())
 
                         <div class="d-flex justify-content-center pt-3 btn-maixer btn-group" role="group" aria-label="Basic example">
                             <button class="btn main-pops__btn-mx active">Пропулярное</button>
