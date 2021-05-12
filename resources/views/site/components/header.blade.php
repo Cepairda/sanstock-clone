@@ -29,7 +29,7 @@
                         <div class="navbar-nav">
                             <ul>
 
-                                <li class="nav-item"><a class="nav-link nav-link-contacts" href="#">Контакты</a></li>
+                                <li class="nav-item"><a class="nav-link nav-link-contacts" href="{{ asset('/contacts') }}">Контакты</a></li>
 
                                 <li class="nav-item nav-link-phone"><i class="callback"></i><a class="nav-link" href="tel:0800212124">0-800-21-21-24</a></li>
 
