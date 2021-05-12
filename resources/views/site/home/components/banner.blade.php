@@ -11,6 +11,8 @@
                         ['link' => 'images/site/home-slider/slide-1.webp', 'title' => 'Lorem ipsum dolor.', 'sub_title' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'],
                         ['link' => 'images/site/home-slider/slide-2.webp', 'title' => 'Lorem.', 'sub_title' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, pariatur.'],
                         ['link' => 'images/site/home-slider/slide-3.webp', 'title' => 'Lorem ipsum dolor sit.', 'sub_title' => 'Lorem ipsum dolor sit amet.'],
+                        ['link' => 'images/site/home-slider/test-banner.png', 'title' => 'Lorem ipsum dolor sit.', 'sub_title' => 'Lorem ipsum dolor sit amet.'],
+                        ['link' => 'images/site/home-slider/test-banner-2.png', 'title' => 'Lorem ipsum dolor sit.', 'sub_title' => 'Lorem ipsum dolor sit amet.'],
                     ];
                     $slide_active = 0;
                 @endphp

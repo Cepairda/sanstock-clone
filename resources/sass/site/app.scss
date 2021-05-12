@@ -12,6 +12,7 @@
 @import "~lightgallery.js/src/sass/lightgallery";
 @import '~owl.carousel/dist/assets/owl.carousel.min.css',
         '~owl.carousel/dist/assets/owl.theme.default.min.css';
+@import '~select2/src/scss/core';
 @import 'plugins/bootstrap-slider.min.css',
         'plugins/swipe-gallery',
         'plugins/characteristics-lists';
@@ -24,6 +25,7 @@
 @import 'components/breadcrumbs',
         'components/header',
         'components/header-menu',
+        'components/form',
         'components/card',
         'components/buttons';
 

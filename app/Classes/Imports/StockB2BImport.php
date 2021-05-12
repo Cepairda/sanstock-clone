@@ -6,8 +6,9 @@ use App\Brand;
 use App\Category;
 use App\Characteristic;
 use App\CharacteristicValue;
-use App\Product;
 use App\ProductGroup;
+use App\ProductSort;
+use App\Product;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 use LaravelLocalization;
@@ -81,10 +82,10 @@ class StockB2BImport
      */
     protected function stockProductGroup(string $ref, array $dataProduct) : void
     {
-        $product = ProductGroup::where('details->sd_code', $ref)->first();
+        $productGroup = ProductGroup::where('details->sd_code', $ref)->first();
 
-        if (!isset($product)) {
-            $product = new ProductGroup();
+        if (!isset($productGroup)) {
+            $productGroup = new ProductGroup();
 
             $sdCode = $dataProduct['sku'];
             $name = $dataProduct['name'];
@@ -94,7 +95,7 @@ class StockB2BImport
 
             $slug = Slug::create(ProductGroup::class, $category['name']['ru'] . '/' . $name['ru']);
 
-            $product->setRequest([
+            $productGroup->setRequest([
                 'slug' => $slug,
                 'details' => [
                     'sd_code' => $sdCode,
@@ -109,9 +110,9 @@ class StockB2BImport
             ]);
 
             LaravelLocalization::setLocale('ru');
-            $product->storeOrUpdate();
+            $productGroup->storeOrUpdate();
 
-            $product->setRequest([
+            $productGroup->setRequest([
                 'data' => [
                     'name' => $name['uk'],
                     'description' => $description['uk'],
@@ -119,7 +120,42 @@ class StockB2BImport
             ]);
 
             LaravelLocalization::setLocale('uk');
-            $product->storeOrUpdate();
+            $productGroup->storeOrUpdate();
+        }
+    }
+
+    /**
+     * @param string $ref
+     * @param array $dataProduct
+     *
+     * @return void
+     */
+    protected function stockProductSort(string $ref, array $dataProduct) : void
+    {
+        $grade = $dataProduct['defective_attributes']['grade'];
+        $productSort = ProductSort::where([['details->sd_code', $ref], ['details->grade', $grade]])->first();
+
+        if (!isset($productSort)) {
+            $productSort = new ProductSort();
+
+            $sdCode = $dataProduct['sku'];
+            $price = $dataProduct['price'];
+            $oldPrice = $dataProduct['old_price'];
+            $balance = $dataProduct['balance'];
+
+            $productSort->setRequest([
+                'details' => [
+                    'sd_code' => $sdCode,
+                    'price' => $price,
+                    'old_price' => $oldPrice,
+                    'balance' => $balance,
+                    'grade' => $grade,
+                    'published' => 0,
+                ],
+            ]);
+
+            LaravelLocalization::setLocale('ru');
+            $productSort->storeOrUpdate();
         }
     }
 
@@ -328,9 +364,9 @@ class StockB2BImport
      *
      * @return void
      */
-    public function stockAttributes(int $sdCode, array $attributes) : void
+    public function stockAttributes(string $sdCode, array $attributes) : void
     {
-        $productGroup = ProductGroup::where('details->sd_сode', $sdCode)->first();
+        $productGroup = ProductGroup::where('details->sd_code', $sdCode)->first();
 
         if (isset($productGroup)) {
             if (isset($attributes)) {
@@ -382,10 +418,11 @@ class StockB2BImport
         foreach ($jsonData['data'] as $sku => $dataProduct) {
             $main = $dataProduct['main'];
             $attributes = $dataProduct['attributes'];
-            $sdCode = $dataProduct['sku'];
+            $sdCode = $dataProduct['main']['sku'];
             //$this->stockBrand($main['brand']['ref'], $main['brand']['name']);
             //$this->stockCategory($main['category']['ref'], $main['category']['name']);
             $this->stockProductGroup($sdCode, $main);
+            $this->stockProductSort($sdCode, $main);
             $this->stockProduct($sku, $main);
             $this->stockAttributes($sdCode, $attributes);
         }

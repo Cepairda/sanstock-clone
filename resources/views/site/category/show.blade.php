@@ -152,7 +152,7 @@
                             <div class="row filter-wrapper">
                                 @foreach($products as $product)
                                     <div class="col-12 col-lg-6 col-xl-4">
-                                     @include('site.product.components.card')
+                                        @include('site.product.components.card')
                                     </div>
                                 @endforeach
                             </div>

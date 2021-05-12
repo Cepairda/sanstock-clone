@@ -13,6 +13,23 @@ footer {
 	flex-shrink: 0;
 }
 
+.main-container {
+	padding-top: 135px;
+	padding-bottom: 70px;
+
+	&__title {
+
+		h1 {
+			//font-family: Proxima Nova Cn Lt, sans-serif;
+			padding-top: 18px;
+			padding-bottom: 36px;
+			text-align: center;
+			font-size: 44px;
+
+		}
+	}
+}
+
 //cart
 .cart__table {
 	table td {

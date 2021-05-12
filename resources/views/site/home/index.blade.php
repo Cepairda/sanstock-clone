@@ -12,20 +12,11 @@
         <div class="main__ideas">
             <div class="container">
                 <div class="row main-ideas">
-                    {{--
-                       1. Смесители для ванной - 11
-                       2. Душевая система - 8
-                       3. Мойки из нерж. стали - 20
-                       4. Аксессуары для ванной 5 (это категория 1 уровня)
-                       5. Смесители для кухонной мойки - 21
-                       6. Смесители для раковины - 13
-                     --}}
-
-                    @foreach(\App\Category::joinLocalization()->whereIn('virtual_id', [11, 8, 20])->orderByRaw('FIELD(virtual_id, "11, 8, 20")')->get() as $category)
+                    @foreach(\App\Category::joinLocalization()->whereIn('resource_id', [ 1091, 1009, 894])->get() as $category)
                     <div class="col-6 col-lg-4 mb-contain">
                         <div class="main-ideas__wrapper jsLink" data-href="{{ route('site.resource', $category->slug) }}">
                             <div class="main-ideas__img">
-                                <img src="{{ asset('images/site/home-popular-category/' . $category->id . '_230.webp') }}" alt="{!! $category->getData('name') !!}">
+                                <img width="150" class="lazy" data-src="{{ asset('images/site/home-popular-category/' . $category->id . '_230.webp') }}" alt="{!! $category->getData('name') !!}">
                             </div>
                                 {{-- asset('images/site/home-popular-category/' . $category->id . '_230.webp') --}}
                             <div class="main-ideas__description">
@@ -60,7 +51,9 @@
                 <div class="row main-product-mx product--lg" style="display: flex">
                     <div class="owl-carousel owl-theme">
                         @foreach($products as $product)
-                            @include('site.product.components.card')
+                            <div class="px-3">
+                                @include('site.product.components.card')
+                            </div>
                         @endforeach
                     </div>
                 </div>
