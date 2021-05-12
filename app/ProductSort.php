@@ -206,6 +206,6 @@ class ProductSort extends Resource
 
     public function products()
     {
-        return $this->hasMany(Product::class, 'details->sd_code', 'details->sd_code');
+        return $this->hasMany(Product::class, 'details->sd_code', 'details->sd_code')->where('details->grade', $this->grade);
     }
 }

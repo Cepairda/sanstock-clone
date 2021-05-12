@@ -194,7 +194,7 @@ class ProductGroup extends Resource
             ->toScript();
     }
 
-    public function productSort()
+    public function productsSort()
     {
         return $this->hasMany(ProductSort::class, 'details->sd_code', 'details->sd_code');
     }
