@@ -1,4 +1,4 @@
-@php($products = $products = \App\Product::joinLocalization()->whereIn('details->sku', [21650, 21899, 22008])->withCategory()->get() )
+@php($products = $products = \App\Product::joinLocalization()->whereIn('details->sku', [2250000000090, 2250000000069, 2250000000175])->withCategory()->get() )
 
 
 <div class="table-responsive table-products cart__table">

@@ -15,6 +15,10 @@ $(document).ready(function () {
         $('#inp-price-max').val($('.max-slider-handle').attr('aria-valuenow'));
     }
 
+
+    $('.owl-carousel').owlCarousel({
+        items:4
+    });
 });
 
 function eff({offsetX, offsetY, target}) {
