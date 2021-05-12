@@ -160,7 +160,6 @@
 
                                     </div>
 
-
                                     <div class="col-6">
 
                                         <div class="form-group form-group-static">
@@ -284,5 +283,9 @@
             </div>
         </div>
     </main>
+
+    @section('javascript')
+    @endsection
+
 
 @endsection
