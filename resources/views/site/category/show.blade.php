@@ -151,7 +151,9 @@
                             </div>
                             <div class="row filter-wrapper">
                                 @foreach($products as $product)
-                                    @include('site.product.components.card')
+                                    <div class="col-12 col-lg-6 col-xl-4">
+                                     @include('site.product.components.card')
+                                    </div>
                                 @endforeach
                             </div>
                             @isset($show_more)
