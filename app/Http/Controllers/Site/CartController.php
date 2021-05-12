@@ -21,7 +21,7 @@ class CartController
 
         $sku = array_keys($orderProducts);
 
-        $products = Product::joinLocalization()->whereIn('details->sku', $sku)->get()->keyBy('sku');
+        $products = Product::joinLocalization()->withCharacteristics()->whereIn('details->sku', $sku)->get()->keyBy('sku');
 
         // получаем товары из базы и формируем данные для отображения корзины
         foreach($products as $product):
@@ -36,6 +36,10 @@ class CartController
 
             $orderItem['price'] = $product->getPriceAttribute();
 
+            $orderItem['grade'] = $product->getDetails('grade');
+
+            $orderItem['defective_attributes'] = $product->data['defective_attributes'];
+// dd($orderItem['defective_attributes']);
             // $orderItem['max_quantity'] = $product->getDetails('quantity');
 
             $orderItem['max_quantity'] = 1;
@@ -43,6 +47,7 @@ class CartController
             $orderProducts[$product->getDetails('sku')] = $orderItem;
 
         endforeach;
+
         return $orderProducts;
     }
 

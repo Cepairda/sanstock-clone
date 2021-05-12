@@ -42,6 +42,8 @@ class ResourceController extends Controller
                 ];
                 $data['additional'] = temp_additional($data['product']->sku);
 
+                //dd($data['product']['data']);
+
                 break;
             case 'category':
                 $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->firstOrFail();
