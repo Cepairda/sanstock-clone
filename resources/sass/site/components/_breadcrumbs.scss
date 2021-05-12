@@ -1,4 +1,4 @@
-.breadcrumb-custom {
+.breadcrumb {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -12,12 +12,12 @@
     list-style: none;
   }
 
-  &__item {
+  &-item {
     display: block;
     list-style: none;
     color: #000;
 
-    & + .breadcrumb-custom__item {
+    & + .breadcrumb-item {
       padding-left: 0.5rem;
 
       &::before {

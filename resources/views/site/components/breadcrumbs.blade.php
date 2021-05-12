@@ -1,8 +1,8 @@
 <div class="container">
     <div class="row">
-        <div class="breadcrumb-custom">
+        <div class="breadcrumb">
             <ul itemtype="https://schema.org/BreadcrumbList">
-                <li class="breadcrumb-custom__item" itemprop="itemListElement"
+                <li class="breadcrumb-item" itemprop="itemListElement"
                     itemscope itemtype="https://schema.org/ListItem">
                     <a href="{{ asset('/') }}" itemprop="item" content="{{ asset('/') }}">
                         <span itemprop="name">Главная</span>

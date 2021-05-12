@@ -23,6 +23,7 @@ require('lightgallery.js');
 require('lg-zoom.js');
 require('lg-fullscreen.js');
 require('lg-thumbnail.js');
+require('owl.carousel');
 require('./plugins/swipeGallery');
 require('./plugins/characteristicsLists');
 require('./plugins/lazyLoadImg');

@@ -45,24 +45,25 @@
         <div class="main__pops-product bgc-gray">
             <div class="container">
                     <div class="main-pops">
-                        <h2 class="main-pops__title">Title</h2>
+                        <h2 class="main-pops__title">Lorem ipsum dolor sit.</h2>
                         <p class="main-pops__mb-title">sub Title</p>
 
-                        @php($products = \App\Product::joinLocalization()->whereIn('details->sku', [21650, 21899, 22008])->withCategory()->get())
+                        @php($products = \App\Product::joinLocalization()->get())
 
-                        <div class="main-pops__btn btn-maixer btn-group" role="group" aria-label="Basic example">
+                        <div class="d-flex justify-content-center pt-3 btn-maixer btn-group" role="group" aria-label="Basic example">
                             <button class="btn main-pops__btn-mx active">Пропулярное</button>
                             <button class="btn main-pops__btn-mx">Для ванной комнаты</button>
                             <button class="btn main-pops__btn-mx">Для кухни</button>
 
                         </div>
                     </div>
-                    <div class="row main-product-mx product--lg" style="display: flex">
+                <div class="row main-product-mx product--lg" style="display: flex">
+                    <div class="owl-carousel owl-theme">
                         @foreach($products as $product)
                             @include('site.product.components.card')
                         @endforeach
-
                     </div>
+                </div>
 
 
             </div>
