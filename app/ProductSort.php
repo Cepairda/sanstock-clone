@@ -7,7 +7,7 @@ use LaravelLocalization;
 use Carbon\Carbon;
 use Spatie\SchemaOrg\Schema;
 
-class ProductGroup extends Resource
+class ProductSort extends Resource
 {
     use Commentable;
 
@@ -26,6 +26,11 @@ class ProductGroup extends Resource
     public function getSdCodeAttribute()
     {
         return $this->getDetails('sd_code');
+    }
+
+    public function getGradeAttribute()
+    {
+        return $this->getDetails('grade');
     }
 
     public function getDescriptionAttribute()
@@ -194,8 +199,13 @@ class ProductGroup extends Resource
             ->toScript();
     }
 
-    public function productSort()
+    public function productGroup()
     {
-        return $this->hasMany(ProductSort::class, 'details->sd_code', 'details->sd_code');
+        return $this->hasOne(ProductGroup::class, 'details->sd_code', 'details->sd_code');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'details->sd_code', 'details->sd_code');
     }
 }
