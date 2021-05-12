@@ -5,7 +5,8 @@
         <tr>
             <td>Код товара</td>
             <td>Фото</td>
-            <td>Наименовае</td>
+            <td>Наименование</td>
+            <td>Сорт</td>
             <td>Количество</td>
             <td>Цена</td>
             <td>Сумма</td>
@@ -13,6 +14,8 @@
         </tr>
         </thead>
         @foreach($orderProducts as $sku => $product)
+
+{{--            {{ dd($product) }}--}}
             <tbody>
             <tr>
                 <td>{{ $product["sku"] }}</td>
@@ -20,7 +23,17 @@
                     {{--{!! img(['type' => 'product', 'sku' => $product["sku"], 'size' => 70, 'alt' => $product["name"], 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}--}}
                     <img width="150" data-src="" src="" class="lazy" alt="">
                 </td>
-                <td>{{ $product["name"] }}</td>
+                <td>
+                    {{ $product["name"] }}
+
+                    @foreach($product['defective_attributes'] as $defect)
+                    <br>
+                        {{ '- ' . $defect }}
+
+                    @endforeach
+                </td>
+
+                <td>{{ $product["grade"] }}</td>
 
                 <td>
                     {{ $product["quantity"] }}

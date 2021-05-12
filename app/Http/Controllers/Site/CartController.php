@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\OrderProduct;
 use App\Orders;
 use App\OrderShipping;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class CartController
 {
-
     /**
      * Получение данных о товарах в корзине
      */
@@ -20,7 +21,7 @@ class CartController
 
         $sku = array_keys($orderProducts);
 
-        $products = Product::joinLocalization()->whereIn('details->sku', $sku)->get()->keyBy('sku');
+        $products = Product::joinLocalization()->withCharacteristics()->whereIn('details->sku', $sku)->get()->keyBy('sku');
 
         // получаем товары из базы и формируем данные для отображения корзины
         foreach($products as $product):
@@ -35,6 +36,10 @@ class CartController
 
             $orderItem['price'] = $product->getPriceAttribute();
 
+            $orderItem['grade'] = $product->getDetails('grade');
+
+            $orderItem['defective_attributes'] = $product->data['defective_attributes'];
+// dd($orderItem['defective_attributes']);
             // $orderItem['max_quantity'] = $product->getDetails('quantity');
 
             $orderItem['max_quantity'] = 1;
@@ -42,6 +47,7 @@ class CartController
             $orderProducts[$product->getDetails('sku')] = $orderItem;
 
         endforeach;
+
         return $orderProducts;
     }
 
@@ -189,14 +195,37 @@ class CartController
 
         $order['new_mail_company_address'] = $request->input['new_mail_company_address'];
 
-        $this->saveNewOrder($order);
+        $orderProducts = $this->getCartProducts();
+
+        if(!$order_id = $this->saveNewOrder($order, $orderProducts)) {
+
+            \App\Jobs\sentOrder::dispatch()->onQueue('checkout');
+
+            return view('site.orders.cart', [
+                'order_id' => $order_id,
+                'message' => 'Ваш заказ принят и отправлен в обработку!',
+            ]);
+        }
+
+        return Redirect::back()->withErrors('Не удалось оформить заказ!');
     }
 
     /**
      * Save new order in data
      * @param $data
+     * @param $orderProducts
+     * @return false
      */
-    public function saveNewOrder($data) {
+    public function saveNewOrder($data, $orderProducts)
+    {
+        if(empty($data) || empty($orderProducts)) {
+
+            info("Ошибка! Не удалось сохранить заказ! Не пришли необходимые данные!");
+
+            info($data);
+
+            info($orderProducts);
+        }
 
         $order = Orders::create([
             'status' => 0,
@@ -232,8 +261,48 @@ class CartController
                 'comments' => $data['new_mail_comment'],
             ]);
 
-            return $orderShipping;
+            if(!empty($orderShipping)) {
+
+                foreach ($orderProducts as $product):
+
+                    $dataOrderProduct = OrderProduct::create([
+                        'order_id' => $order->id,
+                        'product_barcode' => $product['sku'],
+                        'details' => json_encode($product),
+                    ]);
+
+                    if(empty($dataOrderProduct)) {
+
+                        info("Ошибка! Не удалось сохранить товары заказа!");
+
+                        info($orderProducts);
+
+                        Orders::where('order_id', $order->id)->delete();
+
+                        OrderShipping::where('order_id', $order->id)->delete();
+                    }
+
+                endforeach;
+
+                return $order->id;
+
+            } else {
+
+                info("Ошибка! Не удалось сохранить параметры доставки заказа!");
+
+                info($orderShipping);
+
+                Orders::where('order_id', $order->id)->delete();
+
+                return false;
+            }
         }
+
+        info("Ошибка! Не удалось сохранить заказ!");
+
+        info($data);
+
+        info($orderProducts);
 
         return false;
     }
@@ -286,6 +355,5 @@ class CartController
 
         //  dd($result);
         return $result;
-
     }
 }
