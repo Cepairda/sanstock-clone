@@ -66,5 +66,11 @@
 			}
 		}
 	}
+
+	&__container {
+		&:not(.active) {
+			display: none;
+		}
+	}
 }
 

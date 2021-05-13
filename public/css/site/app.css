@@ -16901,6 +16901,9 @@ ul.column li.level2 a:hover {
   border-color: #ef6f20;
   color: #fff;
 }
+.tabs-products__container:not(.active) {
+  display: none;
+}
 
 .form-group {
   display: flex;

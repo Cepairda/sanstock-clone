@@ -29,7 +29,7 @@ require('./plugins/characteristicsLists');
 require('./plugins/lazyLoadImg');
 
 //components
-require('./components/addToCart');
+require('./components/cart');
 
 //page
 require('./page/cardProduct');

@@ -28,11 +28,10 @@
                             <button class="btn btn-item" data-toggle="#sort-3">Сорт - 3</button>
                         </div>
 
-
                     </div>
 
                     <div class="col-12 px-0">
-                        <div id="sort-0" class="tabs-products__container">
+                        <div id="sort-0" class="tabs-products__container active">
                             <div class="owl-carousel owl-theme">
                                 @php($products = \App\ProductSort::joinLocalization()->withProductGroup()->get())
                                 @foreach($products as $product)
@@ -70,10 +69,7 @@
                 </div>
             </div>
         </div>
-        {{--<div class="m-5">--}}
-            {{--<button class="button">{{ __('Where buy')}}</button>--}}
-            {{--<a href="#" class="button">{{ __('Where buy')}}</a>--}}
-        {{--</div>--}}
+
     </main>
 
 @endsection

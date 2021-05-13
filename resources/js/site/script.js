@@ -49,6 +49,9 @@ function effEnd({target}) {
 
 document.addEventListener('mouseover', eff, false);
 document.addEventListener('mouseout', effEnd, false);
+document.addEventListener('click', ({target}) => {
+    const x = target.closest('');
+});
 
 // //liveSearch
 // (function (){
