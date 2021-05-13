@@ -144,7 +144,7 @@
             new Select2Cascade(
                 $city,
                 $("#" + delivery + "_street").select2(select2Options),
-                '/np/city/:parentId:/streets',
+                '/new-post/:parentId:/streets',
                 select2Options
             );
 
@@ -152,7 +152,6 @@
                 $("#" + delivery + "_delivery_type").trigger("change", true);
             });
         });
-
 
         let csrfToken = document.querySelector('#csrf-token').value;
         var url = `/new-post/areas`;
@@ -188,7 +187,6 @@
         xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
         xhr.send();
 
-
         const deliveryType = document.querySelector('#new_mail_delivery_type');
         const action = {
             'storage_storage': {
@@ -205,11 +203,18 @@
 
             }
         };
-        deliveryType.addEventListener('change', function ({target}) {
-            const value = target.value;
+
+        function valid(value) {
             for(let id  in action[value]) {
-                container.querySelector(`#${id}`).parentElement.hidden = action[value][id];
+                const node = container.querySelector(`#${id}`);
+                const val = action[value][id];
+                node.disabled = val;
+                node.parentElement.hidden = val;
             }
+        }
+        valid('storage_storage');
+        deliveryType.addEventListener('change', function ({target}) {
+            valid(target.value);
         });
 
     });

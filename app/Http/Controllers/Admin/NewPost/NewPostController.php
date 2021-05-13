@@ -295,7 +295,6 @@ class NewPostController
         $result = $this->descriptionMap('settlement', LaravelLocalization::getCurrentLocale(), $arrId, $result);
 
         $result = $this->searchResourceBySubstring($result); #$search
-        // dd($result);
 
         return $result;
     }
@@ -305,12 +304,13 @@ class NewPostController
      * @param Request $request
      * @return array
      */
-    public function getStreets(Request $request): array
+    public function getStreets($cityRef): array
     {
 
-        $city_ref = $request->input('city');
+        #$city_ref = $request->input('city');
+        $city_ref = $cityRef;
 
-        $search = $request->input('search');
+        #$search = $request->input('search');
 
         $streets = NewPostStreets::where('city_ref', $city_ref)->get();
 
@@ -328,7 +328,7 @@ class NewPostController
 
         $result = $this->descriptionMap('street', LaravelLocalization::getCurrentLocale(), $arrId, $result);
 
-        $result = $this->searchResourceBySubstring($result, $search);
+        $result = $this->searchResourceBySubstring($result); #$search
         // dd($result);
 
         return $result;

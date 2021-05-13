@@ -28,7 +28,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::get('/{cityRef}/warehouses', 'Admin\NewPost\NewPostController@getWarehouses')->name('get-warehouses');
 
-        Route::get('/streets', 'Admin\NewPost\NewPostController@getStreets')->name('get-streets');
+        Route::get('/{cityRef}/streets', 'Admin\NewPost\NewPostController@getStreets')->name('get-streets');
 
 
     });

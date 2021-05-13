@@ -11139,7 +11139,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return '/new-post/:parentId:/settlements';
       }, select2Options);
       new Select2Cascade($city, $("#" + delivery + "_warehouse").select2(select2Options), '/new-post/:parentId:/warehouses', select2Options);
-      new Select2Cascade($city, $("#" + delivery + "_street").select2(select2Options), '/np/city/:parentId:/streets', select2Options);
+      new Select2Cascade($city, $("#" + delivery + "_street").select2(select2Options), '/new-post/:parentId:/streets', select2Options);
       $("#" + delivery + "_warehouse, #" + delivery + "_street").on("change", function () {
         $("#" + delivery + "_delivery_type").trigger("change", true);
       });
@@ -11195,13 +11195,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'new_mail_apartment': false
       }
     };
+
+    function valid(value) {
+      for (var id in action[value]) {
+        var node = container.querySelector("#".concat(id));
+        var val = action[value][id];
+        node.disabled = val;
+        node.parentElement.hidden = val;
+      }
+    }
+
+    valid('storage_storage');
     deliveryType.addEventListener('change', function (_ref2) {
       var target = _ref2.target;
-      var value = target.value;
-
-      for (var id in action[value]) {
-        container.querySelector("#".concat(id)).parentElement.hidden = action[value][id];
-      }
+      valid(target.value);
     });
   });
 })();
