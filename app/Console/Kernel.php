@@ -41,6 +41,7 @@ class Kernel extends ConsoleKernel
 //            $lastIdPriceImport = Jobs::where('id', $cache)->first();
 //        }
 
+        //yyyyy
         // New Post Areas Import
         $schedule->call(function () {
             \App\Jobs\ImportNewPostAreas::dispatch()->onQueue('NP_Import');
