@@ -287,7 +287,7 @@ class ImportImage
 
                     self::$requestProductGroupImage['details']['additional'][$key]['filemtime_md5'] = $timeImageUpdateMd5;
                     //self::generateAdditionalPreview($product, $key);
-                } elseif ($timeImageUpdateMd5 == (self::$dbProductImage['additional'][$key]['filemtime_md5'] ?? null)) {
+                } elseif ($timeImageUpdateMd5 == (self::$dbProductGroupImage['additional'][$key]['filemtime_md5'] ?? null)) {
                     self::$requestProductGroupImage['details']['additional'][$key]['filemtime_md5'] = $timeImageUpdateMd5;
                 }
             }
