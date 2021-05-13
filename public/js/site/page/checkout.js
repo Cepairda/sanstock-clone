@@ -11022,29 +11022,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var afterActions = [],
           _setOptions = function _setOptions(node, options) {
-        var result = [{
-          'id': '',
-          'text': '',
-          'alt': ''
-        }];
-
         if (node.attr("data-select2-id")) {
           node.select2('destroy');
         }
 
-        if (options.length !== 0) {
-          for (var index in options) {
-            var obj = {
-              'id': options[index]['ref'],
-              'text': options[index]['full_name'],
-              'alt': options[index]['name']
-            };
-            result.push(obj);
-          }
-        }
-
         node.html('').prop("disabled", options.length === 0).select2($.extend({}, select2Options, {
-          data: result
+          data: options
         })).trigger("change");
       }; // Register functions to be called after cascading data loading done
 
@@ -11152,28 +11135,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     xhr.onload = function (_ref) {
       var currentTarget = _ref.currentTarget;
       var response = JSON.parse(currentTarget.response);
-      var result = [{
-        'id': '',
-        'text': '',
-        'alt': ''
-      }];
-
-      if (response.length !== 0) {
-        for (var index in response) {
-          var obj = {
-            'id': response[index]['ref'],
-            'text': response[index]['full_name'],
-            'alt': response[index]['name']
-          };
-          result.push(obj);
-        }
-      }
-
       $('.js-example-basic-single1').html('').select2($.extend({}, _objectSpread(_objectSpread({}, defaultSelect2Options), {}, {
         width: '100%',
         matcher: Select2CustomMatcher
       }), {
-        data: result
+        data: response
       }));
     };
 
