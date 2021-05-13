@@ -1,0 +1,70 @@
+.main-pops {
+	text-align: center;
+}
+
+.main-pops__title {
+	padding-top: 75px;
+	font-family: $font-family-sans-serif;
+	font-size: 44px;
+	color: #000000;
+}
+
+.main-pops__btn {
+	margin-top: 65px;
+	justify-content: center;
+}
+
+.bgc-grad .main-pops__btn-mx, .main-pops__btn-cr {
+	background-color: #303b47;
+	border: 1px solid #4e5d6d;
+}
+
+.main-pops__btn > .active {
+	background-color: #ee6e1f;
+	color: #ffffff !important;
+	border: 1px solid #ef6f20;
+}
+
+.tabs-products {
+	&__caption {
+		text-align: center;
+		padding-top: 75px;
+		margin-bottom: 24px;
+
+		div {
+			font-family: $font-family-sans-serif;
+			font-size: 44px;
+			color: #000000;
+		}
+		p {
+			font-family: $font-family-base;
+			font-size: 16px;
+			color: #9d9d9d;
+		}
+	}
+	&__btn-group {
+		display: flex;
+		justify-content: center;
+		margin-bottom: 16px;
+
+		.btn-item {
+			display: flex;
+			align-items: center;
+			padding: 10px 25px;
+			margin-left: -1px;
+			border: 1px solid #cccccc;
+			border-radius: 0;
+			font-family: Open Sans Semibold, sans-serif;
+			background-color: #fff;
+			color: #9d9d9c;
+			white-space: normal;
+			
+			&.active {
+				background-color: #ef6f20;
+				border-color: #ef6f20;
+				color: #fff;
+			}
+		}
+	}
+}
+
