@@ -16902,9 +16902,13 @@ ul.column li.level2 a:hover {
   width: 100%;
 }
 .form-group label {
+  position: relative;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   margin-bottom: 4px;
   font-family: Open Sans Bold, sans-serif;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 700;
   white-space: nowrap;
   color: #000;

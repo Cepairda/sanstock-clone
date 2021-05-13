@@ -23,7 +23,7 @@ mix
     })
 
     .js('resources/js/site/app.js', 'public/js/site')
-    .js('resources/js/site/page/checkout.js', 'public/js/site/page')
+    //.js('resources/js/site/page/checkout.js', 'public/js/site/page')
 
     .version();
 

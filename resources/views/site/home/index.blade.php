@@ -61,7 +61,7 @@
 
             </div>
         </div>
-        <div id="ceramics" class="main-ceram bgc-grad">
+        <div id="ceramics" class="main-ceram">
             <div class="container">
                 <div class="container main__ceramics">
                     <div class="row">

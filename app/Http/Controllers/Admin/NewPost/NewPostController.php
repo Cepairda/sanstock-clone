@@ -270,12 +270,13 @@ class NewPostController
      * @param Request $request
      * @return array
      */
-    public function getSettlements(Request $request): array
+    public function getSettlements($regionRef): array
     {
 
-        $area_ref = $request->input('area');
+        #$area_ref = $request->input('area');
+        $area_ref = $regionRef;
 
-        $search = $request->input('search');
+        #$search = $request->input('search');
 
         $settlements = NewPostSettlements::where('area_ref', $area_ref)->get();
 
@@ -293,7 +294,7 @@ class NewPostController
 
         $result = $this->descriptionMap('settlement', LaravelLocalization::getCurrentLocale(), $arrId, $result);
 
-        $result = $this->searchResourceBySubstring($result, $search);
+        $result = $this->searchResourceBySubstring($result); #$search
         // dd($result);
 
         return $result;
@@ -338,11 +339,12 @@ class NewPostController
      * @param Request $request
      * @return array
      */
-    public function getWarehouses(Request $request): array
+    public function getWarehouses($cityRef): array
     {
-        $city_ref = $request->input('city');
+        #$city_ref = $request->input('city');
+        $city_ref = $cityRef;
 
-        $search = $request->input('search');
+        #$search = $request->input('search');
 
         $warehouses = NewPostWarehouses::where('city_ref', $city_ref)->get();
 
@@ -360,7 +362,7 @@ class NewPostController
 
         $result = $this->descriptionMap('warehouse', LaravelLocalization::getCurrentLocale(), $arrId, $result);
 
-        $result = $this->searchResourceBySubstring($result, $search);
+        $result = $this->searchResourceBySubstring($result); #$search
         // dd($result);
 
         return $result;
