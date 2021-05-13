@@ -60,6 +60,8 @@ class ResourceController extends Controller
                 $data['productsSort'] = $productsSort;
                 $data['sort'] = $sort;
 
+                //dd($data['product']['data']);
+
                 break;
             case 'category':
                 $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->firstOrFail();
