@@ -259,8 +259,8 @@ class NewPostController
         $arrId = array_keys($result);
 
         $result = $this->descriptionMap('area', LaravelLocalization::getCurrentLocale(), $arrId, $result);
-
-        $result = $this->searchResourceBySubstring($result, $search);
+ //dd($result);
+        //$result = $this->searchResourceBySubstring($result, $search);
 
         return $result;
     }
@@ -270,12 +270,13 @@ class NewPostController
      * @param Request $request
      * @return array
      */
-    public function getSettlements(Request $request): array
+    public function getSettlements($regionRef): array
     {
 
-        $area_ref = $request->input('area');
+        #$area_ref = $request->input('area');
+        $area_ref = $regionRef;
 
-        $search = $request->input('search');
+        #$search = $request->input('search');
 
         $settlements = NewPostSettlements::where('area_ref', $area_ref)->get();
 
@@ -293,8 +294,7 @@ class NewPostController
 
         $result = $this->descriptionMap('settlement', LaravelLocalization::getCurrentLocale(), $arrId, $result);
 
-        $result = $this->searchResourceBySubstring($result, $search);
-        // dd($result);
+        //$result = $this->searchResourceBySubstring($result); #$search
 
         return $result;
     }
@@ -304,12 +304,13 @@ class NewPostController
      * @param Request $request
      * @return array
      */
-    public function getStreets(Request $request): array
+    public function getStreets($cityRef): array
     {
 
-        $city_ref = $request->input('city');
+        #$city_ref = $request->input('city');
+        $city_ref = $cityRef;
 
-        $search = $request->input('search');
+        #$search = $request->input('search');
 
         $streets = NewPostStreets::where('city_ref', $city_ref)->get();
 
@@ -327,7 +328,7 @@ class NewPostController
 
         $result = $this->descriptionMap('street', LaravelLocalization::getCurrentLocale(), $arrId, $result);
 
-        $result = $this->searchResourceBySubstring($result, $search);
+        //$result = $this->searchResourceBySubstring($result); #$search
         // dd($result);
 
         return $result;
@@ -338,11 +339,12 @@ class NewPostController
      * @param Request $request
      * @return array
      */
-    public function getWarehouses(Request $request): array
+    public function getWarehouses($cityRef): array
     {
-        $city_ref = $request->input('city');
+        #$city_ref = $request->input('city');
+        $city_ref = $cityRef;
 
-        $search = $request->input('search');
+        #$search = $request->input('search');
 
         $warehouses = NewPostWarehouses::where('city_ref', $city_ref)->get();
 
@@ -360,7 +362,7 @@ class NewPostController
 
         $result = $this->descriptionMap('warehouse', LaravelLocalization::getCurrentLocale(), $arrId, $result);
 
-        $result = $this->searchResourceBySubstring($result, $search);
+        //$result = $this->searchResourceBySubstring($result); #$search
         // dd($result);
 
         return $result;
@@ -402,6 +404,8 @@ class NewPostController
         // $locale = 'ru';
         $descriptions = NewPostDescriptions::where('group', $resource_key)->whereIn('affiliated_id', $arrId)->get()->toArray();
 
+        $result = [];
+
         $descriptionMap = [];
 
         foreach($descriptions as $data):
@@ -410,39 +414,41 @@ class NewPostController
 
                 if(!isset($descriptionMap[(int)$data['affiliated_id']])) $descriptionMap[(int)$data['affiliated_id']] = $resources[(int)$data['affiliated_id']];
 
-                $descriptionMap[(int)$data['affiliated_id']]['locale'] = $locale ;
+                // $descriptionMap[(int)$data['affiliated_id']]['locale'] = $locale ;
 
                 if(($resource_key === 'area' || $resource_key === 'settlement' || $resource_key === 'warehouse') &&  $locale === $data['locale']) {
 
-                    $descriptionMap[(int)$data['affiliated_id']]['name'] = str_replace(['просп. просп.'], ['просп.'], $data['name']);
+                    $descriptionMap[(int)$data['affiliated_id']]['text'] = str_replace(['просп. просп.'], ['просп.'], $data['name']);
 
-                    $descriptionMap[(int)$data['affiliated_id']]['full_name'] = ($resource_key === 'settlement')
+                    $descriptionMap[(int)$data['affiliated_id']]['alt'] = ($resource_key === 'settlement')
                         ? $data['type'] . ' ' . $data['name'] : $data['name'];
                 }
 
                 if(($resource_key === 'street') &&  $data['locale'] === $this->ua) {
 
-                    $descriptionMap[(int)$data['affiliated_id']]['name'] = $data['name'];
+                    $descriptionMap[(int)$data['affiliated_id']]['text'] = $data['name'];
 
-                    $descriptionMap[(int)$data['affiliated_id']]['full_name'] = $data['type'] . ' ' . $data['name'];
+                    $descriptionMap[(int)$data['affiliated_id']]['alt'] = $data['type'] . ' ' . $data['name'];
                 }
 
-                if(!isset($descriptionMap[(int)$data['affiliated_id']]['search'])) {
-
-                    $descriptionMap[(int)$data['affiliated_id']]['search'] = $data['search'];
-
-                } else {
-
-                    $descriptionMap[(int)$data['affiliated_id']]['search'] = $descriptionMap[(int)$data['affiliated_id']]['search'] . ' ' . $data['search'];
-
-                }
+//                if(!isset($descriptionMap[(int)$data['affiliated_id']]['search'])) {
+//
+//                    $descriptionMap[(int)$data['affiliated_id']]['search'] = $data['search'];
+//
+//                } else {
+//
+//                    $descriptionMap[(int)$data['affiliated_id']]['search'] = $descriptionMap[(int)$data['affiliated_id']]['search'] . ' ' . $data['search'];
+//
+//                }
 
                 if(count($descriptionMap[(int)$data['affiliated_id']]) < 3) unset($descriptionMap[(int)$data['affiliated_id']]);
+
+                if(isset($descriptionMap[(int)$data['affiliated_id']])) $result[] = $descriptionMap[(int)$data['affiliated_id']];
             }
 
         endforeach;
 
-        return $descriptionMap;
+        return $result;
     }
 
     /**

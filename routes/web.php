@@ -24,11 +24,13 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::get('/areas', 'Admin\NewPost\NewPostController@getAreas')->name('get-areas');
 
-        Route::get('/settlements', 'Admin\NewPost\NewPostController@getSettlements')->name('get-settlements');
+        Route::get('/{regionRef}/settlements', 'Admin\NewPost\NewPostController@getSettlements')->name('get-settlements');
 
-        Route::get('/streets', 'Admin\NewPost\NewPostController@getStreets')->name('get-streets');
+        Route::get('/{cityRef}/warehouses', 'Admin\NewPost\NewPostController@getWarehouses')->name('get-warehouses');
 
-        Route::get('/warehouses', 'Admin\NewPost\NewPostController@getWarehouses')->name('get-warehouses');
+        Route::get('/{cityRef}/streets', 'Admin\NewPost\NewPostController@getStreets')->name('get-streets');
+
+
     });
 
     // конец моих маршрутов
