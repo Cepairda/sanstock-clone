@@ -121,7 +121,7 @@
 
             @isset($category->parent_id)
                 <div class="row main__filter">
-                    @if($products->isNotEmpty())
+                    @if($productsSort->isNotEmpty())
                         <main class="col-sm-12 col-lg-8 col-xl-9 order-2">
                             <div class="main__title">{!! $category->h1 !!}</div>
                             {!! isset($json_ld) ? $json_ld : '' !!}
@@ -150,9 +150,12 @@
 
                             </div>
                             <div class="row filter-wrapper">
-                                @foreach($products as $product)
+                                @foreach($productsSort as $productSort)
                                     <div class="col-12 col-lg-6 col-xl-4">
-                                        @include('site.product.components.card')
+                                        @include('site.product.components.card', [
+                                            'product' => $productSort,
+                                            'productGroup' => $productSort->productGroup
+                                        ])
                                     </div>
                                 @endforeach
                             </div>
@@ -166,7 +169,7 @@
                             @endisset
                             <div class="col-sm-12 nav-pages">
                                 <nav aria-label="Page navigation">
-                                    {{--{!! $products->links('site.components.pagination') !!}--}}
+                                    {{--{!! $productsSort->links('site.components.pagination') !!}--}}
                                 </nav>
                             </div>
                         </main>

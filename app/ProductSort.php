@@ -199,6 +199,13 @@ class ProductSort extends Resource
             ->toScript();
     }
 
+    public function scopeWithProductGroup($query, $joinLocalization = true)
+    {
+        return $query->with(['productGroup' => function ($query) use ($joinLocalization) {
+            if ($joinLocalization) return $query->select('*')->joinLocalization();
+        }, 'productGroup.category']);
+    }
+
     public function productGroup()
     {
         return $this->hasOne(ProductGroup::class, 'details->sd_code', 'details->sd_code');

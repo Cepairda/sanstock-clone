@@ -39,7 +39,7 @@
                         <h2 class="main-pops__title">Lorem ipsum dolor sit.</h2>
                         <p class="main-pops__mb-title">sub Title</p>
 
-                        @php($products = \App\ProductSort::joinLocalization()->get())
+                        @php($products = \App\ProductSort::joinLocalization()->withProductGroup()->get())
 
                         <div class="d-flex justify-content-center pt-3 btn-maixer btn-group" role="group" aria-label="Basic example">
                             <button class="btn main-pops__btn-mx active">Пропулярное</button>
@@ -52,7 +52,10 @@
                     <div class="owl-carousel owl-theme">
                         @foreach($products as $product)
                             <div class="px-3">
-                                @include('site.product.components.card')
+                                @include('site.product.components.card', [
+                                    'product' => $product,
+                                    'productGroup' => $product->productGroup
+                                ])
                             </div>
                         @endforeach
                     </div>

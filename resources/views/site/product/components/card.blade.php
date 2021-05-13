@@ -5,12 +5,12 @@
                 <img class="product__img-lg img-data-path lazy"
                      data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462.jpg"
                      src="{{'https://isw.b2b-sandi.com.ua/imagecache/large/' . strval($product->sd_code)[0] . '/' . strval($product->sd_code)[1] . '/' .  $product->sd_code . '.jpg'}}"
-                     title="{{ $product->name }}">
+                     title="{{ $productGroup->name }}">
             </div>
             <div class="d-flex product-description">
                 <div class="product-description__item jsLink"
                      data-href="#">
-                    <span class="product-title">{{ $product->name }}</span>
+                    <span class="product-title">{{ $productGroup->name }}</span>
                 </div>
                 <div class="product-icon">
                     <i id="comparison_123" class="comparison" data-attribute="comparison"
@@ -21,7 +21,7 @@
             </div>
 
             <div class="product-wrapper">
-                <a href="{{-- route('site.resource', $product->category->slug) --}}" class="product-description--item">Category{{-- $product->category->getData('name') --}}</a>
+                <a href="{{ route('site.resource', $productGroup->category->slug) }}" class="product-description--item">Category{{ $productGroup->category->getData('name') }}</a>
                 <div class="product-price">
                     <div class="product-price__item">
                         <p>
@@ -29,7 +29,7 @@
                             <span>грн.</span>
                         </p>
                     </div>
-                    <a class="button" href="{{ route('site.resource', $product->productGroup->slug) }}" alt="{{ $product->name }}"
+                    <a class="button" href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}" alt="{{ $product->name }}"
                        data-target="add" data-barcode="{{ $product->sku }}">{{ __('Where buy')}}</a>
                 </div>
             </div>

@@ -132,13 +132,13 @@ class ProductGroup extends Resource
     public function scopeWithCategory($query)
     {
         return $query->with(['category' => function($query) {
-            return $query->joinLocalization()->withAncestors();
+            return $query->select('*')->joinLocalization()->withAncestors();
         }]);
     }
 
     public function category()
     {
-        return $this->hasOne(Category::class, 'id', 'details->category_id');
+        return $this->hasOne(Category::class, 'details->ref', 'details->category_id');
     }
 
     public function relateProducts()

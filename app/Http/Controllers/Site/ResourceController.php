@@ -25,10 +25,11 @@ class ResourceController extends Controller
             ->firstOrFail();
         $originalType = class_basename($resource->type);
         $type = Str::snake($originalType);
-        //$templateName = Str::snake($originalType);
 
         switch ($type) {
             case 'product_group':
+                $sortGet = $_GET['sort'] ?? null;
+
                 $data = [
                     'productGroup' => $resource->type::joinLocalization()
                         ->withCharacteristics()
@@ -42,6 +43,22 @@ class ResourceController extends Controller
                         ->firstOrFail(),
                 ];
                 $data['additional'] = temp_additional($data['productGroup']->sku);
+                $productsSort = [];
+                $sortFromDb = null;
+
+                foreach ($data['productGroup']->productsSort as $productSort) {
+                    /*$sortFromDb = isset($sortFromDb)
+                        ? ($productSort->grade < $sortFromDb
+                            ? $productSort->grade
+                            : $sortFromDb)
+                        : $productSort->grade;*/
+                    $productsSort[$productSort->grade] = $productSort;
+                }
+
+                $sort = isset($productsSort[$sortGet]) ? $sortGet : min(array_keys($productsSort));
+
+                $data['productsSort'] = $productsSort;
+                $data['sort'] = $sort;
 
                 break;
             case 'category':
@@ -50,8 +67,8 @@ class ResourceController extends Controller
                 //$productGroup = ProductGroup::where('details->category_id', $category->getDetails('ref'))->firstOrFail();
                 $productGroup = ProductGroup::where('details->category_id', $category->getDetails('ref'))->get()->keyBy('details->sd_code')->keys();
                 $productGroupKeys = ProductGroup::where('details->category_id', $category->getDetails('ref'))->get()->keyBy('id')->keys();
-                $products = ProductSort::whereIn('details->sd_code', $productGroup)->get()->keyBy('id')->keys();
-                $productsTotal = $products->count();
+                $productsSort = ProductSort::whereIn('details->sd_code', $productGroup)->get()->keyBy('id')->keys();
+                $productsTotal = $productsSort->count();
 
                 $characteristics = isset($category->characteristic_group[0])
                     ? $category->characteristic_group[0]->getDetails('characteristics')
@@ -89,18 +106,22 @@ class ResourceController extends Controller
 
                 $characteristicsIds = array_keys($valuesForView);
 
-                $products = ProductSort::joinLocalization()->withIcons()->whereIn('id', $products)->withCategory();
+                $productsSort = ProductSort::joinLocalization()
+                    ->withProductGroup()
+                    ->withIcons()
+                    ->whereIn('id', $productsSort)
+                    ->withCategory();
 
-                $mixMaxPriceQuery = (clone $products)->selectRaw("MIN(CAST(JSON_EXTRACT(`details`, '$.price') AS FLOAT)) AS minPrice, MAX(CAST(JSON_EXTRACT(`details`, '$.price') AS FLOAT)) AS maxPrice")->first();
+                $mixMaxPriceQuery = (clone $productsSort)->selectRaw("MIN(CAST(JSON_EXTRACT(`details`, '$.price') AS FLOAT)) AS minPrice, MAX(CAST(JSON_EXTRACT(`details`, '$.price') AS FLOAT)) AS maxPrice")->first();
                 $minPrice = $mixMaxPriceQuery->minPrice;
                 $maxPrice = $mixMaxPriceQuery->maxPrice;
 
-                $products = $products->selectRaw('*, CAST(JSON_EXTRACT(`details`, \'$.price\') AS FLOAT) as price');
+                $productsSort = $productsSort->selectRaw('*, CAST(JSON_EXTRACT(`details`, \'$.price\') AS FLOAT) as price');
 
                 if (Request::has('minPrice') && Request::has('maxPrice')) {
                     $minPriceSelect = Request::input('minPrice');
                     $maxPriceSelect = Request::input('maxPrice');
-                    $products = $products->where('details->price', '>=', +$minPriceSelect)->where('details->price', '<=', +$maxPriceSelect);
+                    $productsSort = $productsSort->where('details->price', '>=', +$minPriceSelect)->where('details->price', '<=', +$maxPriceSelect);
                 }
 
                 if (Request::has('filter')) {
@@ -112,7 +133,7 @@ class ResourceController extends Controller
 
                         $alias = 'rr' . $characteristicId;
 
-                        $products->join('resource_resource as ' . $alias, function ($q) use ($alias, $fids) {
+                        $productsSort->join('resource_resource as ' . $alias, function ($q) use ($alias, $fids) {
                             $q->on('resources.id', '=', $alias . '.resource_id')
                                 ->whereIn($alias . '.relation_id', $fids);
                         });
@@ -123,22 +144,22 @@ class ResourceController extends Controller
 
                 if (Request::has('name')) {
                     $sortName = Request::input('name') == 'up' ? 'ASC' : 'DESC';
-                    $products = $products->orderBy('data->name', $sortName);
+                    $productsSort = $productsSort->orderBy('data->name', $sortName);
                 }
 
                 if (Request::has('price')) {
                     $sortPrice = Request::input('price') == 'up' ? 'ASC' : 'DESC';
-                    $products = $products->orderBy('price', $sortPrice);
+                    $productsSort = $productsSort->orderBy('price', $sortPrice);
                 }
 
-                $products = $products->paginate(21)->appends(Request::except('page'));
+                $productsSort = $productsSort->paginate(21)->appends(Request::except('page'));
 
                 $showMore = null;
 
-                $pageNumber = $products->currentPage();
+                $pageNumber = $productsSort->currentPage();
 
 
-                if ($pageNumber < $products->lastPage()) {
+                if ($pageNumber < $productsSort->lastPage()) {
                     $showMore = [
                         'slug' => $slug,
                         'page' => ($pageNumber + 1)
@@ -149,14 +170,14 @@ class ResourceController extends Controller
 
                 if (isset($parameters['showMore'])) {
                     return [
-                        'products' => $products,
+                        'products' => $productsSort,
                         'show_more' => $showMore,
                     ];
                 }
 
                 $data = [
                     'category' => $category,
-                    'products' => $products,
+                    'productsSort' => $productsSort,
                     'productsTotal' => $productsTotal,
                     'minPrice' => $minPrice,
                     'maxPrice' => $maxPrice,

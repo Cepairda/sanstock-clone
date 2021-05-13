@@ -154,9 +154,30 @@
 
                             <nav>
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    @foreach($productGroup->productsSort as $productSort)
-                                        <a class="nav-link w-25 text-center" data-sort="{{ $productSort->grade }}" data-toggle="tab" href="#sort-{{ $productSort->grade }}" role="tab" aria-controls="nav-home" aria-selected="false">Сорт-{{ $productSort->grade }}</a>
-                                    @endforeach
+                                    @for ($i = 0; $i < 4; $i++)
+                                        @if ($productsSort[$i] ?? null)
+                                            <a class="nav-link w-25 text-center {{ $sort == $i ? 'active' : '' }}"
+                                               data-sort="{{ $i  }}"
+                                               data-toggle="tab" href="#sort-{{ $i}}"
+                                               role="tab"
+                                               aria-controls="nav-home"
+                                               aria-selected="{{ $sort == $i ? 'true' : 'false' }}"
+                                            >
+                                                Сорт-{{ $i}}
+                                            </a>
+                                        @else
+                                            <a class="nav-link w-25 text-center"
+                                               data-sort="{{ $i }}"
+                                               data-toggle="tab" href="#sort-{{ $i}}"
+                                               role="tab"
+                                               aria-controls="nav-home"
+                                               aria-selected="false"
+                                               aria-disabled="true"
+                                            >
+                                                Сорт-{{ $i}}
+                                            </a>
+                                        @endif
+                                    @endfor
                                     <!--a class="nav-link w-25 text-center" data-sort="0" data-toggle="tab" href="#sort-0" role="tab" aria-controls="nav-home" aria-selected="true">Сорт-0</a>
                                     <a class="nav-link w-25 text-center" data-sort="1" data-toggle="tab" href="#sort-1" role="tab" aria-controls="nav-profile" aria-selected="false">Сорт-1</a>
                                     <a class="nav-link w-25 text-center" data-sort="2" data-toggle="tab" href="#sort-2" role="tab" aria-controls="nav-contact" aria-selected="false">Сорт-2</a>
@@ -164,11 +185,13 @@
                                 </div>
                             </nav>
                             <div class="tab-content" id="nav-tabContent">
-                                @foreach($productGroup->productsSort as $productSort)
-                                    <div class="tab-pane fade" id="sort-{{ $productSort->grade }}" role="tabpanel" aria-labelledby="nav-home-tab">
-                                        @include('site.product.components.productsTable', ['products' => $productSort->products])
+                                @for ($i = 0; $i < 4; $i++)
+                                    <div class="tab-pane {{ $sort == $i ? 'active show' : 'fade' }}" id="sort-{{ $i }}" role="tabpanel" aria-labelledby="nav-home-tab">
+                                        @if ($productsSort[$i] ?? null)
+                                            @include('site.product.components.productsTable', ['products' => $productsSort[$i]->products])
+                                        @endif
                                     </div>
-                                @endforeach
+                                @endfor
                                 <!--div class="tab-pane fade" id="sort-0" role="tabpanel" aria-labelledby="nav-home-tab">
                                    {{--@include('site.product.components.productsTable')--}}
                                 </div>
