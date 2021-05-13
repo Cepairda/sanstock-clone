@@ -411,8 +411,12 @@ class NewPostController
         foreach($descriptions as $data):
 
             if(isset($resources[(int)$data['affiliated_id']])) {
-
+// dd($resources[(int)$data['affiliated_id']]);
                 if(!isset($descriptionMap[(int)$data['affiliated_id']])) $descriptionMap[(int)$data['affiliated_id']] = $resources[(int)$data['affiliated_id']];
+
+                $descriptionMap[(int)$data['affiliated_id']]['id'] = $descriptionMap[(int)$data['affiliated_id']]['ref'];
+
+                unset($descriptionMap[(int)$data['affiliated_id']]['ref']);
 
                 // $descriptionMap[(int)$data['affiliated_id']]['locale'] = $locale ;
 
