@@ -67,7 +67,7 @@
                                         data-src => "large: 800x800" - big
                                         data-full => ">= 1000x1000 (for scale)"
                                     --}}
-                                    <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462.jpg">
+                                    <img src="/storage/product/{{ $productGroup->sku }}/{{ $productGroup->sku }}.jpg" data-src="/storage/product/{{ $productGroup->sku }}/{{ $productGroup->sku }}.jpg">
                                     <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_1.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_1.jpg">
                                     <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_2.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_2.jpg">
                                     <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_3.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_3.jpg">
