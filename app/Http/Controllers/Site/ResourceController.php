@@ -42,7 +42,7 @@ class ResourceController extends Controller
                         ->withPartnerUrl()
                         ->firstOrFail(),
                 ];
-                $data['additional'] = temp_additional($data['productGroup']->sku);
+                $data['additional'] = temp_additional($data['productGroup']->sdCode);
                 $productsSort = [];
                 $sortFromDb = null;
 
