@@ -9,8 +9,8 @@
                 @php
                     $slides = [
 
-                        ['link' => 'images/site/home-slider/slide-2.webp', 'title' => 'Lorem.', 'sub_title' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, pariatur.'],
-                        ['link' => 'images/site/home-slider/slide-3.webp', 'title' => 'Lorem ipsum dolor sit.', 'sub_title' => 'Lorem ipsum dolor sit amet.'],
+                        ['link' => 'images/site/home-slider/slide-1.png', 'title' => 'Lorem.', 'sub_title' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, pariatur.'],
+                        ['link' => 'images/site/home-slider/slide-2.png', 'title' => 'Lorem ipsum dolor sit.', 'sub_title' => 'Lorem ipsum dolor sit amet.'],
                     ];
                     $slide_active = 0;
                 @endphp
@@ -26,7 +26,7 @@
                             <div class="carousel-item{{ $key == $slide_active ? ' active' : '' }}" data-interval="false" data-touch="true">
                                 <img src="{{ asset($slide['link']) }}" class="d-block w-100"
                                      alt="...">
-                                <div class="carousel-caption d-none d-md-block">
+                                <div class="carousel-caption d-none">
                                     <h1 class="main-title__title-lg">{{ __($slide['title']) }}</h1>
                                     <p class="main-title__description-lg">{{ __($slide['sub_title']) }}</p>
                                     <div class="btn-link-block btn-n">

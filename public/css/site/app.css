@@ -9817,7 +9817,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
   transition: opacity 0.15s ease 0s;
 }
 .lg-backdrop.in {
-  opacity: 1;
+  opacity: 0.35;
 }
 
 .lg-css3.lg-no-trans .lg-prev-slide, .lg-css3.lg-no-trans .lg-next-slide, .lg-css3.lg-no-trans .lg-current {
@@ -15557,7 +15557,9 @@ p.text--hide.active {
 .navbar-brand {
   position: absolute;
   top: 10px;
-  width: 55px;
+  display: flex;
+  align-items: center;
+  width: 135px;
   height: 45px;
   padding: 0;
   z-index: 1;
@@ -15570,7 +15572,7 @@ p.text--hide.active {
 
 .navbar-nav {
   width: 100%;
-  padding-left: 120px;
+  padding-left: 160px;
 }
 
 .navbar-nav ul {
@@ -16054,7 +16056,7 @@ ul.column li.level2 a:hover {
 
 .level-3__wrap {
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .level-3__link--img {
