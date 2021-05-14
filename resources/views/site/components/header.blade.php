@@ -1,38 +1,56 @@
 <!-- Header -->
+
+
+
 <header>
+
     <div class="head fixed-top bgc-white">
+
         <div class="container header">
+
             <nav class="navbar navbar-expand-lg navbar-light">
+
                 <div class="navbar-mb">
+
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarNavAltMarkup"
                             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+
                     <a class="navbar-brand" href="{{ asset('/') }}">
-                        <img class="w-100"  src="{{ asset('images/logo.png') }}" alt="SanStock" title="SanStock">
+
+                        <img class="w-100"  src="{{ asset('images/logo/logo.svg') }}" alt="SanStok" title="SanStok">
+
                     </a>
+
                     <div class="navbar-mb__lf-cont">
+
                         <form class="header-menu__form" action="#" method="post">
                             {{ csrf_field() }}
-                            <input type="search" class="input-search" name="search_value"
-                                   value="{{ isset($search_value) ? $search_value : '' }}" minlength="3" required>
+
+                            <input type="search" class="input-search" name="search_value" value="{{ isset($search_value) ? $search_value : '' }}" minlength="3" required>
+
                             <button class="header-menu__search">
                                 <i class="icon-search"></i>
                             </button>
+
                         </form>
-                        {{--<div class="navbar-mb__favorites icon-favorites"></div>--}}
+
                     </div>
+
                 </div>
+
                 <div class="navbar-menu collapse navbar-collapse" id="navbarNavAltMarkup">
+
                     <div class="navbar-menu__item navbar-menu--top">
+
                         <div class="navbar-nav">
+
                             <ul>
-
+                                <li class="nav-item"><a class="nav-link nav-link-contacts" href="#">О бренде</a></li>
                                 <li class="nav-item"><a class="nav-link nav-link-contacts" href="{{ asset('/contacts') }}">Контакты</a></li>
-
                                 <li class="nav-item nav-link-phone"><i class="callback"></i><a class="nav-link" href="tel:0800212124">0-800-21-21-24</a></li>
-
                                 <li class="nav-item nav-language">
                                     @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                                         @if(LaravelLocalization::getCurrentLocale() == $localeCode)
@@ -53,10 +71,8 @@
                                         <span class="action-name">
                                             Корзина
                                         </span>
-
                                     </a>
                                 </li>
-
                             </ul>
                         </div>
                     </div>
@@ -95,6 +111,7 @@
                 </div>
             </nav>
         </div>
+
     </div>
 
 </header>
