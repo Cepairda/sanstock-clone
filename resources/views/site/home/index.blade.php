@@ -5,59 +5,48 @@
 
 @section('content')
 
-    <main class="main bgc-gray">
+    <main class="main-container bgc-gray">
 
         @include('site.home.components.banner')
 
-        <div class="main__ideas">
+        <div class="tabs-products">
             <div class="container">
-                <div class="row main-ideas">
-                    @foreach(\App\Category::joinLocalization()->whereIn('resource_id', [ 1091, 1009, 894])->get() as $category)
-                    <div class="col-6 col-lg-4 mb-contain">
-                        <div class="main-ideas__wrapper jsLink" data-href="{{ route('site.resource', $category->slug) }}">
-                            <div class="main-ideas__img">
-                                <img width="150" class="lazy" data-src="{{ asset('images/site/home-popular-category/' . $category->id . '_230.webp') }}" alt="{!! $category->getData('name') !!}">
-                            </div>
-                                {{-- asset('images/site/home-popular-category/' . $category->id . '_230.webp') --}}
-                            <div class="main-ideas__description">
-                                <h3 class="main-ideas__description-title">{!! $category->getData('name') !!}</h3>
-                                <div class="main-ideas__description-link">
-                                    <a class="discover-link" href="{{ route('site.resource', $category->slug) }}">
-                                        Увидеть больше<i class="fas fa-chevron-right link-lg"></i></a>
-                                </div>
+                <div class="row">
+
+                    <div class="col-12">
+
+                        <div class="tabs-products__caption">
+                            <div>Lorem ipsum dolor sit.</div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, ea!</p>
+                        </div>
+
+
+                        <div class="tabs-products__btn-group">
+                            <button class="btn btn-item active" data-toggle="#sort-0">Сорт - 0</button>
+                            <button class="btn btn-item" data-toggle="#sort-1">Сорт - 1</button>
+                            <button class="btn btn-item" data-toggle="#sort-2">Сорт - 2</button>
+                            <button class="btn btn-item" data-toggle="#sort-3">Сорт - 3</button>
+                        </div>
+
+                    </div>
+
+                    <div class="col-12 px-0">
+                        <div id="sort-0" class="tabs-products__container active">
+                            <div class="owl-carousel owl-theme">
+                                @php($products = \App\ProductSort::joinLocalization()->withProductGroup()->get())
+                                @foreach($products as $product)
+                                    <div class="px-3">
+                                        @include('site.product.components.card', [
+                                            'product' => $product,
+                                            'productGroup' => $product->productGroup
+                                        ])
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-
-        <div class="main__pops-product bgc-gray">
-            <div class="container">
-                    <div class="main-pops">
-                        <h2 class="main-pops__title">Lorem ipsum dolor sit.</h2>
-                        <p class="main-pops__mb-title">sub Title</p>
-
-                        @php($products = \App\ProductSort::joinLocalization()->withProductGroup()->get())
-
-                        <div class="d-flex justify-content-center pt-3 btn-maixer btn-group" role="group" aria-label="Basic example">
-                            <button class="btn main-pops__btn-mx active">Пропулярное</button>
-                            <button class="btn main-pops__btn-mx">Для ванной комнаты</button>
-                            <button class="btn main-pops__btn-mx">Для кухни</button>
-
-                        </div>
-                    </div>
-                <div class="row main-product-mx product--lg" style="display: flex">
-                    <div class="owl-carousel owl-theme">
-                        @foreach($products as $product)
-                            <div class="px-3">
-                                @include('site.product.components.card', [
-                                    'product' => $product,
-                                    'productGroup' => $product->productGroup
-                                ])
-                            </div>
-                        @endforeach
+                        <div id="sort-1" class="tabs-products__container">1</div>
+                        <div id="sort-2" class="tabs-products__container">2</div>
+                        <div id="sort-3" class="tabs-products__container">3</div>
                     </div>
                 </div>
 
@@ -80,10 +69,7 @@
                 </div>
             </div>
         </div>
-        {{--<div class="m-5">--}}
-            {{--<button class="button">{{ __('Where buy')}}</button>--}}
-            {{--<a href="#" class="button">{{ __('Where buy')}}</a>--}}
-        {{--</div>--}}
+
     </main>
 
 @endsection

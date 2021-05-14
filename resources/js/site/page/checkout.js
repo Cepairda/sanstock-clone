@@ -20,26 +20,11 @@
             select2Options = select2Options || {};
             let afterActions = [],
                 _setOptions = function (node, options) {
-                    let result = [{
-                        'id': '',
-                        'text': '',
-                        'alt': ''
-                    }];
+
                     if (node.attr("data-select2-id")) {
                         node.select2('destroy');
                     }
-                    if (options.length !== 0) {
-                        for (var index in options) {
-                            let obj = {
-                                'id': options[index]['ref'],
-                                'text': options[index]['full_name'],
-                                'alt': options[index]['name']
-                            };
-                            result.push(obj);
-                        }
-
-                    }
-                    node.html('').prop("disabled", options.length === 0).select2($.extend({}, select2Options, {data: result})).trigger("change");
+                    node.html('').prop("disabled", options.length === 0).select2($.extend({}, select2Options, {data: options})).trigger("change");
                 };
 
             // Register functions to be called after cascading data loading done
@@ -159,28 +144,11 @@
         xhr.open('GET', url, true);
         xhr.onload = function ({currentTarget}) {
             let response = JSON.parse(currentTarget.response);
-            let result = [{
-                'id': '',
-                'text': '',
-                'alt': ''
-            }];
-
-            if (response.length !== 0) {
-                for (var index in response) {
-                    let obj = {
-                        'id': response[index]['ref'],
-                        'text': response[index]['full_name'],
-                        'alt': response[index]['name']
-                    };
-                    result.push(obj);
-                }
-            }
-
             $('.js-example-basic-single1').html('').select2($.extend({}, {
                 ...defaultSelect2Options,
                 width: '100%',
                 matcher: Select2CustomMatcher
-            }, {data: result}));
+            }, {data: response}));
 
         };
         xhr.setRequestHeader('Content-Type', 'application/json');

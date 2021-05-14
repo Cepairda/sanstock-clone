@@ -283,46 +283,7 @@ input:focus {
 }
 
 /*main-pops*/
-.main-pops {
-    text-align: center;
-}
 
-.main-pops__title {
-    font-family: Proxima Nova Cn Lt, sans-serif;
-    font-size: 44px;
-    color: #000000;
-    padding-top: 130px;
-
-}
-
-.main-pops__btn {
-    margin-top: 65px;
-    justify-content: center;
-}
-
-.main-pops__btn-mx, .main-pops__btn-cr {
-    font-family: Open Sans Semibold, sans-serif;
-    padding: 10px 25px;
-    background-color: #fff;
-    color: #9d9d9c !important;
-    border: 1px solid #cccccc;
-    border-radius: 0;
-    white-space: normal;
-    display: flex;
-    align-items: center;
-
-}
-
-.bgc-grad .main-pops__btn-mx, .main-pops__btn-cr {
-    background-color: #303b47;
-    border: 1px solid #4e5d6d;
-}
-
-.main-pops__btn > .active {
-    background-color: #ee6e1f;
-    color: #ffffff !important;
-    border: 1px solid #ef6f20;
-}
 
 .white-lg {
     color: #ffffff !important;
