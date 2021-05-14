@@ -152,7 +152,7 @@
                             <div class="row filter-wrapper">
                                 @foreach($productsSort as $productSort)
                                     <div class="col-12 col-lg-6 col-xl-4">
-                                        @include('site.product.components.card', [
+                                        @include('site.product_group.components.card', [
                                             'product' => $productSort,
                                             'productGroup' => $productSort->productGroup
                                         ])

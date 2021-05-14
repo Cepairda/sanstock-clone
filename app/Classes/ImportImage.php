@@ -43,21 +43,12 @@ class ImportImage
         ini_set('max_execution_time', 0);
         ini_set('memory_limit','5024M');
 
-        //phpinfo();
-
         self::$params['sizeMainImg'] = config('settings-file.import_image.main.size');
         self::$params['sizePreviewImg'] = config('settings-file.import_image.preview.size');
         self::$params['formatPreviewImg'] = config('settings-file.import_image.preview.format');
         self::$params['defaultImg'] = config('settings-file.import_image.defaultImg');
 
         self::$formatImg = array_combine(self::FORMAT_IMG_ORIGINAL, self::FORMAT_IMG_ORIGINAL);
-
-        ///self::$imageRegisterUrl = 'https://isw.b2b-sandi.com.ua/imagecache/full';
-
-        //$client = new Client();
-        //$res = $client->request('GET', 'https://b2b-sandi.com.ua/api/products/images/register');
-
-        //self::$imageRegister = json_decode($res->getBody(), true);
     }
 
     public static function __callStatic($name, $arguments)
@@ -127,16 +118,19 @@ class ImportImage
             self::$dbProductImage->setRequest(self::$requestProductImage);
             self::$dbProductImage->storeOrUpdate();
 
+            $a = self::$requestProductImage;
+
             self::$requestProductGroupImage['details']['product_sd_code'] = $sdCode;
             self::$dbProductGroupImage->setRequest(self::$requestProductGroupImage);
             self::$dbProductGroupImage->storeOrUpdate();
 
-            self::$apiProductImage =
-                self::$requestProductImage =
-                self::$dbProductImage =
-                self::$requestProductGroupImage =
-                self::$dbProductGroupImage =
-                    null;
+            self::$apiProductImage = null;
+            self::$requestProductImage = null;
+            self::$dbProductImage = null;
+            self::$requestProductGroupImage = null;
+            self::$dbProductGroupImage = null;
+
+            sleep(1);
         }
     }
 
@@ -284,13 +278,13 @@ class ImportImage
                     }
 
                     $contents->save($pathAddImg); // save additional
-
-                    self::$requestProductGroupImage['details']['additional'][$key]['filemtime_md5'] = $timeImageUpdateMd5;
                     //self::generateAdditionalPreview($product, $key);
-                } elseif ($timeImageUpdateMd5 == (self::$dbProductGroupImage['additional'][$key]['filemtime_md5'] ?? null)) {
-                    self::$requestProductGroupImage['details']['additional'][$key]['filemtime_md5'] = $timeImageUpdateMd5;
                 }
+
+                self::$requestProductGroupImage['details']['additional'][$key]['filemtime_md5'] = $timeImageUpdateMd5;
             }
+        } else {
+            self::$requestProductGroupImage['details']['additional'] = null;
         }
     }
 
@@ -403,12 +397,10 @@ class ImportImage
                     }
 
                     $contents->save($pathAddImg); // save additional
-
-                    self::$requestProductImage['details']['additional'][$key]['filemtime_md5'] = $timeImageUpdateMd5;
                     //self::generateAdditionalPreview($product, $key);
-                } elseif ($timeImageUpdateMd5 == (self::$dbProductImage['additional'][$key]['filemtime_md5'] ?? null)) {
-                    self::$requestProductImage['details']['additional'][$key]['filemtime_md5'] = $timeImageUpdateMd5;
                 }
+
+                self::$requestProductImage['details']['additional'][$key]['filemtime_md5'] = $timeImageUpdateMd5;
             }
         }
     }
