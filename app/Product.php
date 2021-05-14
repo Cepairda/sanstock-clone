@@ -57,6 +57,17 @@ class Product extends Resource
         return $this->getData('meta_title');
     }
 
+    public function getDefectiveImagesAttribute()
+    {
+        $additional = ProductImage::where('details->product_sku', $this->sku)->first();
+
+        if (isset($additional) && $additional->getDetails('additional')) {
+            return $additional->getDetails('additional');
+        }
+
+        return [];
+    }
+
     public function getMetaDescriptionAttribute()
     {
         return $this->getData('meta_description');
