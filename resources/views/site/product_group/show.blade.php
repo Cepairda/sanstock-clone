@@ -43,8 +43,6 @@
 
 @section('content')
 
-
-
     <main class="main-container pd-bt{{ false ? ' bgc-grad' : ' bgc-white' }}">
 
         @include('site.components.breadcrumbs', ['title' => $productGroup->getData('name')])
@@ -81,16 +79,23 @@
                         <div class="col-12 col-lg-6 card__wrapper">
 
                             <h1 class="card__title">{!! $productGroup->name !!}</h1>
-
-                            <p class="card__code">Код товара:<span class="card__code-id ml-1">{{ $productGroup->sku }}</span></p>
+{{--                            {{dd($productGroup)}}--}}
+                            <p class="card__code">Код группы:<span class="card__code-id ml-1">{{ $productGroup->sd_code }}</span></p>
 
                             <div class="card__price--wrapp">
 
-                                @php($addClassToPrice = !isset($productGroup->price_updated_at) || $productGroup->price_updated_at->addHours(8)->lt(\Carbon\Carbon::now()) ? 'updatePriceJs' : '')
+{{--                                @php($addClassToPrice = !isset($productGroup->price_updated_at) || $productGroup->price_updated_at->addHours(8)->lt(\Carbon\Carbon::now()) ? 'updatePriceJs' : '')--}}
+                                @php($addClassToPrice = 'updatePriceJs')
                                 <p class="card__price">
                                     <span>Цена:</span>
-                                    <span data-product-sku="{{ $productGroup->sku }}"
+                                    <span data-product-sku="{{ $productGroup->sku }}" data-sort="price"
                                           class="{{ $addClassToPrice }}">{{ number_format(ceil($productGroup->price),0,'',' ')}}</span>
+                                    <span>грн.</span>
+                                </p>
+                                <p data-product-group="old_price" class="card__price text-muted d-none" style="font-size: 16px;">
+                                    <span>Старая цена:</span>
+                                    <span data-product-sku="{{ $productGroup->sku }}" data-sort="old_price"
+                                          class="{{ $addClassToPrice }}"><s>{{ number_format(ceil($productGroup->price),0,'',' ')}}</s></span>
                                     <span>грн.</span>
                                 </p>
                             </div>
@@ -159,14 +164,14 @@
                                             <a class="nav-link w-25 text-center {{ $sort == $i ? 'active' : '' }}"
                                                data-sort="{{ $i  }}"
                                                data-toggle="tab" href="#sort-{{ $i}}"
-                                               role="tab"
+                                               role="tab" onclick="changePriceBySort(this.dataset.sort)"
                                                aria-controls="nav-home"
                                                aria-selected="{{ $sort == $i ? 'true' : 'false' }}"
                                             >
                                                 Сорт-{{ $i}}
                                             </a>
                                         @else
-                                            <a class="nav-link w-25 text-center"
+                                            <a class="nav-link disabled w-25 text-center"
                                                data-sort="{{ $i }}"
                                                data-toggle="tab" href="#sort-{{ $i}}"
                                                role="tab"
@@ -184,11 +189,18 @@
                                     <a class="nav-link w-25 text-center" data-sort="3" data-toggle="tab" href="#sort-3" role="tab" aria-controls="nav-contact" aria-selected="false">Сорт-3</a-->
                                 </div>
                             </nav>
+
+
                             <div class="tab-content" id="nav-tabContent">
                                 @for ($i = 0; $i < 4; $i++)
                                     <div class="tab-pane {{ $sort == $i ? 'active show' : 'fade' }}" id="sort-{{ $i }}" role="tabpanel" aria-labelledby="nav-home-tab">
                                         @if ($productsSort[$i] ?? null)
-                                            @include('site.product.components.productsTable', ['products' => $productsSort[$i]->products])
+
+{{--                                            {{ dd($productsSort[$i]) }}--}}
+                                            @include('site.product.components.productsTable', ['products' => $productsSort[$i]->products, 'productsDefectiveAttributes' => $productsDefectiveAttributes, 'sort' => $i, 'current_sort' => $sort])
+
+                                        @else
+                                           <div style="text-align: center;">{{ 'Товар не найден' }}</div>
                                         @endif
                                     </div>
                                 @endfor

@@ -25,6 +25,7 @@ class ResourceController extends Controller
             ->firstOrFail();
         $originalType = class_basename($resource->type);
         $type = Str::snake($originalType);
+        $productsDefectiveAttributes = [];
 
         switch ($type) {
             case 'product_group':
@@ -52,12 +53,19 @@ class ResourceController extends Controller
                             ? $productSort->grade
                             : $sortFromDb)
                         : $productSort->grade;*/
+                    //dd($productSort->products[0]["sku"]);
+                    //dd();
+                    foreach($productSort->products as $productModel):
+                        $products = Product::joinLocalization()->withCharacteristics()->whereIn('details->sku', [$productModel["sku"]])->get();
+                        $productsDefectiveAttributes[$productModel["sku"]] = $products[0]->data['defective_attributes'];
+                    endforeach;
                     $productsSort[$productSort->grade] = $productSort;
                 }
 
                 $sort = isset($productsSort[$sortGet]) ? $sortGet : min(array_keys($productsSort));
 
                 $data['productsSort'] = $productsSort;
+                $data['productsDefectiveAttributes'] = $productsDefectiveAttributes;
                 $data['sort'] = $sort;
 
                 //dd($data['product']['data']);
@@ -140,8 +148,6 @@ class ResourceController extends Controller
                                 ->whereIn($alias . '.relation_id', $fids);
                         });
                     }
-
-
                 }
 
                 if (Request::has('name')) {
@@ -180,6 +186,7 @@ class ResourceController extends Controller
                 $data = [
                     'category' => $category,
                     'productsSort' => $productsSort,
+                    'productsDefectiveAttributes' => $productsDefectiveAttributes,
                     'productsTotal' => $productsTotal,
                     'minPrice' => $minPrice,
                     'maxPrice' => $maxPrice,
@@ -201,7 +208,7 @@ class ResourceController extends Controller
                     'resource' => $resource->type::joinLocalization()->whereId($resource->id)->first()
                 ];
         }
-
+//dd($data);
 
 //        return Cache::remember('resource_' . $resource->id, 3600, function() use ($type, $data){
 //            return view('site.' . $type . '.show', $data)->render();
