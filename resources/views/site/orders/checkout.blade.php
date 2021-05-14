@@ -264,5 +264,4 @@
         <script type="text/javascript" src="{{ mix('js/site/page/checkout.js') }}"></script>
     @endsection
 
-
 @endsection

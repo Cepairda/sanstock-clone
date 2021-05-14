@@ -760,11 +760,6 @@ input:focus {
     display: none;
 }
 
-
-.main-container, .left-sidebar, .main-category {
-    padding-top: 150px;
-}
-
 .main__title {
     font-family: Proxima Nova Cn Lt, sans-serif;
     font-stretch: normal;

@@ -1,10 +1,9 @@
-<section class="main_title bgc-gray">
+<section class="pt-3">
 
     <div class="container">
         <div class="row">
 
             <div class="col-12">
-
 
                 @php
                     $slides = [
