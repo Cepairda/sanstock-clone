@@ -1,6 +1,3 @@
-@php($products = $products = \App\Product::joinLocalization()->whereIn('details->sku', [21650, 21899, 22008])->withCategory()->get() )
-
-
 <div class="table-responsive table-products cart__table">
     <table class="table table-hover">
         <thead>
@@ -24,20 +21,16 @@
                          alt="">
                 </td>
                 <td>{{ $product->name }}</td>
-
                 <td>
                     1
                 </td>
-
                 <td>
                     {{ $product->price }} грн.
                 </td>
-
                 <td>
                     <button class="button" data-add="upDate" data-barcode="{{ $product->sku }}">Купить</button>
                 </td>
             </tr>
-
         @endforeach
         </tbody>
     </table>

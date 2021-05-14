@@ -35,7 +35,7 @@
 
                                     @foreach($products as $product)
                                         <div class="container-item__card">
-                                            @include('site.product.components.card', [
+                                            @include('site.product_group.components.card', [
                                                 'product' => $product,
                                                 'productGroup' => $product->productGroup
                                             ])
