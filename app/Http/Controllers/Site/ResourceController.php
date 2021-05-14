@@ -48,13 +48,6 @@ class ResourceController extends Controller
                 $sortFromDb = null;
 
                 foreach ($data['productGroup']->productsSort as $productSort) {
-                    /*$sortFromDb = isset($sortFromDb)
-                        ? ($productSort->grade < $sortFromDb
-                            ? $productSort->grade
-                            : $sortFromDb)
-                        : $productSort->grade;*/
-                    //dd($productSort->products[0]["sku"]);
-                    //dd();
                     foreach($productSort->products as $productModel):
                         $products = Product::joinLocalization()->withCharacteristics()->whereIn('details->sku', [$productModel["sku"]])->get();
                         $productsDefectiveAttributes[$productModel["sku"]] = $products[0]->data['defective_attributes'];
@@ -67,8 +60,6 @@ class ResourceController extends Controller
                 $data['productsSort'] = $productsSort;
                 $data['productsDefectiveAttributes'] = $productsDefectiveAttributes;
                 $data['sort'] = $sort;
-
-                //dd($data['product']['data']);
 
                 break;
             case 'category':
@@ -134,20 +125,23 @@ class ResourceController extends Controller
                     $productsSort = $productsSort->where('details->price', '>=', +$minPriceSelect)->where('details->price', '<=', +$maxPriceSelect);
                 }
 
-                if (Request::has('filter')) {
-                    $filters = Request::input('filter');
+                if (Request::has('filters')) {
+                    $filters = Request::input('filters');
                     $characteristicsV = $filters;
 
                     foreach ($characteristicsV as $characteristicId => $filters) {
                         $fids = $filters;
 
                         $alias = 'rr' . $characteristicId;
-
-                        $productsSort->join('resource_resource as ' . $alias, function ($q) use ($alias, $fids) {
+                        $productGroupC = ProductGroup::join('resource_resource as ' . $alias, function ($q) use ($alias, $fids) {
                             $q->on('resources.id', '=', $alias . '.resource_id')
                                 ->whereIn($alias . '.relation_id', $fids);
                         });
                     }
+
+                    //dd($productGroupC->get());
+                    //$productGroup->get();
+
                 }
 
                 if (Request::has('name')) {

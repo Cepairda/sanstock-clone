@@ -30,7 +30,7 @@
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" name="filters[{{ $characteristic->id }}][]"
                                    id="valueID{{ $value->id }}" value="{{ $value->id }}"
-                                   {{ in_array($value->id, ($_GET['filter'][$characteristic->id]) ?? []) ? 'checked' : ''}}
+                                   {{ in_array($value->id, ($_GET['filters'][$characteristic->id]) ?? []) ? 'checked' : ''}}
                                    class="custom-control-input">
                             <label class="custom-control-label"
                                    for="valueID{{ $value->id }}">{{ $value->getData('value') }}</label>
