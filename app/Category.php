@@ -53,7 +53,7 @@ class Category extends Resource
     public function scopeWithDescendants($query)
     {
         return $query->with(['descendants' => function ($query) {
-            return $query->with('product')->joinLocalization()->where('details->published', 1);
+            return $query->with('product')->joinLocalization();
         }]);
     }
 

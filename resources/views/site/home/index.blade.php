@@ -71,7 +71,6 @@
                             <div class="info-block__desc">
                                 <h3>Сорт-0</h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolorem eligendi eum expedita in maxime. Aliquam beatae consequatur doloribus eius in laudantium optio quisquam sequi.</p>
-                                <a href="{{ asset('/keramika-dlya-vannoj/') }}" class="button">Перейти</a>
                             </div>
                         </div>
                     </div>
@@ -82,7 +81,6 @@
                             <div class="info-block__desc">
                                 <h3><i>Сорт-1</i></h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut debitis exercitationem non omnis quis tenetur!</p>
-                                <a href="{{ asset('/keramika-dlya-vannoj/') }}" class="button">Перейти</a>
                             </div>
                             <div class="info-block__image">
                                 <img src="{{ asset('images/site/home-popular-category/' . 5443 . '_230.webp') }}"
@@ -103,7 +101,6 @@
                             <div class="info-block__desc">
                                 <h3>Сорт-1</h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolorem eligendi eum expedita in maxime. Aliquam beatae consequatur doloribus eius in laudantium optio quisquam sequi.</p>
-                                <a href="{{ asset('/keramika-dlya-vannoj/') }}" class="button">Перейти</a>
                             </div>
                         </div>
                     </div>
@@ -114,7 +111,6 @@
                             <div class="info-block__desc">
                                 <h3><i>Сорт-3</i></h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut debitis exercitationem non omnis quis tenetur!</p>
-                                <a href="{{ asset('/keramika-dlya-vannoj/') }}" class="button">Перейти</a>
                             </div>
                             <div class="info-block__image">
                                 <img src="{{ asset('images/site/home-popular-category/' . 5443 . '_230.webp') }}"
@@ -125,6 +121,7 @@
                 </div>
             </div>
         </div>
+
     </main>
 
 @endsection
