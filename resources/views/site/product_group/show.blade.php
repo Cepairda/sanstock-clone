@@ -191,7 +191,7 @@
                                 @for ($i = 0; $i < 4; $i++)
                                     <div class="tab-pane {{ $sort == $i ? 'active show' : 'fade' }}" id="sort-{{ $i }}" role="tabpanel" aria-labelledby="nav-home-tab">
                                         @if ($productsSort[$i] ?? null)
-                                            @include('site.product.components.productsTable', ['products' => $productsSort[$i]->products])
+                                            @include('site.product_group.components.productsTable', ['products' => $productsSort[$i]->products])
                                         @endif
                                     </div>
                                 @endfor

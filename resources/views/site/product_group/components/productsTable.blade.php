@@ -1,6 +1,3 @@
-@php($products = $products = \App\Product::joinLocalization()->whereIn('details->sku', [21650, 21899, 22008])->withCategory()->get() )
-
-
 <div class="table-responsive table-products cart__table">
     <table class="table table-hover">
         <thead>
@@ -19,25 +16,23 @@
                 <td>{{ $product["sku"] }}</td>
                 <td>
                     {{--{!! img(['type' => 'product', 'sku' => $product["sku"], 'size' => 70, 'alt' => $product["name"], 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}--}}
-                    <img width="150"
-                         src="{{'https://isw.b2b-sandi.com.ua/imagecache/150x150/' . strval($product["sku"])[0] . '/' . strval($product["sku"])[1] . '/' .  $product["sku"] . '.jpg'}}"
-                         alt="">
+                    @foreach($product->defectiveImages as $key => $value)
+                        <img width="150"
+                             src="/storage/product/{{ $productGroup->sdCode }}/{{ $product->sku }}/{{ $product->sku }}_{{ $key }}.jpg"
+                             alt="">
+                    @endforeach
                 </td>
                 <td>{{ $product->name }}</td>
-
                 <td>
                     1
                 </td>
-
                 <td>
                     {{ $product->price }} грн.
                 </td>
-
                 <td>
                     <button class="button" data-add="upDate" data-barcode="{{ $product->sku }}">Купить</button>
                 </td>
             </tr>
-
         @endforeach
         </tbody>
     </table>
