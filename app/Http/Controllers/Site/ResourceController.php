@@ -208,7 +208,7 @@ class ResourceController extends Controller
                     'resource' => $resource->type::joinLocalization()->whereId($resource->id)->first()
                 ];
         }
-//dd($data);
+// dd($type);
 
 //        return Cache::remember('resource_' . $resource->id, 3600, function() use ($type, $data){
 //            return view('site.' . $type . '.show', $data)->render();
