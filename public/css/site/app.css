@@ -11445,53 +11445,6 @@ input:focus {
   padding-top: 40px;
 }
 
-/*main__ceramics*/
-.main-ceram {
-  padding-bottom: 70px;
-}
-
-.bgc-grad .main-pops__title {
-  color: #ffffff;
-}
-
-.main__ceramics {
-  background-color: #ffffff;
-  margin-top: 80px;
-}
-
-.main__ceramics__img {
-  padding-left: 0;
-  padding-right: 0;
-  overflow: hidden;
-}
-
-.ceramics__img {
-  width: auto;
-}
-
-.main__ceramics__descriptions {
-  padding: 120px 90px 90px 50px;
-}
-
-.descriptions__title-lg {
-  font-family: Proxima Nova Cn Lt, sans-serif;
-  font-size: 40px;
-  margin-bottom: 40px;
-  color: #000 !important;
-}
-
-.descriptions-lg {
-  font-family: "Open Sans Regular", sans-serif;
-  font-size: 20px;
-  margin-bottom: 50px;
-  color: #737373;
-}
-
-.ceramics__btn-lg {
-  margin-top: 98px;
-}
-
-/*----main_index_end-----*/
 /*-----filter-mixer-----*/
 .main__filter {
   padding-top: 35px;
@@ -16901,8 +16854,12 @@ ul.column li.level2 a:hover {
   border-color: #ef6f20;
   color: #fff;
 }
-.tabs-products__container:not(.active) {
+.tabs-products__container .container-item:not(.active) {
   display: none;
+}
+.tabs-products__container .container-item__card {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .form-group {
@@ -17242,6 +17199,37 @@ a:not([href]) {
   border-radius: 50px;
   z-index: -1;
   transform: translate3d(0px, 0px, 0px) !important;
+}
+
+.info-blocks {
+  padding-top: 75px;
+}
+.info-blocks .info-block {
+  display: flex;
+  margin-bottom: 16px;
+  background-color: #fff;
+}
+.info-blocks .info-block__image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-basis: 50%;
+}
+.info-blocks .info-block__desc {
+  flex-basis: 50%;
+  padding: 120px 90px 90px 50px;
+}
+.info-blocks .info-block__desc h3 {
+  margin-bottom: 40px;
+  font-family: Proxima Nova Cn Lt, sans-serif;
+  font-size: 40px;
+  font-style: italic;
+}
+.info-blocks .info-block__desc p {
+  font-family: Open Sans Bold, sans-serif;
+  font-size: 20px;
+  margin-bottom: 50px;
+  color: #737373;
 }
 
 body.cart .add__to-cart {

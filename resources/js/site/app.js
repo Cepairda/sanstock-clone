@@ -30,6 +30,7 @@ require('./plugins/lazyLoadImg');
 
 //components
 require('./components/cart');
+require('./components/tabsProducs');
 
 //page
 require('./page/cardProduct');

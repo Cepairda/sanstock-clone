@@ -33,11 +33,10 @@
                                             <li>
                                                 <div class="head-menu__subcategory">
 
+                                                    @if($cat->children->isNotEmpty())
+
                                                     <div class="head-menu__subcategory--name-wrap category-arrow">
-
-                                                        <a class="head-menu__subcategory--name"
-                                                           href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
-
+                                                        <a class="head-menu__subcategory--name" href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
                                                     </div>
 
                                                     <div class="level-3">
@@ -47,12 +46,10 @@
                                                             <div class="head-menu__subcategory">
 
                                                                 @foreach($cat->children as $c)
-                                                                    <div class="head-menu__subcategory--name-wrap category-arrow">
-
+                                                                    <div class="head-menu__subcategory--name-wrap">
                                                                         <a class="head-menu__subcategory--name" href="{{ route('site.resource', $c->slug) }}">
                                                                             {{ $c->name }}
                                                                         </a>
-
                                                                     </div>
                                                                 @endforeach
 
@@ -62,6 +59,13 @@
 
                                                     </div>
 
+                                                    @else
+
+                                                        <div class="head-menu__subcategory--name-wrap">
+                                                            <a class="head-menu__subcategory--name" href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
+                                                        </div>
+
+                                                    @endif
 
                                                 </div>
                                             </li>

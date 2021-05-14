@@ -65,12 +65,15 @@
                                         data-src => "large: 800x800" - big
                                         data-full => ">= 1000x1000 (for scale)"
                                     --}}
-                                    <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462.jpg">
-                                    <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_1.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_1.jpg">
+                                    <img src="/storage/product/{{ $productGroup->sdCode }}/{{ $productGroup->sdCode }}.jpg" data-src="/storage/product/{{ $productGroup->sdCode }}/{{ $productGroup->sdCode }}.jpg">
+                                    @foreach($additional as $key => $value)
+                                        <img src="/storage/product/{{ $productGroup->sdCode }}/additional/{{ $productGroup->sdCode }}_{{ $key }}.jpg" data-src="/storage/product/{{ $productGroup->sdCode }}/additional/{{ $productGroup->sdCode }}_{{ $key }}.jpg">
+                                    @endforeach
+                                    <!--img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_1.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_1.jpg">
                                     <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_2.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_2.jpg">
                                     <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_3.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_3.jpg">
                                     <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_4.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_4.jpg">
-                                    <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462.jpg">
+                                    <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462.jpg"-->
                                 </div>
                             </div>
                             <!-- END swipeGallery -->
@@ -79,6 +82,7 @@
                         <div class="col-12 col-lg-6 card__wrapper">
 
                             <h1 class="card__title">{!! $productGroup->name !!}</h1>
+
 {{--                            {{dd($productGroup)}}--}}
                             <p class="card__code">Код группы:<span class="card__code-id ml-1">{{ $productGroup->sd_code }}</span></p>
 
@@ -196,11 +200,11 @@
                                     <div class="tab-pane {{ $sort == $i ? 'active show' : 'fade' }}" id="sort-{{ $i }}" role="tabpanel" aria-labelledby="nav-home-tab">
                                         @if ($productsSort[$i] ?? null)
 
-{{--                                            {{ dd($productsSort[$i]) }}--}}
                                             @include('site.product.components.productsTable', ['products' => $productsSort[$i]->products, 'productsDefectiveAttributes' => $productsDefectiveAttributes, 'sort' => $i, 'current_sort' => $sort])
 
                                         @else
                                            <div style="text-align: center;">{{ 'Товар не найден' }}</div>
+
                                         @endif
                                     </div>
                                 @endfor
