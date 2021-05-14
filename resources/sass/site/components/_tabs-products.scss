@@ -68,8 +68,15 @@
 	}
 
 	&__container {
-		&:not(.active) {
-			display: none;
+		.container-item {
+			&:not(.active) {
+				display: none;
+			}
+
+			&__card {
+				padding-left: 15px;
+				padding-right: 15px;
+			}
 		}
 	}
 }

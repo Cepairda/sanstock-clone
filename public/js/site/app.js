@@ -25226,7 +25226,9 @@ __webpack_require__(/*! ./plugins/characteristicsLists */ "./resources/js/site/p
 __webpack_require__(/*! ./plugins/lazyLoadImg */ "./resources/js/site/plugins/lazyLoadImg.js"); //components
 
 
-__webpack_require__(/*! ./components/cart */ "./resources/js/site/components/cart.js"); //page
+__webpack_require__(/*! ./components/cart */ "./resources/js/site/components/cart.js");
+
+__webpack_require__(/*! ./components/tabsProducs */ "./resources/js/site/components/tabsProducs.js"); //page
 
 
 __webpack_require__(/*! ./page/cardProduct */ "./resources/js/site/page/cardProduct.js"); //custom script
@@ -25556,6 +25558,42 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   window.cart = new Cart();
 })();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
+/***/ "./resources/js/site/components/tabsProducs.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/site/components/tabsProducs.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function () {
+  var container = document.querySelector('.tabs-products');
+
+  if (!container) {
+    return false;
+  }
+
+  container.addEventListener('click', function (_ref) {
+    var target = _ref.target;
+    var btn = target.closest('.btn-item');
+
+    if (btn) {
+      var btns = container.querySelectorAll('.btn-item');
+      var tabs = container.querySelectorAll('.container-item');
+      var containerActive = container.querySelector("".concat(btn.dataset.toggle));
+      btns.forEach(function (item) {
+        item.classList.remove('active');
+      });
+      tabs.forEach(function (item) {
+        item.classList.remove('active');
+      });
+      btn.classList.add('active');
+      containerActive.classList.add('active');
+    }
+  }, false);
+})();
 
 /***/ }),
 
@@ -27645,9 +27683,9 @@ function effEnd(_ref2) {
 
 document.addEventListener('mouseover', eff, false);
 document.addEventListener('mouseout', effEnd, false);
-document.addEventListener('click', function (_ref3) {
+document.addEventListener('click', function (_ref3) {//const x = target.closest('');
+
   var target = _ref3.target;
-  var x = target.closest('');
 }); // //liveSearch
 // (function (){
 //     const inputSearch = document.querySelector('#rd-navbar-search-form-input'),
