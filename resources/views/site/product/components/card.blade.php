@@ -30,7 +30,7 @@
                         </p>
                     </div>
                     <a class="button" href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}" alt="{{ $product->name }}"
-                       data-target="add" data-barcode="{{ $product->sku }}">{{ __('Where buy')}}</a>
+                       data-target="add" data-barcode="{{ $product->sku }}">{{ __('Buy')}}</a>
                 </div>
             </div>
         </div>

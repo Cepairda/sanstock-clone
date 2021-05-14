@@ -163,12 +163,11 @@
             let products = {};
             const cartData = this.getCookie(cookieKeyCart);
 
-
             if (!cartData) {
 
                 products[productSku] = value;
-
                 this.setCookie(products);
+                this.openModal();
 
             } else {
 
@@ -190,10 +189,6 @@
 
                 }
             }
-
-
-
-
 
         }
 

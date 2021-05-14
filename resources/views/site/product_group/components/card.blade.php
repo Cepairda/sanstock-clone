@@ -29,7 +29,7 @@
                         <span>грн.</span>
                     </p>
                 </div>
-                <a class="button" href="{{ route('site.resource', $product->productGroup->slug) }}?sort={{ $product->grade }}" alt="{{ $product->name }}" data-target="add" data-barcode="{{ $product->sku }}">{{ __('Where buy')}}</a>
+                <a class="button" href="{{ route('site.resource', $product->productGroup->slug) }}?sort={{ $product->grade }}" alt="{{ $product->name }}" data-target="add" data-barcode="{{ $product->sku }}">{{ __('Buy')}}</a>
             </div>
         </div>
 

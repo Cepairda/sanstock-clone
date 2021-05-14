@@ -22,7 +22,7 @@
         galleryDraggableClassName = 'gallery-draggable',
         galleryPointerClassName = 'gallery-pointer',
 
-        srcNoImg = window.location.origin + '/img/no_img.jpg';
+        srcNoImg = window.location.origin + '/images/no_img.jpg';
 
     window.Gallery1 = class Gallery {
 

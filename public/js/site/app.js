@@ -25435,6 +25435,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         if (!cartData) {
           products[productSku] = value;
           this.setCookie(products);
+          this.openModal();
         } else {
           products = JSON.parse(cartData);
 
@@ -26974,7 +26975,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       galleryBtnDisabledClassName = 'gallery-btn-disabled',
       galleryDraggableClassName = 'gallery-draggable',
       galleryPointerClassName = 'gallery-pointer',
-      srcNoImg = window.location.origin + '/img/no_img.jpg';
+      srcNoImg = window.location.origin + '/images/no_img.jpg';
 
   window.Gallery1 = /*#__PURE__*/function () {
     function Gallery(element) {

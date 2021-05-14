@@ -1,6 +1,5 @@
 <div class="table-responsive table-products cart__table">
     <table class="table table-hover">
-        <caption>Корзина товаров</caption>
         <thead>
         <tr>
             <td>Код товара</td>
