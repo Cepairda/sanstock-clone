@@ -47,26 +47,26 @@
         <div class="container">
 
             @if($descendants->isNotEmpty())
-                
+
                 <div class="row">
 
                     @foreach($descendants as $descendant)
 
 
-                       <div class="col-3">
-                           <div class="py-3 bg-white">
-                               <a href="{{ route('site.resource', $descendant->slug) }}"
-                                  title="{{ $descendant->name }}">
-                                   <img src="{{ asset('images/no_img.jpg') }}"
-                                        data-src="#"
-                                        class="img-data-path w-100 lazy"
-                                        alt="{{ $descendant->name }}">
-                                   <div class="pt-3 text-center">
-                                       {{ $descendant->name }}
-                                   </div>
-                               </a>
-                           </div>
-                       </div>
+                        <div class="col-3">
+                            <div class="py-3 bg-white">
+                                <a href="{{ route('site.resource', $descendant->slug) }}"
+                                   title="{{ $descendant->name }}">
+                                    <img src="{{ asset('images/no_img.jpg') }}"
+                                         data-src="#"
+                                         class="img-data-path w-100 lazy"
+                                         alt="{{ $descendant->name }}">
+                                    <div class="pt-3 text-center">
+                                        {{ $descendant->name }}
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
 
                     @endforeach
 
@@ -156,7 +156,7 @@
                 @endisset
 
             @endif
-            
+
         </div>
 
     </div>
