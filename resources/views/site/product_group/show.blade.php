@@ -67,7 +67,10 @@
                                         data-src => "large: 800x800" - big
                                         data-full => ">= 1000x1000 (for scale)"
                                     --}}
-                                    <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462.jpg">
+                                    <img src="/storage/product/{{ $productGroup->sdCode }}/{{ $productGroup->sdCode }}.jpg" data-src="/storage/product/{{ $productGroup->sdCode }}/{{ $productGroup->sdCode }}.jpg">
+                                    @foreach($additional as $key => $value)
+
+                                    @endforeach
                                     <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_1.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_1.jpg">
                                     <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_2.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_2.jpg">
                                     <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_3.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_3.jpg">
@@ -82,7 +85,7 @@
 
                             <h1 class="card__title">{!! $productGroup->name !!}</h1>
 
-                            <p class="card__code">Код товара:<span class="card__code-id ml-1">{{ $productGroup->sku }}</span></p>
+                            <p class="card__code">Код товара:<span class="card__code-id ml-1">{{ $productGroup->sd_code }}</span></p>
 
                             <div class="card__price--wrapp">
 

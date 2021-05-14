@@ -2,6 +2,7 @@
 
 namespace App\Classes;
 
+use App\ProductGroupImage;
 use App\ProductImage;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -15,6 +16,8 @@ use App\Jobs\ProcessImportImage;
 
 class ImportImage
 {
+    private const DEFAULT_API_URL = 'http://192.168.0.12/api/products?token=368dbc0bf4008db706576eb624e14abf&only_defectives=1';
+
     private const FORMAT_IMG_ORIGINAL = ['jpg', 'png', 'webp'];
     private static $formatImg;
 
@@ -24,6 +27,9 @@ class ImportImage
     private static $apiProductImage;
     private static $dbProductImage;
     private static $requestProductImage;
+
+    private static $dbProductGroupImage;
+    private static $requestProductGroupImage;
 
     public static $params = [
         'defaultImg' => '/image/site/default.jpg'
@@ -81,12 +87,13 @@ class ImportImage
     private static function import($sku)
     {
         $product = Product::where('details->published', 0)->where('details->sku', $sku)->first();
+        $sdCode = $product->sdCode;
 
         if (!empty($product)) {
             info('Ins Img');
             $apiUrl = self::DEFAULT_API_URL . "&sku_in={$sku}";
             self::$imageRegister = self::getDataJson($apiUrl);
-            self::$apiProductImage = self::$imageRegister[$sku];
+            self::$apiProductImage = self::$imageRegister;
             self::$dbProductImage = ProductImage::where('details->product_sku', $sku)->first();
 
             if (!self::$dbProductImage) {
@@ -99,13 +106,39 @@ class ImportImage
                 self::$dbProductImage->storeOrUpdate();
             }
 
-            self::downloadMainImage($product);
-            //self::downloadAdditional($product);
+            self::$dbProductGroupImage = ProductGroupImage::where('details->product_sd_code', $sdCode)->first();
+
+            if (!self::$dbProductGroupImage) {
+                self::$dbProductGroupImage = new ProductGroupImage();
+                self::$dbProductGroupImage->setRequest([
+                    'details' => [
+                        'product_sd_code' => $sdCode
+                    ]
+                ]);
+                self::$dbProductGroupImage->storeOrUpdate();
+            }
+
+            self::downloadMainImage($sdCode, $sku);
+            self::downloadAdditional($sdCode, $sku);
+            self::downloadDefectiveImages($sdCode, $sku);
             //self::generateAdditionalPreview($product);
 
             self::$requestProductImage['details']['product_sku'] = $sku;
             self::$dbProductImage->setRequest(self::$requestProductImage);
             self::$dbProductImage->storeOrUpdate();
+
+            self::$requestProductGroupImage['details']['product_sd_code'] = $sdCode;
+            self::$dbProductGroupImage->setRequest(self::$requestProductGroupImage);
+            self::$dbProductGroupImage->storeOrUpdate();
+
+            self::$apiProductImage =
+                self::$requestProductImage =
+                self::$dbProductImage =
+                self::$requestProductGroupImage =
+                self::$dbProductGroupImage =
+                    null;
+
+            sleep(1);
         }
     }
 
@@ -185,61 +218,79 @@ class ImportImage
         return  asset('/images/site/default.jpg');
     }
 
-    private static function downloadMainImage($product)
+    private static function downloadMainImage($sdCode, $sku)
     {
+        $mainImagePath = self::$apiProductImage['data'][$sku]['images']['main'] ?? null;
         $size = self::$params['sizeMainImg']; // size for original images in PX
 
-        if (isset(self::$apiProductImage['main'])) {
-            $url = self::$imageRegisterUrl . self::$apiProductImage['main']['path'];
-            $pathMainImg = public_path('storage/product/' . $product->getDetails('sku')) . '.' . self::$formatImg['jpg'];
-            //$testPathImg = "/var/www/public/storage/product/22151.jpg";
+        if (isset($mainImagePath)) {
+            $urlString = parse_url($mainImagePath);
+            parse_str($urlString['query'], $params);
+            $timeImageUpdateMd5 = $params['hash'];
 
-            if (md5(self::$apiProductImage['main']['filemtime']) != (self::$dbProductImage['details']['main']['filemtime_md5'] ?? null)
+            $pathSdCode = 'storage/product/' . $sdCode . '/';
+            $pathMainImg = public_path($pathSdCode . $sdCode) . '.' . self::$formatImg['jpg'];
+
+            if ($timeImageUpdateMd5 != (self::$dbProductGroupImage['details']['main']['filemtime_md5'] ?? null)
                 || !file_exists($pathMainImg)
             ) {
-                $contents = Image::make($url)->contrast(5);
+                $contents = Image::make($mainImagePath)->contrast(5);
                 $contents->trim(null, null, 5, 50)->resize($size, $size, function ($constraint) {
                     $constraint->aspectRatio();
                 })->resizeCanvas($size, $size, 'center', false, [255, 255, 255, 0]);
+
+                $savePathSdCode = public_path($pathSdCode);
+
+                if (!file_exists($savePathSdCode)) {
+                    mkdir($savePathSdCode, 0777, true);
+                }
+
                 $contents->save($pathMainImg); // save original
 
-                self::$requestProductImage['details']['main']['filemtime'] = self::$apiProductImage['main']['filemtime'];
-                self::$requestProductImage['details']['main']['filemtime_md5'] = md5(self::$apiProductImage['main']['filemtime']);
-                self::generatePreview($product);
-            } elseif (self::$apiProductImage['main']['filemtime'] == (self::$dbProductImage['details']['main']['filemtime'] ?? null)) {
-                self::$requestProductImage['details']['main']['filemtime'] = self::$dbProductImage['details']['main']['filemtime'];
-                self::$requestProductImage['details']['main']['filemtime_md5'] = md5(self::$dbProductImage['details']['main']['filemtime']);
+                self::$requestProductGroupImage['details']['main']['filemtime_md5'] = $timeImageUpdateMd5;
+                //self::generatePreview($product);
+            } elseif ($timeImageUpdateMd5 == (self::$dbProductGroupImage['details']['main']['filemtime_md5'] ?? null)) {
+                self::$requestProductGroupImage['details']['main']['filemtime_md5'] = $timeImageUpdateMd5;
             }
         }
     }
 
-    private static function downloadAdditional($product)
+    private static function downloadAdditional($sdCode, $sku)
     {
-        if (isset(self::$apiProductImage['additional'])) {
-            foreach (self::$apiProductImage['additional'] as $key => $additional) {
-                $path = 'storage/product/' . $product->getDetails('sku') . '/';
-                $pathAddImg = public_path($path . $product->getDetails('sku') . '_' . $key) . '.' . self::$formatImg['jpg'];
+        $additionalImages = self::$apiProductImage['data'][$sku]['images']['additional'] ?? null;
 
-                if (md5($additional['filemtime']) != (self::$dbProductImage['details']['additional'][$key]['filemtime_md5'] ?? null)
+        if (isset($additionalImages)) {
+            foreach ($additionalImages as $key => $imagePath) {
+                $urlString = parse_url($imagePath);
+                parse_str($urlString['query'], $params);
+                $timeImageUpdateMd5 = $params['hash'];
+
+                $pathSdCode = 'storage/product/' . $sdCode . '/';
+                $pathAdditional = $pathSdCode . 'additional/';
+                $pathAddImg = public_path($pathAdditional . $sdCode . '_' . $key) . '.' . self::$formatImg['jpg'];
+
+                if ($timeImageUpdateMd5 != (self::$dbProductGroupImage['details']['additional'][$key]['filemtime_md5'] ?? null)
                     || !file_exists($pathAddImg)
                 ) {
-                    $url = self::$imageRegisterUrl . $additional['path'];
+                    $url = $imagePath;
                     $contents = Image::make($url);
-                    $savePath = public_path($path);
+                    $savePathSdCode = public_path($pathSdCode);
+                    $savePathAdditional = public_path($pathAdditional);
 
-                    if (!file_exists($savePath)) {
-                        mkdir($savePath, 0777, true);
+                    if (!file_exists($savePathSdCode)) {
+                        mkdir($savePathSdCode, 0777, true);
+                    }
 
+                    if (!file_exists($savePathAdditional)) {
+                        mkdir($savePathAdditional, 0777, true);
                     }
 
                     $contents->save($pathAddImg); // save additional
 
-                    self::$requestProductImage['details']['additional'][$key]['filemtime'] = $additional['filemtime'];
-                    self::$requestProductImage['details']['additional'][$key]['filemtime_md5'] = md5($additional['filemtime']);
-                    self::generateAdditionalPreview($product, $key);
-                } elseif ($additional['filemtime'] != (self::$dbProductImage['additional'][$key]['filemtime'] ?? null)) {
-                    self::$requestProductImage['details']['additional'][$key]['filemtime'] = self::$dbProductImage['details']['additional'][$key]['filemtime'];
-                    self::$requestProductImage['details']['additional'][$key]['filemtime_md5'] = md5(self::$dbProductImage['details']['additional'][$key]['filemtime']);
+                    self::$requestProductGroupImage['details']['additional'][$key]['filemtime_md5'] = $timeImageUpdateMd5;
+                    //self::generateAdditionalPreview($product, $key);
+                } elseif ($timeImageUpdateMd5 == (self::$dbProductGroupImage['additional'][$key]['filemtime_md5'] ?? null)) {
+                    self::$requestProductGroupImage['details']['additional'][$key]['filemtime_md5'] = $timeImageUpdateMd5;
                 }
             }
         }
@@ -322,6 +373,46 @@ class ImportImage
                 }
             //}
         //}
+    }
+
+    private static function downloadDefectiveImages($sdCode, $sku)
+    {
+        $defectiveImages = self::$apiProductImage['data'][$sku]['main']['defective_attributes']['images'] ?? null;
+        if (isset($defectiveImages)) {
+            foreach ($defectiveImages as $key => $imagePath) {
+                $urlString = parse_url($imagePath);
+                parse_str($urlString['query'], $params);
+                $timeImageUpdateMd5 = $params['hash'];
+
+                $pathSdCode = 'storage/product/' . $sdCode . '/';
+                $pathSku = $pathSdCode . $sku . '/';
+                $pathAddImg = public_path($pathSku . $sku . '_' . $key) . '.' . self::$formatImg['jpg'];
+
+                if ($timeImageUpdateMd5 != (self::$dbProductImage['details']['additional'][$key]['filemtime_md5'] ?? null)
+                    || !file_exists($pathAddImg)
+                ) {
+                    $url = $imagePath;
+                    $contents = Image::make($url);
+                    $savePathSdCode = public_path($pathSdCode);
+                    $savePathSku = public_path($pathSku);
+
+                    if (!file_exists($savePathSdCode)) {
+                        mkdir($savePathSdCode, 0777, true);
+                    }
+
+                    if (!file_exists($savePathSku)) {
+                        mkdir($savePathSku, 0777, true);
+                    }
+
+                    $contents->save($pathAddImg); // save additional
+
+                    self::$requestProductImage['details']['additional'][$key]['filemtime_md5'] = $timeImageUpdateMd5;
+                    //self::generateAdditionalPreview($product, $key);
+                } elseif ($timeImageUpdateMd5 == (self::$dbProductImage['additional'][$key]['filemtime_md5'] ?? null)) {
+                    self::$requestProductImage['details']['additional'][$key]['filemtime_md5'] = $timeImageUpdateMd5;
+                }
+            }
+        }
     }
 
     public static function getDataJson(string $apiUrl) : array
