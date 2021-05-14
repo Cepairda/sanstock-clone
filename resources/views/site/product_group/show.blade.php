@@ -175,7 +175,7 @@
                                                 Сорт-{{ $i}}
                                             </a>
                                         @else
-                                            <a class="nav-link disabled w-25 text-center"
+                                            <a class="nav-link w-25 text-center"
                                                data-sort="{{ $i }}"
                                                data-toggle="tab" href="#sort-{{ $i}}"
                                                role="tab"
@@ -200,7 +200,7 @@
                                     <div class="tab-pane {{ $sort == $i ? 'active show' : 'fade' }}" id="sort-{{ $i }}" role="tabpanel" aria-labelledby="nav-home-tab">
                                         @if ($productsSort[$i] ?? null)
 
-                                            @include('site.product.components.productsTable', ['products' => $productsSort[$i]->products, 'productsDefectiveAttributes' => $productsDefectiveAttributes, 'sort' => $i, 'current_sort' => $sort])
+                                            @include('site.product_group.components.productsTable', ['products' => $productsSort[$i]->products, 'productsDefectiveAttributes' => $productsDefectiveAttributes, 'sort' => $i, 'current_sort' => $sort])
 
                                         @else
                                            <div style="text-align: center;">{{ 'Товар не найден' }}</div>
