@@ -19,34 +19,29 @@
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, ea!</p>
                         </div>
                         <div class="tabs-products__btn-group">
-                            <button class="btn btn-item active" data-toggle="#sort-0">Сорт - 0</button>
-                            <button class="btn btn-item" data-toggle="#sort-1">Сорт - 1</button>
-                            <button class="btn btn-item" data-toggle="#sort-2">Сорт - 2</button>
-                            <button class="btn btn-item" data-toggle="#sort-3">Сорт - 3</button>
+                            <!--button class="btn btn-item active" data-toggle="#sort-0">Сорт - 0</button-->
+                            @foreach($productsGradeKey as $key => $value)
+                                <button class="btn btn-item {{ $value == $gradeActiveDefault ? 'active' : ''}}" data-toggle="#sort-{{ $value }}">Сорт - {{ $value }}</button>
+                            @endforeach
                         </div>
                     </div>
 
-                    @php($products = \App\ProductSort::joinLocalization()->withProductGroup()->take(8)->get())
-
                     <div class="col-12 px-0">
                         <div class="tabs-products__container">
-                            <div id="sort-0" class="container-item active">
-                                <div class="owl-carousel owl-theme">
-
-                                    @foreach($products as $product)
-                                        <div class="container-item__card">
-                                            @include('site.product_group.components.card', [
-                                                'product' => $product,
-                                                'productGroup' => $product->productGroup
-                                            ])
-                                        </div>
-                                    @endforeach
+                            @foreach($productsBySort as $key => $products)
+                                <div id="sort-{{ $key }}" class="container-item {{ $key == $gradeActiveDefault ? 'active' : ''}}">
+                                    <div class="owl-carousel owl-theme">
+                                        @foreach($products as $product)
+                                            <div class="container-item__card">
+                                                @include('site.product_group.components.card', [
+                                                    'product' => $product,
+                                                    'productGroup' => $product->productGroup
+                                                ])
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
-
-                            </div>
-                            <div id="sort-1" class="container-item">1</div>
-                            <div id="sort-2" class="container-item">2</div>
-                            <div id="sort-3" class="container-item">3</div>
+                            @endforeach
                         </div>
                     </div>
 
