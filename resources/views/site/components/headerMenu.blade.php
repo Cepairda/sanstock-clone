@@ -1,6 +1,6 @@
 @php($categories = $categories ?? \App\Category::joinLocalization()->get()->toTree())
 
-<li class="nav-menu--item nav-head-menu">
+<div class="nav-menu--item nav-head-menu">
 
     <p class="head-menu--title">
         Каталог товаров
@@ -97,5 +97,5 @@
 
     </div>
 
-</li>
+</div>
 
