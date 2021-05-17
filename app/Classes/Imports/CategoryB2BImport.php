@@ -6,6 +6,7 @@ use App\Brand;
 use App\Category;
 use App\Characteristic;
 use App\CharacteristicValue;
+use App\Jobs\ProcessCategoryB2BImport;
 use App\Product;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
@@ -36,16 +37,22 @@ class CategoryB2BImport
 
     public function addToQueue()
     {
-        $brand = $this->firstOrCreateBrand();
+        $this->getDataJson($this->apiUrl);
+        $jsonData = self::$data;
 
-        foreach (self::$data['products'] as $productRef => $productData) {
-            ProcessImportB2B::dispatch($brand->id, $productRef)->onQueue('b2bImport');
+        foreach ($jsonData as $ref => $data) {
+            ProcessCategoryB2BImport::dispatch($ref)->onQueue('b2bImportCategory');
         }
     }
 
-    public function importQueue($brandId, $productRef)
+    public function importQueue($ref)
     {
-        $this->product($brandId, $productRef);
+        [
+            'parent_ref' => $parentRef,
+            'name' => $name,
+            'image' => $image
+        ] = self::$data[$ref];
+        $this->categoryImport($ref, $parentRef, $name, $image);
     }
 
     public function import()
@@ -61,9 +68,7 @@ class CategoryB2BImport
         }
 
         $this->fixParent();
-
         $tree = Category::get()->toTree();
-
         $this->recursiveCheck($tree);
     }
 
