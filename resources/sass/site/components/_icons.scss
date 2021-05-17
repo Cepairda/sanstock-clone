@@ -1,0 +1,17 @@
+.icon-search {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: transparent url($search) center no-repeat;
+  background-size: cover;
+  line-height: 1;
+}
+
+.icon-callback {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: transparent url($receiver) center no-repeat;
+  background-size: cover;
+  line-height: 1;
+}

@@ -22,13 +22,16 @@
 @import 'template/style.all', 'template/stylemedia';
 
 //components
-@import 'components/breadcrumbs',
+@import 'components/icons',
+        'components/language',
+        'components/breadcrumbs',
         'components/header',
         'components/header-menu',
         'components/tabs-products',
         'components/form',
         'components/card',
-        'components/buttons';
+        'components/buttons',
+        'components/language';
 
 //page
 @import 'page/home',

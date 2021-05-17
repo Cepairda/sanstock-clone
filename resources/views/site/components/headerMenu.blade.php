@@ -3,7 +3,7 @@
 <div class="nav-menu--item nav-head-menu">
 
     <p class="head-menu--title">
-        Каталог товаров
+        {{ __('Catalog products') }}
     </p>
 
     <div class="head-menu head-menu--container">
@@ -11,86 +11,98 @@
         <div class="level-1">
 
             <div class="level-1__wrap">
+                <ul class="visible-container">
 
-                @foreach($categories as $category)
+                    @foreach($categories as $category)
+                        <li>
+                            @if($category->children->isNotEmpty())
 
-                    @if($category->children->isNotEmpty())
+                                <div class="head-menu__category">
 
-                        <div class="head-menu__category">
+                                    <div class="head-menu__category--name-wrap category-arrow"
+                                         data-id="{{ $category->id }}">
 
-                            <div class="head-menu__category--name-wrap category-arrow" data-id="{{ $category->id }}">
+                                        <a class="head-menu__category--name"
+                                           href="{{ route('site.resource', $category->slug) }}">{{ $category->name }}</a>
 
-                                <a class="head-menu__category--name"
-                                   href="{{ route('site.resource', $category->slug) }}">{{ $category->name }}</a>
+                                    </div>
 
-                            </div>
+                                    <div class="level-2">
 
-                            <div class="level-2">
+                                        <div class="level-2__wrap">
 
-                                <div class="level-2__wrap">
-                                    <ul class="test">
-                                        @foreach($category->children as $cat)
-                                            <li>
-                                                <div class="head-menu__subcategory">
+                                            <ul class="visible-container">
 
-                                                    @if($cat->children->isNotEmpty())
+                                                @foreach($category->children as $cat)
 
-                                                    <div class="head-menu__subcategory--name-wrap category-arrow">
-                                                        <a class="head-menu__subcategory--name" href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
-                                                    </div>
+                                                    <li>
 
-                                                    <div class="level-3">
+                                                        <div class="head-menu__subcategory">
 
-                                                        <div class="level-3__wrap">
+                                                            @if($cat->children->isNotEmpty())
 
-                                                            <div class="head-menu__subcategory">
+                                                                <div class="head-menu__subcategory--name-wrap category-arrow">
+                                                                    <a class="head-menu__subcategory--name"
+                                                                       href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
+                                                                </div>
 
-                                                                @foreach($cat->children as $c)
-                                                                    <div class="head-menu__subcategory--name-wrap">
-                                                                        <a class="head-menu__subcategory--name" href="{{ route('site.resource', $c->slug) }}">
-                                                                            {{ $c->name }}
-                                                                        </a>
+                                                                <div class="level-3">
+
+                                                                    <div class="level-3__wrap">
+                                                                        <ul class="visible-container">
+
+                                                                        @foreach($cat->children as $c)
+<li>
+                                                                            <div class="head-menu__subcategory">
+                                                                                <div class="head-menu__subcategory--name-wrap">
+                                                                                    <a class="head-menu__subcategory--name"
+                                                                                       href="{{ route('site.resource', $c->slug) }}">
+                                                                                        {{ $c->name }}
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+</li>
+                                                                        @endforeach
+                                                                        </ul>
+
+
                                                                     </div>
-                                                                @endforeach
 
-                                                            </div>
+                                                                </div>
+
+                                                            @else
+
+                                                                <div class="head-menu__subcategory--name-wrap">
+                                                                    <a class="head-menu__subcategory--name"
+                                                                       href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
+                                                                </div>
+
+                                                            @endif
 
                                                         </div>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
 
-                                                    </div>
+                                        </div>
 
-                                                    @else
-
-                                                        <div class="head-menu__subcategory--name-wrap">
-                                                            <a class="head-menu__subcategory--name" href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
-                                                        </div>
-
-                                                    @endif
-
-                                                </div>
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                                    </div>
 
                                 </div>
 
-                            </div>
+                            @else
 
-                        </div>
+                                <div class="head-menu__category">
 
-                    @else
+                                    <a class="head-menu__category--name"
+                                       href="#">{{ $category->name }}</a>
 
-                        <div class="head-menu__category">
+                                </div>
 
-                            <a class="head-menu__category--name"
-                               href="#">{{ $category->name }}</a>
-
-                        </div>
-
-                    @endif
-
-                @endforeach
-
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
             </div>
 
         </div>
