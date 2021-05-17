@@ -8,6 +8,11 @@ class Category extends Resource
 {
     use NodeTrait;
 
+    public function getRefAttribute()
+    {
+        return $this->getDetails('ref');
+    }
+
     public function getNameAttribute()
     {
         return $this->getData('name');

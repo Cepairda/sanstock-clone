@@ -58,7 +58,7 @@
                                 <a href="{{ route('site.resource', $descendant->slug) }}"
                                    title="{{ $descendant->name }}">
                                     <img src="{{ asset('images/no_img.jpg') }}"
-                                         data-src="#"
+                                         data-src="{{ asset('storage/category/' . $descendant->ref . '.jpg')  }}"
                                          class="img-data-path w-100 lazy"
                                          alt="{{ $descendant->name }}">
                                     <div class="pt-3 text-center">
