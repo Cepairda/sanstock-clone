@@ -1,5 +1,5 @@
 {{--<div class="col-12 col-lg-6 col-xl-4">--}}
-    <div class="product__wrapper">
+<div class="product__wrapper">
         <div class="product__wrapper-lg">
             <a class="product__img" href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}">
                 <img class="product__img-lg img-data-path lazy"
@@ -15,7 +15,7 @@
             </div>
 
             <div class="product-wrapper">
-                <a href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}" class="product-description--item">Category{{ $productGroup->category->getData('name') }}</a>
+                <a href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}" class="product-description--item">Category</a>
                 <div class="product-price">
                     <div class="product-price__item">
                         <p>

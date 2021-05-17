@@ -203,7 +203,7 @@ class ProductSort extends Resource
     {
         return $query->with(['productGroup' => function ($query) use ($joinLocalization) {
             if ($joinLocalization) return $query->select('*')->joinLocalization();
-        }, 'productGroup.category']);
+        }]);
     }
 
     public function productGroup()

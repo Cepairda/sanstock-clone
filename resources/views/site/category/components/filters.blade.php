@@ -10,9 +10,9 @@
         <div class="left-sidebar__view range-slider">
             <h3 class="left-sidebar__view--title">@lang('site.content.price')</h3>
             <b class="text-lg">@lang('site.content.ot')</b>
-            <input class="inp-price-min" type="number" value="{{ $minPrice }}" disabled>
+            <input class="inp-price-min" type="number" name="minPrice" value="{{ $minPrice }}">
             <b class="text-lg">до</b>
-            <input class="inp-price-max" type="number" value="{{ $maxPrice }}" disabled>
+            <input class="inp-price-max" type="number" name="maxPrice" value="{{ $maxPrice }}">
             <b class="text-lg">грн.</b>
             <input id="priceRangeSlider" type="text" data-slider-min="{{ $minPrice }}"
                    data-slider-max="{{ $maxPrice }}" data-slider-value="[{{ $minPriceSelect }},{{ $maxPriceSelect }}]"
@@ -20,6 +20,22 @@
         </div>
 
     @endif
+    <hr>
+    <div class="left-sidebar__view">
+        <div class="left-sidebar__view--wrapp">
+            <h3 class="left-sidebar__view--title">Сорт</h3>
+            @foreach ($sortType as $i)
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="sort[]"
+                           id="sortID{{ $i }}" value="{{ $i }}"
+                           {{ in_array($i, ($_GET['sort']) ?? []) ? 'checked' : ''}}
+                           class="custom-control-input">
+                    <label class="custom-control-label"
+                           for="sortID{{ $i }}">{{ $i }}</label>
+                </div>
+            @endforeach
+        </div>
+    </div>
     <hr>
     @foreach ($characteristics as $characteristic)
         @if(count($valuesForView[$characteristic->id]) > 1)

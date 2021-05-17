@@ -164,7 +164,6 @@
                             <nav>
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                     @for ($i = 0; $i < 4; $i++)
-                                        @if ($productsSort[$i] ?? null)
                                             <a class="nav-link w-25 text-center {{ $sort == $i ? 'active' : '' }}"
                                                data-sort="{{ $i  }}"
                                                data-toggle="tab" href="#sort-{{ $i}}"
@@ -174,18 +173,6 @@
                                             >
                                                 Сорт-{{ $i}}
                                             </a>
-                                        @else
-                                            <a class="nav-link w-25 text-center"
-                                               data-sort="{{ $i }}"
-                                               data-toggle="tab" href="#sort-{{ $i}}"
-                                               role="tab"
-                                               aria-controls="nav-home"
-                                               aria-selected="false"
-                                               aria-disabled="true"
-                                            >
-                                                Сорт-{{ $i}}
-                                            </a>
-                                        @endif
                                     @endfor
                                     <!--a class="nav-link w-25 text-center" data-sort="0" data-toggle="tab" href="#sort-0" role="tab" aria-controls="nav-home" aria-selected="true">Сорт-0</a>
                                     <a class="nav-link w-25 text-center" data-sort="1" data-toggle="tab" href="#sort-1" role="tab" aria-controls="nav-profile" aria-selected="false">Сорт-1</a>
