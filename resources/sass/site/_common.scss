@@ -1,3 +1,64 @@
+body {
+	position: relative;
+	font-family: 'Open Sans Regular', sans-serif;
+	font-size: 14px;
+	line-height: 1.5;
+	background-color: #fafafa;
+	padding: 0;
+	margin: 0;
+}
+
+ul {
+	list-style-type: none;
+}
+
+ul, li, p {
+	margin: 0;
+	padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+	padding: 0;
+	line-height: 1;
+}
+
+.bgc-grad h1, .bgc-grad h2, .bgc-grad h3, .bgc-grad h4, .bgc-grad h5, .bgc-grad h6 {
+	color: #fff;
+}
+
+a {
+	text-decoration: none;
+	color: #000000;
+	transition: all 0.5s ease;
+
+	&:active,
+	&:hover {
+		color: #000000;
+		text-decoration: none;
+
+	}
+
+	&.disabled {
+		cursor: default;
+		color: $grey-midl-light !important;
+	}
+}
+
+i {
+	cursor: pointer;
+}
+
+
+button:focus,
+button:active{
+	outline: none;
+}
+
+input:focus {
+	outline: none;
+}
+
 .page {
 	position: relative;
 	display: flex;
@@ -36,3 +97,4 @@ footer {
 		vertical-align: middle;
 	}
 }
+
