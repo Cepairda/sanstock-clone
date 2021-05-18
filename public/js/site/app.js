@@ -27122,7 +27122,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
             img.src = _this2.lineNode.querySelector("[data-index=\"".concat(index, "\"]")).dataset.src;
           } else {
-            img.src = window.location.origin + '/img/b2b/white_fone_150x150.jpg';
+            img.src = _this2.lineNode.querySelector("[data-index=\"".concat(index, "\"] img")).src; //window.location.origin + '/img/b2b/white_fone_150x150.jpg';
           }
 
           div.append(img);
@@ -27175,12 +27175,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       value: function addButtons() {
         var classNameChevron = {
           'x': {
-            'positive': 'fas fa-chevron-left',
-            'negative': 'fas fa-chevron-right'
+            'positive': 'chevron-left',
+            'negative': 'chevron-right'
           },
           'y': {
-            'positive': 'fas fa-chevron-up',
-            'negative': 'fas fa-chevron-down'
+            'positive': 'chevron-up',
+            'negative': 'chevron-down'
           }
         };
         var setStyleParam = this.settings.axis === 'x' ? "width: ".concat(this.settings.widthButtonNav, "px;") : "height: ".concat(this.settings.widthButtonNav, "px;");

@@ -81,8 +81,8 @@
                                 <div class="main__title">{!! $category->h1 !!}</div>
                                 {!! isset($json_ld) ? $json_ld : '' !!}
                                 <div class="main__sort">
-                                    <p>@lang('site.content.sort'):</p>
-                                    <div class="sort-wrapper">
+                                    {{--<p>{{ __('Sort') }}:</p>--}}
+                                    {{--<div class="sort-wrapper">--}}
 
                                         {{--<span class="sort-view">@lang('site.links_to_sort.' . (isset($parameters['sort']) ? $parameters['sort'][0] : 'name'))</span>--}}
                                         {{--<ul>--}}
@@ -95,7 +95,7 @@
                                         {{--<li class="sort-view-link jsLink"--}}
                                         {{--data-href="{{ asset($links_to_sort['-name']) }}">@lang('site.links_to_sort.-name')</li>--}}
                                         {{--</ul>--}}
-                                    </div>
+                                    {{--</div>--}}
 
                                     @if (isset($filters))
                                         <div class="btn-filter open-filter">

@@ -3,14 +3,14 @@
 	position: sticky;
 	top: 0;
 	background: #fff;
-	z-index: 1050;
+	z-index: 1000;
 	box-shadow: 0 3px 3px rgba(0, 0, 0, .05);
 
 	//header-top
 	&-top {
 		position: relative;
 		background-color: #ffffff;
-		z-index: 1050;
+		z-index: 1000;
 		border-bottom: 1px solid $grey-light;
 	}
 

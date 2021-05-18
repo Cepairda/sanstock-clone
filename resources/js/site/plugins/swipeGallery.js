@@ -167,7 +167,7 @@
                     this.lineNode.querySelector(`[data-index="${index}"]`).classList.add('active');
                     img.src = this.lineNode.querySelector(`[data-index="${index}"]`).dataset.src;
                 } else {
-                    img.src = window.location.origin + '/img/b2b/white_fone_150x150.jpg';
+                    img.src = this.lineNode.querySelector(`[data-index="${index}"] img`).src;//window.location.origin + '/img/b2b/white_fone_150x150.jpg';
                 }
 
                 div.append(img);
@@ -221,12 +221,12 @@
 
             const classNameChevron = {
                 'x': {
-                    'positive': 'fas fa-chevron-left',
-                    'negative': 'fas fa-chevron-right'
+                    'positive': 'chevron-left',
+                    'negative': 'chevron-right'
                 },
                 'y': {
-                    'positive': 'fas fa-chevron-up',
-                    'negative': 'fas fa-chevron-down'
+                    'positive': 'chevron-up',
+                    'negative': 'chevron-down'
                 }
             };
 

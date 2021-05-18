@@ -3,7 +3,20 @@ $font-family-base: Open Sans Bold, sans-serif;
 $font-family-sans-serif: Proxima Nova Cn Lt, sans-serif;
 
 //Colors
-$color-base: #ef6e20;
+$c1: #01feff;
+$c2: #00c5e3;
+$c3:#009acf;
+$c4:#0072bc;
+
+//баннер
+$c5: #016fc0; //text
+$c6: #cde2f2; //bgc
+
+$color-base: $c3;
+$color-base-gradient-1: $c4;
+$color-base-gradient-2: $c2;
+
+
 $grey : #b8b8b8;
 $grey-midl-dark: darken($grey, 12%);
 $grey-dark: darken($grey, 18%);
@@ -27,6 +40,4 @@ $chevron-down: "data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20
 $chevron-right: "data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline fill='none' stroke='" + $icon-color +"' stroke-width='1.03' points='7 4 13 10 7 16'%3E%3C/polyline%3E%3C/svg%3E";
 $cart: "data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7.3' cy='17.3' r='1.4'%3E%3C/circle%3E%3Ccircle cx='13.3' cy='17.3' r='1.4'%3E%3C/circle%3E%3Cpolyline fill='none' stroke='" + $icon-color +"' points='0 2 3.2 4 5.3 12.5 16 12.5 18 6.5 8 6.5'%3E%3C/polyline%3E%3C/svg%3E";
 $receiver: "data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='none' stroke='" + $icon-color +"' stroke-width='1.01' d='M6.189,13.611C8.134,15.525 11.097,18.239 13.867,18.257C16.47,18.275 18.2,16.241 18.2,16.241L14.509,12.551L11.539,13.639L6.189,8.29L7.313,5.355L3.76,1.8C3.76,1.8 1.732,3.537 1.7,6.092C1.667,8.809 4.347,11.738 6.189,13.611'%3E%3C/path%3E%3C/svg%3E";
-$search: "data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle fill='none' stroke='" + $icon-color +"' stroke-width='1.1' cx='9' cy='9' r='7'%3E%3C/circle%3E%3Cpath fill='none' stroke='%23000' stroke-width='1.1' d='M14,14 L18,18 L14,14 Z'%3E%3C/path%3E%3C/svg%3E"
-
-
+$search: "data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle fill='none' stroke='" + $icon-color +"' stroke-width='1.1' cx='9' cy='9' r='7'%3E%3C/circle%3E%3Cpath fill='none' stroke='%23000' stroke-width='1.1' d='M14,14 L18,18 L14,14 Z'%3E%3C/path%3E%3C/svg%3E";

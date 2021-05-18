@@ -8,8 +8,8 @@
     <!-- Range-->
     @if ($minPrice != $maxPrice)
         <div class="left-sidebar__view range-slider">
-            <h3 class="left-sidebar__view--title">@lang('site.content.price')</h3>
-            <b class="text-lg">@lang('site.content.ot')</b>
+            <h3 class="left-sidebar__view--title">{{ __('Price') }}</h3>
+            <b class="text-lg">{{ __('From') }}</b>
             <input class="inp-price-min" type="number" name="minPrice" value="{{ $minPrice }}">
             <b class="text-lg">до</b>
             <input class="inp-price-max" type="number" name="maxPrice" value="{{ $maxPrice }}">

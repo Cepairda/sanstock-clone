@@ -55,7 +55,7 @@
     "No results found for": "За запитом нічого не знайдено",
     "Apply": "Застосувати",
     "Price": "Ціна",
-    "Sort by": "Сортувати за",
+    "Sort": "Сортувати",
 
     "No products": "Немає товарів",
     "No price": "Немає ціни",
@@ -86,5 +86,6 @@
 
     "Cart": "Кошик",
     "Checkout": "Оформити",
-    "Catalog products": "Каталог товарів"
+    "Catalog products": "Каталог товарів",
+    "From": "Від"
 }
