@@ -8,18 +8,21 @@
 
     <div class="head-menu head-menu--container">
 
-        <div class="level-1">
+        <div class="level-1 box">
 
-            <div class="level-1__wrap">
-                <ul class="visible-container">
+            <div class="level-1__wrap box-view box-white">
+
+                <ul class="visible-container box-list">
 
                     @foreach($categories as $category)
+
                         <li>
+
                             @if($category->children->isNotEmpty())
 
                                 <div class="head-menu__category">
 
-                                    <div class="head-menu__category--name-wrap category-arrow"
+                                    <div class="head-menu__category--name-wrap tt category-arrow"
                                          data-id="{{ $category->id }}">
 
                                         <a class="head-menu__category--name"
@@ -27,11 +30,11 @@
 
                                     </div>
 
-                                    <div class="level-2">
+                                    <div class="level-2 box">
 
-                                        <div class="level-2__wrap">
+                                        <div class="level-2__wrap box-view box-grey">
 
-                                            <ul class="visible-container">
+                                            <ul class="visible-container box-list">
 
                                                 @foreach($category->children as $cat)
 
@@ -41,28 +44,29 @@
 
                                                             @if($cat->children->isNotEmpty())
 
-                                                                <div class="head-menu__subcategory--name-wrap category-arrow">
+                                                                <div class="head-menu__subcategory--name-wrap tt category-arrow">
                                                                     <a class="head-menu__subcategory--name"
                                                                        href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
                                                                 </div>
 
-                                                                <div class="level-3">
+                                                                <div class="level-3 box">
 
-                                                                    <div class="level-3__wrap">
-                                                                        <ul class="visible-container">
+                                                                    <div class="level-3__wrap box-view box-white">
 
-                                                                        @foreach($cat->children as $c)
-<li>
-                                                                            <div class="head-menu__subcategory">
-                                                                                <div class="head-menu__subcategory--name-wrap">
-                                                                                    <a class="head-menu__subcategory--name"
-                                                                                       href="{{ route('site.resource', $c->slug) }}">
-                                                                                        {{ $c->name }}
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-</li>
-                                                                        @endforeach
+                                                                        <ul class="visible-container box-list">
+
+                                                                            @foreach($cat->children as $c)
+                                                                                <li>
+                                                                                    <div class="head-menu__subcategory">
+                                                                                        <div class="head-menu__subcategory--name-wrap tt">
+                                                                                            <a class="head-menu__subcategory--name"
+                                                                                               href="{{ route('site.resource', $c->slug) }}">
+                                                                                                {{ $c->name }}
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </li>
+                                                                            @endforeach
                                                                         </ul>
 
 
@@ -72,7 +76,7 @@
 
                                                             @else
 
-                                                                <div class="head-menu__subcategory--name-wrap">
+                                                                <div class="head-menu__subcategory--name-wrap tt">
                                                                     <a class="head-menu__subcategory--name"
                                                                        href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
                                                                 </div>
@@ -92,7 +96,7 @@
 
                             @else
 
-                                <div class="head-menu__category">
+                                <div class="head-menu__category tt">
 
                                     <a class="head-menu__category--name"
                                        href="#">{{ $category->name }}</a>
@@ -100,9 +104,12 @@
                                 </div>
 
                             @endif
+
                         </li>
+
                     @endforeach
                 </ul>
+
             </div>
 
         </div>
