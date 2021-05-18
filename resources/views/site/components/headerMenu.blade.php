@@ -20,9 +20,9 @@
 
                             @if($category->children->isNotEmpty())
 
-                                <div class="head-menu__category">
+                                <div class="head-menu__category box-list__inner">
 
-                                    <div class="head-menu__category--name-wrap tt category-arrow"
+                                    <div class="head-menu__category--name-wrap category-arrow box-list__link box-list-white"
                                          data-id="{{ $category->id }}">
 
                                         <a class="head-menu__category--name"
@@ -40,11 +40,11 @@
 
                                                     <li>
 
-                                                        <div class="head-menu__subcategory">
+                                                        <div class="head-menu__subcategory box-list__inner">
 
                                                             @if($cat->children->isNotEmpty())
 
-                                                                <div class="head-menu__subcategory--name-wrap tt category-arrow">
+                                                                <div class="head-menu__subcategory--name-wrap box-list__link box-list-grey category-arrow">
                                                                     <a class="head-menu__subcategory--name"
                                                                        href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
                                                                 </div>
@@ -57,8 +57,8 @@
 
                                                                             @foreach($cat->children as $c)
                                                                                 <li>
-                                                                                    <div class="head-menu__subcategory">
-                                                                                        <div class="head-menu__subcategory--name-wrap tt">
+                                                                                    <div class="head-menu__subcategory box-list__inner">
+                                                                                        <div class="head-menu__subcategory--name-wrap box-list__link box-list-white">
                                                                                             <a class="head-menu__subcategory--name"
                                                                                                href="{{ route('site.resource', $c->slug) }}">
                                                                                                 {{ $c->name }}
@@ -75,12 +75,12 @@
                                                                 </div>
 
                                                             @else
-
-                                                                <div class="head-menu__subcategory--name-wrap tt">
-                                                                    <a class="head-menu__subcategory--name"
-                                                                       href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
+                                                                <div class="box-list__inner">
+                                                                    <div class="head-menu__subcategory--name-wrap  box-list__link">
+                                                                        <a class="head-menu__subcategory--name"
+                                                                           href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
+                                                                    </div>
                                                                 </div>
-
                                                             @endif
 
                                                         </div>
@@ -95,14 +95,14 @@
                                 </div>
 
                             @else
+                                <div class="box-list__inner">
+                                    <div class="head-menu__category box-list__link">
 
-                                <div class="head-menu__category tt">
+                                        <a class="head-menu__category--name"
+                                           href="#">{{ $category->name }}</a>
 
-                                    <a class="head-menu__category--name"
-                                       href="#">{{ $category->name }}</a>
-
+                                    </div>
                                 </div>
-
                             @endif
 
                         </li>

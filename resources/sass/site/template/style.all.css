@@ -1046,46 +1046,6 @@ label {
     background-color: #000;
 }
 
-/*input price*/
-.text-lg {
-    font-size: 11px;
-}
-
-.inp-price-min, .inp-price-max {
-    font-family: Open Sans Semibold, sans-serif;
-    font-size: 14px;
-    border: 1px solid #9d9d9c;
-    padding-left: 5px;
-    border-radius: 3px;
-    background-color: transparent;
-    max-width: 55px;
-    margin: 5px 3px;
-}
-
-.slider.slider-horizontal {
-    width: 100%;
-}
-
-.slider.slider-horizontal .slider-track {
-    height: 2px;
-    margin-top: 0;
-    background-image: none;
-    background-color: #cccccc;
-}
-
-.slider-selection {
-    background-image: none;
-    background-color: #ee711e;
-}
-
-.slider-handle {
-    top: 6px;
-    width: 10px;
-    height: 10px;
-    background-image: none;
-    background-color: #ee711e;
-}
-
 /*nav-pages*/
 .nav-pages {
     display: flex;
@@ -1584,12 +1544,6 @@ hr {
     background-color: #efefef;
 }
 
-.nav-pills .nav-link-i.active {
-    color: #000000;
-    background-color: transparent;
-    border-bottom: 2px solid #ef6f20;
-}
-
 .card__title .nav-link-i {
     border-radius: 0;
 }
@@ -1914,7 +1868,7 @@ table.tab-cr > tbody > tr > td {
     font-size: 20px;
     font-weight: 700;
     text-align: center;
-    color: #ef6e20;
+    color: #009acf;
 }
 
 .main__contacts-dest {
@@ -2069,133 +2023,6 @@ table.tab-cr > tbody > tr > td {
 .main-product-fl {  min-height: 310px;}
 
 /*---main__news_end---*/
-
-/*footer*/
-.body-wrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
-}
-
-.body-content {
-    flex: 1 0 auto;
-}
-footer {
-    width: 100%;
-    padding-top: 85px;
-    background-color: #ffffff;
-
-    flex: 0 0 auto;
-}
-
-.footer__element {
-    margin-bottom: 45px;
-}
-
-.footer-grad {
-    background-color: #141e25;
-}
-
-.bgc-grad footer {
-    background-color: #141e25;
-}
-
-.bgc-grad footer .footer__element__title {
-    color: #9d9d9d;
-}
-
-.footer__element__title {
-    display: block;
-    font-family: Proxima Nova Cn Rg, sans-serif;
-    font-size: 18px;
-    margin-bottom: 35px;
-}
-
-.footer-grad .footer__element__title {
-    color: #9d9d9d;
-}
-
-.footer__element li {
-    margin-bottom: 10px;
-}
-
-.footer__element--item {
-    font-family: Open Sans Regular, sans-serif;
-    font-size: 16px;
-    line-height: 1.875;
-    color: #656565;
-}
-
-.footer-grad .footer__element--item {
-    color: #656565;
-}
-
-.footer-grad .footer__element--item:hover {
-    color: #f5f5f5;
-}
-
-li.footer__element--item-tel {
-    font-family: Proxima Nova Cn Rg, sans-serif;
-    font-size: 20px;
-    line-height: 1.5;
-    margin-bottom: 10px;
-    color: white;
-}
-
-.bgc-grad .footer__element--item-tel {
-    color: #9d9d9d;
-}
-
-.footer-grad {
-    color: #9d9d9d;
-}
-
-.footer__element-phone {
-    font-family: Proxima Nova Cn Rg, sans-serif;
-    color: #ef6e20;
-    font-size: 24px;
-    line-height: 1.25;
-}
-
-.footer__element-phone:hover {
-    color: #ef6e20;
-    opacity: 0.8;
-
-}
-
-.fa-twitter, .fa-instagram, .fa-facebook-f {
-    color: #ee6e1f;
-}
-
-.footer__element i {
-    margin-right: 25px;
-}
-
-.copyright {
-    color: #9d9d9c;
-    border-top: 1px solid #ececec;
-    font-size: 12px;
-}
-
-.footer-grad .copyright {
-    color: #4c4c4c;
-    border-color: #31373b;
-}
-
-.bgc-grad .copyright {
-    color: #4c4c4c;
-    border-color: #31373b;
-}
-
-
-.copyright--lg {
-    padding: 15px;
-}
-
-.footer_mb-vr {
-    display: none;
-}
 
 
 /*checked btn-apply*/

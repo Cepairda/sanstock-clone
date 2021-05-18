@@ -23,6 +23,7 @@
 	background-color: #ee6e1f;
 	color: #ffffff !important;
 	border: 1px solid #ef6f20;
+
 }
 
 .tabs-products {
@@ -60,9 +61,10 @@
 			white-space: normal;
 			
 			&.active {
-				background-color: #ef6f20;
-				border-color: #ef6f20;
+				//background-color: #ef6f20;
+				//border-color: #ef6f20;
 				color: #fff;
+				background-image: linear-gradient(90deg, $color-base-gradient-1, $color-base-gradient-2);
 			}
 		}
 	}

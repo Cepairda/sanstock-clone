@@ -111,34 +111,39 @@ $menu: "data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xml
 
     &.box-grey {
       background-color: #f5f5f5;
+      .box-list__link {
 
-      .tt {
-        position: relative;
-        border-bottom: 1px solid #ffffff;
-
-        .head-menu__category--name {
-          //background-color: #ffffff;
-        }
       }
     }
 
     &.box-white {
       background-color: #ffffff;
-
-      .tt {
-        position: relative;
-        border-bottom: 1px solid #f5f5f5;
-
-        .head-menu__category--name {
-          //background-color: #f5f5f5;
-        }
-      }
     }
   }
 
   &-list {
     overflow-y: auto;
     max-height: 570px;
+
+    &__link {
+      position: relative;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+
+      &.box-list-white {
+        border-color: #f5f5f5;
+        &:hover {
+          //background-color: #f5f5f5;
+        }
+      }
+
+      .box-list-grey {
+        border-color: #ffffff;
+        &:hover {
+          //background-color: #ffffff;
+        }
+      }
+    }
   }
 }
 
@@ -175,13 +180,13 @@ $menu: "data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xml
   right: 28px;
 }
 .head-menu__category:hover .head-menu__category--name {
-  color: #000;
-  background-color: #f5f5f5;
+  //color: #000;
+  //background-color: #f5f5f5;
 }
 
 .head-menu__subcategory:hover .head-menu__subcategory--name {
-  color: #000;
-  background-color: #ffffff;
+  //color: #000;
+  //background-color: #ffffff;
 }
 
 .level-1__wrap .head-menu__category:first-child .head-menu__category--name {
@@ -636,9 +641,6 @@ $menu: "data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xml
   background-image: url("../libs/icon/heated-towel-rail_menu.svg");
 }
 
-@media (min-width: 1200px) {
-
-}
 @media (min-width: 992px) and (max-width: 1199.98px) {
   .head-menu--title{
     font-size: 14px;

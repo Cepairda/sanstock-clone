@@ -69,7 +69,8 @@
                                     @foreach($additional as $key => $value)
                                         <img src="/storage/product/{{ $productGroup->sdCode }}/additional/{{ $productGroup->sdCode }}_{{ $key }}.jpg" data-src="/storage/product/{{ $productGroup->sdCode }}/additional/{{ $productGroup->sdCode }}_{{ $key }}.jpg">
                                     @endforeach
-                                    <!--img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_1.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_1.jpg">
+                                    <!--
+                                    <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_1.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_1.jpg">
                                     <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_2.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_2.jpg">
                                     <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_3.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_3.jpg">
                                     <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_4.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_4.jpg">

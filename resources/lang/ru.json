@@ -55,7 +55,7 @@
     "No results found for": "По запросу ничего не найдено",
     "Apply": "Применить",
     "Price": "Цена",
-    "Sort by": "Сортировать по",
+    "Sort": "Сортировать",
 
     "No products": "Нет товаров",
     "No price": "Нет цены",
@@ -88,5 +88,6 @@
 
     "Cart": "Корзина",
     "Checkout": "Оформить",
-    "Catalog products": "Каталог товаров"
+    "Catalog products": "Каталог товаров",
+    "From": "От"
 }

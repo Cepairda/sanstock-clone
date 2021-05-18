@@ -9,7 +9,7 @@
 .btn-link-block-g {
 	display: inline-block;
 	padding: 12px 27px;
-	background-image: linear-gradient(90deg, #ef6f20, #ec900f);
+	background-image: linear-gradient(90deg, $color-base-gradient-1, $color-base-gradient-2);
 	border-radius: 50px;
 	font-family: Open Sans Bold, sans-serif;
 	font-size: 14px;
@@ -117,13 +117,17 @@ a:not([href]) {
 	display: inline-block;
 	min-width: 120px;
 	padding: 12px 24px;
-	background-image: linear-gradient(90deg, #ef6f20, #ec900f);
+
+	border: 2px solid;
+	border-image-slice: 1;
+	border-image-source: linear-gradient(90deg, $color-base-gradient-1, $color-base-gradient-2 );
+	background-image: linear-gradient(90deg, $color-base-gradient-1, $color-base-gradient-2 );
+
 	text-align: center;
 	font-family: Open Sans Bold, sans-serif;
 	font-size: 14px;
+	background-color: transparent;
 	color: #ffffff;
-	border-radius: 50px;
-	border: none;
 	overflow: hidden;
 	transition: all .35s ease 0s;
 
@@ -134,43 +138,35 @@ a:not([href]) {
 		right: 0;
 		bottom: 0;
 		left: 0;
-		border-width: 2px;
-		border-style: solid;
-		border-color: #ef6f20;
-		border-radius: 50px;
 		z-index: -1;
 	}
 
-	//&::before {
 	span {
 		content: "";
 		position: absolute;
 		width: 0;
-		height: 0; //100%
-		background: #fff;
+		height: 0;
 		top: 0;
 		left: 0;
-		border-radius: 50px;
 		z-index: -1;
 		transition: all 300ms ease;
 	}
 
 	&:hover, &.added {
-		color: #ef6f20;
+		background-image: none;
+		color: $color-base-gradient-1;
 		box-shadow:none;
 		z-index: 1;
 
 		&::after {
 			z-index: auto;
 		}
-		//&:before {
+
 		span {
 			position: absolute;
 			width: 100%;
 			height: 100%;
-			background: #fff;
-
-			//transition: all 300ms ease;
+			background: transparent;
 			&.xx {
 				transform: translate3d(0px, 0px, 0px) !important;
 			}
@@ -181,10 +177,9 @@ a:not([href]) {
 		position: absolute;
 		width: 100%;
 		height: 100%;
-		background: #fff;
+		background: transparent;
 		top: 0;
 		left: 0;
-		border-radius: 50px;
 		z-index: -1;
 		transform: translate3d(0px, 0px, 0px) !important;
 	}
