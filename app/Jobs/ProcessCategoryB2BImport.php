@@ -30,9 +30,9 @@ class ProcessCategoryB2BImport implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($ref)
+    public function __construct()
     {
-        $this->ref = $ref;
+        //$this->ref = $ref;
     }
 
     /**
@@ -45,10 +45,6 @@ class ProcessCategoryB2BImport implements ShouldQueue
         set_time_limit(0);
         ini_set('memory_limit', '1024M');
 
-        $categoryB2BImport->importQueue($this->ref);
-
-        $categoryB2BImport->fixParent();
-        $tree = Category::get()->toTree();
-        $categoryB2BImport->recursiveCheck($tree);
+        $categoryB2BImport->importQueue();
     }
 }
