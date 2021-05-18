@@ -10,69 +10,86 @@
 @endif
 
 @section('breadcrumbs')
-    <li class="active"
+    <li class="breadcrumb-item active"
         itemprop="itemListElement"
         itemscope itemtype="https://schema.org/ListItem"
     >
         <span itemprop="name">
-            {{ __('Search') }}
+                {{ __('Search') }}
         </span>
         <meta itemprop="position" content="2" />
     </li>
 @endsection
 
 @section('content')
-
-    @include('site.components.breadcrumbs', ['title' => 'Поиск "' . $searchQuery . '"'])
-
     <form>
         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}"/>
     </form>
 
-    <section class="section-md bg-white">
+    <div class="main-container bgc-gray">
 
-        <div class="shell">
-            <div class="range range-60 range-md-reverse">
-                @if($products->isNotEmpty())
-                    <div class="cell-12 section-divided__main">
-                        <div class="section-sm">
-                            <div class="filter-shop-box">
-                                <p>{{ __('Showing') }} {{ $products->count() }} {{ __('of') }} {{ $products->total() }} </p>
-                                <!--div class="form-wrap">
+        @include('site.components.breadcrumbs', ['title' => 'tytyt', 'h1' => true])
 
-                                    <select class="form-input select-filter" data-placeholder="Default sorting"
-                                            data-minimum-results-for-search="Infinity">
+        <div class="container">
+            <div class="row main__filter">
+                @if($productsSort->isNotEmpty())
+                    <main class="col-sm-12 col-lg-12 col-xl-12 order-2">
+                        {!! isset($json_ld) ? $json_ld : '' !!}
+                        <div class="main__sort">
+                            <p>@lang('site.content.sort'):</p>
+                            <div class="sort-wrapper">
 
-                                        <option>{{ __('Sort by name low to high') }}</option>
-                                        <option value="2">{{ __('Sort by name high to low') }}</option>
-                                        <option value="3">{{ __('Sort by price low to high') }}</option>
-                                        <option value="4">{{ __('Sort by price high to low') }}</option>
-
-                                    </select>
-                                </div-->
+                                {{--<span class="sort-view">@lang('site.links_to_sort.' . (isset($parameters['sort']) ? $parameters['sort'][0] : 'name'))</span>--}}
+                                {{--<ul>--}}
+                                {{--<li class="sort-view-link jsLink"--}}
+                                {{--data-href="{{ asset($links_to_sort['price']) }}">@lang('site.links_to_sort.price')</li>--}}
+                                {{--<li class="sort-view-link jsLink"--}}
+                                {{--data-href="{{ asset($links_to_sort['-price']) }}">@lang('site.links_to_sort.-price')</li>--}}
+                                {{--<li class="sort-view-link jsLink"--}}
+                                {{--data-href="{{ asset($links_to_sort['name']) }}">@lang('site.links_to_sort.name')</li>--}}
+                                {{--<li class="sort-view-link jsLink"--}}
+                                {{--data-href="{{ asset($links_to_sort['-name']) }}">@lang('site.links_to_sort.-name')</li>--}}
+                                {{--</ul>--}}
                             </div>
-                            <div class="range range-xs-center range-70">
-                                @foreach($products as $product)
-                                    <div class="cell-sm-4 cell-lg-3">
-                                        @include('site.components.product')
-                                    </div>
-                                @endforeach
-                            </div>
+
+                            @if (isset($filters))
+                                <div class="btn-filter open-filter">
+                                    @lang('site.category.components.filter')
+                                </div>
+                            @endif
+
                         </div>
-                        <!-- Pagination-->
-                        <section class="section-sm">
-                            <!-- Classic Pagination-->
-                            {!! $products->links() !!}
-                        </section>
-                    </div>
-                @else
-                    <div class="section-sm m-auto">
-                        <p>{{ __('Search not result', ['search_value' => $searchQuery]) }}</p>
-                    </div>
+                        <div class="row filter-wrapper">
+                            @foreach($productsSort as $productSort)
+                                <div class="col-12 col-lg-6 col-xl-3">
+                                    @include('site.product_group.components.card', [
+                                        'product' => $productSort,
+                                        'productGroup' => $productSort->productGroup
+                                    ])
+                                </div>
+                            @endforeach
+                        </div>
+                        @isset($show_more)
+                            <button type="button" class="btn-more-link" data-page="{{ $show_more['page'] }}"
+                                    data-url="{{ asset('show-more') }}"
+                                    data-parameters="{{ $show_more['parameters'] }}" id="showMore"
+                                    data-token="{{ csrf_token() }}" data-alias="{{ $show_more['alias'] }}">
+                                @lang('site.content.showmore')
+                            </button>
+                        @endisset
+                        <div class="col-sm-12 nav-pages">
+                            <nav aria-label="Page navigation">
+                                {{--{!! $productsSort->links('site.components.pagination') !!}--}}
+                            </nav>
+                        </div>
+                    </main>
                 @endif
+
             </div>
         </div>
 
-    </section>
+    </div>
+
+
 
 @endsection

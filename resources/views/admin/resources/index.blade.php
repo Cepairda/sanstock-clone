@@ -114,7 +114,9 @@
                                             <td>
                                                 @isset($resource->data)
                                                     @foreach($resource->data as $key => $value)
-                                                        <b>{{ $key }}</b>: {{ Str::limit($value, 20, '...') }}; <br>
+                                                        @if(!is_array($value))
+                                                            <b>{{ $key }}</b>: {{ Str::limit($value, 20, '...') }}; <br>
+                                                        @endif
                                                     @endforeach
                                                 @endisset
                                             </td>

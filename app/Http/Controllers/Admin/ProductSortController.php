@@ -12,13 +12,13 @@ use App\Product;
 use App\ProductSort;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProductSortController extends Controller
 {
     use isResource;
 
-    public function __construct(Product $product)
+    public function __construct(ProductSort $productSort)
     {
-        $this->resource = $product;
+        $this->resource = $productSort;
     }
 
     public function export()
@@ -46,8 +46,7 @@ class ProductController extends Controller
     }
 
     public function createSearchString() {
-        $products = $this->resource
-            ->select('id', 'details', 'ua.data as ua_name', 'ru.data as ru_name')
+        $products = Product::select('id', 'details', 'ua.data as ua_name', 'ru.data as ru_name')
             ->join('resource_localizations as ua', function($q) {
                 $q->on('ua.resource_id', '=', 'resources.id')
                     ->where('ua.locale', 'uk');
@@ -58,11 +57,15 @@ class ProductController extends Controller
             })->get();
 
         foreach ($products as $product) {
-            ProductSort::where('id', $product->id)->update([
+            $sdCode = $product->getDetails('sd_code');
+            $uaName = (json_decode($product->ua_name, 1))['name'];
+            $ruName = (json_decode($product->ru_name, 1))['name'];
+
+            ProductSort::where('details->sd_code', $sdCode)->update([
                 'search_string' =>
-                    (json_decode($product->ua_name, 1))['name'] . ' ' .
-                    (json_decode($product->ru_name, 1))['name'] . ' ' .
-                    $product->details['sd_code']
+                    $uaName . ' ' .
+                    $ruName . ' ' .
+                    $sdCode
             ]);
         }
     }
