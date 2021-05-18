@@ -37,22 +37,29 @@ class CategoryB2BImport
 
     public function addToQueue()
     {
-        $this->getDataJson($this->apiUrl);
-        $jsonData = self::$data;
-
-        foreach ($jsonData as $ref => $data) {
-            ProcessCategoryB2BImport::dispatch($ref)->onQueue('b2bImportCategory');
-        }
+//        $this->getDataJson($this->apiUrl);
+//        $jsonData = self::$data;
+//
+//        foreach ($jsonData as $ref => $data) {
+//            ProcessCategoryB2BImport::dispatch($ref)->onQueue('b2bImportCategory');
+//        }
+        ProcessCategoryB2BImport::dispatch()->onQueue('b2bImportCategory');
     }
 
-    public function importQueue($ref)
+    public function importQueue()
     {
-        [
+        if (empty(self::$data)) {
+            self::$data = $this->getDataJson();
+        }
+
+        /*[
             'parent_ref' => $parentRef,
             'name' => $name,
             'image' => $image
         ] = self::$data[$ref];
-        $this->categoryImport($ref, $parentRef, $name, $image);
+        $this->categoryImport($ref, $parentRef, $name, $image);*/
+
+        $this->import();
     }
 
     public function import()

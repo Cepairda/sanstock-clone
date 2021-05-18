@@ -70,8 +70,7 @@
                         @include('site.components.headerMenu')
                     </div>
                     <div class="header__search">
-                        <form class="header__search--form header-menu__form" id="life-search" action="#" method="post" autocomplete="off">
-                            {{ csrf_field() }}
+                        <form class="header__search--form header-menu__form" id="life-search" action="{{ route('site.products.search') }}" method="get" autocomplete="off">
                             <input type="text" id="input-search" class="input-search" name="search_value"
                                    value="{{ isset($search_value) ? $search_value : '' }}" minlength="3"
                                    placeholder="{{ __('Search placeholder') }}"
