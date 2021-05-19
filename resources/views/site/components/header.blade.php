@@ -21,7 +21,7 @@
                         </li>
 
                         <li class="header-nav__item">
-                            <a href="{{ asset('/contacts') }}">Контакты</a>
+                            <a href="{{ asset('/contacts') }}">{{ __('Contacts') }}</a>
                         </li>
 
                         <li class="header-nav__item">

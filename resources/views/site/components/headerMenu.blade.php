@@ -1,6 +1,6 @@
 @php($categories = $categories ?? \App\Category::joinLocalization()->get()->toTree())
 
-<div class="nav-menu--item nav-head-menu">
+<div class="nav-head-menu">
 
     <p class="head-menu--title">
         {{ __('Catalog products') }}
@@ -8,11 +8,11 @@
 
     <div class="head-menu head-menu--container">
 
-        <div class="level-1 box">
+        <div class="box">
 
-            <div class="level-1__wrap box-view box-white">
+            <div class="box-view box-white">
 
-                <ul class="visible-container box-list">
+                <ul class="box-list">
 
                     @foreach($categories as $category)
 
@@ -20,72 +20,71 @@
 
                             @if($category->children->isNotEmpty())
 
-                                <div class="head-menu__category box-list__inner">
+                                <div class="box-list__inner">
 
-                                    <div class="head-menu__category--name-wrap category-arrow box-list__link box-list-white"
-                                         data-id="{{ $category->id }}">
+                                    <div class="box-list__link box-list-white box-list-arrow">
 
-                                        <a class="head-menu__category--name"
-                                           href="{{ route('site.resource', $category->slug) }}">{{ $category->name }}</a>
+                                        <a href="{{ route('site.resource', $category->slug) }}">{{ $category->name }}</a>
 
                                     </div>
 
-                                    <div class="level-2 box">
+                                    <div class="box">
 
-                                        <div class="level-2__wrap box-view box-grey">
+                                        <div class="box-view box-grey">
 
-                                            <ul class="visible-container box-list">
+                                            <ul class="box-list">
 
                                                 @foreach($category->children as $cat)
 
                                                     <li>
 
-                                                        <div class="head-menu__subcategory box-list__inner">
+                                                        <div class="box-list__inner">
 
                                                             @if($cat->children->isNotEmpty())
 
-                                                                <div class="head-menu__subcategory--name-wrap box-list__link box-list-grey category-arrow">
-                                                                    <a class="head-menu__subcategory--name"
-                                                                       href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
+                                                                <div class="box-list__link box-list-grey box-list-arrow">
+                                                                    <a href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
                                                                 </div>
 
-                                                                <div class="level-3 box">
+                                                                <div class="box">
 
-                                                                    <div class="level-3__wrap box-view box-white">
+                                                                    <div class="box-view box-white">
 
-                                                                        <ul class="visible-container box-list">
+                                                                        <ul class="box-list">
 
                                                                             @foreach($cat->children as $c)
+
                                                                                 <li>
-                                                                                    <div class="head-menu__subcategory box-list__inner">
-                                                                                        <div class="head-menu__subcategory--name-wrap box-list__link box-list-white">
-                                                                                            <a class="head-menu__subcategory--name"
-                                                                                               href="{{ route('site.resource', $c->slug) }}">
-                                                                                                {{ $c->name }}
-                                                                                            </a>
+                                                                                    <div class="box-list__inner">
+                                                                                        <div class="box-list__link box-list-white">
+                                                                                            <a href="{{ route('site.resource', $c->slug) }}"> {{ $c->name }}</a>
                                                                                         </div>
                                                                                     </div>
                                                                                 </li>
+
                                                                             @endforeach
                                                                         </ul>
-
 
                                                                     </div>
 
                                                                 </div>
 
                                                             @else
+
                                                                 <div class="box-list__inner">
-                                                                    <div class="head-menu__subcategory--name-wrap  box-list__link">
-                                                                        <a class="head-menu__subcategory--name"
-                                                                           href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
+                                                                    <div class="box-list__link box-list-grey">
+                                                                        <a href="{{ route('site.resource', $cat->slug) }}">{!! $cat->name !!}</a>
                                                                     </div>
                                                                 </div>
+
                                                             @endif
 
                                                         </div>
+
                                                     </li>
+
                                                 @endforeach
+
                                             </ul>
 
                                         </div>
@@ -96,11 +95,8 @@
 
                             @else
                                 <div class="box-list__inner">
-                                    <div class="head-menu__category box-list__link">
-
-                                        <a class="head-menu__category--name"
-                                           href="#">{{ $category->name }}</a>
-
+                                    <div class="box-list__link box-list-white">
+                                        <a href="{{ route('site.resource', $category->slug) }}">{{ $category->name }}</a>
                                     </div>
                                 </div>
                             @endif
