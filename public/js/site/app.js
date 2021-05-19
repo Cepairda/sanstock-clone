@@ -27773,7 +27773,19 @@ window.delay = function () {
     clearTimeout(timer);
     timer = setTimeout(callback, ms);
   };
-}();
+}(); //Reload page checkbox category
+
+
+(function () {
+  var form = document.querySelector('#sidebar-filter') || false;
+
+  if (form) {
+    form.addEventListener('input', function (e) {
+      var checkbox = e.target.closest('[type="checkbox"]');
+      checkbox && form.submit();
+    }, false);
+  }
+})();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),

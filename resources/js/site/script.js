@@ -99,3 +99,15 @@ window.delay = (() => {
         timer = setTimeout(callback, ms);
     };
 })();
+
+//Reload page checkbox category
+(function () {
+    let form = document.querySelector('#sidebar-filter') || false;
+
+    if(form) {
+        form.addEventListener('input', e => {
+            let checkbox = e.target.closest('[type="checkbox"]');
+            checkbox && form.submit();
+        }, false)
+    }
+}());
