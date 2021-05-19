@@ -48,6 +48,11 @@ class CategoryB2BImport
 
     public function importQueue()
     {
+        $this->importCommand();
+    }
+
+    public function importCommand()
+    {
         if (empty(self::$data)) {
             self::$data = $this->getDataJson();
         }
@@ -166,7 +171,7 @@ class CategoryB2BImport
             }
 
             if ($isEmpty) {
-                $category->delete();
+                $category->forceDelete();
             }
         }
 
