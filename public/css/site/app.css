@@ -15432,9 +15432,30 @@ p.text--hide.active {
   justify-content: flex-end;
   color: #b0b0b0;
 }
-.header__search--form .input-search {
+.header__search--form:not(.active) .search-result {
+  height: 0 !important;
+}
+.header__search--form.active .search-input {
+  border-bottom-left-radius: 0;
+}
+.header__search--form.active .search-result {
+  height: auto;
+  border-style: solid;
+  border-width: 0 1px 1px 1px;
+  border-color: #ececec;
+}
+.header__search--form mark {
+  padding: 0;
+  background-color: #ececec;
+}
+.header__search--form .search-container {
+  position: relative;
+  width: 100%;
+}
+.header__search--form .search-input {
   display: block;
   width: 100%;
+  height: 100%;
   padding: 8px 16px 8px 32px;
   outline: none;
   border-radius: 3px 0 0 3px;
@@ -15443,13 +15464,57 @@ p.text--hide.active {
   line-height: 1;
   transition: all 0.1s;
 }
-.header__search--form .input-search.warn {
-  border-color: red;
+.header__search--form .search-result {
+  position: absolute;
+  top: calc(100% - 1px);
+  right: 0;
+  left: 0;
+  height: 0;
+  max-height: calc(100vh - 200px);
+  margin: 0;
+  border-radius: 0 0 3px 3px;
+  font-size: 16px;
+  line-height: 34px;
+  text-align: left;
+  background-color: #fff;
+  transition: height 300ms ease;
+  overflow: hidden;
+  z-index: 998;
 }
-.header__search--form .input-search.warn:focus, .header__search--form .input-search.warn:active {
-  border-color: red;
+.header__search--form .search-result ul {
+  max-height: 100%;
+  overflow-y: auto;
 }
-.header__search--form .form-submit {
+.header__search--form .search-result ul li {
+  border-top: 1px solid #f5f5f5;
+}
+.header__search--form .search-result .search-product-link {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+}
+.header__search--form .search-result .search-product-link > *:not(:last-child) {
+  margin-right: 8px;
+}
+.header__search--form .search-result .search-product-link:hover {
+  background-color: #f5f5f5;
+}
+.header__search--form .search-result .search-product-link:active {
+  background-color: #cdcdcd;
+}
+.header__search--form .search-result .search-product-link p {
+  font-size: 14px;
+  line-height: 1.1;
+  color: #000;
+}
+.header__search--form .search-result .search-text-info {
+  padding: 12px 8px;
+  border-top: 1px solid #f5f5f5;
+  font-size: 16px;
+  line-height: 1.1;
+  color: #9d9d9c;
+}
+.header__search--form .search-submit {
   display: flex;
   align-items: center;
   padding: 8px 10px;
@@ -16642,6 +16707,16 @@ footer {
   padding-bottom: 36px;
   text-align: center;
   font-size: 44px;
+}
+
+.container-gap {
+  padding-top: 75px;
+}
+.container-gap-sm {
+  padding-top: 35px;
+}
+.container-gap-xl {
+  padding-top: 150px;
 }
 
 .cart__table table td {

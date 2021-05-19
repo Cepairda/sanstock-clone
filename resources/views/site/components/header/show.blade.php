@@ -68,15 +68,21 @@
                         @include('site.components.header.menu')
                     </div>
                     <div class="header__search">
-                        <form class="header__search--form header-menu__form" id="life-search" action="{{ route('site.products.search') }}" method="get" autocomplete="off">
-                            <input type="text" id="input-search" class="input-search" name="query"
-                                   value="{{ isset($search_value) ? $search_value : '' }}" minlength="3"
-                                   placeholder="{{ __('Search placeholder') }}"
-                                   data-lang="{{ app()->getLocale() }}"
-                                   required>
-                            <button type="submit" class="form-submit">{{ __('Search') }}</button>
+                        <form id="life-search" class="header__search--form" action="{{ route('site.products.search') }}" method="get" autocomplete="off">
+                            <div class="search-container">
+                                <input id="search-input"
+                                       class="search-input"
+                                       name="query"
+                                       type="text"
+                                       value="{{ isset($search_value) ? $search_value : '' }}"
+                                       minlength="3"
+                                       placeholder="{{ __('Search placeholder') }}"
+                                       data-lang="{{ app()->getLocale() }}"
+                                       required>
+                                <div class="search-result"></div>
+                            </div>
+                            <button type="submit" class="search-submit">{{ __('Search') }}</button>
                         </form>
-                        <div class="header__search--product-container"></div>
                     </div>
                     <div class="nav-item nav__actions header__actions">
                         <a class="header__actions--link" href="{{ asset('/cart') }}">

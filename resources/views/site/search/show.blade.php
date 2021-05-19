@@ -32,8 +32,8 @@
 
         <div class="container">
             <div class="row main__filter">
-                @if($productsSort->isNotEmpty())
-                    <main class="col-sm-12 col-lg-12 col-xl-12 order-2">
+                <main class="col-sm-12 col-lg-12 col-xl-12 order-2">
+                    @if($productsSort->isNotEmpty())
                         {!! isset($json_ld) ? $json_ld : '' !!}
                         <div class="main__sort">
                             <p>@lang('site.content.sort'):</p>
@@ -82,8 +82,12 @@
                                 {{--{!! $productsSort->links('site.components.pagination') !!}--}}
                             </nav>
                         </div>
-                    </main>
-                @endif
+                    @else
+                        <div class="main__title">
+                            <p>{{ __('Search not result', ['search_value' => $searchQuery]) }}</p>
+                        </div>
+                    @endif
+                </main>
 
             </div>
         </div>

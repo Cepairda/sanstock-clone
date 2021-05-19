@@ -90,6 +90,17 @@ footer {
 	}
 }
 
+.container-gap {
+	padding-top: $gap;
+
+	&-sm {
+		padding-top: $gap-sm;
+	}
+	&-xl {
+		padding-top: $gap-xl;
+	}
+}
+
 //cart
 .cart__table {
 	table td {

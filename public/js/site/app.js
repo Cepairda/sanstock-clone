@@ -25226,6 +25226,8 @@ __webpack_require__(/*! ./plugins/characteristicsLists */ "./resources/js/site/p
 __webpack_require__(/*! ./plugins/lazyLoadImg */ "./resources/js/site/plugins/lazyLoadImg.js"); //components
 
 
+__webpack_require__(/*! ./components/liveSearch */ "./resources/js/site/components/liveSearch.js");
+
 __webpack_require__(/*! ./components/cart */ "./resources/js/site/components/cart.js");
 
 __webpack_require__(/*! ./components/tabsProducs */ "./resources/js/site/components/tabsProducs.js"); //page
@@ -25559,6 +25561,168 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   window.cart = new Cart();
 })();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
+/***/ "./resources/js/site/components/liveSearch.js":
+/*!****************************************************!*\
+  !*** ./resources/js/site/components/liveSearch.js ***!
+  \****************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+(function () {
+  var liveSearchForm = document.querySelector('#life-search');
+  var inputSearch = liveSearchForm.querySelector('.search-input');
+
+  if (!inputSearch) {
+    return;
+  }
+
+  var searchResult = liveSearchForm.querySelector('.search-result');
+  var i18n = {
+    input: {
+      uk: 'Введіть мінімум 3 літери',
+      ru: 'Введите минимум 3 знака',
+      en: 'Enter at least 3 characters'
+    },
+    notFound: {
+      uk: 'За запитом нічого не знайдено',
+      ru: 'По запросу ничего не найдено',
+      en: 'No results found for'
+    }
+  };
+
+  function localization() {
+    var markup = document.documentElement;
+    var localizationDocument = markup.getAttribute('lang');
+
+    var localization = function localization(lang) {
+      var handl = {
+        'ru-UA': 'ru',
+        'uk-UA': 'uk'
+      };
+      return handl[lang];
+    };
+
+    return localization(localizationDocument);
+  }
+
+  function debounce(func) {
+    var time = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
+    var timer;
+    return function () {
+      clearTimeout(timer);
+      timer = setTimeout(func, time);
+    };
+  }
+
+  function insertMark(str, pos, len) {
+    return str.slice(0, pos) + '<mark>' + str.slice(pos, pos + len) + '</mark>' + str.slice(pos + len);
+  }
+
+  function mark(value) {
+    var textsArray = searchResult.querySelectorAll('.m-t');
+    textsArray.forEach(function (text) {
+      if (text.innerText.search(RegExp(value, "gi")) === -1) {
+        text.innerHTML = text.innerText;
+      } else {
+        var str = text.innerText;
+        text.innerHTML = insertMark(str, text.innerText.search(RegExp(value, "gi")), value.length);
+      }
+    });
+  }
+
+  function xhrLiveSearch(_x) {
+    return _xhrLiveSearch.apply(this, arguments);
+  }
+
+  function _xhrLiveSearch() {
+    _xhrLiveSearch = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(value) {
+      var xhrUrl, response, data, val;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              xhrUrl = "".concat(location.origin, "/live-search?query=").concat(value);
+              _context.next = 3;
+              return fetch(xhrUrl, {});
+
+            case 3:
+              response = _context.sent;
+
+              if (!(response.status === 200)) {
+                _context.next = 16;
+                break;
+              }
+
+              _context.next = 7;
+              return response.text();
+
+            case 7:
+              data = _context.sent;
+              searchResult.textContent = '';
+              searchResult.insertAdjacentHTML('afterbegin', data);
+              window.lazyLoadImg.toRun();
+              val = liveSearchForm.querySelector('.search_error');
+              console.log(i18n.notFound[localization]);
+              val && val.insertAdjacentHTML('beforeend', "<p class=\"search-text-info\">".concat(i18n.notFound[localization()], ":<span class=\"text-body ml-1\">\"").concat(value, "\"</span></p>"));
+              searchResult.style.height = searchResult.firstElementChild.scrollHeight + +1 + 'px';
+              mark(value);
+
+            case 16:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _xhrLiveSearch.apply(this, arguments);
+  }
+
+  inputSearch.oninput = function () {
+    var value = this.value.trim();
+
+    var enter = function enter() {
+      if (value.length >= 3) {
+        xhrLiveSearch(value);
+      } else if (value.length == 0) {
+        searchResult.textContent = '';
+        searchResult.style.height = 0;
+      } else {
+        searchResult.textContent = '';
+        console.log(i18n.input[localization]);
+        searchResult.insertAdjacentHTML("beforeend", "<p class=\"search-text-info\">".concat(i18n.input[localization()], "</p>"));
+        searchResult.style.height = searchResult.firstElementChild.scrollHeight + +1 + 'px';
+      }
+    };
+
+    debounce(enter(), 500); //delay(function () {}, 500);
+  };
+
+  inputSearch.onfocus = function () {
+    liveSearchForm.classList.add('active');
+  };
+
+  document.addEventListener('mousedown', function (_ref) {
+    var target = _ref.target;
+    var form = target.closest('#life-search');
+
+    if (!form) {
+      liveSearchForm.classList.remove('active');
+    }
+  }, false);
+})();
 
 /***/ }),
 
@@ -27683,38 +27847,18 @@ function effEnd(_ref2) {
 }
 
 document.addEventListener('mouseover', eff, false);
-document.addEventListener('mouseout', effEnd, false);
-document.addEventListener('click', function (_ref3) {//const x = target.closest('');
+document.addEventListener('mouseout', effEnd, false); //Reload page checkbox category
 
-  var target = _ref3.target;
-}); // //liveSearch
-// // (function (){
-// //     const inputSearch = document.querySelector('#rd-navbar-search-form-input'),
-// //           searchResult = document.querySelector('.rd-search-results-live');
-// //     async function xhrLiveSearch (value) {
-// //         const xhrUrl = `${location.origin}/live-search?query=${value}`,
-// //             response = await fetch(xhrUrl, {});
-// //         if (response.status === 200) {
-// //             let data = await response.text();
-// //             searchResult.textContent = '';
-// //             searchResult.insertAdjacentHTML('afterbegin', data);
-// //             favoriteSelected();
-// //
-// //             let val  = document.querySelector('.search_error .search');
-// //             val ? val.textContent = value : undefined;
-// //         }
-// //     }
-// //
-// //     inputSearch.oninput = function () {
-// //         let value = this.value.trim();
-// //
-// //         delay(function () {
-// //             if (value.length >= 3) {
-// //                 xhrLiveSearch(value)
-// //             }
-// //         }, 500);
-// //     }
-// // }());
+(function () {
+  var form = document.querySelector('#sidebar-filter') || false;
+
+  if (form) {
+    form.addEventListener('input', function (e) {
+      var checkbox = e.target.closest('[type="checkbox"]');
+      checkbox && form.submit();
+    }, false);
+  }
+})();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),

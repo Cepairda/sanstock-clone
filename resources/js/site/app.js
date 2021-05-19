@@ -29,6 +29,7 @@ require('./plugins/characteristicsLists');
 require('./plugins/lazyLoadImg');
 
 //components
+require('./components/liveSearch');
 require('./components/cart');
 require('./components/tabsProducs');
 

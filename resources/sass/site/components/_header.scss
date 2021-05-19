@@ -81,9 +81,39 @@
 			justify-content: flex-end;
 			color: #b0b0b0;
 
-			.input-search {
+			&:not(.active) {
+				.search-result {
+					height: 0 !important;
+				}
+			}
+
+			&.active {
+				.search-input {
+					border-bottom-left-radius: 0;
+				}
+				.search-result {
+					height: auto;
+					border-style: solid;
+					border-width: 0 1px 1px 1px;
+					border-color: #ececec;
+					//box-shadow: 0 1px 1px 0 rgb(0, 0, 0, 0.05);
+				}
+			}
+
+			mark {
+				padding: 0;
+				background-color: #ececec;
+			}
+
+			.search-container {
+				position: relative;
+				width: 100%;
+			}
+
+			.search-input {
 				display: block;
 				width: 100%;
+				height: 100%;
 				padding: 8px 16px 8px 32px;
 				outline: none;
 				border-radius: 3px 0 0 3px;
@@ -92,21 +122,67 @@
 				line-height: 1;
 				transition: all 0.1s;
 
-				&:hover,
-				&:focus,
-				&:active {
-					//border-bottom: 1px solid #bbb;
-				}
-				&.warn {
-					border-color: red;
-					&:focus,
-					&:active {
-						border-color: red;
-					}
-				}
 			}
 
-			.form-submit {
+            .search-result {
+                position: absolute;
+				top: calc(100% - 1px);
+                right: 0;
+				left: 0;
+				height: 0;
+                max-height: calc(100vh - 200px);
+                margin: 0;
+				border-radius: 0 0 3px 3px;
+                font-size: 16px;
+                line-height: 34px;
+                text-align: left;
+				background-color: #fff;
+				transition: height 300ms ease;
+				overflow: hidden;
+				z-index: 998;
+
+				ul {
+					max-height: 100%;
+					overflow-y: auto;
+
+					li {
+						border-top: 1px solid #f5f5f5;
+					}
+				}
+
+
+				.search-product-link {
+					display: flex;
+					align-items: center;
+					padding: 4px 8px;
+
+					& > *:not(:last-child) {
+						margin-right: 8px;
+					}
+
+					&:hover {
+						background-color: #f5f5f5;
+					}
+
+					&:active {
+						background-color: #cdcdcd;
+					}
+
+					p {
+						font-size: 14px;
+						line-height: 1.1;
+						color: #000;
+					}
+				}
+				.search-text-info {
+					padding: 12px 8px;
+					border-top: 1px solid #f5f5f5;
+					font-size: 16px;
+					line-height: 1.1;
+					color: #9d9d9c;
+				}
+            }
+			.search-submit {
 				display: flex;
 				align-items: center;
 				padding: 8px 10px;
@@ -119,6 +195,7 @@
 				color: #000;
 				outline: none;
 			}
+
 		}
 	}
 
