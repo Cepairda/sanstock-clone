@@ -27619,10 +27619,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 /*!*************************************!*\
   !*** ./resources/js/site/script.js ***!
   \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+$(document).ready(function () {
   var priceRangeSlider = $('#priceRangeSlider');
 
   if (priceRangeSlider.length) {
@@ -27687,34 +27697,83 @@ document.addEventListener('mouseout', effEnd, false);
 document.addEventListener('click', function (_ref3) {//const x = target.closest('');
 
   var target = _ref3.target;
-}); // //liveSearch
-// (function (){
-//     const inputSearch = document.querySelector('#rd-navbar-search-form-input'),
-//           searchResult = document.querySelector('.rd-search-results-live');
-//     async function xhrLiveSearch (value) {
-//         const xhrUrl = `${location.origin}/live-search?query=${value}`,
-//             response = await fetch(xhrUrl, {});
-//         if (response.status === 200) {
-//             let data = await response.text();
-//             searchResult.textContent = '';
-//             searchResult.insertAdjacentHTML('afterbegin', data);
-//             favoriteSelected();
-//
-//             let val  = document.querySelector('.search_error .search');
-//             val ? val.textContent = value : undefined;
-//         }
-//     }
-//
-//     inputSearch.oninput = function () {
-//         let value = this.value.trim();
-//
-//         delay(function () {
-//             if (value.length >= 3) {
-//                 xhrLiveSearch(value)
-//             }
-//         }, 500);
-//     }
-// }());
+}); //liveSearch
+
+(function () {
+  var inputSearch = document.querySelector('#input-search'),
+      searchResult = document.querySelector('.search-results-live');
+
+  function xhrLiveSearch(_x) {
+    return _xhrLiveSearch.apply(this, arguments);
+  }
+
+  function _xhrLiveSearch() {
+    _xhrLiveSearch = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(value) {
+      var xhrUrl, response, data, val;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              xhrUrl = "".concat(location.origin, "/live-search?query=").concat(value);
+              _context.next = 3;
+              return fetch(xhrUrl, {});
+
+            case 3:
+              response = _context.sent;
+
+              if (!(response.status === 200)) {
+                _context.next = 12;
+                break;
+              }
+
+              _context.next = 7;
+              return response.text();
+
+            case 7:
+              data = _context.sent;
+              searchResult.textContent = '';
+              searchResult.insertAdjacentHTML('afterbegin', data);
+              val = document.querySelector('.search_error .search');
+              val ? val.textContent = value : undefined;
+
+            case 12:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _xhrLiveSearch.apply(this, arguments);
+  }
+
+  inputSearch.oninput = function () {
+    var value = this.value.trim();
+    delay(function () {
+      if (value.length >= 3) {
+        xhrLiveSearch(value);
+        inputSearch.classList.add('no-empty');
+      } else if (value.length == 0) {
+        inputSearch.classList.remove('no-empty');
+      }
+    }, 500);
+  };
+
+  inputSearch.onfocus = function () {
+    inputSearch.classList.add('active');
+  };
+
+  inputSearch.onblur = function () {
+    inputSearch.classList.remove('active');
+  };
+})();
+
+window.delay = function () {
+  var timer = 0;
+  return function (callback, ms) {
+    clearTimeout(timer);
+    timer = setTimeout(callback, ms);
+  };
+}();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),
@@ -27737,8 +27796,8 @@ document.addEventListener('click', function (_ref3) {//const x = target.closest(
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\js\site\app.js */"./resources/js/site/app.js");
-module.exports = __webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\sass\site\app.scss */"./resources/sass/site/app.scss");
+__webpack_require__(/*! /var/www/resources/js/site/app.js */"./resources/js/site/app.js");
+module.exports = __webpack_require__(/*! /var/www/resources/sass/site/app.scss */"./resources/sass/site/app.scss");
 
 
 /***/ })

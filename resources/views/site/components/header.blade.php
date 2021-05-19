@@ -77,6 +77,7 @@
                                    data-lang="{{ app()->getLocale() }}"
                                    required>
                             <button type="submit" class="form-submit">{{ __('Search') }}</button>
+                            <div class="search-results-live" id="search-results-live"></div>
                         </form>
                     </div>
                     <div class="nav-item nav__actions header__actions">
