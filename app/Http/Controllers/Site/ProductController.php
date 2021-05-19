@@ -11,6 +11,7 @@ class ProductController extends Controller
 {
     public function search()
     {
+        //dd($query);
         return view('site.product.components.search', [
             'products' => Product::joinLocalization()->where('details->published', 1)
                 ->where(function ($query) {

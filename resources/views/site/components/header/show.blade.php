@@ -32,8 +32,6 @@
                             <a class="disabled" href="#">{{ __('FAQ') }}</a>
                         </li>
 
-
-
                         <li class="header-nav__item ml-auto">
                             <div class="header-nav__item--phone">
                                 <span class="icon-callback"></span>
@@ -67,7 +65,7 @@
             <div class="col-12">
                 <div class="header__inner">
                     <div class="header__menu nav-menu">
-                        @include('site.components.headerMenu')
+                        @include('site.components.header.menu')
                     </div>
                     <div class="header__search">
                         <form class="header__search--form header-menu__form" id="life-search" action="{{ route('site.products.search') }}" method="get" autocomplete="off">
@@ -78,6 +76,7 @@
                                    required>
                             <button type="submit" class="form-submit">{{ __('Search') }}</button>
                         </form>
+                        <div class="header__search--product-container"></div>
                     </div>
                     <div class="nav-item nav__actions header__actions">
                         <a class="header__actions--link" href="{{ asset('/cart') }}">

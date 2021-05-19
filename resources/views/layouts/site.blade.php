@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="content">
-            @include('site.components.header')
+            @include('site.components.header.show')
             @yield('content')
         </div>
         @include('site.components.footer')

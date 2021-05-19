@@ -16146,7 +16146,7 @@ li.footer__element--item-tel {
 }
 .tabs-products__btn-group .btn-item.active {
   color: #fff;
-  background-image: linear-gradient(90deg, #0072bc, #00c5e3);
+  background-image: linear-gradient(90deg, #0071BC, #00c5e3);
 }
 .tabs-products__container .container-item:not(.active) {
   display: none;
@@ -16327,7 +16327,7 @@ li.footer__element--item-tel {
 .btn-link-block-g {
   display: inline-block;
   padding: 12px 27px;
-  background-image: linear-gradient(90deg, #0072bc, #00c5e3);
+  background-image: linear-gradient(90deg, #0071BC, #00c5e3);
   border-radius: 50px;
   font-family: Open Sans Bold, sans-serif;
   font-size: 14px;
@@ -16432,8 +16432,8 @@ a:not([href]) {
   padding: 12px 24px;
   border: 2px solid;
   border-image-slice: 1;
-  border-image-source: linear-gradient(90deg, #0072bc, #00c5e3);
-  background-image: linear-gradient(90deg, #0072bc, #00c5e3);
+  border-image-source: linear-gradient(90deg, #0071BC, #00c5e3);
+  background-image: linear-gradient(90deg, #0071BC, #00c5e3);
   text-align: center;
   font-family: Open Sans Bold, sans-serif;
   font-size: 14px;
@@ -16463,7 +16463,7 @@ a:not([href]) {
 }
 .button:hover, .button.added {
   background-image: none;
-  color: #0072bc;
+  color: #0071BC;
   box-shadow: none;
   z-index: 1;
 }
@@ -16661,8 +16661,8 @@ footer {
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
   border-image-slice: 1;
-  border-image-source: linear-gradient(90deg, #0072bc, #00c5e3);
-  background-image: linear-gradient(90deg, #0072bc, #00c5e3);
+  border-image-source: linear-gradient(90deg, #0071BC, #00c5e3);
+  background-image: linear-gradient(90deg, #0071BC, #00c5e3);
   color: #fff;
 }
 
