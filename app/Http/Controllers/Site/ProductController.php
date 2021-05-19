@@ -12,7 +12,8 @@ class ProductController extends Controller
 {
     public function search()
     {
-        return view('site.product_group.components.search', [
+
+        return view('site.components.header.liveSearch', [
             'products' => ProductSort::joinLocalization()->withProductGroup()->where('details->published', 0)
                 ->where(function ($query) {
                     foreach (explode(' ', request()->get('query')) as $value) {

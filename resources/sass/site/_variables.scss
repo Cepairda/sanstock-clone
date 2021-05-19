@@ -3,12 +3,13 @@ $font-family-base: Open Sans Bold, sans-serif;
 $font-family-sans-serif: Proxima Nova Cn Lt, sans-serif;
 
 //Colors
-$c1: #01feff;
+//logo linearGradient #00FFFF to #0071BC
+$c1: #00FFFF;
 $c2: #00c5e3;
-$c3:#009acf;
-$c4:#0072bc;
+$c3: #009acf;
+$c4: #0071BC;
 
-//баннер
+//Banner
 $c5: #016fc0; //text
 $c6: #cde2f2; //bgc
 
@@ -25,8 +26,8 @@ $grey-light: lighten($grey, 18%);
 
 //Gap
 $gap-xl: 150px;
-$gap-l: 75px;
-$gap-s: 35px;
+$gap: 75px;
+$gap-sm: 35px;
 
 $lg-path-fonts : '../../../fonts/site/lg';
 $lg-path-images: '../../../images/site/lg';

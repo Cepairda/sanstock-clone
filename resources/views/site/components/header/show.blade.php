@@ -32,8 +32,6 @@
                             <a class="disabled" href="#">{{ __('FAQ') }}</a>
                         </li>
 
-
-
                         <li class="header-nav__item ml-auto">
                             <div class="header-nav__item--phone">
                                 <span class="icon-callback"></span>
@@ -67,17 +65,23 @@
             <div class="col-12">
                 <div class="header__inner">
                     <div class="header__menu nav-menu">
-                        @include('site.components.headerMenu')
+                        @include('site.components.header.menu')
                     </div>
                     <div class="header__search">
-                        <form class="header__search--form header-menu__form" id="life-search" action="{{ route('site.products.search') }}" method="get" autocomplete="off">
-                            <input type="text" id="input-search" class="input-search" name="query"
-                                   value="{{ isset($search_value) ? $search_value : '' }}" minlength="3"
-                                   placeholder="{{ __('Search placeholder') }}"
-                                   data-lang="{{ app()->getLocale() }}"
-                                   required>
-                            <button type="submit" class="form-submit">{{ __('Search') }}</button>
-                            <div class="search-results-live" id="search-results-live"></div>
+                        <form id="life-search" class="header__search--form" action="{{ route('site.products.search') }}" method="get" autocomplete="off">
+                            <div class="search-container">
+                                <input id="search-input"
+                                       class="search-input"
+                                       name="query"
+                                       type="text"
+                                       value="{{ isset($search_value) ? $search_value : '' }}"
+                                       minlength="3"
+                                       placeholder="{{ __('Search placeholder') }}"
+                                       data-lang="{{ app()->getLocale() }}"
+                                       required>
+                                <div class="search-result"></div>
+                            </div>
+                            <button type="submit" class="search-submit">{{ __('Search') }}</button>
                         </form>
                     </div>
                     <div class="nav-item nav__actions header__actions">
