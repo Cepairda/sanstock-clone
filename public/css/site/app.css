@@ -16645,6 +16645,34 @@ body.cart .add__to-cart {
   font-size: 32px;
 }
 
+._bl {
+  position: relative;
+  display: flex;
+  width: 170px;
+}
+._bl-p, ._bl-n {
+  position: absolute;
+  display: none;
+  width: 25px;
+  height: 100%;
+  background-color: #f5f5f5;
+  z-index: 10;
+}
+._bl-p {
+  left: 0;
+}
+._bl-n {
+  right: 0;
+}
+._bl-g {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+._bl-g > * {
+  margin: 4px;
+}
+
 body {
   position: relative;
   font-family: "Open Sans Regular", sans-serif;

@@ -29,4 +29,20 @@
 
     let $tabSelector = $(`a[data-toggle="tab"][data-sort="${sort}"]`);
     $tabSelector.tab('show');
+
+
+    //=== demo
+
+    const glt = document.querySelectorAll('.th-gallery');
+    glt.forEach(el => {
+        lightGallery(el, {
+            share: false,
+            actualSize: false,
+            download: true,
+            zoom: true,
+            fullScreen: true,
+            thumbnail: true,
+            showThumbByDefault: true,
+        });
+    });
 }());

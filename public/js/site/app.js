@@ -25820,7 +25820,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   }
 
   var $tabSelector = $("a[data-toggle=\"tab\"][data-sort=\"".concat(sort, "\"]"));
-  $tabSelector.tab('show');
+  $tabSelector.tab('show'); //=== demo
+
+  var glt = document.querySelectorAll('.th-gallery');
+  glt.forEach(function (el) {
+    lightGallery(el, {
+      share: false,
+      actualSize: false,
+      download: true,
+      zoom: true,
+      fullScreen: true,
+      thumbnail: true,
+      showThumbByDefault: true
+    });
+  });
 })();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
