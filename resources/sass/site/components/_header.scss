@@ -323,18 +323,6 @@
 	align-items: center;
 }
 
-.dropdown-toggle:after {
-	margin-left: 10px;
-	border-top: none;
-	background-image: url("../libs/icon/arrow black.svg");
-	background-repeat: no-repeat;
-	background-position: center;
-	width: 23px;
-	height: 20px;
-	background-size: contain;
-	transform: rotate(90deg);
-}
-
 .header__navbar__region, .dropdown-item {
 	display: flex;
 	align-items: center;

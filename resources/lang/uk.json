@@ -85,7 +85,10 @@
     "Become a partner": "Стати партнером",
 
     "Cart": "Кошик",
+    "Empty cart": "Очистити кошик",
+    "Cart empty": "Кошик порожній",
     "Checkout": "Оформити",
     "Catalog products": "Каталог товарів",
-    "From": "Від"
+    "From": "Від",
+    "Additionally": "Додатково"
 }

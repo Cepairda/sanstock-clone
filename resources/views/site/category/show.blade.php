@@ -45,16 +45,11 @@
         @include('site.components.breadcrumbs', ['title' => $category->getData('name'), 'h1' => true])
 
         <div class="container">
-
             @if($descendants->isNotEmpty())
-
                 <div class="row">
-
                     @foreach($descendants as $descendant)
-
-
                         <div class="col-3">
-                            <div class="py-3 bg-white">
+                            <div class="py-3 mb-3 bg-white">
                                 <a href="{{ route('site.resource', $descendant->slug) }}"
                                    title="{{ $descendant->name }}">
                                     <img src="{{ asset('images/no_img.jpg') }}"
@@ -67,13 +62,9 @@
                                 </a>
                             </div>
                         </div>
-
                     @endforeach
-
                 </div>
-
             @else
-
                 @isset($category->parent_id)
                     <div class="row main__filter">
                         @if($productsSort->isNotEmpty())
@@ -83,7 +74,6 @@
                                 <div class="main__sort">
                                     {{--<p>{{ __('Sort') }}:</p>--}}
                                     {{--<div class="sort-wrapper">--}}
-
                                         {{--<span class="sort-view">@lang('site.links_to_sort.' . (isset($parameters['sort']) ? $parameters['sort'][0] : 'name'))</span>--}}
                                         {{--<ul>--}}
                                         {{--<li class="sort-view-link jsLink"--}}
@@ -96,13 +86,11 @@
                                         {{--data-href="{{ asset($links_to_sort['-name']) }}">@lang('site.links_to_sort.-name')</li>--}}
                                         {{--</ul>--}}
                                     {{--</div>--}}
-
                                     @if (isset($filters))
                                         <div class="btn-filter open-filter">
                                             @lang('site.category.components.filter')
                                         </div>
                                     @endif
-
                                 </div>
                                 <div class="row filter-wrapper">
                                     @foreach($productsSort as $productSort)
@@ -131,7 +119,6 @@
                         @endif
 
                         <aside class="col-sm-3 col-lg-4 col-xl-3 main-filter order-1">
-
 
                         @include('site.category.components.filters', ['alias' => $category->alias])
 

@@ -15,3 +15,21 @@
   background-size: cover;
   line-height: 1;
 }
+
+.icon-cart {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: transparent url($cart) center no-repeat;
+  background-size: cover;
+  line-height: 1;
+}
+
+.icon-addition {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: transparent url($addition) center no-repeat;
+  background-size: cover;
+  line-height: 1;
+}
