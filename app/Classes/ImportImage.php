@@ -5,7 +5,7 @@ namespace App\Classes;
 use App\ProductGroupImage;
 use App\ProductImage;
 use GuzzleHttp\Client;
-use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Cast\Object_;
 use Storage;
 use File;
 use Image;
@@ -14,17 +14,20 @@ use Jenssegers\Agent\Agent;
 use App\Product;
 use App\Jobs\ProcessImportImage;
 
+/**
+ * Class ImportImage
+ * @package App\Classes
+ */
 class ImportImage
 {
+
     private const DEFAULT_API_URL = 'http://94.131.241.126/api/products?token=368dbc0bf4008db706576eb624e14abf&only_defectives=1';
-
     private const FORMAT_IMG_ORIGINAL = ['jpg', 'png', 'webp'];
+
     private static $formatImg;
-
     private static $imageRegister;
-    private static $imageRegisterUrl;
-
     private static $apiProductImage;
+
     private static $dbProductImage;
     private static $requestProductImage;
 
@@ -37,7 +40,10 @@ class ImportImage
 
     private static $init = false;
 
-    private static function init()
+    /**
+     * @return void
+     */
+    private static function init(): void
     {
         set_time_limit(0);
         ini_set('max_execution_time', 0);
@@ -51,7 +57,12 @@ class ImportImage
         self::$formatImg = array_combine(self::FORMAT_IMG_ORIGINAL, self::FORMAT_IMG_ORIGINAL);
     }
 
-    public static function __callStatic($name, $arguments)
+    /**
+     * @param string$name
+     * @param array $arguments
+     * @return false|mixed
+     */
+    public static function __callStatic(string $name, array $arguments)
     {
         if (!self::$init) {
             self::init();
@@ -64,7 +75,11 @@ class ImportImage
         );
     }
 
-    public static function addToQueue($ids = null)
+    /**
+     * @param array|null $ids
+     * @return void
+     */
+    public static function addToQueue(array $ids = null): void
     {
         $products = isset($ids)
             ? Product::where('details->published', 1)->whereIn('details->sku', explode(',', $ids))->get()
@@ -75,7 +90,12 @@ class ImportImage
         }
     }
 
-    private static function import($sku)
+    /**
+     * @param int $sku
+     * @return void
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    private static function import(int $sku): void
     {
         $product = Product::where('details->published', 0)->where('details->sku', $sku)->first();
         $sdCode = $product->sdCode;
@@ -112,7 +132,6 @@ class ImportImage
             self::downloadMainImage($sdCode, $sku);
             self::downloadAdditional($sdCode, $sku);
             self::downloadDefectiveImages($sdCode, $sku);
-            //self::generateAdditionalPreview($product);
 
             self::$requestProductImage['details']['product_sku'] = $sku;
             self::$dbProductImage->setRequest(self::$requestProductImage);
@@ -132,6 +151,10 @@ class ImportImage
         }
     }
 
+    /**
+     * @param $data
+     * @return string
+     */
     public static function getXmlImage($data) {
 
         $data['format'] = 'webp';
@@ -161,6 +184,10 @@ class ImportImage
         return  asset(self::$params['defaultImg']);
     }
 
+    /**
+     * @param $data
+     * @return string
+     */
     public static function getImage($data)
     {
 
@@ -208,7 +235,12 @@ class ImportImage
         return  asset('/images/site/default.jpg');
     }
 
-    private static function downloadMainImage($sdCode, $sku)
+    /**
+     * @param string $sdCode
+     * @param int $sku
+     * @return void
+     */
+    private static function downloadMainImage(string $sdCode, int $sku): void
     {
         $mainImagePath = self::$apiProductImage['data'][$sku]['images']['main'] ?? null;
         $size = self::$params['sizeMainImg']; // size for original images in PX
@@ -219,7 +251,8 @@ class ImportImage
             $timeImageUpdateMd5 = $params['hash'];
 
             $pathSdCode = 'storage/product/' . $sdCode . '/';
-            $pathMainImg = public_path($pathSdCode . $sdCode) . '.' . self::$formatImg['jpg'];
+            $publicPathImg = public_path($pathSdCode . $sdCode);
+            $pathMainImg = $publicPathImg . '.' . self::$formatImg['jpg'];
 
             if ($timeImageUpdateMd5 != (self::$dbProductGroupImage['details']['main']['filemtime_md5'] ?? null)
                 || !file_exists($pathMainImg)
@@ -238,14 +271,19 @@ class ImportImage
                 $contents->save($pathMainImg); // save original
 
                 self::$requestProductGroupImage['details']['main']['filemtime_md5'] = $timeImageUpdateMd5;
-                //self::generatePreview($product);
+                self::generatePreview($publicPathImg, clone $contents);
             } elseif ($timeImageUpdateMd5 == (self::$dbProductGroupImage['details']['main']['filemtime_md5'] ?? null)) {
                 self::$requestProductGroupImage['details']['main']['filemtime_md5'] = $timeImageUpdateMd5;
             }
         }
     }
 
-    private static function downloadAdditional($sdCode, $sku)
+    /**
+     * @param string $sdCode
+     * @param int $sku
+     * @return void
+     */
+    private static function downloadAdditional(string $sdCode, int $sku): void
     {
         $additionalImages = self::$apiProductImage['data'][$sku]['images']['additional'] ?? null;
 
@@ -257,7 +295,8 @@ class ImportImage
 
                 $pathSdCode = 'storage/product/' . $sdCode . '/';
                 $pathAdditional = $pathSdCode . 'additional/';
-                $pathAddImg = public_path($pathAdditional . $sdCode . '_' . $key) . '.' . self::$formatImg['jpg'];
+                $publicPathImg = public_path($pathAdditional . $sdCode . '_' . $key);
+                $pathAddImg =  $publicPathImg . '.' . self::$formatImg['jpg'];
 
                 if ($timeImageUpdateMd5 != (self::$dbProductGroupImage['details']['additional'][$key]['filemtime_md5'] ?? null)
                     || !file_exists($pathAddImg)
@@ -276,7 +315,7 @@ class ImportImage
                     }
 
                     $contents->save($pathAddImg); // save additional
-                    //self::generateAdditionalPreview($product, $key);
+                    self::generatePreview($publicPathImg, clone $contents);
                 }
 
                 self::$requestProductGroupImage['details']['additional'][$key]['filemtime_md5'] = $timeImageUpdateMd5;
@@ -286,86 +325,12 @@ class ImportImage
         }
     }
 
-    private static function generatePreview($product)
-    {
-        $s = Storage::disk('public');
-        $sizes = config('settings-file.import_image.preview.size');
-        $formats = config('settings-file.import_image.preview.format');
-
-
-        //$watermark = Image::make( $s->get('watermark.png') );
-
-        $productPath = null;
-
-        $dir = 'product/' . $product->getDetails('sku');
-
-        if ($s->exists($dir . '.' . self::$formatImg['png'])) {
-            $productPath = $dir . '.' . self::$formatImg['png'];
-        } elseif ($s->exists($dir . '.' . self::$formatImg['jpg'])) {
-            $productPath = $dir . '.' . self::$formatImg['jpg'];
-        }
-
-        if (!empty($productPath)) {
-            $contents = Image::make( $s->get($productPath) );
-
-            if ($contents) {
-                //$contents->insert($watermark, 'center');
-
-                foreach($sizes as $size) {
-
-                    $tmpContents = clone $contents;
-
-                    foreach($formats as $format) { // formats for resized images webp, png
-                        $tmpContents->trim(null, null, 5, 50)->resize($size, $size, function ($constraint) {
-                            $constraint->aspectRatio();
-                        })->resizeCanvas($size, $size, 'center', false, [255, 255, 255, 0]);
-
-                        $tmpContents->encode($format, 80)->save( public_path('storage/product/' . $size . '-' . $product->getDetails('sku')) . '.' . $format);
-                    }
-                }
-            }
-        }
-    }
-
-    private static function generateAdditionalPreview($product, $key)
-    {
-        $s = Storage::disk('public');
-        $sizes = config('settings-file.import_image.preview.size');
-        $formats = config('settings-file.import_image.preview.format');
-
-        //$watermark = Image::make( $s->get('watermark.png') );
-
-        $productPath = null;
-
-        $dir = 'product/' . $product->getDetails('sku') . '/';
-
-        //foreach (self::$apiProductImage['additional'] as $key => $additional) {
-            $productPath = $dir . $product->getDetails('sku') . '_' . $key . '.' . self::$formatImg['jpg'];
-
-            //if (!empty($productPath)) {
-                $contents = Image::make( $s->get($productPath) );
-
-                if ($contents) {
-                    //$contents->insert($watermark, 'center');
-
-                    foreach($sizes as $size) {
-                        $tmpContents = clone $contents;
-
-                        foreach($formats as $format) { // formats for resized images webp, png
-                            $tmpContents->trim(null, null, 5, 50)->resize($size, $size, function ($constraint) {
-                                $constraint->aspectRatio();
-                            })->resizeCanvas($size, $size, 'center', false, [255, 255, 255, 0]);
-
-                            $tmpContents->encode($format, 90)->save(
-                                public_path('storage/product/' . $product->getDetails('sku') . '/' . $size . '-' . $product->getDetails('sku')) . '_'  . $key . '.' . $format);
-                        }
-                    }
-                }
-            //}
-        //}
-    }
-
-    private static function downloadDefectiveImages($sdCode, $sku)
+    /**
+     * @param string $sdCode
+     * @param int $sku
+     * @return void
+     */
+    private static function downloadDefectiveImages(string $sdCode, int $sku): void
     {
         $defectiveImages = self::$apiProductImage['data'][$sku]['main']['defective_attributes']['images'] ?? null;
         if (isset($defectiveImages)) {
@@ -376,7 +341,8 @@ class ImportImage
 
                 $pathSdCode = 'storage/product/' . $sdCode . '/';
                 $pathSku = $pathSdCode . $sku . '/';
-                $pathAddImg = public_path($pathSku . $sku . '_' . $key) . '.' . self::$formatImg['jpg'];
+                $publicPathImg = public_path($pathSku . $sku . '_' . $key);
+                $pathAddImg = $publicPathImg . '.' . self::$formatImg['jpg'];
 
                 if ($timeImageUpdateMd5 != (self::$dbProductImage['details']['additional'][$key]['filemtime_md5'] ?? null)
                     || !file_exists($pathAddImg)
@@ -395,7 +361,7 @@ class ImportImage
                     }
 
                     $contents->save($pathAddImg); // save additional
-                    //self::generateAdditionalPreview($product, $key);
+                    self::generatePreview($publicPathImg, clone $contents);
                 }
 
                 self::$requestProductImage['details']['additional'][$key]['filemtime_md5'] = $timeImageUpdateMd5;
@@ -403,7 +369,37 @@ class ImportImage
         }
     }
 
-    public static function getDataJson(string $apiUrl) : array
+    /**
+     * @param string $publicPathImg
+     * @param object $contents Object of type Image
+     * @return void
+     */
+    private static function generatePreview(string $publicPathImg, object $contents): void
+    {
+        $sizes = config('settings-file.import_image.preview.size');
+        $formats = config('settings-file.import_image.preview.format');
+
+        if ($contents) {
+            foreach($sizes as $size) {
+                $tmpContents = clone $contents;
+
+                foreach($formats as $format) { // formats for resized images webp, png
+                    $tmpContents->trim(null, null, 5, 50)->resize($size, $size, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->resizeCanvas($size, $size, 'center', false, [255, 255, 255, 0]);
+
+                    $tmpContents->encode($format, 90)->save($publicPathImg . '-' . $size . '.' . $format);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param string $apiUrl
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public static function getDataJson(string $apiUrl): array
     {
         $client = new Client();
         $res = $client->request('GET', $apiUrl);

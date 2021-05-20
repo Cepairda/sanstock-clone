@@ -30,11 +30,9 @@ class ImportCategory extends Command
     public function handle(CategoryB2BImport $categoryB2BImport)
     {
         try {
-            $ref = $this->option('ref');
+            $categoryB2BImport->importQueue();
 
-            $categoryB2BImport->addToQueue($ref);
-
-            $this->info('Images have been successfully added to the queue');
+            $this->info('Categories have been successfully added');
         } catch (\Exception $exception) {
             $this->error('Something went wrong.' . $exception->getMessage());
         }
