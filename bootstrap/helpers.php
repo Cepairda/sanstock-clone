@@ -1,5 +1,7 @@
 <?php
 
+use App\Resource;
+
 if (!function_exists('mb_ucfirst')) {
     function mb_ucfirst($string, $enc = 'UTF-8')
     {
@@ -36,19 +38,31 @@ if (!function_exists('humanFileSize'))
 
 if (!function_exists('img')) {
     /**
-     * Format text.
-     *
-     * @param  string  $text
+     * @param string $type main|additional|defective|category
+     * @param resource $resource need passed for - main: sdCode; additional: sdCode, sku, key; defective: sdCode, sku, key; category: ref
+     * @param array $attributesHtml
+     * @param int|null $size
      * @return string
+     * @throws Exception
      */
-
-    function img($data)
+    function img(string $type, Resource $resource, array $attributesHtml, int $size = null): string
     {
-        $ikey = $data['size'] . '-' . $data['sku'];
-
-//        if (Cache::has($ikey) ) {
-//            return Cache::get($ikey);
-//        }
+       /* switch ($type) {
+            case 'main':
+                $path = "{$type}/{$resource->sdCode}/{$resource->sdCode}";
+                brake;
+            case 'additional':
+                $path = "{$type}/{$resource->sdCode}/additional/{$resource->sku}_{$resource->key}";
+                brake;
+            case 'defective':
+                $path = "{$type}/{$resource->sdCode}/{$resource->sku}/{$resource->sku}_{$resource->key']}";
+                brake;
+            case 'category':
+                $path = "{$type}/{$resource['ref']}";
+                brake;
+            default:
+                throw new Exception('Not exists type');
+        }
 
         if (!empty($data)) {
             $class = !empty($data['class']) ? ' class="' . implode(' ', $data['class']) . '"' : '';
@@ -62,12 +76,10 @@ if (!function_exists('img')) {
 
             $tag = '<img' . $class . $alt . $uri . ' />';
 
-            Cache::put($ikey, $tag, now()->addMinutes(60));
-
             return $tag;
         } else {
             return null;
-        }
+        }*/
     }
 }
 

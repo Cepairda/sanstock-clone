@@ -98,26 +98,40 @@ class CategoryB2BImport
 
         if (!isset($category)) {
             $category = new Category();
-
-            $category->setRequest([
-                'slug' => Slug::create(Category::class, $name['ru']),
-                'details' => [
-                    'ref' => $ref,
-                    'parent_ref' => $parentRef,
-                ],
-                'data' => ['name' => $name['ru']]
-            ]);
-
-            LaravelLocalization::setLocale('ru');
-            $category->storeOrUpdate();
-
-            $category->setRequest([
-                'data' => ['name' => $name['uk']]
-            ]);
-
-            LaravelLocalization::setLocale('uk');
-            $category->storeOrUpdate();
         }
+
+        /**
+         * If this is the root category, we must trim the numbers
+         * otherwise no change
+         * Before: 1. CategoryName
+         * After: CategoryName
+         */
+        if (is_null($parentRef)) {
+            $nameRu = substr($name['ru'], strpos($name['ru'], ' ') + 1);
+            $nameUk = substr($name['uk'], strpos($name['uk'], ' ') + 1);
+        } else {
+            $nameRu = $name['ru'];
+            $nameUk = $name['uk'];
+        }
+
+        $category->setRequest([
+            'slug' => Slug::create(Category::class, $nameRu),
+            'details' => [
+                'ref' => $ref,
+                'parent_ref' => $parentRef,
+            ],
+            'data' => ['name' => $nameRu]
+        ]);
+
+        LaravelLocalization::setLocale('ru');
+        $category->storeOrUpdate();
+
+        $category->setRequest([
+            'data' => ['name' => $nameUk]
+        ]);
+
+        LaravelLocalization::setLocale('uk');
+        $category->storeOrUpdate();
     }
 
     public function fixParent()
