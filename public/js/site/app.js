@@ -25789,53 +25789,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* WEBPACK VAR INJECTION */(function($) {(function () {
   "use strict";
 
-  var pageProduct = document.body.classList.contains('product');
+  var _pageProduct = document.body.classList.contains('productGroup');
 
-  if (!pageProduct) {
+  if (!_pageProduct) {
     return false;
   }
 
   var nameGetParam = 'sort';
   var paramsString = window.location.search;
   var searchParams = new URLSearchParams(paramsString);
-  var tabSelector = '';
 
-  if (searchParams.has(nameGetParam)) {
-    tabSelector = "a[data-toggle=\"tab\"][data-sort=\"".concat(searchParams.get(nameGetParam), "\"]");
-  } else {
-    var tableContainer = 'table-products';
-    var idContainerTabs = 'product-tabs';
-    var containetTabs = document.querySelector("#".concat(idContainerTabs));
+  var _productTabs = document.querySelector('#product-tabs');
 
-    if (containetTabs) {
-      var s1 = function s1(id) {
-        var container = containetTabs.querySelector("#sort-".concat(id));
-
-        if (!container) {
-          return false;
-        } else {
-          var tabTable = container.querySelector(".table-products");
-
-          if (tabTable) {
-            return "a[data-toggle=\"tab\"][data-sort=\"".concat(id, "\"]");
-          } else {
-            return s1(++id);
-          }
-        }
-      };
-
-      var result = s1(0);
-      tabSelector = result ? result : '';
-      console.log(result);
-    }
-  }
-
-  $(tabSelector).tab('show');
+  var sort = 0;
   $('a[data-toggle="tab"][data-sort]').on('shown.bs.tab', function (_ref) {
     var target = _ref.target;
     var sortNumber = target.dataset.sort;
     window.history.pushState({}, 'Title', "?sort=".concat(sortNumber));
   });
+  $("a#characteristics-tab[data-toggle=\"pill\"]").on('shown.bs.tab', function (_ref2) {
+    var target = _ref2.target;
+    showHideCharacteristic();
+  });
+
+  if (searchParams.has(nameGetParam)) {
+    sort = searchParams.get(nameGetParam);
+  } else {
+    var active = _productTabs ? _productTabs.dataset.active : undefined;
+    active !== undefined ? sort = active : $("a#characteristics-tab[data-toggle=\"pill\"]").tab('show');
+  }
+
+  var $tabSelector = $("a[data-toggle=\"tab\"][data-sort=\"".concat(sort, "\"]"));
+  $tabSelector.tab('show');
 })();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 

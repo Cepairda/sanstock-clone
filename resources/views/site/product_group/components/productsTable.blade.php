@@ -1,6 +1,7 @@
 <div class="table-responsive table-products cart__table">
     <table class="table table-hover">
         <thead>
+
         <tr>
             <td>Код товара</td>
             <td>Фото</td>
@@ -9,22 +10,13 @@
             <td>Цена</td>
             <td>Добавить корзину</td>
         </tr>
+
         </thead>
+
         <tbody>
-        <script>
 
-            let sort_price = {};
-
-        </script>
 
         @foreach($products as $sku => $product)
-            <script>
-                sort_price['{{$sort}}'] = {};
-                sort_price['{{$sort}}']['price'] = '{{ $product->price }}';
-                sort_price['{{$sort}}']['old_price'] = '{{ $product->old_price }}';
-            </script>
-
-{{--{{ dd($product) }}--}}
             <tr>
                 <td>{{ $product["sku"] }}</td>
                 <td>
@@ -62,41 +54,44 @@
     </table>
 </div>
 
-<script>
-    //console.log(sort_price);
-    function changePriceBySort(sort) {
+{{--<script>--}}
+    {{--function changePriceBySort(sort) {--}}
 
-        if(sort in sort_price) {
+        {{--if(sort in sort_price) {--}}
 
-            let price = document.querySelector('[data-sort="price"]');
-            if(price !== null) {
-                if('price' in sort_price[sort] && sort_price[sort].price !== '') {
-                    price.textContent = sort_price[sort].price;
+            {{--let price = document.querySelector('[data-sort="price"]');--}}
 
-                    let oldPrice = document.querySelector('[data-product-group="old_price"]');
-                    if(oldPrice !== null) {
-                        if('old_price' in sort_price[sort] && sort_price[sort].old_price !== '') {
-                            oldPrice.querySelector('[data-sort="old_price"] s').textContent = sort_price[sort].old_price;
-                            if(oldPrice.classList.contains('d-none')) oldPrice.classList.remove('d-none');
-                        } else {
-                            oldPrice.querySelector('[data-sort="old_price"] s').textContent = '0';
-                            if(!oldPrice.classList.contains('d-none')) oldPrice.classList.add('d-none');
-                        }
-                    }
-                } else {
-                    price.textContent = '0';
-                }
-            }
-        }
-        addOrReplaceOrderBy('sort', sort);
-    }
+            {{--if(price !== null) {--}}
 
-    function addOrReplaceOrderBy(paramName, newData) {
-        let url = new URL(window.location.href);
-        url.searchParams.set(paramName, newData);
-        history.pushState(null, null, url.href);
-    }
+                {{--if('price' in sort_price[sort] && sort_price[sort].price !== '') {--}}
+                    {{----}}
+                    {{--price.textContent = sort_price[sort].price;--}}
 
-    changePriceBySort('{{$current_sort}}');
+                    {{--let oldPrice = document.querySelector('[data-product-group="old_price"]');--}}
+                    {{--if(oldPrice !== null) {--}}
+                        {{--if('old_price' in sort_price[sort] && sort_price[sort].old_price !== '') {--}}
+                            {{--oldPrice.querySelector('[data-sort="old_price"] s').textContent = sort_price[sort].old_price;--}}
+                            {{--if(oldPrice.classList.contains('d-none')) oldPrice.classList.remove('d-none');--}}
+                        {{--} else {--}}
+                            {{--oldPrice.querySelector('[data-sort="old_price"] s').textContent = '0';--}}
+                            {{--if(!oldPrice.classList.contains('d-none')) oldPrice.classList.add('d-none');--}}
+                        {{--}--}}
+                    {{--}--}}
+                {{--} else {--}}
 
-</script>
+                    {{--price.textContent = '0';--}}
+                {{--}--}}
+            {{--}--}}
+        {{--}--}}
+        {{--addOrReplaceOrderBy('sort', sort);--}}
+    {{--}--}}
+
+    {{--function addOrReplaceOrderBy(paramName, newData) {--}}
+        {{--let url = new URL(window.location.href);--}}
+        {{--url.searchParams.set(paramName, newData);--}}
+        {{--history.pushState(null, null, url.href);--}}
+    {{--}--}}
+
+    {{--changePriceBySort('{{$current_sort}}');--}}
+
+{{--</script>--}}
