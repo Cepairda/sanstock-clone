@@ -19,7 +19,7 @@
                 <div class="product-price">
                     <div class="product-price__item">
                         <p>
-                            <span data-product-sku="123">{{ number_format(ceil($product->price),0,'',' ') }}</span>
+                            <span data-product-sort-sd-code="{{ $productGroup->sdCode }}" data-product-sort-grade="{{ $product->grade }}">{{ number_format(ceil($product->price),0,'',' ') }}</span>
                             <span>грн.</span>
                         </p>
                     </div>

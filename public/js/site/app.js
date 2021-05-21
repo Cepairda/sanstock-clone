@@ -25230,7 +25230,9 @@ __webpack_require__(/*! ./components/liveSearch */ "./resources/js/site/componen
 
 __webpack_require__(/*! ./components/cart */ "./resources/js/site/components/cart.js");
 
-__webpack_require__(/*! ./components/tabsProducs */ "./resources/js/site/components/tabsProducs.js"); //page
+__webpack_require__(/*! ./components/tabsProducs */ "./resources/js/site/components/tabsProducs.js");
+
+__webpack_require__(/*! ./components/updatePriceBalance */ "./resources/js/site/components/updatePriceBalance.js"); //page
 
 
 __webpack_require__(/*! ./page/cardProduct */ "./resources/js/site/page/cardProduct.js"); //custom script
@@ -25758,6 +25760,143 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       containerActive.classList.add('active');
     }
   }, false);
+})();
+
+/***/ }),
+
+/***/ "./resources/js/site/components/updatePriceBalance.js":
+/*!************************************************************!*\
+  !*** ./resources/js/site/components/updatePriceBalance.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//update Price
+(function () {
+  var pageType = document.getElementById('product-tabs') ? 'product' : 'category';
+  var url = '/products/update-price',
+      dataProductSort = document.querySelectorAll('[data-product-sort-sd-code]'),
+      token = document.querySelector('input[name=_token]'),
+      productSortArray = [];
+
+  var _iterator = _createForOfIteratorHelper(dataProductSort),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var data = _step.value;
+      productSortArray.push([data.dataset.productSortSdCode, +data.dataset.productSortGrade]);
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  console.log(productSortArray);
+
+  if (productSortArray.length && token) {
+    fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRF-Token": token.value
+      },
+      method: "post",
+      credentials: "same-origin",
+      body: JSON.stringify({
+        'data': productSortArray,
+        'type': pageType
+      })
+    }).then(function (response) {
+      return response.json();
+    }).then(function (dataApi) {
+      if (pageType == 'category') {
+        var _iterator2 = _createForOfIteratorHelper(dataProductSort),
+            _step2;
+
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var data = _step2.value;
+            var checkOnExist = false;
+
+            for (var productData in dataApi) {
+              if (data.dataset.productSortSdCode == dataApi[productData]['sdCode'] && +data.dataset.productSortGrade == dataApi[productData]['grade']) {
+                data.innerHTML = parseInt(dataApi[productData]['price']).toLocaleString('ru-Ru');
+                /* if (dataApi[skuApi]['discount_price']) {
+                    sku.innerHTML = "<span>" + parseInt(dataApi[skuApi]['discount_price']).toLocaleString('ru-Ru') +"</span>  &nbsp;&nbsp;&nbsp;<span>" + parseInt(dataApi[skuApi]['price']).toLocaleString('ru-Ru') +"</span>";
+                } else {
+                    sku.innerHTML = "<span>" + parseInt(dataApi[skuApi]['price']).toLocaleString('ru-Ru') +"</span>";
+                }*/
+
+                checkOnExist = true;
+              }
+            }
+
+            if (!checkOnExist) {
+              var parent = data.closest(".col-12.col-lg-6.col-xl-4").remove();
+              console.log(parent);
+            }
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+      } else if (pageType == 'product') {
+        var products = document.querySelectorAll('.table-products table tbody tr');
+
+        var _iterator3 = _createForOfIteratorHelper(products),
+            _step3;
+
+        try {
+          for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+            var _data = _step3.value;
+            var _checkOnExist = false;
+            var tdArray = _data.children;
+            var sku = tdArray[0].textContent.trim();
+            var balance = tdArray[3]; //.textContent.trim();
+
+            var price = tdArray[4]; //.textContent.trim();
+
+            var button = tdArray[5].firstElementChild;
+
+            for (var _productData in dataApi) {
+              if (sku == dataApi[_productData]['sku']) {
+                //data.innerHTML = parseInt(dataApi[productData]['price']).toLocaleString('ru-Ru');
+                var priceApi = dataApi[_productData]['price'] + ' грн.';
+
+                if (dataApi[_productData]['oldPrice']) {
+                  priceApi += "<p><s>" + dataApi[_productData]['oldPrice'] + " грн.</s></p>";
+                }
+
+                balance.textContent = dataApi[_productData]['balance'];
+                price.innerHTML = priceApi;
+                _checkOnExist = true;
+              }
+            }
+
+            if (!_checkOnExist) {//let parent = data.closest(".col-12.col-lg-6.col-xl-4").remove();
+              //console.log(parent);
+            }
+
+            button.textContent = 'Нет в наличии';
+          }
+        } catch (err) {
+          _iterator3.e(err);
+        } finally {
+          _iterator3.f();
+        }
+      }
+    });
+  }
 })();
 
 /***/ }),
@@ -27881,8 +28020,8 @@ document.addEventListener('mouseout', effEnd, false); //Reload page checkbox cat
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\js\site\app.js */"./resources/js/site/app.js");
-module.exports = __webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\sass\site\app.scss */"./resources/sass/site/app.scss");
+__webpack_require__(/*! /var/www/resources/js/site/app.js */"./resources/js/site/app.js");
+module.exports = __webpack_require__(/*! /var/www/resources/sass/site/app.scss */"./resources/sass/site/app.scss");
 
 
 /***/ })

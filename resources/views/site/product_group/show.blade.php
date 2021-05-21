@@ -85,7 +85,7 @@
                             <h1 class="card__title">{!! $productGroup->name !!}</h1>
 
 {{--                            {{dd($productGroup)}}--}}
-                            <p class="card__code">Код группы:<span class="card__code-id ml-1">{{ $productGroup->sd_code }}</span></p>
+                            <p class="card__code">Код группы:<span class="card__code-id ml-1">{{ $productGroup->sdCode }}</span></p>
 
                             <div class="card__price--wrapp">
 
@@ -166,6 +166,8 @@
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                     @for ($i = 0; $i < 4; $i++)
                                             <a class="nav-link w-25 text-center {{ $sort == $i ? 'active' : '' }}"
+                                               data-product-sort-sd-code="{{ $productGroup->sdCode }}"
+                                               data-product-sort-grade="{{ $i }}"
                                                data-sort="{{ $i  }}"
                                                data-toggle="tab" href="#sort-{{ $i}}"
                                                role="tab" onclick="changePriceBySort(this.dataset.sort)"

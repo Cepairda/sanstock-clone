@@ -225,7 +225,6 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
     // New Post
     Route::get('admin/test-request', '\App\Http\Controllers\Admin\NewPost\NewPostController@sentRequest')->name('sent-request-new-post');
 
-
     //Site
     Route::as('site.')->namespace('Site')->group(function () {
         Route::get('/telegram-bot', 'TelegramBotController@index')->name('telegram-bot');

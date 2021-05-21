@@ -32,6 +32,7 @@ require('./plugins/lazyLoadImg');
 require('./components/liveSearch');
 require('./components/cart');
 require('./components/tabsProducs');
+require('./components/updatePriceBalance');
 
 //page
 require('./page/cardProduct');

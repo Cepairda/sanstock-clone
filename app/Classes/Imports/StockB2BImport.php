@@ -166,7 +166,7 @@ class StockB2BImport
                     'sd_code' => $sdCode,
                     'price' => $price,
                     'old_price' => $oldPrice,
-                    'balance' => $balance,
+                    //'balance' => $balance,
                     'grade' => $grade,
                     'published' => 0,
                 ],
