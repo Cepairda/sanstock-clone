@@ -7,7 +7,7 @@
     @php($i = 2)
     <li class="breadcrumb-item active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
         <span itemprop="name">
-           Корзина
+           {{ __('Cart') }}
         </span>
         <meta itemprop="position" content="{{ $i }}"/>
     </li>
@@ -19,29 +19,33 @@
 
         @include('site.components.breadcrumbs', ['title' => 'Cart', 'h1' => true])
 
-        <div class="container">
+        <div class="container container-gap-sm">
 
             <div class="row">
+                @if(count($orderProducts))
+                    <!-- Navigations -->
+                    @include('site.orders.components.cartNavigations')
 
-                <!-- Navigations -->
-                <div class="col-12 d-flex justify-content-end py-4">
-                    <a class="button" href="{{ asset('/cart/checkout') }}">Оформить</a>
-                </div>
-
-                <!-- Products -->
-                <div class="col-12">
-                    @if(count($orderProducts))
+                    <!-- Table products -->
+                    <div class="col-12">
                         @include('site.components.cartProductsTable')
+                    </div>
+
+                    <!-- Navigations -->
+                    @include('site.orders.components.cartNavigations')
+
                     @else
-                        Корзина пуста
-                    @endif
-                </div>
-
-                <!-- Navigations -->
-                <div class="col-12 d-flex justify-content-end py-4">
-                    <a class="button" href="{{ asset('/cart/checkout') }}">Оформить</a>
-                </div>
-
+                    <div class="col-12">
+                        <div class="cart__empty">
+                            <div class="cart__empty--img">
+                                <span class="icon-cart"></span>
+                            </div>
+                            <p class="cart__empty--title">
+                                {{ __('Cart empty') }}
+                            </p>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
 

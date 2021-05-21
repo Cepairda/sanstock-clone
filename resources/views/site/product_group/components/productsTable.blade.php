@@ -9,30 +9,29 @@
             <td>Цена</td>
             <td>Добавить корзину</td>
         </tr>
+
         </thead>
+
         <tbody>
-        <script>
 
-            let sort_price = {};
-
-        </script>
 
         @foreach($products as $sku => $product)
-            <script>
-                sort_price['{{$sort}}'] = {};
-                sort_price['{{$sort}}']['price'] = '{{ $product->price }}';
-                sort_price['{{$sort}}']['old_price'] = '{{ $product->old_price }}';
-            </script>
-
-{{--{{ dd($product) }}--}}
             <tr>
                 <td>{{ $product["sku"] }}</td>
                 <td>
-                    @foreach($product->defectiveImages as $key => $value)
-                        <img width="150"
-                             src="/storage/product/{{ $productGroup->sdCode }}/{{ $product->sku }}/{{ $product->sku }}_{{ $key }}.jpg"
-                             alt="">
-                    @endforeach
+                    <div class="_bl">
+                        <div class="_bl-p"></div>
+                        <div class="_bl-g th-gallery">
+                            @foreach($product->defectiveImages as $key => $value)
+                                <a href="/storage/product/{{ $productGroup->sdCode }}/{{ $product->sku }}/{{ $product->sku }}_{{ $key }}.jpg">
+                                    <img class="lazy img-data-path" width="75"
+                                         data-src="/storage/product/{{ $productGroup->sdCode }}/{{ $product->sku }}/{{ $product->sku }}_{{ $key }}.jpg"
+                                         src="{{ asset('images/white_fone_150x150.jpg' )}}" alt="">
+                                </a>
+                            @endforeach
+                        </div>
+                        <div class="_bl-n"></div>
+                    </div>
                 </td>
                 <td style="text-align: left;" data-price="{{ $product->price }}" data-oldprice="{{ $product->old_price }}">
                     @if(isset($productsDefectiveAttributes[$product["sku"]]))
@@ -61,42 +60,3 @@
         </tbody>
     </table>
 </div>
-
-<script>
-    //console.log(sort_price);
-    function changePriceBySort(sort) {
-
-        if(sort in sort_price) {
-
-            let price = document.querySelector('[data-sort="price"]');
-            if(price !== null) {
-                if('price' in sort_price[sort] && sort_price[sort].price !== '') {
-                    price.textContent = sort_price[sort].price;
-
-                    let oldPrice = document.querySelector('[data-product-group="old_price"]');
-                    if(oldPrice !== null) {
-                        if('old_price' in sort_price[sort] && sort_price[sort].old_price !== '') {
-                            oldPrice.querySelector('[data-sort="old_price"] s').textContent = sort_price[sort].old_price;
-                            if(oldPrice.classList.contains('d-none')) oldPrice.classList.remove('d-none');
-                        } else {
-                            oldPrice.querySelector('[data-sort="old_price"] s').textContent = '0';
-                            if(!oldPrice.classList.contains('d-none')) oldPrice.classList.add('d-none');
-                        }
-                    }
-                } else {
-                    price.textContent = '0';
-                }
-            }
-        }
-        addOrReplaceOrderBy('sort', sort);
-    }
-
-    function addOrReplaceOrderBy(paramName, newData) {
-        let url = new URL(window.location.href);
-        url.searchParams.set(paramName, newData);
-        history.pushState(null, null, url.href);
-    }
-
-    changePriceBySort('{{$current_sort}}');
-
-</script>

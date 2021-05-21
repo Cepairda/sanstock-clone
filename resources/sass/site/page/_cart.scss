@@ -3,3 +3,18 @@ body.cart {
     display: none;
   }
 }
+
+.cart {
+  &__empty {
+    text-align: center;
+    &--img {
+      .icon-cart {
+        height: 300px;
+        width: 300px;
+      }
+    }
+    &--title {
+      font-size: 32px;
+    }
+  }
+}

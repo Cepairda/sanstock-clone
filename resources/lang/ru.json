@@ -87,7 +87,10 @@
     "Read more": "Читать дальше",
 
     "Cart": "Корзина",
+    "Empty cart": "Очистить корзину",
+    "Cart empty": "Корзина пуста",
     "Checkout": "Оформить",
     "Catalog products": "Каталог товаров",
-    "From": "От"
+    "From": "От",
+    "Additionally": "Дополнительно"
 }

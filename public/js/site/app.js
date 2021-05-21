@@ -25291,6 +25291,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   var productUpDateToCartSelector = '[data-add="upDate"]';
   var productToCartModalSelector = '[data-add="modal"]';
   var productDeleteCartSelector = '[data-add="delete"]';
+  var productClearCartSelector = '[data-add="clear"]';
   var cartModalId = 'cartModal';
   var cartCounterNode = document.getElementById("".concat(cartCounterId));
   var toast = "<div class=\"toast hide\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-delay=\"2500\">\n                    <div class=\"toast-header\">\n                        <strong class=\"mr-auto\">Bootstrap</strong>\n                        <small>11 \u043C\u0438\u043D \u043D\u0430\u0437\u0430\u0434</small>\n                        <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"toast\" aria-label=\"Close\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                    </div>\n                    <div class=\"toast-body\">\n                        \u041F\u0440\u0438\u0432\u0435\u0442, \u043C\u0438\u0440! \u042D\u0442\u043E \u0442\u043E\u0441\u0442-\u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435.\n                    </div>\n                </div>";
@@ -25303,6 +25304,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       this.cartCounterId = 'cart-count';
       this.productToCartContainerClassName = '[data-add="to-add"]';
       this.cartCounterNode = document.getElementById("".concat(cartCounterId));
+      this.deleteWithButton = false; // возможность удалять из куки кнопкой "[data-add="upDate"]"
+
       this.i18n = {
         ru: {
           'button-add': 'Купить',
@@ -25315,7 +25318,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       };
       this.getLocalization = this.getLocalization.bind(this);
       this.getCookie = this.getCookie.bind(this);
+      this.setCookie = this.setCookie.bind(this);
+      this.deleteCookie = this.deleteCookie.bind(this);
       this.checkCookieCart = this.checkCookieCart.bind(this);
+      this.clear = this.clear.bind(this);
       this.openModal = this.openModal.bind(this);
       this.localization = this.getLocalization();
       this.run();
@@ -25353,16 +25359,22 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.setCount(products); //this.setToast();
       }
     }, {
+      key: "deleteCookie",
+      value: function deleteCookie(name) {
+        document.cookie = name + "=" + "" + "; path=/; max-age=" + -1;
+        this.setCount();
+      }
+    }, {
       key: "setCount",
       value: function setCount() {
         var products = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-        var count;
+        var count = 0;
 
         if (products != null) {
           count = Object.keys(products).length;
         } else {
           var cartData = this.getCookie(cookieKeyCart);
-          count = Object.keys(cartData).length;
+          cartData && (count = Object.keys(cartData).length);
         }
 
         cartCounterNode.textContent = "".concat(count);
@@ -25443,7 +25455,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         } else {
           products = JSON.parse(cartData);
 
-          if (addToCartBtn.classList.contains('added')) {
+          if (addToCartBtn.classList.contains('added') && this.deleteWithButton) {
             delete products[productSku];
             this.setCookie(products);
             this.buttonsChange(productSku);
@@ -25453,6 +25465,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.buttonsChange(productSku);
             this.openModal();
           }
+        }
+      }
+    }, {
+      key: "clear",
+      value: function clear() {
+        this.deleteCookie(cookieKeyCart);
+
+        if (document.body.classList.contains('cart')) {
+          location.reload();
         }
       }
     }, {
@@ -25540,9 +25561,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           var upDateBtn = target.closest("".concat(productUpDateToCartSelector));
           var openModal = target.closest("".concat(productToCartModalSelector));
           var deleteBtn = target.closest("".concat(productDeleteCartSelector));
+          var clear = target.closest("".concat(productClearCartSelector));
           upDateBtn && _this2.upDateCart(upDateBtn);
           openModal && _this2.openModal();
           deleteBtn && _this2["delete"](deleteBtn);
+          clear && _this2.clear();
         }, false);
         document.addEventListener('DOMContentLoaded', this.checkCookieCart, false);
       }
@@ -25550,10 +25573,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       key: "run",
       value: function run() {
         this.setEvent();
-        var obj = {
-          'localization': this.localization
-        };
-        console.log(obj);
       }
     }]);
 
@@ -25664,7 +25683,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               response = _context.sent;
 
               if (!(response.status === 200)) {
-                _context.next = 16;
+                _context.next = 15;
                 break;
               }
 
@@ -25677,12 +25696,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               searchResult.insertAdjacentHTML('afterbegin', data);
               window.lazyLoadImg.toRun();
               val = liveSearchForm.querySelector('.search_error');
-              console.log(i18n.notFound[localization]);
               val && val.insertAdjacentHTML('beforeend', "<p class=\"search-text-info\">".concat(i18n.notFound[localization()], ":<span class=\"text-body ml-1\">\"").concat(value, "\"</span></p>"));
               searchResult.style.height = searchResult.firstElementChild.scrollHeight + +1 + 'px';
               mark(value);
 
-            case 16:
+            case 15:
             case "end":
               return _context.stop();
           }
@@ -25703,7 +25721,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         searchResult.style.height = 0;
       } else {
         searchResult.textContent = '';
-        console.log(i18n.input[localization]);
         searchResult.insertAdjacentHTML("beforeend", "<p class=\"search-text-info\">".concat(i18n.input[localization()], "</p>"));
         searchResult.style.height = searchResult.firstElementChild.scrollHeight + +1 + 'px';
       }
@@ -25870,7 +25887,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
             for (var _productData in dataApi) {
               if (sku == dataApi[_productData]['sku']) {
-                //data.innerHTML = parseInt(dataApi[productData]['price']).toLocaleString('ru-Ru');
                 var priceApi = dataApi[_productData]['price'] + ' грн.';
 
                 if (dataApi[_productData]['oldPrice']) {
@@ -25884,7 +25900,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
             }
 
             if (!_checkOnExist) {//let parent = data.closest(".col-12.col-lg-6.col-xl-4").remove();
-              //console.log(parent);
             }
 
             button.textContent = 'Нет в наличии';
@@ -25911,52 +25926,50 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 /* WEBPACK VAR INJECTION */(function($) {(function () {
   "use strict";
 
-  var pageProduct = document.body.classList.contains('product');
+  var _pageProduct = document.body.classList.contains('productGroup');
 
-  if (!pageProduct) {
+  if (!_pageProduct) {
     return false;
   }
 
   var nameGetParam = 'sort';
   var paramsString = window.location.search;
   var searchParams = new URLSearchParams(paramsString);
-  var tabSelector = '';
 
-  if (searchParams.has(nameGetParam)) {
-    tabSelector = "a[data-toggle=\"tab\"][data-sort=\"".concat(searchParams.get(nameGetParam), "\"]");
-  } else {
-    var tableContainer = 'table-products';
-    var idContainerTabs = 'product-tabs';
-    var containetTabs = document.querySelector("#".concat(idContainerTabs));
+  var _productTabs = document.querySelector('#product-tabs');
 
-    if (containetTabs) {
-      var s1 = function s1(id) {
-        var container = containetTabs.querySelector("#sort-".concat(id));
-
-        if (!container) {
-          return false;
-        } else {
-          var tabTable = container.querySelector(".table-products");
-
-          if (tabTable) {
-            return "a[data-toggle=\"tab\"][data-sort=\"".concat(id, "\"]");
-          } else {
-            return s1(++id);
-          }
-        }
-      };
-
-      var result = s1(0);
-      tabSelector = result ? result : '';
-      console.log(result);
-    }
-  }
-
-  $(tabSelector).tab('show');
+  var sort = 0;
   $('a[data-toggle="tab"][data-sort]').on('shown.bs.tab', function (_ref) {
     var target = _ref.target;
     var sortNumber = target.dataset.sort;
     window.history.pushState({}, 'Title', "?sort=".concat(sortNumber));
+  });
+  $("a#characteristics-tab[data-toggle=\"pill\"]").on('shown.bs.tab', function (_ref2) {
+    var target = _ref2.target;
+    showHideCharacteristic();
+  });
+
+  if (searchParams.has(nameGetParam)) {
+    sort = searchParams.get(nameGetParam);
+  } else {
+    var active = _productTabs ? _productTabs.dataset.active : undefined;
+    active !== undefined ? sort = active : $("a#characteristics-tab[data-toggle=\"pill\"]").tab('show');
+  }
+
+  var $tabSelector = $("a[data-toggle=\"tab\"][data-sort=\"".concat(sort, "\"]"));
+  $tabSelector.tab('show'); //=== demo
+
+  var glt = document.querySelectorAll('.th-gallery');
+  glt.forEach(function (el) {
+    lightGallery(el, {
+      share: false,
+      actualSize: false,
+      download: true,
+      zoom: true,
+      fullScreen: true,
+      thumbnail: true,
+      showThumbByDefault: true
+    });
   });
 })();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))

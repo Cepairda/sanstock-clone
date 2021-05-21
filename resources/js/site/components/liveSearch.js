@@ -70,7 +70,6 @@
             searchResult.insertAdjacentHTML('afterbegin', data);
             window.lazyLoadImg.toRun();
             let val  = liveSearchForm.querySelector('.search_error');
-            console.log(i18n.notFound[localization]);
             val && val.insertAdjacentHTML('beforeend', `<p class="search-text-info">${i18n.notFound[localization()]}:<span class="text-body ml-1">"${value}"</span></p>`);
             searchResult.style.height = (searchResult.firstElementChild.scrollHeight + +1) + 'px';
             mark(value);
@@ -87,7 +86,6 @@
                 searchResult.style.height = 0;
             } else {
                 searchResult.textContent = '';
-                console.log(i18n.input[localization]);
                 searchResult.insertAdjacentHTML("beforeend", `<p class="search-text-info">${i18n.input[localization()]}</p>`);
                 searchResult.style.height = (searchResult.firstElementChild.scrollHeight + +1) + 'px';
             }
