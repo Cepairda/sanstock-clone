@@ -38,6 +38,7 @@ require('./components/menu');
 
 //page
 require('./page/cardProduct');
+require('./page/category');
 
 //custom script
 require('./script');

@@ -58,7 +58,6 @@
         @endif
     @endforeach
     <div class="left-sidebar__view--btn">
-        <button type="submit" class="btn-filter btn-show">{{ __('Apply') }}</button>
-        <a href="#" class="btn-filter btn-reset">{{ __('Reset')}}</a>
+        <button type="reset" class="button">{{ __('Reset') }}</button>
     </div>
 </form>
