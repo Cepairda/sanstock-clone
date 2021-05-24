@@ -25226,13 +25226,17 @@ __webpack_require__(/*! ./plugins/characteristicsLists */ "./resources/js/site/p
 __webpack_require__(/*! ./plugins/lazyLoadImg */ "./resources/js/site/plugins/lazyLoadImg.js"); //components
 
 
+__webpack_require__(/*! ./components/backdrop */ "./resources/js/site/components/backdrop.js");
+
 __webpack_require__(/*! ./components/liveSearch */ "./resources/js/site/components/liveSearch.js");
 
 __webpack_require__(/*! ./components/cart */ "./resources/js/site/components/cart.js");
 
 __webpack_require__(/*! ./components/tabsProducs */ "./resources/js/site/components/tabsProducs.js");
 
-__webpack_require__(/*! ./components/updatePriceBalance */ "./resources/js/site/components/updatePriceBalance.js"); //page
+__webpack_require__(/*! ./components/updatePriceBalance */ "./resources/js/site/components/updatePriceBalance.js");
+
+__webpack_require__(/*! ./components/menu */ "./resources/js/site/components/menu.js"); //page
 
 
 __webpack_require__(/*! ./page/cardProduct */ "./resources/js/site/page/cardProduct.js"); //custom script
@@ -25240,6 +25244,73 @@ __webpack_require__(/*! ./page/cardProduct */ "./resources/js/site/page/cardProd
 
 __webpack_require__(/*! ./script */ "./resources/js/site/script.js");
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"), __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
+/***/ "./resources/js/site/components/backdrop.js":
+/*!**************************************************!*\
+  !*** ./resources/js/site/components/backdrop.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+//=== test 24.05
+(function () {
+  var Backdrop = /*#__PURE__*/function () {
+    function Backdrop() {
+      _classCallCheck(this, Backdrop);
+
+      this.body = document.body;
+    }
+
+    _createClass(Backdrop, [{
+      key: "check",
+      value: function check() {
+        return this.body.classList.contains('modal-open');
+      }
+    }, {
+      key: "openModal",
+      value: function openModal() {
+        var block = document.createElement('div');
+        block.className = 'modal-backdrop fade';
+        this.body.classList.add('modal-open');
+        this.body.append(block);
+        setTimeout(function () {
+          block.classList.add('show');
+        }, 160);
+      }
+    }, {
+      key: "closeModal",
+      value: function closeModal() {
+        var b = document.querySelector('.modal-backdrop');
+        b.classList.remove('show');
+        setTimeout(function () {
+          b.remove();
+        }, 160);
+        this.body.classList.remove('modal-open');
+      }
+    }, {
+      key: "action",
+      value: function action() {
+        if (this.check()) {
+          this.closeModal();
+        } else {
+          this.openModal();
+        }
+      }
+    }]);
+
+    return Backdrop;
+  }();
+
+  window.backdroup = new Backdrop();
+})();
 
 /***/ }),
 
@@ -25739,6 +25810,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     if (!form) {
       liveSearchForm.classList.remove('active');
+    }
+  }, false);
+})();
+
+/***/ }),
+
+/***/ "./resources/js/site/components/menu.js":
+/*!**********************************************!*\
+  !*** ./resources/js/site/components/menu.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function () {
+  var headerNav = document.querySelector('.header-nav');
+  var openNav = document.querySelector('#open-nav');
+  var closeNav = document.querySelector('#close-nav');
+  var hM = document.querySelector('.head-menu--title');
+  var bL = document.querySelector('.box-list__inner');
+  openNav.addEventListener('click', function () {
+    headerNav.classList.add('show');
+    backdroup.action();
+  });
+  closeNav.addEventListener('click', function () {
+    headerNav.classList.remove('show');
+    backdroup.action();
+  });
+  hM.addEventListener('click', function () {
+    document.querySelector('.head-menu').classList.add('active');
+  }); //===---
+
+  document.addEventListener('click', function (_ref) {
+    var target = _ref.target;
+    var t = target.closest('.modal-backdrop');
+
+    if (t) {
+      headerNav.classList.remove('show');
+      backdroup.action();
     }
   }, false);
 })();
@@ -27959,47 +28068,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   $('.owl-carousel').owlCarousel({
     items: 4
   });
-});
-
-function eff(_ref) {
-  var offsetX = _ref.offsetX,
-      offsetY = _ref.offsetY,
-      target = _ref.target;
-  var btn = target.closest('.button');
-
-  if (!btn) {
-    return;
-  }
-
-  var el = document.createElement('span');
-  var r = {
-    x: -btn.offsetWidth,
-    y: 0
-  };
-  el.style.setProperty('transform', "translate3d(".concat(r.x, "px, ").concat(r.y, "px, 0px)"));
-  btn.insertAdjacentElement('afterbegin', el);
-  var el1 = btn.querySelector('span');
-  setTimeout(function () {
-    el1.classList.add('xx');
-  }, 160);
-}
-
-function effEnd(_ref2) {
-  var target = _ref2.target;
-  var btn = target.closest('.button');
-
-  if (!btn) {
-    return;
-  }
-
-  var el = btn.querySelectorAll('span');
-  el.forEach(function (elem) {
-    return elem.remove();
-  });
-}
-
-document.addEventListener('mouseover', eff, false);
-document.addEventListener('mouseout', effEnd, false); //Reload page checkbox category
+}); //Reload page checkbox category
 
 (function () {
   var form = document.querySelector('#sidebar-filter') || false;
@@ -28033,8 +28102,8 @@ document.addEventListener('mouseout', effEnd, false); //Reload page checkbox cat
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/js/site/app.js */"./resources/js/site/app.js");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/site/app.scss */"./resources/sass/site/app.scss");
+__webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\js\site\app.js */"./resources/js/site/app.js");
+module.exports = __webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\sass\site\app.scss */"./resources/sass/site/app.scss");
 
 
 /***/ })
