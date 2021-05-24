@@ -59,6 +59,10 @@ input:focus {
 	outline: none;
 }
 
+label {
+	margin-bottom: 0;
+}
+
 .page {
 	position: relative;
 	display: flex;
