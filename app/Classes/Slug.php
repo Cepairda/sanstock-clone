@@ -27,7 +27,7 @@ class Slug
 
         $i = 0;
 
-        while ($resourceId = $resource::whereSlug($slug)->where('id', '!=', $id)->first()) {
+        while ($resourceId = $resource::withTrashed()->whereSlug($slug)->where('id', '!=', $id)->first()) {
             $slug = $mainSlug . '-' . ++$i;
         }
 

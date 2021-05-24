@@ -89,7 +89,7 @@ class CategoryB2BImport
      */
     public function categoryImport(string $ref, ?string $parentRef, array $name, string $image) : void
     {
-        $category = Category::where('details->ref', $ref)->first();
+        $category = Category::withTrashed()->where('details->ref', $ref)->first();
 
         if (!isset($category)) {
             $category = new Category();
@@ -110,7 +110,7 @@ class CategoryB2BImport
         }
 
         $category->setRequest([
-            'slug' => Slug::create(Category::class, $nameRu),
+            'slug' => Slug::create(Category::class, $nameRu, $category->id),
             'details' => [
                 'ref' => $ref,
                 'parent_ref' => $parentRef,

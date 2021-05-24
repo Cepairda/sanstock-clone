@@ -45,7 +45,7 @@
                     }
 
                     if (!checkOnExist) {
-                        let parent = data.closest(".col-12.col-lg-6.col-xl-4").remove();
+                        //let parent = data.closest(".col-12.col-lg-6.col-xl-4").remove();
                         console.log(parent);
                     }
                 }
