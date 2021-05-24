@@ -3,13 +3,14 @@
 namespace App;
 
 use App\Traits\Commentable;
+use Awobaz\Compoships\Compoships;
 use LaravelLocalization;
 use Carbon\Carbon;
 use Spatie\SchemaOrg\Schema;
 
 class ProductSort extends Resource
 {
-    use Commentable;
+    use Compoships;
 
     protected $appends = ['price_updated_at'];
 
@@ -211,8 +212,15 @@ class ProductSort extends Resource
         return $this->hasOne(ProductGroup::class, 'details->sd_code', 'details->sd_code');
     }
 
+    public function scopeWithProducts($query, $joinLocalization = true)
+    {
+        return $query->with(['products' => function ($query) use ($joinLocalization) {
+            if ($joinLocalization) return $query->select('*')->joinLocalization();
+        }]);
+    }
+
     public function products()
     {
-        return $this->hasMany(Product::class, 'details->sd_code', 'details->sd_code')->where('details->grade', $this->grade);
+        return $this->hasMany(Product::class, ['details->sd_code', 'details->grade'], ['details->sd_code', 'details->grade']);
     }
 }

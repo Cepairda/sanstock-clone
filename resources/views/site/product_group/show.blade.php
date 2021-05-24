@@ -170,7 +170,6 @@
                                             @include('site.product_group.components.productsTable',
                                             [
                                                 'products' => $productsSort[$_sort]->products,
-                                                'productsDefectiveAttributes' => $productsDefectiveAttributes,
                                             ])
                                         @else
                                             <div style="text-align: center;">

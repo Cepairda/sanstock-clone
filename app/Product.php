@@ -3,13 +3,14 @@
 namespace App;
 
 use App\Traits\Commentable;
+use Awobaz\Compoships\Compoships;
 use LaravelLocalization;
 use Carbon\Carbon;
 use Spatie\SchemaOrg\Schema;
 
 class Product extends Resource
 {
-    use Commentable;
+    use Compoships;
 
     protected $appends = ['price_updated_at'];
 
