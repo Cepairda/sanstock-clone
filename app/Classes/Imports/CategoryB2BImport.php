@@ -2,21 +2,16 @@
 
 namespace App\Classes\Imports;
 
-use App\Brand;
 use App\Category;
-use App\Characteristic;
-use App\CharacteristicValue;
 use App\Jobs\ProcessCategoryB2BImport;
 use App\Product;
 use GuzzleHttp\Client;
-use Illuminate\Support\Str;
 use LaravelLocalization;
-use App\Jobs\ProcessImportB2B;
 use App\Classes\Slug;
 
 class CategoryB2BImport
 {
-    private $apiUrl = 'http://94.131.241.126/api/categories';
+    private $apiUrl = 'https://b2b-sandi.com.ua/api/categories';
     private static $data;
 
     public function getDataJson()

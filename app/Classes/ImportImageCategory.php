@@ -13,7 +13,7 @@ use App\Jobs\ProcessImportImageCategory;
 
 class ImportImageCategory
 {
-    private const DEFAULT_API_URL = 'http://94.131.241.126/api/categories';
+    private const DEFAULT_API_URL = 'https://b2b-sandi.com.ua/api/categories';
 
     private const FORMAT_IMG_ORIGINAL = ['jpg', 'png', 'webp'];
     private static $formatImg;

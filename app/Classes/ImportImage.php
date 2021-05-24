@@ -21,7 +21,7 @@ use App\Jobs\ProcessImportImage;
 class ImportImage
 {
 
-    private const DEFAULT_API_URL = 'http://94.131.241.126/api/products?token=368dbc0bf4008db706576eb624e14abf&only_defectives=1';
+    private const DEFAULT_API_URL = 'https://b2b-sandi.com.ua/api/products?token=368dbc0bf4008db706576eb624e14abf&only_defectives=1';
     private const FORMAT_IMG_ORIGINAL = ['jpg', 'png', 'webp'];
 
     private static $formatImg;

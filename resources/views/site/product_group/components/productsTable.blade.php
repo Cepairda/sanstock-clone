@@ -34,20 +34,17 @@
                     </div>
                 </td>
                 <td style="text-align: left;" data-price="{{ $product->price }}" data-oldprice="{{ $product->old_price }}">
-                    @if(isset($productsDefectiveAttributes[$product["sku"]]))
-
-                    @foreach($productsDefectiveAttributes[$product["sku"]] as $defective_attribute)
-
-                        {{ '- ' . $defective_attribute }}
-
-                    @endforeach
+                    @if($product->getData('defective_attributes'))
+                        @foreach($product->getData('defective_attributes') as $defective_attribute)
+                            {{ '- ' . $defective_attribute }}
+                        @endforeach
                     @endif
                 </td>
                 <td>
                     1
                 </td>
                 <td>
-                    1 грн.
+                    {{ $product->price }} грн.
                     @if ($product->old_price ?? null)
                         <p><s>{{ $product->old_price }} грн.</s></p>
                     @endif

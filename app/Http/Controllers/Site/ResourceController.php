@@ -35,6 +35,7 @@ class ResourceController extends Controller
                     'productGroup' => $resource->type::joinLocalization()
                         ->withCharacteristics()
                         ->whereId($resource->id)
+                        ->withProductsSort()
                         //->where('details->published', 1)
                         ->withCategory()
                         ->withRelateProducts()
@@ -48,10 +49,10 @@ class ResourceController extends Controller
                 $sortFromDb = null;
 
                 foreach ($data['productGroup']->productsSort as $productSort) {
-                    foreach($productSort->products as $productModel):
-                        $products = Product::joinLocalization()->withCharacteristics()->whereIn('details->sku', [$productModel["sku"]])->get();
-                        $productsDefectiveAttributes[$productModel["sku"]] = $products[0]->data['defective_attributes'];
-                    endforeach;
+                    //foreach($productSort->products as $productModel):
+                    //    $products = Product::joinLocalization()->withCharacteristics()->whereIn('details->sku', [$productModel["sku"]])->get();
+                    //    $productsDefectiveAttributes[$productModel["sku"]] = $products[0]->data['defective_attributes'];
+                    //endforeach;
                     $productsSort[$productSort->grade] = $productSort;
                 }
 
@@ -59,7 +60,7 @@ class ResourceController extends Controller
                 $sort = isset($sortType[$sortGet]) ? $sortGet : min(array_keys($productsSort));
 
                 $data['productsSort'] = $productsSort;
-                $data['productsDefectiveAttributes'] = $productsDefectiveAttributes;
+                //$data['productsDefectiveAttributes'] = $productsDefectiveAttributes;
                 $data['sort'] = $sort;
 
                 break;
