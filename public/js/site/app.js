@@ -25239,7 +25239,9 @@ __webpack_require__(/*! ./components/updatePriceBalance */ "./resources/js/site/
 __webpack_require__(/*! ./components/menu */ "./resources/js/site/components/menu.js"); //page
 
 
-__webpack_require__(/*! ./page/cardProduct */ "./resources/js/site/page/cardProduct.js"); //custom script
+__webpack_require__(/*! ./page/cardProduct */ "./resources/js/site/page/cardProduct.js");
+
+__webpack_require__(/*! ./page/category */ "./resources/js/site/page/category.js"); //custom script
 
 
 __webpack_require__(/*! ./script */ "./resources/js/site/script.js");
@@ -26047,10 +26049,19 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
   var _productTabs = document.querySelector('#product-tabs');
 
+  var price = document.querySelector('[data-sort="price"]');
   var sort = 0;
   $('a[data-toggle="tab"][data-sort]').on('shown.bs.tab', function (_ref) {
     var target = _ref.target;
     var sortNumber = target.dataset.sort;
+    var pr = this.dataset.price;
+
+    if (pr !== '') {
+      price.textContent = pr;
+    } else {
+      price.textContent = '0';
+    }
+
     window.history.pushState({}, 'Title', "?sort=".concat(sortNumber));
   });
   $("a#characteristics-tab[data-toggle=\"pill\"]").on('shown.bs.tab', function (_ref2) {
@@ -26082,6 +26093,20 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   });
 })();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
+/***/ "./resources/js/site/page/category.js":
+/*!********************************************!*\
+  !*** ./resources/js/site/page/category.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+//Category
+(function () {
+  "use strict";
+})();
 
 /***/ }),
 
@@ -28102,8 +28127,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/js/site/app.js */"./resources/js/site/app.js");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/site/app.scss */"./resources/sass/site/app.scss");
+__webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\js\site\app.js */"./resources/js/site/app.js");
+module.exports = __webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\sass\site\app.scss */"./resources/sass/site/app.scss");
 
 
 /***/ })

@@ -97,7 +97,7 @@
                            style="font-size: 16px;">
                             <span>Старая цена:</span>
                             <span data-product-sku="{{ $productGroup->sku }}" data-sort="old_price"
-                                  class="{{ $addClassToPrice }}"><s>{{ number_format(ceil($productGroup->price),0,'',' ')}}</s></span>
+                                  class="{{ $addClassToPrice }}"><s>{{ number_format(ceil($productGroup->price),0,'',' ') }}</s></span>
                             <span>грн.</span>
                         </p>
                     </div>
@@ -116,8 +116,7 @@
                         </li>
                         <li class="nav-item" role="presentation" style="width: 50%;">
                             <a class="nav-link-i" id="characteristics-tab" data-toggle="pill"
-                               href="#characteristics" role="tab" aria-controls="characteristics" aria-selected="true">Технисческие
-                                характеристики</a>
+                               href="#characteristics" role="tab" aria-controls="characteristics" aria-selected="true">{{ __('Technical characteristics') }}</a>
                         </li>
                     </ul>
                 </div>
@@ -145,11 +144,11 @@
                         <div class="tab-pane fade show active" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
 
                             <nav>
-
                                 <div id="nav-tab" class="nav nav-tabs" role="tablist">
                                     @for ($_sort = 0; $_sort < 4; $_sort++)
                                         <a class="nav-link w-25 text-center"
                                            data-sort="{{ $_sort }}"
+                                            data-price="{!!  isset($productsSort[$_sort]->price) ? number_format(ceil($productsSort[$_sort]->price),0,'',' ')  : ''  !!}"
                                            data-toggle="tab" href="#sort-{{ $_sort }}"
                                            role="tab"
                                            aria-controls="nav-home"

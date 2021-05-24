@@ -10,10 +10,17 @@
     const paramsString = window.location.search;
     const searchParams = new URLSearchParams(paramsString);
     const _productTabs = document.querySelector('#product-tabs');
+    const price = document.querySelector('[data-sort="price"]')
     let sort = 0;
 
     $('a[data-toggle="tab"][data-sort]').on('shown.bs.tab', function ({target}) {
         const sortNumber = target.dataset.sort;
+        let pr = this.dataset.price;
+        if(pr !== '') {
+            price.textContent = pr;
+        } else {
+            price.textContent = '0';
+        }
         window.history.pushState({}, 'Title', `?sort=${sortNumber}`);
     });
     $(`a#characteristics-tab[data-toggle="pill"]`).on('shown.bs.tab', function ({target}) {

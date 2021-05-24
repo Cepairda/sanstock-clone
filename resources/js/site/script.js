@@ -30,6 +30,6 @@ $(document).ready(function () {
         form.addEventListener('input', e => {
             let checkbox = e.target.closest('[type="checkbox"]');
             checkbox && form.submit();
-        }, false)
+        }, false);
     }
 }());

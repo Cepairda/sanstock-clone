@@ -966,61 +966,6 @@ label {
     color: #ececec;
 }
 
-/*checkbox*/
-.custom-checkbox {
-    margin-bottom: 15px;
-}
-
-.custom-control-input:checked ~ .custom-control-label::before {
-    border-color: #ec900f;
-    background-color: #ec900f;
-}
-
-.custom-checkbox .custom-control-label::before {
-    border-radius: 2px;
-}
-
-.custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
-    border-color: #9d9d9c;
-}
-
-.custom-control-input:focus ~ .custom-control-label::before {
-    box-shadow: none;
-}
-
-.custom-control-input:not(:disabled):active ~ .custom-control-label::before {
-    background-color: #ec900f;
-    border-color: #ec900f;
-}
-
-.custom-control-input:disabled ~ .custom-control-label {
-    color: transparent;
-}
-
-.custom-control-input:disabled ~ .custom-control-label::before {
-    background-color: transparent;
-}
-
-.custom-checkbox .custom-control-input:disabled:checked ~ .custom-control-label::before {
-    background-color: rgba(255, 255, 255, .5)
-}
-
-.custom-control-label::before {
-    background-color: transparent;
-    margin-top: -2px;
-}
-
-.custom-control-label::after {top: 2px;}
-
-.custom-control-input:disabled + label {
-    color: #d4d3d3 !important;
-    cursor: default;
-}
-
-.bgc-grad .custom-control-input:disabled + label {
-    color: grey !important;
-}
-
 /*radio*/
 .custom-radio .custom-control-input:checked ~ .custom-control-label::before {
     background-color: transparent;
