@@ -44,7 +44,7 @@
                     1
                 </td>
                 <td>
-                    1 грн.
+                    {{ $product->price }} грн.
                     @if ($product->old_price ?? null)
                         <p><s>{{ $product->old_price }} грн.</s></p>
                     @endif

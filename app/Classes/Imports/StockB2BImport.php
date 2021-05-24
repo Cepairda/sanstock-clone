@@ -17,7 +17,7 @@ use App\Classes\Slug;
 
 class StockB2BImport
 {
-    private const DEFAULT_API_URL = 'http://94.131.241.126/api/products?token=368dbc0bf4008db706576eb624e14abf&only_defectives=1';
+    private const DEFAULT_API_URL = 'https://b2b-sandi.com.ua/api/products?token=368dbc0bf4008db706576eb624e14abf&only_defectives=1';
     protected $apiUrl;
     private static $data;
 
