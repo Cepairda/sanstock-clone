@@ -6,14 +6,25 @@
         <div class="row">
             <div class="col-12">
 
+                <div class="header-top__btn">
+
+                    <button id="open-nav" type="button" class="open">Навигация</button>
+
+                </div>
+
                 <nav class="header-nav">
 
                     <ul class="header-nav__wrap">
 
                         <li class="header-nav__item">
-                            <a href="{{ asset('/') }}">
-                                <img src="{{ asset('images/logo/logo.svg') }}" width="150" alt="Sanstok">
-                            </a>
+                            <div>
+                                <a href="{{ asset('/') }}">
+                                    <img src="{{ asset('images/logo/logo.svg') }}" width="150" alt="Sanstok">
+                                </a>
+                                <button id="close-nav" type="button" class="close">
+                                    <span>&times;</span>
+                                </button>
+                            </div>
                         </li>
 
                         <li class="header-nav__item">
@@ -32,7 +43,7 @@
                             <a class="disabled" href="#">{{ __('FAQ') }}</a>
                         </li>
 
-                        <li class="header-nav__item ml-auto">
+                        <li class="header-nav__item item-right">
                             <div class="header-nav__item--phone">
                                 <span class="icon-callback"></span>
                                 <a href="tel:0800212124">0-800-21-21-24</a >
@@ -53,6 +64,7 @@
                         </li>
                     </ul>
                 </nav>
+
             </div>
         </div>
     </div>

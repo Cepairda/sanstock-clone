@@ -251,24 +251,6 @@
         width: auto;
     }
 
-    .nav-menu {
-        width: 100%;
-        margin: 0;
-        flex-direction: column;
-    }
-
-    .nav-menu--item,
-    .menu-link {
-        display: block;
-        padding: 0;
-    }
-
-    .nav-menu--item.active {
-        background-color: orange;
-        box-shadow: none;
-        margin: 0;
-    }
-
     .menu-container__bottom {
         display: none;
     }

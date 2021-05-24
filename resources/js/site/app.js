@@ -29,10 +29,12 @@ require('./plugins/characteristicsLists');
 require('./plugins/lazyLoadImg');
 
 //components
+require('./components/backdrop');
 require('./components/liveSearch');
 require('./components/cart');
 require('./components/tabsProducs');
 require('./components/updatePriceBalance');
+require('./components/menu');
 
 //page
 require('./page/cardProduct');

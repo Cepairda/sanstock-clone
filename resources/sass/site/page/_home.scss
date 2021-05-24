@@ -32,3 +32,24 @@
     }
   }
 }
+
+//Выравнивание карточек в табах
+.tabs-products__container {
+  .owl-carousel {
+    .owl-stage {
+      display: flex;
+    }
+
+    .owl-item {
+      float: none;
+    }
+  }
+
+  .container-item__card {
+    height: 100%;
+  }
+
+  .product__wrapper {
+    height: 100%;
+  }
+}
