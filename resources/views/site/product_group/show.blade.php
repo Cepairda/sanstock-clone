@@ -52,6 +52,10 @@
             <div class="row main__card">
 
 
+                <div class="col-12">
+                    <h1 class="card__title py-4">{!! $productGroup->name !!}</h1>
+                </div>
+
                 <div class="col-lg-6">
                     <!-- swipeGallery -->
                     <div class="gallery-container">
@@ -78,46 +82,38 @@
                 </div>
 
                 <div class="col-12 col-lg-6 card__wrapper">
-                    <h1 class="card__title">{!! $productGroup->name !!}</h1>
                     <p class="card__code">Код:<span class="card__code-id ml-1">{{ $productGroup->sd_code }}</span></p>
+
                     <div class="card__price--wrapp">
                         @php($addClassToPrice = 'updatePriceJs')
-
-
-                        <div class="card__price"
-                             style="
-                                font-size: 30px;
-                                display: inline-block;
-                                padding: 0 10px;
-                                background-color: #ec3f33;
-                                border-radius: 3px;
-                                color: #fff;
-                                margin-bottom: 10px;">
-                            <span>{{ __('Profit') }}:</span>
-                            <span data-sort="price-difference" class="{{ $addClassToPrice }}">
-                                {{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->differencePrice : 0),0,'',' ') }}
+                        <div class="characteristic-list__wrap">
+                            <div class="characteristic-list__item list-normal">
+                                <span>{{ __('Old price') }}:</span>
+                                <span class="price-old">
+                                    <span data-sort="price-normal">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->normalPrice : 0),0,'',' ') }}</span>
+                                    <span>грн.</span>
                                 </span>
-                            <span>грн.</span>
+                            </div>
 
+                            <div class="characteristic-list__item list-price">
+                                <span>{{ __('Price') }}:</span>
+                                <span>
+                                    <span class="{{ $addClassToPrice }}" data-product-sku="{{ $productGroup->sku }}" data-sort="price">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->price : 0),0,'',' ') }}</span>
+                                    <span>грн.</span>
+                                </span>
+                            </div>
+
+                            <div class="characteristic-list__item list-difference">
+                                <span>{{ __('Profit') }}:</span>
+                                <span class="price-difference">
+                                    <span data-sort="price-difference">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->differencePrice : 0),0,'',' ') }}</span>
+                                    <span>грн.</span>
+                                </span>
+                            </div>
 
                         </div>
-
-                        <div class="card__price" style="padding: 0 10px;">
-                            <span>Цена:</span>
-                            <span data-product-sku="{{ $productGroup->sku }}"
-                                  data-sort="price"
-                                  class="{{ $addClassToPrice }}">
-                                        {{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->price : 0),0,'',' ')}}
-                                    </span>
-                            <span>грн.</span>
-                            <span class="price-old" style="font-size: 24px">
-                                <span data-sort="price-normal">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->normalPrice : 0),0,'',' ') }}</span>
-                                <span>грн.</span>
-                            </span>
-                        </div>
-
-                        <div class="mt-4" style="padding-left: 10px;">
-                            <a id="to-sort" href="#sort-tab-1" class="button">{{ __('Buy') }}</a>
+                        <div class="mt-5">
+                            <a id="to-sort" href="#sort-tab-1" class="button" style="min-width: 200px; font-size: 24px">{{ __('Buy') }}</a>
                         </div>
 
                     </div>

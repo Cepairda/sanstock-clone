@@ -28114,6 +28114,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   $('.owl-carousel').owlCarousel({
     items: 4
   });
+  $('[data-toggle="tooltip"]').tooltip();
 }); //Reload page checkbox category
 
 (function () {
