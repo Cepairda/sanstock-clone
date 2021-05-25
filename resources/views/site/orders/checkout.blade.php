@@ -120,7 +120,7 @@
                                                     class=""
                                                     name="new_mail_delivery_type"
                                                     data-placeholder="Тип доставки"
-                                                    required>
+                                                    required style="padding: 4px;">
                                                 <option value="storage_storage">Доставка на отделение</option>
                                                 <option value="storage_door">Доставка за адресом</option>
                                             </select>
