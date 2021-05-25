@@ -94,10 +94,11 @@
                                 color: #fff;
                                 margin-bottom: 10px;">
                             <span>{{ __('Profit') }}:</span>
-                            <span data-sort="price-old" class="{{ $addClassToPrice }}">
-                                {{-- number_format(ceil($productGroup->price),0,'',' ') --}}1 200
-                                <span>грн.</span>
-                            </span>
+                            <span data-sort="price-difference" class="{{ $addClassToPrice }}">
+                                {{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->differencePrice : 0),0,'',' ') }}
+                                </span>
+                            <span>грн.</span>
+
 
                         </div>
 
@@ -106,16 +107,18 @@
                             <span data-product-sku="{{ $productGroup->sku }}"
                                   data-sort="price"
                                   class="{{ $addClassToPrice }}">
-                                        {{ number_format(ceil($productGroup->price),0,'',' ')}}
+                                        {{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->price : 0),0,'',' ')}}
                                     </span>
                             <span>грн.</span>
-                            <span class="price-old">
-                                {{-- number_format(ceil($productGroup->differencePrice),0,'',' ') --}}2 447 грн.
+                            <span class="price-old" style="font-size: 24px">
+                                <span data-sort="price-normal">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->normalPrice : 0),0,'',' ') }}</span>
+                                <span>грн.</span>
                             </span>
                         </div>
 
-
-
+                        <div class="mt-4" style="padding-left: 10px;">
+                            <a id="to-sort" href="#sort-tab-1" class="button">{{ __('Buy') }}</a>
+                        </div>
 
                     </div>
                     <p class="card__description">{{ $productGroup->description }}</p>
@@ -163,9 +166,12 @@
                             <nav>
                                 <div id="nav-tab" class="nav nav-tabs" role="tablist">
                                     @for ($_sort = 0; $_sort < 4; $_sort++)
-                                        <a class="nav-link w-25 text-center {{ isset($productsSort[$_sort]) ? '' : 'nav-link-gray' }}"
+                                        <a id="sort-tab-{{ $_sort }}"
+                                           class="nav-link w-25 text-center {{ isset($productsSort[$_sort]) ? '' : 'nav-link-gray' }}"
                                            data-sort="{{ $_sort }}"
                                            data-price="{!!  isset($productsSort[$_sort]) ? number_format(ceil($productsSort[$_sort]->price),0,'',' ')  : ''  !!}"
+                                           data-normal="{!! isset($productsSort[$_sort]->normalPrice) ? number_format(ceil($productsSort[$_sort]->normalPrice),0,'',' ') : '' !!}"
+                                           data-difference="{!! isset($productsSort[$_sort]->differencePrice) ? number_format(ceil($productsSort[$_sort]->differencePrice),0,'',' ') : '' !!}"
                                            data-toggle="tab" href="#sort-{{ $_sort }}"
                                            role="tab"
                                            aria-controls="nav-home"

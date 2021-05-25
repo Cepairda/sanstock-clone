@@ -56,12 +56,18 @@ class ResourceController extends Controller
                     $productsSort[$productSort->grade] = $productSort;
                 }
 
+                $productsSortKeys = array_keys($productsSort);
                 $sortType = [0, 1, 2, 3];
-                $sort = isset($sortType[$sortGet]) ? $sortGet : min(array_keys($productsSort));
+                $sort = isset($sortType[$sortGet]) ? $sortGet : min($productsSortKeys);
+                $firstExistSort = min($productsSortKeys);
+
+                $togglePrice = in_array($sort, $productsSortKeys);
 
                 $data['productsSort'] = $productsSort;
                 //$data['productsDefectiveAttributes'] = $productsDefectiveAttributes;
                 $data['sort'] = $sort;
+                $data['firstExistSort'] = $firstExistSort;
+                $data['togglePrice'] = $togglePrice;
 
                 break;
             case 'category':

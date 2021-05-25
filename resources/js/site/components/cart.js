@@ -38,11 +38,11 @@
             this.deleteWithButton = false; // возможность удалять из куки кнопкой "[data-add="upDate"]"
             this.i18n = {
               ru: {
-                  'button-add': 'Купить',
+                  'button-add': 'В корзину',
                   'button-added': 'В корзине'
               },
               uk: {
-                  'button-add': 'Купити',
+                  'button-add': 'В кошик',
                   'button-added': 'В кошику'
               }
             };

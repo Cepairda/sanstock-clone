@@ -57,7 +57,7 @@
                                 margin-top: 2px;
                                 padding: 2px 12px;
                                 border-radius: 50px;
-                                background-color: red;
+                                background-color: #ec3f33;
                                 text-align: center;
                                 color: #ffffff;
                                 font-size: 14px;
@@ -70,7 +70,7 @@
 
                 </td>
                 <td>
-                    <button class="button" data-add="upDate" data-barcode="{{ $product->sku }}">Купить</button>
+                    <button class="button" data-add="upDate" data-barcode="{{ $product->sku }}">{{ __('Add to cart') }}</button>
                 </td>
             </tr>
         @endforeach

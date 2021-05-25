@@ -25,11 +25,19 @@ $(document).ready(function () {
 //Reload page checkbox category
 (function () {
     let form = document.querySelector('#sidebar-filter') || false;
-
+    let reset = form.querySelector('button[type="reset"]');
     if(form) {
         form.addEventListener('input', e => {
             let checkbox = e.target.closest('[type="checkbox"]');
             checkbox && form.submit();
         }, false);
+
+        let checkboxes = form.querySelectorAll('input[type="checkbox"]');
+
+        reset.addEventListener('click', e => {
+            for (let i = 0; i < checkboxes.length; i++) {
+                    checkboxes[i].checked = false;
+            }
+        });
     }
 }());
