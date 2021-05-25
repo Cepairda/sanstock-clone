@@ -15,7 +15,7 @@
             </div>
 
             <div class="product-wrapper">
-                <a href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}" class="product-description--item">Сорт {{ $product->grade }}</a>
+                <a href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}" data-toggle="tooltip" data-placement="top" title="{{ __('descriptions.desc_sort-' . $product->grade) }}" class="product-description--item">Сорт-{{ $product->grade }}</a>
                 <div class="product-price">
                     <div class="product-price__item">
                         <p><span class="product-price__item--old">{{ number_format(ceil($product->normalPrice),0,'',' ') }} грн.</span></p>

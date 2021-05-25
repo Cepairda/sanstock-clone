@@ -16442,3 +16442,27 @@ footer {
   padding-left: 4px;
   font-size: 18px;
 }
+
+.tooltip-inner {
+  max-width: 320px;
+  font-size: 12px;
+  color: #565656;
+  background-color: #f5f5f5;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.tooltip.show {
+  opacity: 1;
+}
+
+.bs-tooltip-top .arrow::after, .bs-tooltip-auto[x-placement^=top] .arrow::after {
+  position: absolute;
+  top: 0;
+  border-width: 0.4rem 0.4rem 0;
+  border-color: #000000;
+  border-style: solid;
+}
+
+.bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^=top] .arrow::before {
+  border-top-color: #f5f5f5;
+}
