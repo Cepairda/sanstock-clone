@@ -88,7 +88,7 @@
                             <span data-product-sku="{{ $productGroup->sku }}"
                                   data-sort="price"
                                   class="{{ $addClassToPrice }}">
-                                        {{ number_format(ceil($productGroup->price),0,'',' ')}}
+                                        {{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->price : 0),0,'',' ')}}
                                     </span>
                             <span>грн.</span>
                         </p>
@@ -97,7 +97,7 @@
                            style="font-size: 16px;">
                             <span>Старая цена:</span>
                             <span data-product-sku="{{ $productGroup->sku }}" data-sort="old_price"
-                                  class="{{ $addClassToPrice }}"><s>{{ number_format(ceil($productGroup->price),0,'',' ') }}</s></span>
+                                  class="{{ $addClassToPrice }}"><s>{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->normalPrice : 0),0,'',' ') }}</s></span>
                             <span>грн.</span>
                         </p>
                     </div>
