@@ -32,7 +32,7 @@
                 <td>{{ $product["grade"] }}</td>
 
                 <td>
-                    <span class="text-nowrap">{{ $product["price"] }} грн.</span>
+                    <span class="text-nowrap">{{ number_format(ceil($product["price"]),0,'',' ') }} грн.</span>
                 </td>
 
                 <td>
