@@ -87,6 +87,7 @@
     "Read more": "Читать дальше",
 
     "Cart": "Корзина",
+    "Add to cart": "В корзину",
     "Empty cart": "Очистить корзину",
     "Cart empty": "Корзина пуста",
     "Checkout": "Оформить",
@@ -96,5 +97,6 @@
     "Reset": "Сбросить",
     "Technical characteristics": "Технические характеристики",
     "Popular products": "Популярные товары",
-    "Recent receipts": "Последние поступления"
+    "Recent receipts": "Последние поступления",
+    "Profit": "Выгода"
 }

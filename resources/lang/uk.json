@@ -85,6 +85,7 @@
     "Become a partner": "Стати партнером",
 
     "Cart": "Кошик",
+    "Add to cart": "В кошик",
     "Empty cart": "Очистити кошик",
     "Cart empty": "Кошик порожній",
     "Checkout": "Оформити",
@@ -94,5 +95,6 @@
     "Reset": "Скасувати",
     "Technical characteristics": "Технічні характеристики",
     "Popular products": "Популярні товари",
-    "Recent receipts": "Останні надходження"
+    "Recent receipts": "Останні надходження",
+    "Profit": "Вигода"
 }

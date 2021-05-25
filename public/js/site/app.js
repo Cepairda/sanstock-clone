@@ -25381,11 +25381,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
       this.i18n = {
         ru: {
-          'button-add': 'Купить',
+          'button-add': 'В корзину',
           'button-added': 'В корзине'
         },
         uk: {
-          'button-add': 'Купити',
+          'button-add': 'В кошик',
           'button-added': 'В кошику'
         }
       };
@@ -26048,25 +26048,47 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
   var _productTabs = document.querySelector('#product-tabs');
 
+  var priceW = document.querySelector('.card__price--wrapp');
+  var toSort = document.querySelector('#to-sort');
   var price = document.querySelector('[data-sort="price"]');
+  var priceN = document.querySelector('[data-sort="price-normal"]');
+  var priceD = document.querySelector('[data-sort="price-difference"]');
   var sort = 0;
   $('a[data-toggle="tab"][data-sort]').on('shown.bs.tab', function (_ref) {
     var target = _ref.target;
     var sortNumber = target.dataset.sort;
     var pr = this.dataset.price;
+    var nr = this.dataset.normal;
+    var df = this.dataset.difference;
 
     if (pr !== '') {
+      priceW.hidden = false;
       price.textContent = pr;
+      priceN.textContent = nr;
+      priceD.textContent = df;
     } else {
-      price.textContent = '0';
+      priceW.hidden = true;
     }
 
+    toSort.href = "#sort-tab-".concat(sortNumber);
     window.history.pushState({}, 'Title', "?sort=".concat(sortNumber));
   });
   $("a#characteristics-tab[data-toggle=\"pill\"]").on('shown.bs.tab', function (_ref2) {
     var target = _ref2.target;
     showHideCharacteristic();
   });
+  toSort.addEventListener('click', function (e) {
+    e.preventDefault();
+    var element = document.querySelector("".concat(this.getAttribute('href')));
+
+    if (element) {
+      var y = element.getBoundingClientRect().top + window.pageYOffset - 120;
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
+    }
+  }, false);
 
   if (searchParams.has(nameGetParam)) {
     sort = searchParams.get(nameGetParam);
