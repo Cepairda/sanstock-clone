@@ -353,7 +353,8 @@ class CartController
         echo "Код ответа: $info" . PHP_EOL;
         echo "Страница " . $result['current_page'] . " из " . $result['last_page'] . PHP_EOL;
 
-        //  dd($result);
         return $result;
     }
+
+
 }

@@ -17,13 +17,13 @@ class NewPostController
 
     private $next_page_url;
 
-    private $arias_url = 'http://94.131.241.126/api/nova-poshta/areas';
+    private $arias_url = 'https://b2b-sandi.com.ua/api/nova-poshta/areas';
 
-    private $settlements_url = 'http://94.131.241.126/api/nova-poshta/cities';
+    private $settlements_url = 'https://b2b-sandi.com.ua/api/nova-poshta/cities';
 
-    private $streets_url = 'http://94.131.241.126/api/nova-poshta/streets';
+    private $streets_url = 'https://b2b-sandi.com.ua/api/nova-poshta/streets';
 
-    private $warehouses_url = 'http://94.131.241.126/api/nova-poshta/warehouses';
+    private $warehouses_url = 'https://b2b-sandi.com.ua/api/nova-poshta/warehouses';
 
     private $ru = 'ru';
 
