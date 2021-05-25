@@ -30,6 +30,8 @@ class CartController
 
             $orderItem['sku'] = $product->getDetails('sku');
 
+            $orderItem["sdCode"] = $product->getDetails('sd_code');
+
             $orderItem['name'] = $product->name;
 
             $orderItem['quantity'] = $orderProducts[$product->getDetails('sku')];

@@ -6,7 +6,7 @@
                 <a class="search-product-link"
                    href="{{ route('site.resource', $product->productGroup->slug) }}"
                    alt="{{ $product->productGroup->name }}">
-                    <div class="data-img-path"
+                    <div class="img-data-path"
                          data-src="/storage/product/{{ $product->sdCode }}/{{ $product->sdCode }}.jpg">
                         <img width="50"
                              class="lazy"

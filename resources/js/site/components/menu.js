@@ -16,7 +16,7 @@
     });
 
     hM.addEventListener('click', function () {
-        document.querySelector('.head-menu').classList.add('active');
+        //document.querySelector('.head-menu').classList.add('active');
     });
 
     //===---

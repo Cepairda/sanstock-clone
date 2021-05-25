@@ -7,21 +7,18 @@
             <td>Фото</td>
             <td>Наименование</td>
             <td>Сорт</td>
-            <td>Количество</td>
             <td>Цена</td>
-            <td>Сумма</td>
             <td></td>
         </tr>
         </thead>
         @foreach($orderProducts as $sku => $product)
 
-{{--            {{ dd($product) }}--}}
             <tbody>
             <tr>
                 <td>{{ $product["sku"] }}</td>
                 <td>
                     {{--{!! img(['type' => 'product', 'sku' => $product["sku"], 'size' => 70, 'alt' => $product["name"], 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}--}}
-                    <img width="150" data-src="" src="" class="lazy" alt="">
+                    <img width="100" data-src="/storage/product/{{ $product["sdCode"]  }}/{{ $product["sdCode"] }}.jpg" src="{{ asset('images/white_fone_150x150.jpg') }}" class="img-data-path lazy" alt="">
                 </td>
                 <td>
                     {{ $product["name"] }}
@@ -35,17 +32,10 @@
 
                 <td>{{ $product["grade"] }}</td>
 
-                <td>
-                    {{ $product["quantity"] }}
-                </td>
-
                 <td data-max="{{ $product['max_quantity'] }}">
                     {{ $product["price"] }} грн.
                 </td>
 
-                <td>
-                    {{ $product["quantity"] * $product["price"] }} грн.
-                </td>
                 <td>
                     <span style="cursor: pointer;" data-add="delete" data-barcode="{{ $product["sku"] }}">
                         <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
