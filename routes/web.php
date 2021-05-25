@@ -254,6 +254,10 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::get('/contacts', 'ContactController@index')->name('contacts');
         Route::post('/contacts', 'ContactController@contactForm')->name('contact-form');
 
+        Route::get('/about-us', function(){
+            return view('site.page.about-us');
+        })->name('about-us');
+
         Route::get('/documentation', function () {return view('site.page.documentation');})->name('documentations');
         Route::get('/documents/certificates', function () {return view('site.page.certificates');})->name('certificates');
 
