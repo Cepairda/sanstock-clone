@@ -15,8 +15,8 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="tabs-products__caption">
-                            <div>Lorem ipsum dolor sit.</div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, ea!</p>
+                            <div>{{ __('Recent receipts') }}</div>
+                            {{--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, ea!</p>--}}
                         </div>
                         <div class="tabs-products__btn-group">
                             <!--button class="btn btn-item active" data-toggle="#sort-0">Сорт - 0</button-->
@@ -59,7 +59,7 @@
                     <div class="col-12">
                         <div class="info-block">
                             <div class="info-block__image">
-                                <img src="{{ asset('images/site/home-popular-category/' . 5443 . '_230.webp') }}"
+                                <img src="{{ asset('images/site/home-popular-category/' . 5428 . '_230.webp') }}"
                                      alt="ceramics-title">
                             </div>
 
@@ -78,7 +78,7 @@
                                 <p>{{ __('descriptions.desc_sort-1') }}</p>
                             </div>
                             <div class="info-block__image">
-                                <img src="{{ asset('images/site/home-popular-category/' . 5443 . '_230.webp') }}"
+                                <img src="{{ asset('images/site/home-popular-category/' . 5452 . '_230.webp') }}"
                                      alt="ceramics-title">
                             </div>
                         </div>
@@ -108,7 +108,7 @@
                                 <p>{{ __('descriptions.desc_sort-3') }}</p>
                             </div>
                             <div class="info-block__image">
-                                <img src="{{ asset('images/site/home-popular-category/' . 5443 . '_230.webp') }}"
+                                <img src="{{ asset('images/site/home-popular-category/' . 5442 . '_230.webp') }}"
                                      alt="ceramics-title">
                             </div>
                         </div>

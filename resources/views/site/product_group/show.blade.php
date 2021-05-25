@@ -146,7 +146,7 @@
                             <nav>
                                 <div id="nav-tab" class="nav nav-tabs" role="tablist">
                                     @for ($_sort = 0; $_sort < 4; $_sort++)
-                                        <a class="nav-link w-25 text-center {{ $productsSort[$_sort] ?? 'nav-link-gray' }}"
+                                        <a class="nav-link w-25 text-center {{ isset($productsSort[$_sort]) ? '' : 'nav-link-gray' }}"
                                            data-sort="{{ $_sort }}"
                                            data-price="{!!  isset($productsSort[$_sort]) ? number_format(ceil($productsSort[$_sort]->price),0,'',' ')  : ''  !!}"
                                            data-toggle="tab" href="#sort-{{ $_sort }}"

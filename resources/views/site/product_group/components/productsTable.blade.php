@@ -17,7 +17,7 @@
         @foreach($products as $sku => $product)
             <tr>
                 <td>{{ $product["sku"] }}</td>
-                <td>h
+                <td>
                     <div class="_bl">
                         <div class="_bl-g th-gallery">
                             @foreach($product->defectiveImages as $key => $value)
