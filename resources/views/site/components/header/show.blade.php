@@ -28,7 +28,7 @@
                         </li>
 
                         <li class="header-nav__item">
-                            <a class="disabled" href="#">{{ __('About us') }}</a>
+                            <a href="{{ asset('/about-us') }}">{{ __('About us') }}</a>
                         </li>
 
                         <li class="header-nav__item">

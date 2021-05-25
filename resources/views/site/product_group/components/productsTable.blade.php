@@ -57,6 +57,7 @@
                         font-size: 14px;
                         font-weight: 700;
                         line-height: 20px;
+                        white-space: nowrap;
                         box-shadow: 0 0 3px 0 rgba(0, 0, 0, .35)"
                         >{{ number_format(ceil($differencePrice),0,'',' ') }} грн.</span>
                     </div>
