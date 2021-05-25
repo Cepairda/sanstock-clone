@@ -28096,12 +28096,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 (function () {
   var form = document.querySelector('#sidebar-filter') || false;
+  var reset = form.querySelector('button[type="reset"]');
 
   if (form) {
     form.addEventListener('input', function (e) {
       var checkbox = e.target.closest('[type="checkbox"]');
       checkbox && form.submit();
     }, false);
+    var checkboxes = form.querySelectorAll('input[type="checkbox"]');
+    reset.addEventListener('click', function (e) {
+      for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = false;
+      }
+    });
   }
 })();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
@@ -28126,8 +28133,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\js\site\app.js */"./resources/js/site/app.js");
-module.exports = __webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\sass\site\app.scss */"./resources/sass/site/app.scss");
+__webpack_require__(/*! /var/www/resources/js/site/app.js */"./resources/js/site/app.js");
+module.exports = __webpack_require__(/*! /var/www/resources/sass/site/app.scss */"./resources/sass/site/app.scss");
 
 
 /***/ })
