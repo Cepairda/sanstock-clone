@@ -30,7 +30,7 @@
                         </div>
                     </div>
                 </td>
-                <td style="text-align: left;" data-price="{{ $product->price }}" data-oldprice="{{ $product->old_price }}">
+                <td style="text-align: left;" data-price="{{ $price }}" data-oldprice="{{ $normalPrice }}">
                     @if($product->getData('defective_attributes'))
                         @foreach($product->getData('defective_attributes') as $defective_attribute)
                             {{ '- ' . $defective_attribute }}
@@ -38,9 +38,9 @@
                     @endif
                 </td>
                 <td>
-                    <span class="text-nowrap">{{ $product->price }} грн.</span>
-                    @if ($product->old_price ?? null)
-                        <p><span class="text-nowrap"><s>{{ $product->old_price }} грн.</s></span></p>
+                    <span class="text-nowrap">{{ $price }} грн.</span>
+                    @if ($normalPrice ?? null)
+                        <p><span class="text-nowrap"><s>{{ $normalPrice }} грн.</s></span></p>
                     @endif
                 </td>
                 <td>
