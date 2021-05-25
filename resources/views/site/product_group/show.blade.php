@@ -83,7 +83,25 @@
                     <div class="card__price--wrapp">
                         @php($addClassToPrice = 'updatePriceJs')
 
-                        <p class="card__price">
+
+                        <div class="card__price"
+                             style="
+                                font-size: 30px;
+                                display: inline-block;
+                                padding: 0 10px;
+                                background-color: #ec3f33;
+                                border-radius: 3px;
+                                color: #fff;
+                                margin-bottom: 10px;">
+                            <span>{{ __('Profit') }}:</span>
+                            <span data-sort="price-old" class="{{ $addClassToPrice }}">
+                                {{-- number_format(ceil($productGroup->price),0,'',' ') --}}1 200
+                                <span>грн.</span>
+                            </span>
+
+                        </div>
+
+                        <div class="card__price" style="padding: 0 10px;">
                             <span>Цена:</span>
                             <span data-product-sku="{{ $productGroup->sku }}"
                                   data-sort="price"
@@ -91,15 +109,14 @@
                                         {{ number_format(ceil($productGroup->price),0,'',' ')}}
                                     </span>
                             <span>грн.</span>
-                        </p>
+                            <span class="price-old">
+                                {{-- number_format(ceil($productGroup->differencePrice),0,'',' ') --}}2 447 грн.
+                            </span>
+                        </div>
 
-                        <p data-product-group="old_price" class="card__price text-muted d-none"
-                           style="font-size: 16px;">
-                            <span>Старая цена:</span>
-                            <span data-product-sku="{{ $productGroup->sku }}" data-sort="old_price"
-                                  class="{{ $addClassToPrice }}"><s>{{ number_format(ceil($productGroup->price),0,'',' ') }}</s></span>
-                            <span>грн.</span>
-                        </p>
+
+
+
                     </div>
                     <p class="card__description">{{ $productGroup->description }}</p>
                 </div>

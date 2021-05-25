@@ -16215,7 +16215,7 @@ body.cart .add__to-cart {
 ._bl-g a:not(:first-child) {
   display: none;
 }
-._bl-g img {
+._bl-g--img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -16387,4 +16387,9 @@ footer {
   height: 10px;
   background-image: none;
   background-color: #009acf;
+}
+
+.price-old {
+  color: #ccc;
+  text-decoration: line-through;
 }
