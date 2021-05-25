@@ -15886,6 +15886,7 @@ li.footer__element--item-tel {
 
 .product__wrapper {
   display: flex;
+  height: 100%;
   padding-top: 15px;
   padding-bottom: 15px;
 }

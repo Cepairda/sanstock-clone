@@ -65,7 +65,7 @@
 
                             <div class="info-block__desc">
                                 <h3>Сорт-0</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolorem eligendi eum expedita in maxime. Aliquam beatae consequatur doloribus eius in laudantium optio quisquam sequi.</p>
+                                <p>Товар в этом сорте имеет, как правило, только повреждения упаковки. В некоторых случаях - еле заметные потертости и/или царапины. Скидка на изделия этого сорта минимальная.</p>
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                         <div class="info-block">
                             <div class="info-block__desc">
                                 <h3><i>Сорт-1</i></h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut debitis exercitationem non omnis quis tenetur!</p>
+                                <p>К «сорту 1» относится продукция, которая может иметь испорченную упаковочную коробку, легкие потертости, легкую волнистость, небольшое нарушение геометрии, царапины, нечеткий логотип или его отсутствие. Цена на изделия этого сорта привлекательнее, чем у предыдущего.</p>
                             </div>
                             <div class="info-block__image">
                                 <img src="{{ asset('images/site/home-popular-category/' . 5443 . '_230.webp') }}"
@@ -94,8 +94,8 @@
                             </div>
 
                             <div class="info-block__desc">
-                                <h3>Сорт-1</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolorem eligendi eum expedita in maxime. Aliquam beatae consequatur doloribus eius in laudantium optio quisquam sequi.</p>
+                                <h3>Сорт-2</h3>
+                                <p>У изделий этого сорта могут дополнительно присутствовать вмятины, вздутия/пятна на задней части изделия, сколы. Как следствие, скидка на изделия в этом сорте больше, чем у предыдущих сортов.</p>
                             </div>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                         <div class="info-block">
                             <div class="info-block__desc">
                                 <h3><i>Сорт-3</i></h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut debitis exercitationem non omnis quis tenetur!</p>
+                                <p>В «сорте 3» могут также присутствовать трещины, не влияющие на использование изделия. Наличие в большем масштабе, чем в предыдущих сортах, вмятин, царапин/точек/потертостей, кривизны корпуса и составляющих частей изделия, которые не исключают полноценное его использование. Соответственно, скидка на этот сорт самая максимальная.</p>
                             </div>
                             <div class="info-block__image">
                                 <img src="{{ asset('images/site/home-popular-category/' . 5443 . '_230.webp') }}"
