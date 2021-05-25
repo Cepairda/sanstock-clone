@@ -16208,25 +16208,14 @@ body.cart .add__to-cart {
   font-size: 32px;
 }
 
-._bl {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+._bl-g a:not(:first-child) {
+  display: none;
 }
-._bl-g {
-  display: flex;
-  justify-content: center;
+._bl-g img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  overflow: hidden;
-}
-._bl-g a {
-  transform: scale(1.5);
-}
-._bl-g a:not(:first-child) {
-  display: none;
+  box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.35);
 }
 
 .nav-link-gray {

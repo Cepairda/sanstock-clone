@@ -17,7 +17,6 @@
             <tr>
                 <td>{{ $product["sku"] }}</td>
                 <td>
-                    {{--{!! img(['type' => 'product', 'sku' => $product["sku"], 'size' => 70, 'alt' => $product["name"], 'class' => ['lazyload', 'no-src'], 'data-src' => true]) !!}--}}
                     <img width="100" data-src="/storage/product/{{ $product["sdCode"]  }}/{{ $product["sdCode"] }}.jpg" src="{{ asset('images/white_fone_150x150.jpg') }}" class="img-data-path lazy" alt="">
                 </td>
                 <td>
@@ -32,8 +31,8 @@
 
                 <td>{{ $product["grade"] }}</td>
 
-                <td data-max="{{ $product['max_quantity'] }}">
-                    {{ $product["price"] }} грн.
+                <td>
+                    <span class="text-nowrap">{{ $product["price"] }} грн.</span>
                 </td>
 
                 <td>

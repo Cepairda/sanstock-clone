@@ -17,7 +17,7 @@
         @foreach($products as $sku => $product)
             <tr>
                 <td>{{ $product["sku"] }}</td>
-                <td>
+                <td>h
                     <div class="_bl">
                         <div class="_bl-g th-gallery">
                             @foreach($product->defectiveImages as $key => $value)
@@ -38,9 +38,9 @@
                     @endif
                 </td>
                 <td>
-                    {{ $product->price }} грн.
+                    <span class="text-nowrap">{{ $product->price }} грн.</span>
                     @if ($product->old_price ?? null)
-                        <p><s>{{ $product->old_price }} грн.</s></p>
+                        <p><span class="text-nowrap"><s>{{ $product->old_price }} грн.</s></span></p>
                     @endif
                 </td>
                 <td>
