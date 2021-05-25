@@ -25839,8 +25839,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     headerNav.classList.remove('show');
     backdroup.action();
   });
-  hM.addEventListener('click', function () {
-    document.querySelector('.head-menu').classList.add('active');
+  hM.addEventListener('click', function () {//document.querySelector('.head-menu').classList.add('active');
   }); //===---
 
   document.addEventListener('click', function (_ref) {

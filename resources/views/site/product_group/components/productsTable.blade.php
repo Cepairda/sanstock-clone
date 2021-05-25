@@ -5,7 +5,6 @@
             <td>Код товара</td>
             <td>Фото</td>
             <td>Описание</td>
-            <td>Количество</td>
             <td>Цена</td>
             <td>Добавить корзину</td>
         </tr>
@@ -20,7 +19,6 @@
                 <td>{{ $product["sku"] }}</td>
                 <td>
                     <div class="_bl">
-                        <div class="_bl-p"></div>
                         <div class="_bl-g th-gallery">
                             @foreach($product->defectiveImages as $key => $value)
                                 <a href="/storage/product/{{ $productGroup->sdCode }}/{{ $product->sku }}/{{ $product->sku }}_{{ $key }}.jpg">
@@ -30,7 +28,6 @@
                                 </a>
                             @endforeach
                         </div>
-                        <div class="_bl-n"></div>
                     </div>
                 </td>
                 <td style="text-align: left;" data-price="{{ $product->price }}" data-oldprice="{{ $product->old_price }}">
@@ -39,9 +36,6 @@
                             {{ '- ' . $defective_attribute }}
                         @endforeach
                     @endif
-                </td>
-                <td>
-                    1
                 </td>
                 <td>
                     {{ $product->price }} грн.

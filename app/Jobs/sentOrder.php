@@ -43,6 +43,9 @@ class sentOrder implements ShouldQueue
                 $order->save();
 
             } else info('Не удалось обновить статус заказа! Заказ с id = ' . $result['order_id'] . ' не найден!');
+
+            // отнимаем 1 от количества товара
+
         }
     }
 }

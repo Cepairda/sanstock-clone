@@ -30,6 +30,8 @@ class CartController
 
             $orderItem['sku'] = $product->getDetails('sku');
 
+            $orderItem["sdCode"] = $product->getDetails('sd_code');
+
             $orderItem['name'] = $product->name;
 
             $orderItem['quantity'] = $orderProducts[$product->getDetails('sku')];
@@ -353,7 +355,8 @@ class CartController
         echo "Код ответа: $info" . PHP_EOL;
         echo "Страница " . $result['current_page'] . " из " . $result['last_page'] . PHP_EOL;
 
-        //  dd($result);
         return $result;
     }
+
+
 }
