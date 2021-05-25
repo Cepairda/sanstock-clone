@@ -169,6 +169,9 @@
                                             @include('site.product_group.components.productsTable',
                                             [
                                                 'products' => $productsSort[$_sort]->products,
+                                                'price' => $productsSort[$_sort]->price,
+                                                'normalPrice' => $productsSort[$_sort]->normalPrice,
+                                                'differencePrice' => $productsSort[$_sort]->differencePrice,
                                             ])
                                         @else
                                             <div style="text-align: center;">

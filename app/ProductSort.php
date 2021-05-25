@@ -13,10 +13,21 @@ class ProductSort extends Resource
     use Compoships;
 
     protected $appends = ['price_updated_at'];
+    protected $markup = [3, 10, 15, 20];
 
     public function getNameAttribute()
     {
         return $this->getData('name');
+    }
+
+    public function getNormalPriceAttribute()
+    {
+        return $this->oldPrice ?: $this->price * (100 + $this->markup[$this->grade]) / 100;
+    }
+
+    public function getDifferencePriceAttribute()
+    {
+        return $this->normalPrice - $this->price;
     }
 
     public function getSkuAttribute()
