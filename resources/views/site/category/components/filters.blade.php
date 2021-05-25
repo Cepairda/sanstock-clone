@@ -21,6 +21,7 @@
 
     @endif
     <hr>
+    @if(count($sortType) > 1)
     <div class="left-sidebar__view">
         <div class="left-sidebar__view--wrapp">
             <h3 class="left-sidebar__view--title">Сорт</h3>
@@ -37,6 +38,7 @@
         </div>
     </div>
     <hr>
+    @endif
     @foreach ($characteristics as $characteristic)
         @if(count($valuesForView[$characteristic->id]) > 1)
             <div class="left-sidebar__view">
