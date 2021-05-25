@@ -18,10 +18,12 @@
                 <a href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}" class="product-description--item">Сорт {{ $product->grade }}</a>
                 <div class="product-price">
                     <div class="product-price__item">
+                        <p><span class="product-price__item--old">{{ number_format(ceil($product->normalPrice),0,'',' ') }} грн.</span></p>
                         <p>
                             <span data-product-sort-sd-code="{{ $productGroup->sdCode }}" data-product-sort-grade="{{ $product->grade }}">{{ number_format(ceil($product->price),0,'',' ') }}</span>
                             <span>грн.</span>
                         </p>
+
                     </div>
                     <a class="button" href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}" alt="{{ $product->name }}"
                        data-target="add" data-barcode="{{ $product->sku }}">{{ __('Buy')}}</a>

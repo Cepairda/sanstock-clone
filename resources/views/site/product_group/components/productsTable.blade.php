@@ -17,7 +17,7 @@
         @foreach($products as $sku => $product)
             <tr>
                 <td>{{ $product["sku"] }}</td>
-                <td>h
+                <td>
                     <div class="_bl">
                         <div class="_bl-g th-gallery">
                             @foreach($product->defectiveImages as $key => $value)
@@ -38,10 +38,29 @@
                     @endif
                 </td>
                 <td>
-                    <span class="text-nowrap">{{ $price }} грн.</span>
                     @if ($normalPrice ?? null)
-                        <p><span class="text-nowrap"><s>{{ $normalPrice }} грн.</s></span></p>
+                        <p><span class="text-nowrap"><s>{{ number_format(ceil($normalPrice),0,'',' ') }} грн.</s></span></p>
                     @endif
+                    <span class="text-nowrap">{{ number_format(ceil($price),0,'',' ') }} грн.</span>
+
+                    <div class="pt-3">
+                        <p class="mb-1">Выгода:</p>
+                        <span style="
+                        min-width: 12px;
+                        height: 20px;
+                        margin-top: 2px;
+                        padding: 2px 12px;
+                        border-radius: 50px;
+                        background-color: red;
+                        text-align: center;
+                        color: #ffffff;
+                        font-size: 14px;
+                        font-weight: 700;
+                        line-height: 20px;
+                        box-shadow: 0 0 3px 0 rgba(0, 0, 0, .35)"
+                        >{{ number_format(ceil($differencePrice),0,'',' ') }} грн.</span>
+                    </div>
+
                 </td>
                 <td>
                     <button class="button" data-add="upDate" data-barcode="{{ $product->sku }}">Купить</button>
