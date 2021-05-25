@@ -15,7 +15,7 @@
             </div>
 
             <div class="product-wrapper">
-                <a href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}" class="product-description--item">Category</a>
+                <a href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}" class="product-description--item">Сорт {{ $product->grade }}</a>
                 <div class="product-price">
                     <div class="product-price__item">
                         <p>
