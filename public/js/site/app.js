@@ -28119,19 +28119,30 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 (function () {
   var form = document.querySelector('#sidebar-filter') || false;
-  var reset = form.querySelector('button[type="reset"]');
 
   if (form) {
     form.addEventListener('input', function (e) {
       var checkbox = e.target.closest('[type="checkbox"]');
       checkbox && form.submit();
     }, false);
+    var reset = form.querySelector('button[type="reset"]');
     var checkboxes = form.querySelectorAll('input[type="checkbox"]');
     reset.addEventListener('click', function (e) {
+      e.preventDefault();
+
       for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = false;
       }
-    });
+
+      var priceRangeSlider = $('#priceRangeSlider');
+      var min = priceRangeSlider.slider('getAttribute', 'min');
+      var max = priceRangeSlider.slider('getAttribute', 'max');
+      priceRangeSlider.slider('setValue', [min, max]);
+      var minPriceInp = form.querySelector('.inp-price-min');
+      minPriceInp.value = min;
+      var maxPriceInp = form.querySelector('.inp-price-max');
+      maxPriceInp.value = max;
+    }, false);
   }
 })();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
