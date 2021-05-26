@@ -29,7 +29,13 @@
                     @endforeach
                 </td>
 
-                <td>{{ $product["grade"] }}</td>
+                <td>
+                    <span data-toggle="tooltip" data-placement="top"
+                          title="{{ __('descriptions.desc_sort-' . $product["grade"]) }}"
+                          class="label">Сорт-{{ $product["grade"] }}</span>
+
+
+                </td>
 
                 <td>
                     <span class="text-nowrap">{{ number_format(ceil($product["price"]),0,'',' ') }} грн.</span>

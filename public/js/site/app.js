@@ -25607,6 +25607,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           var table = data.body; // JSON data parsed by `response.json()` call
 
           document.body.insertAdjacentHTML('beforeend', table);
+          $("#".concat(cartModalId)).on('shown.bs.modal', function (_ref) {
+            var target = _ref.target;
+            $('[data-toggle="tooltip"]').tooltip();
+          });
           $("#".concat(cartModalId)).modal('show');
           $("#".concat(cartModalId)).on('hidden.bs.modal', function (e) {
             $(this).remove();
@@ -25629,8 +25633,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       value: function setEvent() {
         var _this2 = this;
 
-        document.addEventListener('click', function (_ref) {
-          var target = _ref.target;
+        document.addEventListener('click', function (_ref2) {
+          var target = _ref2.target;
           var upDateBtn = target.closest("".concat(productUpDateToCartSelector));
           var openModal = target.closest("".concat(productToCartModalSelector));
           var deleteBtn = target.closest("".concat(productDeleteCartSelector));
@@ -28112,7 +28116,24 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   }
 
   $('.owl-carousel').owlCarousel({
-    items: 4
+    responsive: {
+      // breakpoint from 0 up
+      0: {
+        items: 1
+      },
+      // breakpoint from 480 up
+      500: {
+        items: 2
+      },
+      // breakpoint from 992 up
+      992: {
+        items: 3
+      },
+      // breakpoint from 1200 up
+      1200: {
+        items: 4
+      }
+    }
   });
   $('[data-toggle="tooltip"]').tooltip();
 }); //Reload page checkbox category

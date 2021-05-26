@@ -233,6 +233,11 @@
                 .then((data) => {
                     const table =  data.body; // JSON data parsed by `response.json()` call
                     document.body.insertAdjacentHTML('beforeend', table);
+
+                    $(`#${cartModalId}`).on('shown.bs.modal', function ({target}) {
+                        $('[data-toggle="tooltip"]').tooltip();
+                    });
+
                     $(`#${cartModalId}`).modal('show');
 
                     $(`#${cartModalId}`).on('hidden.bs.modal', function (e) {
