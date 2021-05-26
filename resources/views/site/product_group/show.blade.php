@@ -83,39 +83,39 @@
 
                 <div class="col-12 col-lg-6 card__wrapper">
                     <p class="card__code">Код:<span class="card__code-id ml-1">{{ $productGroup->sd_code }}</span></p>
+                    <div class="card__price--inner p-1">
+                        <div class="card__price--wrapp">
+                            @php($addClassToPrice = 'updatePriceJs')
+                            <div class="characteristic-list__wrap">
+                                <div class="characteristic-list__item list-normal">
+                                    <span>{{ __('Old price') }}:</span>
+                                    <span class="price-old">
+                                        <span data-sort="price-normal">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->normalPrice : 0),0,'',' ') }}</span>
+                                        <span>грн.</span>
+                                    </span>
+                                </div>
 
-                    <div class="card__price--wrapp">
-                        @php($addClassToPrice = 'updatePriceJs')
-                        <div class="characteristic-list__wrap">
-                            <div class="characteristic-list__item list-normal">
-                                <span>{{ __('Old price') }}:</span>
-                                <span class="price-old">
-                                    <span data-sort="price-normal">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->normalPrice : 0),0,'',' ') }}</span>
-                                    <span>грн.</span>
-                                </span>
+                                <div class="characteristic-list__item list-price">
+                                    <span>{{ __('Price') }}:</span>
+                                    <span>
+                                        <span class="{{ $addClassToPrice }}" data-product-sku="{{ $productGroup->sku }}" data-sort="price">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->price : 0),0,'',' ') }}</span>
+                                        <span>грн.</span>
+                                    </span>
+                                </div>
+
+                                <div class="characteristic-list__item list-difference">
+                                    <span>{{ __('Profit') }}:</span>
+                                    <span class="price-difference">
+                                        <span data-sort="price-difference">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->differencePrice : 0),0,'',' ') }}</span>
+                                        <span>грн.</span>
+                                    </span>
+                                </div>
+
                             </div>
-
-                            <div class="characteristic-list__item list-price">
-                                <span>{{ __('Price') }}:</span>
-                                <span>
-                                    <span class="{{ $addClassToPrice }}" data-product-sku="{{ $productGroup->sku }}" data-sort="price">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->price : 0),0,'',' ') }}</span>
-                                    <span>грн.</span>
-                                </span>
+                            <div class="mt-5">
+                                <a id="to-sort" href="#sort-tab-1" class="button" style="min-width: 200px; font-size: 24px">{{ __('Buy') }}</a>
                             </div>
-
-                            <div class="characteristic-list__item list-difference">
-                                <span>{{ __('Profit') }}:</span>
-                                <span class="price-difference">
-                                    <span data-sort="price-difference">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->differencePrice : 0),0,'',' ') }}</span>
-                                    <span>грн.</span>
-                                </span>
-                            </div>
-
                         </div>
-                        <div class="mt-5">
-                            <a id="to-sort" href="#sort-tab-1" class="button" style="min-width: 200px; font-size: 24px">{{ __('Buy') }}</a>
-                        </div>
-
                     </div>
                     <p class="card__description">{{ $productGroup->description }}</p>
                 </div>
@@ -163,7 +163,7 @@
                                 <div id="nav-tab" class="nav nav-tabs" role="tablist">
                                     @for ($_sort = 0; $_sort < 4; $_sort++)
                                         <a id="sort-tab-{{ $_sort }}"
-                                           class="nav-link w-25 text-center {{ isset($productsSort[$_sort]) ? '' : 'nav-link-gray' }}"
+                                           class="nav-link w-25 text-center{{ isset($productsSort[$_sort]) ? '' : ' nav-link-gray' }}{{ $_sort == $sort ? ' active' : '' }}"
                                            data-sort="{{ $_sort }}"
                                            data-price="{!!  isset($productsSort[$_sort]) ? number_format(ceil($productsSort[$_sort]->price),0,'',' ')  : ''  !!}"
                                            data-normal="{!! isset($productsSort[$_sort]->normalPrice) ? number_format(ceil($productsSort[$_sort]->normalPrice),0,'',' ') : '' !!}"
@@ -181,7 +181,7 @@
                             <div id="nav-tabContent" class="tab-content">
                                 @for ($_sort = 0; $_sort < 4; $_sort++)
                                     <div id="sort-{{ $_sort }}"
-                                         class="tab-pane"
+                                         class="tab-pane{{ $_sort == $sort ? ' active' : '' }}"
                                          role="tabpanel"
                                          aria-labelledby="nav-home-tab">
                                         @if ($productsSort[$_sort] ?? null)

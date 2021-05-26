@@ -16,7 +16,25 @@ $(document).ready(function () {
     }
 
     $('.owl-carousel').owlCarousel({
-        items:4
+        responsive : {
+            // breakpoint from 0 up
+            0 : {
+                items: 1
+            },
+            // breakpoint from 480 up
+            500 : {
+                items: 2
+            },
+            // breakpoint from 992 up
+            992 : {
+                items: 3
+            },
+            // breakpoint from 1200 up
+            1200 : {
+                items: 4
+            }
+        },
+
     });
 
     $('[data-toggle="tooltip"]').tooltip();
