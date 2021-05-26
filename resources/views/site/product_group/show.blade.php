@@ -193,8 +193,8 @@
                                                 'differencePrice' => $productsSort[$_sort]->differencePrice,
                                             ])
                                         @else
-                                            <div style="text-align: center;">
-                                                <p>{{ 'Товара данного сорта - нет' }}</p>
+                                            <div class="text-center h5 pt-5">
+                                                {{ __('There is no product of this sort') }}
                                             </div>
                                         @endif
                                     </div>

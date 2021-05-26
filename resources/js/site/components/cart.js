@@ -15,18 +15,27 @@
     const cartModalId = 'cartModal';
     const cartCounterNode = document.getElementById(`${cartCounterId}`);
     const toast =
-            `<div class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2500">
-                    <div class="toast-header">
-                        <strong class="mr-auto">Bootstrap</strong>
-                        <small>11 мин назад</small>
-                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="toast-body">
-                        Привет, мир! Это тост-сообщение.
-                    </div>
-                </div>`;
+        `<div class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2500">
+            <div class="toast-header">
+                <strong class="mr-auto">Bootstrap</strong>
+                <small>11 мин назад</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                Привет, мир! Это тост-сообщение.
+            </div>
+        </div>`;
+    const emptyCart = text =>
+        `<div class="cart__empty">
+            <div class="cart__empty--img">
+                <span class="icon-cart"></span>
+            </div>
+            <p class="cart__empty--title">
+                ${text}
+            </p>
+        </div>`;
 
     class Cart {
 
@@ -39,11 +48,14 @@
             this.i18n = {
               ru: {
                   'button-add': 'В корзину',
-                  'button-added': 'В корзине'
+                  'button-added': 'В корзине',
+                  'cart-empty': 'Корзина пуста'
+
               },
               uk: {
                   'button-add': 'В кошик',
-                  'button-added': 'В кошику'
+                  'button-added': 'В кошику',
+                  'cart-empty': 'Кошик порожній'
               }
             };
 
@@ -134,6 +146,14 @@
 
             const cartData = this.getCookie(cookieKeyCart);
 
+            function isEmpty(obj) {
+                for(let key in obj)
+                {
+                    return false;
+                }
+                return true;
+            }
+
             if(cartData) {
 
                 const products = JSON.parse(cartData);
@@ -141,8 +161,22 @@
 
                 this.setCookie(products);
 
-                const tr = button.closest('tr');
-                tr && (tr.remove());
+
+
+                if (isEmpty(products)) {
+
+                    if(document.body.classList.contains('cart')){
+                        this.clear()
+                    } else {
+                        const table = button.closest('table');
+                        const parent = table.parentElement;
+                        table && (table.remove());
+                        parent.insertAdjacentHTML('beforeend', emptyCart(this.i18n[this.getLocalization()]['cart-empty']))
+                    }
+                } else {
+                    const tr = button.closest('tr');
+                    tr && (tr.remove());
+                }
 
                 this.buttonsChange(productSku);
 

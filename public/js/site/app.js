@@ -25367,7 +25367,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   var productClearCartSelector = '[data-add="clear"]';
   var cartModalId = 'cartModal';
   var cartCounterNode = document.getElementById("".concat(cartCounterId));
-  var toast = "<div class=\"toast hide\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-delay=\"2500\">\n                    <div class=\"toast-header\">\n                        <strong class=\"mr-auto\">Bootstrap</strong>\n                        <small>11 \u043C\u0438\u043D \u043D\u0430\u0437\u0430\u0434</small>\n                        <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"toast\" aria-label=\"Close\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                    </div>\n                    <div class=\"toast-body\">\n                        \u041F\u0440\u0438\u0432\u0435\u0442, \u043C\u0438\u0440! \u042D\u0442\u043E \u0442\u043E\u0441\u0442-\u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435.\n                    </div>\n                </div>";
+  var toast = "<div class=\"toast hide\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-delay=\"2500\">\n            <div class=\"toast-header\">\n                <strong class=\"mr-auto\">Bootstrap</strong>\n                <small>11 \u043C\u0438\u043D \u043D\u0430\u0437\u0430\u0434</small>\n                <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"toast\" aria-label=\"Close\">\n                    <span aria-hidden=\"true\">&times;</span>\n                </button>\n            </div>\n            <div class=\"toast-body\">\n                \u041F\u0440\u0438\u0432\u0435\u0442, \u043C\u0438\u0440! \u042D\u0442\u043E \u0442\u043E\u0441\u0442-\u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435.\n            </div>\n        </div>";
+
+  var emptyCart = function emptyCart(text) {
+    return "<div class=\"cart__empty\">\n            <div class=\"cart__empty--img\">\n                <span class=\"icon-cart\"></span>\n            </div>\n            <p class=\"cart__empty--title\">\n                ".concat(text, "\n            </p>\n        </div>");
+  };
 
   var Cart = /*#__PURE__*/function () {
     function Cart() {
@@ -25382,11 +25386,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       this.i18n = {
         ru: {
           'button-add': 'В корзину',
-          'button-added': 'В корзине'
+          'button-added': 'В корзине',
+          'cart-empty': 'Корзина пуста'
         },
         uk: {
           'button-add': 'В кошик',
-          'button-added': 'В кошику'
+          'button-added': 'В кошику',
+          'cart-empty': 'Кошик порожній'
         }
       };
       this.getLocalization = this.getLocalization.bind(this);
@@ -25482,12 +25488,33 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         var productSku = button.dataset.barcode;
         var cartData = this.getCookie(cookieKeyCart);
 
+        function isEmpty(obj) {
+          for (var key in obj) {
+            return false;
+          }
+
+          return true;
+        }
+
         if (cartData) {
           var products = JSON.parse(cartData);
           delete products[productSku];
           this.setCookie(products);
-          var tr = button.closest('tr');
-          tr && tr.remove();
+
+          if (isEmpty(products)) {
+            if (document.body.classList.contains('cart')) {
+              this.clear();
+            } else {
+              var table = button.closest('table');
+              var parent = table.parentElement;
+              table && table.remove();
+              parent.insertAdjacentHTML('beforeend', emptyCart(this.i18n[this.getLocalization()]['cart-empty']));
+            }
+          } else {
+            var tr = button.closest('tr');
+            tr && tr.remove();
+          }
+
           this.buttonsChange(productSku);
         }
       }
