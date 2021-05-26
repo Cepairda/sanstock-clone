@@ -53,6 +53,8 @@
         toSort.href = `#sort-tab-${sortNumber}`;
         window.history.pushState({}, 'Title', `?sort=${sortNumber}`);
     });
+
+
     $(`a#characteristics-tab[data-toggle="pill"]`).on('shown.bs.tab', function ({target}) {
         showHideCharacteristic();
     });

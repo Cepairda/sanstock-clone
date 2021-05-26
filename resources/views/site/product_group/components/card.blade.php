@@ -5,7 +5,7 @@
                 <span href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}"
                    data-toggle="tooltip" data-placement="top"
                    title="{{ __('descriptions.desc_sort-' . $product->grade) }}"
-                   class="label">Сорт-{{ $product->grade }}</span>
+                   class="label" data-sort="{{ $product->grade }}">Сорт-{{ $product->grade }}</span>
                 <a class="product__img"
                    href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}">
                     <img class="product__img-lg img-data-path lazy"
