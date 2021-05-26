@@ -4,10 +4,13 @@
             <div class="col-lg-3 footer__element">
                 <span class="footer__element__title">@lang('site.content.categories')</span>
                 <ul>
-                    <li><a class="footer__element--item" href="{{ asset('/') }}">Категория 1</a></li>
-                    <li><a class="footer__element--item" href="{{ asset('/') }}">Категория 2</a></li>
-                    <li><a class="footer__element--item" href="{{ asset('/') }}">Категория 3</a></li>
-                    <li><a class="footer__element--item" href="{{ asset('/') }}">Категория 4</a></li>
+                    @php($categories = $categories ?? \App\Category::joinLocalization()->whereIsRoot()->get())
+
+                    @foreach($categories as $category)
+                        <li>
+                            <a class="footer__element--item" href="{{ route('site.resource', $category->slug) }}">{{ $category->name }}</a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
             <div class="col-lg-3 footer__element">

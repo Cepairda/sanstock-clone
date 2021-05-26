@@ -52,6 +52,10 @@
             <div class="row main__card">
 
 
+                <div class="col-12">
+                    <h1 class="card__title py-4">{!! $productGroup->name !!}</h1>
+                </div>
+
                 <div class="col-lg-6">
                     <!-- swipeGallery -->
                     <div class="gallery-container">
@@ -78,28 +82,40 @@
                 </div>
 
                 <div class="col-12 col-lg-6 card__wrapper">
-                    <h1 class="card__title">{!! $productGroup->name !!}</h1>
                     <p class="card__code">Код:<span class="card__code-id ml-1">{{ $productGroup->sd_code }}</span></p>
-                    <div class="card__price--wrapp">
-                        @php($addClassToPrice = 'updatePriceJs')
-
-                        <p class="card__price">
-                            <span>Цена:</span>
-                            <span data-product-sku="{{ $productGroup->sku }}"
-                                  data-sort="price"
-                                  class="{{ $addClassToPrice }}">
-                                        {{ number_format(ceil($productGroup->price),0,'',' ')}}
+                    <div class="card__price--inner p-1">
+                        <div class="card__price--wrapp">
+                            @php($addClassToPrice = 'updatePriceJs')
+                            <div class="characteristic-list__wrap">
+                                <div class="characteristic-list__item list-normal">
+                                    <span>{{ __('Old price') }}:</span>
+                                    <span class="price-old">
+                                        <span data-sort="price-normal">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->normalPrice : 0),0,'',' ') }}</span>
+                                        <span>грн.</span>
                                     </span>
-                            <span>грн.</span>
-                        </p>
+                                </div>
 
-                        <p data-product-group="old_price" class="card__price text-muted d-none"
-                           style="font-size: 16px;">
-                            <span>Старая цена:</span>
-                            <span data-product-sku="{{ $productGroup->sku }}" data-sort="old_price"
-                                  class="{{ $addClassToPrice }}"><s>{{ number_format(ceil($productGroup->price),0,'',' ') }}</s></span>
-                            <span>грн.</span>
-                        </p>
+                                <div class="characteristic-list__item list-price">
+                                    <span>{{ __('Price') }}:</span>
+                                    <span>
+                                        <span class="{{ $addClassToPrice }}" data-product-sku="{{ $productGroup->sku }}" data-sort="price">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->price : 0),0,'',' ') }}</span>
+                                        <span>грн.</span>
+                                    </span>
+                                </div>
+
+                                <div class="characteristic-list__item list-difference">
+                                    <span>{{ __('Profit') }}:</span>
+                                    <span class="price-difference">
+                                        <span data-sort="price-difference">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->differencePrice : 0),0,'',' ') }}</span>
+                                        <span>грн.</span>
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="mt-5">
+                                <a id="to-sort" href="#sort-tab-1" class="button" style="min-width: 200px; font-size: 24px">{{ __('Buy') }}</a>
+                            </div>
+                        </div>
                     </div>
                     <p class="card__description">{{ $productGroup->description }}</p>
                 </div>
@@ -146,9 +162,12 @@
                             <nav>
                                 <div id="nav-tab" class="nav nav-tabs" role="tablist">
                                     @for ($_sort = 0; $_sort < 4; $_sort++)
-                                        <a class="nav-link w-25 text-center"
+                                        <a id="sort-tab-{{ $_sort }}"
+                                           class="nav-link w-25 text-center{{ isset($productsSort[$_sort]) ? '' : ' nav-link-gray' }}{{ $_sort == $sort ? ' active' : '' }}"
                                            data-sort="{{ $_sort }}"
-                                            data-price="{!!  isset($productsSort[$_sort]->price) ? number_format(ceil($productsSort[$_sort]->price),0,'',' ')  : ''  !!}"
+                                           data-price="{!!  isset($productsSort[$_sort]) ? number_format(ceil($productsSort[$_sort]->price),0,'',' ')  : ''  !!}"
+                                           data-normal="{!! isset($productsSort[$_sort]->normalPrice) ? number_format(ceil($productsSort[$_sort]->normalPrice),0,'',' ') : '' !!}"
+                                           data-difference="{!! isset($productsSort[$_sort]->differencePrice) ? number_format(ceil($productsSort[$_sort]->differencePrice),0,'',' ') : '' !!}"
                                            data-toggle="tab" href="#sort-{{ $_sort }}"
                                            role="tab"
                                            aria-controls="nav-home"
@@ -162,13 +181,16 @@
                             <div id="nav-tabContent" class="tab-content">
                                 @for ($_sort = 0; $_sort < 4; $_sort++)
                                     <div id="sort-{{ $_sort }}"
-                                         class="tab-pane"
+                                         class="tab-pane{{ $_sort == $sort ? ' active' : '' }}"
                                          role="tabpanel"
                                          aria-labelledby="nav-home-tab">
                                         @if ($productsSort[$_sort] ?? null)
                                             @include('site.product_group.components.productsTable',
                                             [
                                                 'products' => $productsSort[$_sort]->products,
+                                                'price' => $productsSort[$_sort]->price,
+                                                'normalPrice' => $productsSort[$_sort]->normalPrice,
+                                                'differencePrice' => $productsSort[$_sort]->differencePrice,
                                             ])
                                         @else
                                             <div style="text-align: center;">

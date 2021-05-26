@@ -10,17 +10,17 @@
         <div class="left-sidebar__view range-slider">
             <h3 class="left-sidebar__view--title">{{ __('Price') }}</h3>
             <b class="text-lg">{{ __('From') }}</b>
-            <input class="inp-price-min" type="number" name="minPrice" value="{{ $minPrice }}">
+            <input class="inp-price-min" type="number" name="minPrice" value="{{ $minPriceSelect }}">
             <b class="text-lg">до</b>
-            <input class="inp-price-max" type="number" name="maxPrice" value="{{ $maxPrice }}">
+            <input class="inp-price-max" type="number" name="maxPrice" value="{{ $maxPriceSelect  }}">
             <b class="text-lg">грн.</b>
             <input id="priceRangeSlider" type="text" data-slider-min="{{ $minPrice }}"
                    data-slider-max="{{ $maxPrice }}" data-slider-value="[{{ $minPriceSelect }},{{ $maxPriceSelect }}]"
                    data-slider-step="10">
         </div>
-
     @endif
     <hr>
+    @if(count($sortType) > 1)
     <div class="left-sidebar__view">
         <div class="left-sidebar__view--wrapp">
             <h3 class="left-sidebar__view--title">Сорт</h3>
@@ -37,6 +37,7 @@
         </div>
     </div>
     <hr>
+    @endif
     @foreach ($characteristics as $characteristic)
         @if(count($valuesForView[$characteristic->id]) > 1)
             <div class="left-sidebar__view">

@@ -16,8 +16,28 @@ $(document).ready(function () {
     }
 
     $('.owl-carousel').owlCarousel({
-        items:4
+        responsive : {
+            // breakpoint from 0 up
+            0 : {
+                items: 1
+            },
+            // breakpoint from 480 up
+            500 : {
+                items: 2
+            },
+            // breakpoint from 992 up
+            992 : {
+                items: 3
+            },
+            // breakpoint from 1200 up
+            1200 : {
+                items: 4
+            }
+        },
+
     });
+
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 
@@ -30,6 +50,29 @@ $(document).ready(function () {
         form.addEventListener('input', e => {
             let checkbox = e.target.closest('[type="checkbox"]');
             checkbox && form.submit();
+        }, false);
+
+        let reset = form.querySelector('button[type="reset"]');
+        let checkboxes = form.querySelectorAll('input[type="checkbox"]');
+
+
+
+        reset.addEventListener('click', e => {
+            e.preventDefault();
+
+            for (let i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = false;
+            }
+
+            const priceRangeSlider = $('#priceRangeSlider');
+            const min = priceRangeSlider.slider('getAttribute', 'min');
+            const max = priceRangeSlider.slider('getAttribute', 'max');
+            priceRangeSlider.slider('setValue', [min, max]);
+
+            const minPriceInp = form.querySelector('.inp-price-min');
+                minPriceInp.value = min;
+            const maxPriceInp = form.querySelector('.inp-price-max');
+                maxPriceInp.value = max;
         }, false);
     }
 }());

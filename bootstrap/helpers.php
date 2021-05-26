@@ -1,6 +1,7 @@
 <?php
 
 use App\Resource;
+use App\Classes\Image\Type\BaseType;
 
 if (!function_exists('mb_ucfirst')) {
     function mb_ucfirst($string, $enc = 'UTF-8')
@@ -42,44 +43,42 @@ if (!function_exists('img')) {
      * @param resource $resource need passed for - main: sdCode; additional: sdCode, sku, key; defective: sdCode, sku, key; category: ref
      * @param array $attributesHtml
      * @param int|null $size
+     * @param int $key
      * @return string
      * @throws Exception
      */
-    function img(string $type, Resource $resource, array $attributesHtml, int $size = null): string
+    function img(string $type, Resource $resource, array $attributesHtml, int $size = null, int $key = 1): string
     {
-       /* switch ($type) {
+        switch ($type) {
             case 'main':
-                $path = "{$type}/{$resource->sdCode}/{$resource->sdCode}";
-                brake;
+                $path = "product/{$resource->sdCode}/{$resource->sdCode}";
+                break;
             case 'additional':
-                $path = "{$type}/{$resource->sdCode}/additional/{$resource->sku}_{$resource->key}";
-                brake;
+                $path = "product/{$resource->sdCode}/additional/{$resource->sku}_{$key}";
+                break;
             case 'defective':
-                $path = "{$type}/{$resource->sdCode}/{$resource->sku}/{$resource->sku}_{$resource->key']}";
-                brake;
+                $path = "product/{$resource->sdCode}/{$resource->sku}/{$resource->sku}_{$key}";
+                break;
             case 'category':
-                $path = "{$type}/{$resource['ref']}";
-                brake;
+                $path = "category/{$resource['ref']}";
+                break;
             default:
                 throw new Exception('Not exists type');
         }
 
-        if (!empty($data)) {
-            $class = !empty($data['class']) ? ' class="' . implode(' ', $data['class']) . '"' : '';
-            $alt = !empty($data['alt']) ? ' alt="' . htmlspecialchars($data['alt']) . '"': '';
+        $attributes = '';
 
-            if (isset($data['data-src'])) {
-                $uri = 'data-src="' . \App\Classes\ImportImage::getImage($data) . '" src="' . asset('images/site/default_white.jpg') . '"';
-            } else {
-                $uri = ' src="' . \App\Classes\ImportImage::getImage($data) . '"';
-            }
+        foreach ($attributesHtml as $name => $value) {
+            $attributes .= "{$name}=\"{$value}\" ";
+        }
 
-            $tag = '<img' . $class . $alt . $uri . ' />';
+        $path .= $size ?? "_{$size}";
 
-            return $tag;
-        } else {
-            return null;
-        }*/
+        $src = '"' . asset('images/no_img.jpg') . '"';
+        $dataSrc = '"' . asset('storage/' . $path) . '.jpg' . '"';
+        $tag = "<img src={$src} data-src={$dataSrc} {$attributes} />";
+
+        return $tag;
     }
 }
 

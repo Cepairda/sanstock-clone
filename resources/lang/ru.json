@@ -87,6 +87,7 @@
     "Read more": "Читать дальше",
 
     "Cart": "Корзина",
+    "Add to cart": "В корзину",
     "Empty cart": "Очистить корзину",
     "Cart empty": "Корзина пуста",
     "Checkout": "Оформить",
@@ -94,5 +95,9 @@
     "From": "От",
     "Additionally": "Дополнительно",
     "Reset": "Сбросить",
-    "Technical characteristics": "Технические характеристики"
+    "Technical characteristics": "Технические характеристики",
+    "Popular products": "Популярные товары",
+    "Recent receipts": "Последние поступления",
+    "Profit": "Выгода",
+    "Old price": "Старая цена"
 }

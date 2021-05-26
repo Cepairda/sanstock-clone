@@ -38,11 +38,11 @@
             this.deleteWithButton = false; // возможность удалять из куки кнопкой "[data-add="upDate"]"
             this.i18n = {
               ru: {
-                  'button-add': 'Купить',
+                  'button-add': 'В корзину',
                   'button-added': 'В корзине'
               },
               uk: {
-                  'button-add': 'Купити',
+                  'button-add': 'В кошик',
                   'button-added': 'В кошику'
               }
             };
@@ -233,6 +233,11 @@
                 .then((data) => {
                     const table =  data.body; // JSON data parsed by `response.json()` call
                     document.body.insertAdjacentHTML('beforeend', table);
+
+                    $(`#${cartModalId}`).on('shown.bs.modal', function ({target}) {
+                        $('[data-toggle="tooltip"]').tooltip();
+                    });
+
                     $(`#${cartModalId}`).modal('show');
 
                     $(`#${cartModalId}`).on('hidden.bs.modal', function (e) {

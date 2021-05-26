@@ -25381,11 +25381,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
       this.i18n = {
         ru: {
-          'button-add': 'Купить',
+          'button-add': 'В корзину',
           'button-added': 'В корзине'
         },
         uk: {
-          'button-add': 'Купити',
+          'button-add': 'В кошик',
           'button-added': 'В кошику'
         }
       };
@@ -25607,6 +25607,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           var table = data.body; // JSON data parsed by `response.json()` call
 
           document.body.insertAdjacentHTML('beforeend', table);
+          $("#".concat(cartModalId)).on('shown.bs.modal', function (_ref) {
+            var target = _ref.target;
+            $('[data-toggle="tooltip"]').tooltip();
+          });
           $("#".concat(cartModalId)).modal('show');
           $("#".concat(cartModalId)).on('hidden.bs.modal', function (e) {
             $(this).remove();
@@ -25629,8 +25633,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       value: function setEvent() {
         var _this2 = this;
 
-        document.addEventListener('click', function (_ref) {
-          var target = _ref.target;
+        document.addEventListener('click', function (_ref2) {
+          var target = _ref2.target;
           var upDateBtn = target.closest("".concat(productUpDateToCartSelector));
           var openModal = target.closest("".concat(productToCartModalSelector));
           var deleteBtn = target.closest("".concat(productDeleteCartSelector));
@@ -25839,8 +25843,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     headerNav.classList.remove('show');
     backdroup.action();
   });
-  hM.addEventListener('click', function () {
-    document.querySelector('.head-menu').classList.add('active');
+  hM.addEventListener('click', function () {//document.querySelector('.head-menu').classList.add('active');
   }); //===---
 
   document.addEventListener('click', function (_ref) {
@@ -25927,8 +25930,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     _iterator.f();
   }
 
-  console.log(productSortArray);
-
   if (productSortArray.length && token) {
     fetch(url, {
       headers: {
@@ -25968,9 +25969,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
               }
             }
 
-            if (!checkOnExist) {
-              //let parent = data.closest(".col-12.col-lg-6.col-xl-4").remove();
-              console.log(parent);
+            if (!checkOnExist) {//let parent = data.closest(".col-12.col-lg-6.col-xl-4").remove();
             }
           }
         } catch (err) {
@@ -26049,25 +26048,65 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
   var _productTabs = document.querySelector('#product-tabs');
 
+  var priceI = document.querySelector('.card__price--inner');
+  var priceW = document.querySelector('.card__price--wrapp');
+  var toSort = document.querySelector('#to-sort');
   var price = document.querySelector('[data-sort="price"]');
-  var sort = 0;
+  var priceN = document.querySelector('[data-sort="price-normal"]');
+  var priceD = document.querySelector('[data-sort="price-difference"]');
+  var sort = 0; //===--- demo
+
   $('a[data-toggle="tab"][data-sort]').on('shown.bs.tab', function (_ref) {
     var target = _ref.target;
     var sortNumber = target.dataset.sort;
     var pr = this.dataset.price;
+    var nr = this.dataset.normal;
+    var df = this.dataset.difference;
 
     if (pr !== '') {
+      document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
+      priceI.classList.add('collapsing');
+      priceW.hidden = false;
+      priceI.style.height = priceI.scrollHeight + 'px';
+      setTimeout(function () {
+        priceI.classList.remove('collapsing');
+        priceI.style.height = null;
+      }, 350);
       price.textContent = pr;
+      priceN.textContent = nr;
+      priceD.textContent = df;
     } else {
-      price.textContent = '0';
+      priceI.style.height = priceI.scrollHeight + 'px';
+      document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
+      priceI.classList.add('collapsing');
+      setTimeout(function () {
+        priceI.style.height = null;
+      }, 160);
+      setTimeout(function () {
+        priceW.hidden = true;
+        priceI.classList.remove('collapsing');
+      }, 350);
     }
 
+    toSort.href = "#sort-tab-".concat(sortNumber);
     window.history.pushState({}, 'Title', "?sort=".concat(sortNumber));
   });
   $("a#characteristics-tab[data-toggle=\"pill\"]").on('shown.bs.tab', function (_ref2) {
     var target = _ref2.target;
     showHideCharacteristic();
   });
+  toSort.addEventListener('click', function (e) {
+    e.preventDefault();
+    var element = document.querySelector("".concat(this.getAttribute('href')));
+
+    if (element) {
+      var y = element.getBoundingClientRect().top + window.pageYOffset - 120;
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
+    }
+  }, false);
 
   if (searchParams.has(nameGetParam)) {
     sort = searchParams.get(nameGetParam);
@@ -26076,8 +26115,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     active !== undefined ? sort = active : $("a#characteristics-tab[data-toggle=\"pill\"]").tab('show');
   }
 
-  var $tabSelector = $("a[data-toggle=\"tab\"][data-sort=\"".concat(sort, "\"]"));
-  $tabSelector.tab('show'); //=== demo
+  var $tabSelector = $("a[data-toggle=\"tab\"][data-sort=\"".concat(sort, "\"]")); //$tabSelector.tab('show');
+  //=== demo
 
   var glt = document.querySelectorAll('.th-gallery');
   glt.forEach(function (el) {
@@ -28091,8 +28130,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   }
 
   $('.owl-carousel').owlCarousel({
-    items: 4
+    responsive: {
+      // breakpoint from 0 up
+      0: {
+        items: 1
+      },
+      // breakpoint from 480 up
+      500: {
+        items: 2
+      },
+      // breakpoint from 992 up
+      992: {
+        items: 3
+      },
+      // breakpoint from 1200 up
+      1200: {
+        items: 4
+      }
+    }
   });
+  $('[data-toggle="tooltip"]').tooltip();
 }); //Reload page checkbox category
 
 (function () {
@@ -28102,6 +28159,24 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     form.addEventListener('input', function (e) {
       var checkbox = e.target.closest('[type="checkbox"]');
       checkbox && form.submit();
+    }, false);
+    var reset = form.querySelector('button[type="reset"]');
+    var checkboxes = form.querySelectorAll('input[type="checkbox"]');
+    reset.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = false;
+      }
+
+      var priceRangeSlider = $('#priceRangeSlider');
+      var min = priceRangeSlider.slider('getAttribute', 'min');
+      var max = priceRangeSlider.slider('getAttribute', 'max');
+      priceRangeSlider.slider('setValue', [min, max]);
+      var minPriceInp = form.querySelector('.inp-price-min');
+      minPriceInp.value = min;
+      var maxPriceInp = form.querySelector('.inp-price-max');
+      maxPriceInp.value = max;
     }, false);
   }
 })();
