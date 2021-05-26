@@ -25930,8 +25930,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     _iterator.f();
   }
 
-  console.log(productSortArray);
-
   if (productSortArray.length && token) {
     fetch(url, {
       headers: {
@@ -25971,9 +25969,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
               }
             }
 
-            if (!checkOnExist) {
-              //let parent = data.closest(".col-12.col-lg-6.col-xl-4").remove();
-              console.log(parent);
+            if (!checkOnExist) {//let parent = data.closest(".col-12.col-lg-6.col-xl-4").remove();
             }
           }
         } catch (err) {

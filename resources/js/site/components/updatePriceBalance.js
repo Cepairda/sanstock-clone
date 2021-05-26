@@ -11,8 +11,6 @@
         productSortArray.push([data.dataset.productSortSdCode, +data.dataset.productSortGrade]);
     }
 
-    console.log(productSortArray);
-
     if (productSortArray.length && token) {
         fetch(url, {
             headers: {
@@ -46,7 +44,6 @@
 
                     if (!checkOnExist) {
                         //let parent = data.closest(".col-12.col-lg-6.col-xl-4").remove();
-                        console.log(parent);
                     }
                 }
             } else if (pageType == 'product') {

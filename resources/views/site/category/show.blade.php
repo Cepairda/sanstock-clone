@@ -86,11 +86,6 @@
                                         {{--data-href="{{ asset($links_to_sort['-name']) }}">@lang('site.links_to_sort.-name')</li>--}}
                                         {{--</ul>--}}
                                     {{--</div>--}}
-                                    @if (isset($filters))
-                                        <div class="btn-filter open-filter">
-                                            @lang('site.category.components.filter')
-                                        </div>
-                                    @endif
                                 </div>
                                 <div class="row filter-wrapper">
                                     @foreach($productsSort as $productSort)
@@ -119,9 +114,9 @@
                         @endif
 
                         <aside class="col-sm-3 col-lg-4 col-xl-3 main-filter order-1">
-
-                        @include('site.category.components.filters', ['alias' => $category->alias])
-
+                        @if ($productsTotal > 1)
+                            @include('site.category.components.filters', ['alias' => $category->alias])
+                        @endif
                         <!-- filter banner -->
                             <div class="filter-banner" hidden>
                                 <img class="mw-100 lazy-img-thumb" src="{{ asset('site/libs/icon/logo.svg') }}"

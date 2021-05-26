@@ -18,7 +18,6 @@
                    data-slider-max="{{ $maxPrice }}" data-slider-value="[{{ $minPriceSelect }},{{ $maxPriceSelect }}]"
                    data-slider-step="10">
         </div>
-
     @endif
     <hr>
     @if(count($sortType) > 1)
