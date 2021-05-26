@@ -41,7 +41,9 @@
                 <div class="col-8">
                     <div class="main__contacts-form">
 
-                        <form action="">
+                        <form action="{{ route('site.checkout') }}" method="POST">
+
+                            {{ csrf_field() }}
 
                                 <div class="row">
 
@@ -52,8 +54,7 @@
                                             <input id="new_mail_surname"
                                                    class="w-100"
                                                    type="text"
-                                                   name="new_mail_surname"
-                                                   required>
+                                                   name="new_mail_surname">
                                             <label class="required"
                                                    for="new_mail_surname">Фамилия</label>
                                         </div>
@@ -67,8 +68,7 @@
                                                    class="w-100"
                                                    type="text"
                                                    name="new_mail_patronymic"
-                                                   value=""
-                                                   required>
+                                                   value="">
                                             <label class="required"
                                                    for="new_mail_patronymic">Отчество</label>
                                         </div>
@@ -82,8 +82,7 @@
                                                    class="w-100"
                                                    type="text"
                                                    name="new_mail_name"
-                                                   value=""
-                                                   required>
+                                                   value="">
                                             <label class="required" for="new_mail_name">Имя</label>
                                         </div>
 
@@ -96,8 +95,6 @@
                                                    class="w-100"
                                                    type="tel"
                                                    name="new_mail_phone"
-                                                   required
-                                                   pattern="^\+38[\s]\(0\d{2}\)[\s]\d{3}[-]\d{2}[-]\d{2}$"
                                                    size="19" maxlength="19">
                                             <label class="required" for="new_mail_phone">Номер телефона (+38 (0xx) xxx-xx-xx)</label>
                                         </div>
@@ -120,7 +117,7 @@
                                                     class=""
                                                     name="new_mail_delivery_type"
                                                     data-placeholder="Тип доставки"
-                                                    required style="padding: 4px;">
+                                                     style="padding: 4px;">
                                                 <option value="storage_storage">Доставка на отделение</option>
                                                 <option value="storage_door">Доставка за адресом</option>
                                             </select>
@@ -138,8 +135,7 @@
                                             <select id="new_mail_region"
                                                     class="js-example-basic-single1"
                                                     name="new_mail_region"
-                                                    data-placeholder="Нужно выбрать область"
-                                                    required>
+                                                    data-placeholder="Нужно выбрать область">
                                                 <option value=""></option>
                                             </select>
 
@@ -159,8 +155,7 @@
                                                     class="js-example-basic-single"
                                                     name="new_mail_city"
                                                     data-placeholder="Нужно выбрать населенный пункт"
-                                                    disabled
-                                                    required>
+                                                    disabled>
                                             </select>
 
                                             <label class="font-weight-bold" for="new_mail_city">Населенный пункт</label>
@@ -178,8 +173,7 @@
                                                     name="new_mail_warehouse"
                                                     class="js-example-basic-single"
                                                     data-placeholder="Нужно выбрать отделение"
-                                                    disabled
-                                                    required>
+                                                    disabled>
                                             </select>
 
                                             <label for="new_mail_warehouse">Номер отделения</label>
@@ -197,8 +191,7 @@
                                                     name="new_mail_street"
                                                     class="js-example-basic-single"
                                                     data-placeholder="Нужно выбрать адрес"
-                                                    disabled
-                                                    required>
+                                                    disabledd>
                                             </select>
 
                                             <label for="new_mail_street">Адрес доставки</label>
@@ -213,8 +206,7 @@
                                             <input id="new_mail_house"
                                                    name="new_mail_house"
                                                    class="w-100"
-                                                   type="text"
-                                                   required>
+                                                   type="text">
 
                                             <label for="new_mail_house">Номер дома</label>
                                         </div>
@@ -237,7 +229,7 @@
                                     <div class="col-12">
 
                                         <div class="form-group">
-                                            <textarea class="w-100" name="" id="" cols="30" rows="10" required></textarea>
+                                            <textarea class="w-100" name="" id="" cols="30" rows="10"></textarea>
                                             <label for="new_mail_apartment">Комментарий к заказу</label>
                                         </div>
 

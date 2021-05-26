@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix(LaravelLocalization::setLocale())->group(function () {
@@ -239,8 +240,11 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::get('/order-products', 'CartController@getCartProducts')->name('order-products');
         Route::get('/order-products-table', 'CartController@getCartProductsTable')->name('order-products');
         Route::get('/cart/checkout', function() {
+            if(!isset($_COOKIE["products_cart"])) return redirect()->route('site./');
             return view('site.orders.checkout');
         });
+        // оформить заказ
+        Route::post('/checkout', 'CartController@checkout')->name('checkout');
 
         Route::get('search', 'SearchController@search')->name('products.search');
         Route::post('products/update-price', 'ProductController@updatePrice')->name('products.update-price');
