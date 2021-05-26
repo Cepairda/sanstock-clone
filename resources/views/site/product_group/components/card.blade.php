@@ -1,6 +1,12 @@
 {{--<div class="col-12 col-lg-6 col-xl-4">--}}
 <div class="product__wrapper">
         <div class="product__wrapper-lg">
+
+                {{-- img('main', $productGroup, [
+                        'class' => 'product__img-lg img-data-path lazy',
+                        'title' => $productGroup->name,
+                    ])
+                --}}
             <div class="position-relative">
                 <span href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}"
                    data-toggle="tooltip" data-placement="top"
