@@ -2,6 +2,12 @@
 <div class="product__wrapper">
         <div class="product__wrapper-lg">
             <a class="product__img" href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}">
+                {{-- img('main', $productGroup, [
+                        'class' => 'product__img-lg img-data-path lazy',
+                        'title' => $productGroup->name,
+                    ])
+                --}}
+
                 <img class="product__img-lg img-data-path lazy"
                      data-src="/storage/product/{{ $productGroup->sdCode }}/{{ $productGroup->sdCode }}.jpg"
                      src="{{ asset('images/no_img.jpg') }}"
