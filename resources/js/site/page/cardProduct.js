@@ -10,6 +10,7 @@
     const paramsString = window.location.search;
     const searchParams = new URLSearchParams(paramsString);
     const _productTabs = document.querySelector('#product-tabs');
+    const priceI = document.querySelector('.card__price--inner');
     const priceW = document.querySelector('.card__price--wrapp');
     const toSort = document.querySelector('#to-sort');
     const price = document.querySelector('[data-sort="price"]');
@@ -17,18 +18,36 @@
     const priceD = document.querySelector('[data-sort="price-difference"]');
     let sort = 0;
 
+
+    //===--- demo
     $('a[data-toggle="tab"][data-sort]').on('shown.bs.tab', function ({target}) {
         const sortNumber = target.dataset.sort;
         let pr = this.dataset.price;
         let nr = this.dataset.normal;
         let df = this.dataset.difference;
         if(pr !== '') {
+            document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
+            priceI.classList.add('collapsing');
             priceW.hidden = false;
+            priceI.style.height = priceI.scrollHeight + 'px';
+            setTimeout( () => {
+                priceI.classList.remove('collapsing');
+                priceI.style.height = null
+            }, 350);
             price.textContent = pr;
             priceN.textContent = nr;
             priceD.textContent = df;
         } else {
-            priceW.hidden = true;
+            priceI.style.height = priceI.scrollHeight + 'px';
+            document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
+            priceI.classList.add('collapsing');
+            setTimeout( () => {
+                priceI.style.height = null;
+                }, 160);
+            setTimeout( () => {
+                priceW.hidden = true;
+                priceI.classList.remove('collapsing');
+            }, 350);
         }
 
         toSort.href = `#sort-tab-${sortNumber}`;
@@ -55,7 +74,7 @@
     }
 
     let $tabSelector = $(`a[data-toggle="tab"][data-sort="${sort}"]`);
-    $tabSelector.tab('show');
+    //$tabSelector.tab('show');
 
 
     //=== demo

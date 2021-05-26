@@ -16224,6 +16224,10 @@ body.cart .add__to-cart {
   box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.35);
 }
 
+.nav-tabs .nav-link {
+  font-style: italic;
+}
+
 .nav-link-gray {
   color: #ccc;
 }
@@ -16466,6 +16470,18 @@ footer {
 
 .bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^=top] .arrow::before {
   border-top-color: #e8e8e8;
+}
+
+.bs-tooltip-bottom .arrow::before, .bs-tooltip-auto[x-placement^=bottom] .arrow::before {
+  border-bottom-color: #e8e8e8;
+}
+.bs-tooltip-bottom .arrow::after, .bs-tooltip-auto[x-placement^=bottom] .arrow::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  border-right: 6.3px solid transparent;
+  border-left: 6.3px solid transparent;
+  border-bottom: 6.3px solid #f5f5f5;
 }
 
 .label {

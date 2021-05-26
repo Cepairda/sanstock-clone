@@ -26048,12 +26048,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
   var _productTabs = document.querySelector('#product-tabs');
 
+  var priceI = document.querySelector('.card__price--inner');
   var priceW = document.querySelector('.card__price--wrapp');
   var toSort = document.querySelector('#to-sort');
   var price = document.querySelector('[data-sort="price"]');
   var priceN = document.querySelector('[data-sort="price-normal"]');
   var priceD = document.querySelector('[data-sort="price-difference"]');
-  var sort = 0;
+  var sort = 0; //===--- demo
+
   $('a[data-toggle="tab"][data-sort]').on('shown.bs.tab', function (_ref) {
     var target = _ref.target;
     var sortNumber = target.dataset.sort;
@@ -26062,12 +26064,28 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     var df = this.dataset.difference;
 
     if (pr !== '') {
+      document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
+      priceI.classList.add('collapsing');
       priceW.hidden = false;
+      priceI.style.height = priceI.scrollHeight + 'px';
+      setTimeout(function () {
+        priceI.classList.remove('collapsing');
+        priceI.style.height = null;
+      }, 350);
       price.textContent = pr;
       priceN.textContent = nr;
       priceD.textContent = df;
     } else {
-      priceW.hidden = true;
+      priceI.style.height = priceI.scrollHeight + 'px';
+      document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
+      priceI.classList.add('collapsing');
+      setTimeout(function () {
+        priceI.style.height = null;
+      }, 160);
+      setTimeout(function () {
+        priceW.hidden = true;
+        priceI.classList.remove('collapsing');
+      }, 350);
     }
 
     toSort.href = "#sort-tab-".concat(sortNumber);
@@ -26097,8 +26115,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     active !== undefined ? sort = active : $("a#characteristics-tab[data-toggle=\"pill\"]").tab('show');
   }
 
-  var $tabSelector = $("a[data-toggle=\"tab\"][data-sort=\"".concat(sort, "\"]"));
-  $tabSelector.tab('show'); //=== demo
+  var $tabSelector = $("a[data-toggle=\"tab\"][data-sort=\"".concat(sort, "\"]")); //$tabSelector.tab('show');
+  //=== demo
 
   var glt = document.querySelectorAll('.th-gallery');
   glt.forEach(function (el) {
