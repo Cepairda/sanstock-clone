@@ -38,9 +38,9 @@ class StockB2BImport
 
     /**
      * @param array $data
-     * @return array
+     * @return void
      */
-    private function setData(array $data) : array
+    private function setData(array $data) : void
     {
         self::$data = $data;
     }

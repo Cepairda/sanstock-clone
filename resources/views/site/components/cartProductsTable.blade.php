@@ -32,7 +32,7 @@
                 <td>
                     <span data-toggle="tooltip" data-placement="top"
                           title="{{ __('descriptions.desc_sort-' . $product["grade"]) }}"
-                          class="label">Сорт-{{ $product["grade"] }}</span>
+                          class="label" data-sort="{{ $product["grade"] }}">Сорт-{{ $product["grade"] }}</span>
 
 
                 </td>
