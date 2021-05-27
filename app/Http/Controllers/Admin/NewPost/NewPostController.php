@@ -249,6 +249,7 @@ class NewPostController
         $areas = NewPostAreas::where('status', 1)->get();
 
         $result = [];
+        $result[] = ['id' => '', 'text' => '', 'alt' => ''];
 
         foreach($areas as $region):
 
@@ -281,6 +282,7 @@ class NewPostController
         $settlements = NewPostSettlements::where('area_ref', $area_ref)->get();
 
         $result = [];
+        $result[] = ['id' => '', 'text' => '', 'alt' => ''];
 
         foreach($settlements as $region):
 
@@ -315,6 +317,7 @@ class NewPostController
         $streets = NewPostStreets::where('city_ref', $city_ref)->get();
 
         $result = [];
+        $result[] = ['id' => '', 'text' => '', 'alt' => ''];
 
         foreach($streets as $region):
 
@@ -349,6 +352,7 @@ class NewPostController
         $warehouses = NewPostWarehouses::where('city_ref', $city_ref)->get();
 
         $result = [];
+        $result[] = ['id' => '', 'text' => '', 'alt' => ''];
 
         foreach($warehouses as $region):
 
@@ -422,7 +426,14 @@ class NewPostController
 
                 if(($resource_key === 'area' || $resource_key === 'settlement' || $resource_key === 'warehouse') &&  $locale === $data['locale']) {
 
-                    $descriptionMap[(int)$data['affiliated_id']]['text'] = str_replace(['просп. просп.'], ['просп.'], $data['name']);
+                    $settlement_type = '';
+                    if(isset($data['type'])) {
+                        if($data['type'] === 'селище міського типу') $settlement_type = 'сел. ';
+                        if($data['type'] === 'місто') $settlement_type = 'м. ';
+                        if($data['type'] === 'село') $settlement_type = 'с. ';
+                    }
+
+                    $descriptionMap[(int)$data['affiliated_id']]['text'] = $settlement_type . str_replace(['просп. просп.'], ['просп.'], $data['name']);
 
                     $descriptionMap[(int)$data['affiliated_id']]['alt'] = ($resource_key === 'settlement')
                         ? $data['type'] . ' ' . $data['name'] : $data['name'];
@@ -430,7 +441,7 @@ class NewPostController
 
                 if(($resource_key === 'street') &&  $data['locale'] === $this->ua) {
 
-                    $descriptionMap[(int)$data['affiliated_id']]['text'] = $data['name'];
+                    $descriptionMap[(int)$data['affiliated_id']]['text'] = $data['type'] . ' ' . $data['name'];
 
                     $descriptionMap[(int)$data['affiliated_id']]['alt'] = $data['type'] . ' ' . $data['name'];
                 }

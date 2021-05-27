@@ -91,7 +91,10 @@ class CartController
             'new_mail_surname' => 'required',
             'new_mail_name' => 'required',
             'new_mail_patronymic' => 'required',
-            'new_mail_phone' => 'required',
+            'new_mail_phone' => 'required|regex:/^\+38[\s]\(0\d{2}\)[\s]\d{3}[-]\d{2}[-]\d{2}$/',
+            'new_mail_delivery_type' => 'required',
+            'new_mail_region' => 'required|size:36',
+            'new_mail_city' => 'required|size:36',
             //'new_mail_delivery_type' => 'required',
 //            'new_mail_insurance_sum' => 'required|numeric|min:200',
         ];
@@ -125,7 +128,7 @@ class CartController
 //            $rules['new_mail_house'] = 'required';
 //        }
         //dd('************');
-        $validated = $request->validate($rules);
+
 
         $shipping = [];
 //dd($request->new_mail_surname);
@@ -185,6 +188,8 @@ class CartController
 
             $shipping['new_mail_apartment'] = '';
 
+            $rules['new_mail_warehouse'] = 'required|size:36';
+
         } else {
 
             $orderData['new_mail_street'] = $shipping['new_mail_street'];
@@ -195,8 +200,18 @@ class CartController
 
             $shipping['new_mail_warehouse'] = '';
 
+            $rules['new_mail_house'] = 'required';
+
         }
 
+        $validated = $request->validate($rules);
+// dd($validated);
+//        if ($validated->fails()) {
+//            return Redirect::back()->withErrors('Не заполнены все обязательные поля!');
+////            return view("user.home", [
+////                "errors" => $validator->errors()
+////            ]);
+//        }
 
 //        if($order['new_mail_delivery_type'] === 'storage_door') {
 //
