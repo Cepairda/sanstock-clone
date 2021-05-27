@@ -54,6 +54,10 @@ button:active{
 	outline: none;
 }
 
+::placeholder {
+    color: #ccc;
+}
+
 input:focus {
 	outline: none;
 }

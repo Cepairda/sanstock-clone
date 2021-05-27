@@ -11,8 +11,8 @@
                 @include('site.components.cartProductsTable')
             </div>
             <div class="modal-footer">
-                <button type="button" class="button added" data-dismiss="modal">Закрыть</button>
-                <a href="{{ asset('/cart/checkout') }}" type="button" class="button">Перейти к оформлению</a>
+                <button type="button" class="button added" data-dismiss="modal">{{ __('Close') }}</button>
+                <a href="{{ asset('/cart/checkout') }}" type="button" class="button">{{ __('Go to checkout') }}</a>
             </div>
         </div>
     </div>

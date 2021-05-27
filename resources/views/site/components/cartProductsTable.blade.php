@@ -1,13 +1,13 @@
 <div class="table-responsive cart__table">
     <table class="table table-hover">
-        <caption>Корзина товаров</caption>
+        <caption>{{ __('Cart products') }}</caption>
         <thead>
         <tr>
-            <td>Код товара</td>
+            <td>{{ __('Product code') }}</td>
             <td>Фото</td>
-            <td>Наименование</td>
+            <td>{{ __('Name of') }}</td>
             <td>Сорт</td>
-            <td>Цена</td>
+            <td>{{ __('Price') }}</td>
             <td></td>
         </tr>
         </thead>

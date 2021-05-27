@@ -14223,11 +14223,6 @@ p.text--hide.active {
   }
 
   /*---main-filter_end---*/
-  /*-----main-----*/
-  .main-container, .main-collection, .main-category {
-    padding-top: 70px;
-  }
-
   .main__sort {
     padding-left: 15px;
     padding-right: 15px;
@@ -16291,6 +16286,18 @@ i {
 button:focus,
 button:active {
   outline: none;
+}
+
+::-moz-placeholder {
+  color: #ccc;
+}
+
+:-ms-input-placeholder {
+  color: #ccc;
+}
+
+::placeholder {
+  color: #ccc;
 }
 
 input:focus {

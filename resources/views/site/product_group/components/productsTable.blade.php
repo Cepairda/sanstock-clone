@@ -2,11 +2,11 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <td>Код товара</td>
+            <td>{{ __('Product code') }}</td>
             <td>Фото</td>
-            <td>Описание</td>
-            <td>Цена</td>
-            <td>Добавить корзину</td>
+            <td>{{ __('Description') }}</td>
+            <td>{{ __('Price') }}</td>
+            <td>{{ __('Add cart') }}</td>
         </tr>
 
         </thead>

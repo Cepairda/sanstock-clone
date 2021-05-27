@@ -85,7 +85,9 @@
     "Become a partner": "Стати партнером",
 
     "Cart": "Кошик",
+    "Cart products": "Кошик товарів",
     "Add to cart": "В кошик",
+    "Add cart": "Додати корзину",
     "Empty cart": "Очистити кошик",
     "Cart empty": "Кошик порожній",
     "Checkout": "Оформити",
@@ -116,5 +118,9 @@
     "Delivery address": "Адреса доставки",
     "House number": "Номер будинку",
     "Flat": "Квартира",
-    "Comment on the order": "Коментар до замовлення"
+    "Comment on the order": "Коментар до замовлення",
+    "Filters": "Фільтри",
+    "Product code": "Код товару",
+    "Name of": "Найменування",
+    "Go to checkout": "Перейти до оформлення"
 }
