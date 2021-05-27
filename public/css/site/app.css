@@ -16336,6 +16336,9 @@ footer {
   padding-top: 150px;
 }
 
+.cart__table {
+  min-height: 300px;
+}
 .cart__table table td {
   text-align: center;
   vertical-align: middle;
