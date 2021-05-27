@@ -179,6 +179,12 @@ class CartController
 
             $orderData['new_mail_warehouse'] = $shipping['new_mail_warehouse'];
 
+            $shipping['new_mail_street'] = '';
+
+            $shipping['new_mail_house'] = '';
+
+            $shipping['new_mail_apartment'] = '';
+
         } else {
 
             $orderData['new_mail_street'] = $shipping['new_mail_street'];
@@ -186,6 +192,8 @@ class CartController
             $orderData['new_mail_house'] = $shipping['new_mail_house'];
 
             $orderData['new_mail_apartment'] = $shipping['new_mail_apartment'];
+
+            $shipping['new_mail_warehouse'] = '';
 
         }
 
@@ -266,11 +274,11 @@ class CartController
 
         $orderShipping->settlement_ref = $shipping['new_mail_city'];
 
-        $orderShipping->street_ref = '';
+        $orderShipping->street_ref = $shipping['new_mail_street'];
 
-        $orderShipping->house = '';
+        $orderShipping->house = $shipping['new_mail_house'];
 
-        $orderShipping->apartment = '';
+        $orderShipping->apartment = $shipping['new_mail_apartment'];
 
         $orderShipping->warehouse_ref = $shipping['new_mail_warehouse'] ;
 
@@ -311,6 +319,12 @@ class CartController
             $orderProduct->save();
 
            $products[$product['sku']] = $product['quantity'];
+
+            Product::where('details->sku', $product['sku'])->update([
+                //'details->price' => $price,
+                //'details->old_price' => $oldPrice,
+                'details->balance' => 0
+            ]);
 
         endforeach;
 
@@ -458,7 +472,7 @@ class CartController
         curl_setopt_array($curl,
             array(
                 CURLOPT_URL => "https://b2b-sandi.com.ua/api/orders/checkout?token=368dbc0bf4008db706576eb624e14abf",
-                //CURLOPT_RETURNTRANSFER => TRUE,
+                CURLOPT_RETURNTRANSFER => TRUE,
                 CURLOPT_CONNECTTIMEOUT => 20,
                 CURLOPT_TIMEOUT => 1000,
                 CURLOPT_POST => true,
