@@ -17,11 +17,17 @@ use App\Classes\Slug;
 
 class StockB2BImport
 {
-    private const DEFAULT_API_URL = 'http://94.131.241.126/api/products?token=368dbc0bf4008db706576eb624e14abf&only_defectives=1';
+    private const DEFAULT_API_URL = 'https://b2b-sandi.com.ua/api/products?token=368dbc0bf4008db706576eb624e14abf&only_defectives=1';
     protected $apiUrl;
     private static $data;
 
-    public function getDataJson($apiUrl = self::DEFAULT_API_URL, array $queryString = [])
+    /**
+     * @param string $apiUrl
+     * @param array $queryString
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getDataJson($apiUrl = self::DEFAULT_API_URL, array $queryString = []) : array
     {
         $client = new Client();
         $res = $client->request('GET', $apiUrl, $queryString);
@@ -30,12 +36,19 @@ class StockB2BImport
         return self::$data;
     }
 
-    private function setData($data)
+    /**
+     * @param array $data
+     * @return array
+     */
+    private function setData(array $data) : array
     {
         self::$data = $data;
     }
 
-    public function addToQueue()
+    /**
+     * @return void
+     */
+    public function addToQueue() : void
     {
         $this->apiUrl = self::DEFAULT_API_URL;
 
@@ -57,7 +70,12 @@ class StockB2BImport
         } while ($this->apiUrl = $jsonData['next_page_url'] ?? null);
     }
 
-    public function importQueue(array $skuArray)
+    /**
+     * @param array $skuArray
+     *
+     * @return void
+     */
+    public function importQueue(array $skuArray) : void
     {
         $skuStr = implode(',', $skuArray);
         $apiUrl = self::DEFAULT_API_URL . "&sku_in={$skuStr}";
@@ -148,7 +166,7 @@ class StockB2BImport
                     'sd_code' => $sdCode,
                     'price' => $price,
                     'old_price' => $oldPrice,
-                    'balance' => $balance,
+                    //'balance' => $balance,
                     'grade' => $grade,
                     'published' => 0,
                 ],
@@ -185,10 +203,7 @@ class StockB2BImport
             $defectiveDescriptionRu = $dataProduct['defective_attributes']['descriptions']['ru'];
             $defectiveDescriptionUk = $dataProduct['defective_attributes']['descriptions']['uk'];
 
-            //$slug = Slug::create(Product::class, $category['name']['ru'] . '/' . $name['ru']);
-
             $product->setRequest([
-                //'slug' => $slug,
                 'details' => [
                     'sku' => $ref,
                     'sd_code' => $sdCode,
@@ -297,6 +312,11 @@ class StockB2BImport
             $c = new Characteristic();
 
             $c->setRequest([
+                'details' => [
+                    'is_filter' => 1,
+                    'published' => 1,
+                    'sort' => 0
+                ],
                 'data' => ['name' => $nameRu]
             ]);
 
@@ -306,11 +326,6 @@ class StockB2BImport
 
         if (!empty($nameUk)) {
             $c->setRequest([
-                'details' => [
-                    'is_filter' => 1,
-                    'published' => 1,
-                    'sort' => 0
-                ],
                 'data' => ['name' => $nameUk],
             ]);
 
@@ -419,8 +434,6 @@ class StockB2BImport
             $main = $dataProduct['main'];
             $attributes = $dataProduct['attributes'];
             $sdCode = $dataProduct['main']['sku'];
-            //$this->stockBrand($main['brand']['ref'], $main['brand']['name']);
-            //$this->stockCategory($main['category']['ref'], $main['category']['name']);
             $this->stockProductGroup($sdCode, $main);
             $this->stockProductSort($sdCode, $main);
             $this->stockProduct($sku, $main);

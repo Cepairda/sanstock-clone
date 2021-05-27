@@ -22,15 +22,23 @@
 @import 'template/style.all', 'template/stylemedia';
 
 //components
-@import 'components/breadcrumbs',
+@import 'components/icons',
+        'components/language',
+        'components/breadcrumbs',
         'components/header',
         'components/header-menu',
+        'components/footer',
         'components/tabs-products',
         'components/form',
+        'components/checkbox',
         'components/card',
-        'components/buttons';
+        'components/buttons',
+        'components/language';
 
 //page
-@import 'page/cart';
+@import 'page/home',
+        'page/cart',
+        'page/product';
+
 
 @import 'common';

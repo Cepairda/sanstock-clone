@@ -23,10 +23,12 @@ class Slug
         }
 
         $slug = rtrim($originalSlug, '/');
+        $mainSlug = $slug;
+
         $i = 0;
 
-        while ($resourceId = $resource::whereSlug($slug)->where('id', '!=', $id)->first()) {
-               $slug .= '-' . ++$i;
+        while ($resourceId = $resource::withTrashed()->whereSlug($slug)->where('id', '!=', $id)->first()) {
+            $slug = $mainSlug . '-' . ++$i;
         }
 
         return $slug;

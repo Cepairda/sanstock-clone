@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix(LaravelLocalization::setLocale())->group(function () {
@@ -225,7 +226,6 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
     // New Post
     Route::get('admin/test-request', '\App\Http\Controllers\Admin\NewPost\NewPostController@sentRequest')->name('sent-request-new-post');
 
-
     //Site
     Route::as('site.')->namespace('Site')->group(function () {
         Route::get('/telegram-bot', 'TelegramBotController@index')->name('telegram-bot');
@@ -240,8 +240,11 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::get('/order-products', 'CartController@getCartProducts')->name('order-products');
         Route::get('/order-products-table', 'CartController@getCartProductsTable')->name('order-products');
         Route::get('/cart/checkout', function() {
+            if(!isset($_COOKIE["products_cart"])) return redirect()->route('site./');
             return view('site.orders.checkout');
         });
+        // оформить заказ
+        Route::post('/checkout', 'CartController@checkout')->name('checkout');
 
         Route::get('search', 'SearchController@search')->name('products.search');
         Route::post('products/update-price', 'ProductController@updatePrice')->name('products.update-price');
@@ -254,6 +257,10 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
         Route::get('/contacts', 'ContactController@index')->name('contacts');
         Route::post('/contacts', 'ContactController@contactForm')->name('contact-form');
+
+        Route::get('/about-us', function(){
+            return view('site.page.about-us');
+        })->name('about-us');
 
         Route::get('/documentation', function () {return view('site.page.documentation');})->name('documentations');
         Route::get('/documents/certificates', function () {return view('site.page.certificates');})->name('certificates');

@@ -25,6 +25,7 @@
     "Sort by price high to low": "Сначала дороже",
 
     "Where buy": "Где купить",
+    "Buy": "Купить",
     "Enter keyword": "Введите поисковы запрос",
     "Show more": "Подробнее",
     "Specifications": "Технические характеристики",
@@ -40,6 +41,8 @@
     "Information": "Информация",
     "About brand": "О бренде",
     "About us": "О нас",
+    "Delivery": "Доставка",
+    "FAQ": "Часто задаваемые вопросы",
     "Documentation": "Документация",
     "Certificates" : "Сертификаты",
     "copy": "Запатентованный бренд. Все права защищены.",
@@ -52,7 +55,7 @@
     "No results found for": "По запросу ничего не найдено",
     "Apply": "Применить",
     "Price": "Цена",
-    "Sort by": "Сортировать по",
+    "Sort": "Сортировать",
 
     "No products": "Нет товаров",
     "No price": "Нет цены",
@@ -73,6 +76,7 @@
     "Reply to review": "Ответить на отзыв",
 
     "Search": "Поиск",
+    "Search placeholder": "Введите поисковый запрос...",
     "Search not result": "По запросу \":search_value\" ничего не найдено, попробуйте изменить строку поиска.",
 
     "Show More": "Показать еще",
@@ -83,6 +87,17 @@
     "Read more": "Читать дальше",
 
     "Cart": "Корзина",
-    "Checkout": "Оформить"
-
+    "Add to cart": "В корзину",
+    "Empty cart": "Очистить корзину",
+    "Cart empty": "Корзина пуста",
+    "Checkout": "Оформить",
+    "Catalog products": "Каталог товаров",
+    "From": "От",
+    "Additionally": "Дополнительно",
+    "Reset": "Сбросить",
+    "Technical characteristics": "Технические характеристики",
+    "Popular products": "Популярные товары",
+    "Recent receipts": "Последние поступления",
+    "Profit": "Выгода",
+    "Old price": "Старая цена"
 }

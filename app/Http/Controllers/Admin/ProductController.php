@@ -9,10 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\ImageController;
 use App\Classes\Imports\ProductWithDataImport;
 use App\Product;
-use Carbon\Carbon;
-use GuzzleHttp\Client;
+use App\ProductSort;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 
 class ProductController extends Controller
 {
@@ -60,11 +58,11 @@ class ProductController extends Controller
             })->get();
 
         foreach ($products as $product) {
-            Product::where('id', $product->id)->update([
+            ProductSort::where('id', $product->id)->update([
                 'search_string' =>
                     (json_decode($product->ua_name, 1))['name'] . ' ' .
                     (json_decode($product->ru_name, 1))['name'] . ' ' .
-                    $product->details['sku']
+                    $product->details['sd_code']
             ]);
         }
     }

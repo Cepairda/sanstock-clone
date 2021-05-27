@@ -2,20 +2,16 @@
 
 namespace App\Classes\Imports;
 
-use App\Brand;
 use App\Category;
-use App\Characteristic;
-use App\CharacteristicValue;
+use App\Jobs\ProcessCategoryB2BImport;
 use App\Product;
 use GuzzleHttp\Client;
-use Illuminate\Support\Str;
 use LaravelLocalization;
-use App\Jobs\ProcessImportB2B;
 use App\Classes\Slug;
 
 class CategoryB2BImport
 {
-    private $apiUrl = 'http://94.131.241.126/api/categories';
+    private $apiUrl = 'https://b2b-sandi.com.ua/api/categories';
     private static $data;
 
     public function getDataJson()
@@ -36,16 +32,34 @@ class CategoryB2BImport
 
     public function addToQueue()
     {
-        $brand = $this->firstOrCreateBrand();
-
-        foreach (self::$data['products'] as $productRef => $productData) {
-            ProcessImportB2B::dispatch($brand->id, $productRef)->onQueue('b2bImport');
-        }
+//        $this->getDataJson($this->apiUrl);
+//        $jsonData = self::$data;
+//
+//        foreach ($jsonData as $ref => $data) {
+//            ProcessCategoryB2BImport::dispatch($ref)->onQueue('b2bImportCategory');
+//        }
+        ProcessCategoryB2BImport::dispatch()->onQueue('b2bImportCategory');
     }
 
-    public function importQueue($brandId, $productRef)
+    public function importQueue()
     {
-        $this->product($brandId, $productRef);
+        $this->importCommand();
+    }
+
+    public function importCommand()
+    {
+        if (empty(self::$data)) {
+            self::$data = $this->getDataJson();
+        }
+
+        /*[
+            'parent_ref' => $parentRef,
+            'name' => $name,
+            'image' => $image
+        ] = self::$data[$ref];
+        $this->categoryImport($ref, $parentRef, $name, $image);*/
+
+        $this->import();
     }
 
     public function import()
@@ -61,9 +75,7 @@ class CategoryB2BImport
         }
 
         $this->fixParent();
-
         $tree = Category::get()->toTree();
-
         $this->recursiveCheck($tree);
     }
 
@@ -77,30 +89,44 @@ class CategoryB2BImport
      */
     public function categoryImport(string $ref, ?string $parentRef, array $name, string $image) : void
     {
-        $category = Category::where('details->ref', $ref)->first();
+        $category = Category::withTrashed()->where('details->ref', $ref)->first();
 
         if (!isset($category)) {
             $category = new Category();
-
-            $category->setRequest([
-                'slug' => Slug::create(Category::class, $name['ru']),
-                'details' => [
-                    'ref' => $ref,
-                    'parent_ref' => $parentRef,
-                ],
-                'data' => ['name' => $name['ru']]
-            ]);
-
-            LaravelLocalization::setLocale('ru');
-            $category->storeOrUpdate();
-
-            $category->setRequest([
-                'data' => ['name' => $name['uk']]
-            ]);
-
-            LaravelLocalization::setLocale('uk');
-            $category->storeOrUpdate();
         }
+
+        /**
+         * If this is the root category, we must trim the numbers
+         * otherwise no change
+         * Before: 1. CategoryName
+         * After: CategoryName
+         */
+        if (is_null($parentRef)) {
+            $nameRu = substr($name['ru'], strpos($name['ru'], ' ') + 1);
+            $nameUk = substr($name['uk'], strpos($name['uk'], ' ') + 1);
+        } else {
+            $nameRu = $name['ru'];
+            $nameUk = $name['uk'];
+        }
+
+        $category->setRequest([
+            'slug' => Slug::create(Category::class, $nameRu, $category->id),
+            'details' => [
+                'ref' => $ref,
+                'parent_ref' => $parentRef,
+            ],
+            'data' => ['name' => $nameRu]
+        ]);
+
+        LaravelLocalization::setLocale('ru');
+        $category->storeOrUpdate();
+
+        $category->setRequest([
+            'data' => ['name' => $nameUk]
+        ]);
+
+        LaravelLocalization::setLocale('uk');
+        $category->storeOrUpdate();
     }
 
     public function fixParent()
@@ -154,7 +180,7 @@ class CategoryB2BImport
             }
 
             if ($isEmpty) {
-                $category->delete();
+                $category->forceDelete();
             }
         }
 

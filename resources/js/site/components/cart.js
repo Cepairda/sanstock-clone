@@ -11,6 +11,7 @@
     const productUpDateToCartSelector = '[data-add="upDate"]';
     const productToCartModalSelector = '[data-add="modal"]';
     const productDeleteCartSelector = '[data-add="delete"]';
+    const productClearCartSelector = '[data-add="clear"]';
     const cartModalId = 'cartModal';
     const cartCounterNode = document.getElementById(`${cartCounterId}`);
     const toast =
@@ -34,20 +35,24 @@
             this.cartCounterId = 'cart-count';
             this.productToCartContainerClassName = '[data-add="to-add"]';
             this.cartCounterNode = document.getElementById(`${cartCounterId}`);
+            this.deleteWithButton = false; // возможность удалять из куки кнопкой "[data-add="upDate"]"
             this.i18n = {
               ru: {
-                  'button-add': 'Купить',
+                  'button-add': 'В корзину',
                   'button-added': 'В корзине'
               },
               uk: {
-                  'button-add': 'Купити',
+                  'button-add': 'В кошик',
                   'button-added': 'В кошику'
               }
             };
 
             this.getLocalization = this.getLocalization.bind(this);
             this.getCookie = this.getCookie.bind(this);
+            this.setCookie = this.setCookie.bind(this);
+            this.deleteCookie = this.deleteCookie.bind(this);
             this.checkCookieCart = this.checkCookieCart.bind(this);
+            this.clear = this.clear.bind(this);
             this.openModal = this.openModal.bind(this);
 
             this.localization = this.getLocalization();
@@ -84,13 +89,18 @@
 
         }
 
+        deleteCookie(name) {
+            document.cookie = name + "=" + "" + "; path=/; max-age=" + -1;
+            this.setCount();
+        }
+
         setCount(products = null) {
-            let count;
+            let count = 0;
             if(products != null) {
                 count = Object.keys(products).length;
             } else {
                 const cartData = this.getCookie(cookieKeyCart);
-                count = Object.keys(cartData).length;
+                cartData && (count = Object.keys(cartData).length);
             }
             cartCounterNode.textContent = `${count}`;
         }
@@ -156,25 +166,24 @@
             cartCounterNode.hidden= false;
         }
 
-        upDateCart (addToCartBtn) {
+        upDateCart(addToCartBtn) {
 
             const productSku = addToCartBtn.dataset.barcode;
             const value = 1; //кол-во
             let products = {};
             const cartData = this.getCookie(cookieKeyCart);
 
-
             if (!cartData) {
 
                 products[productSku] = value;
-
                 this.setCookie(products);
+                this.openModal();
 
             } else {
 
                 products = JSON.parse(cartData);
 
-                if (addToCartBtn.classList.contains('added')) {
+                if (addToCartBtn.classList.contains('added') && this.deleteWithButton) {
 
                     delete products[productSku];
                     this.setCookie(products);
@@ -191,10 +200,13 @@
                 }
             }
 
+        }
 
-
-
-
+        clear() {
+            this.deleteCookie(cookieKeyCart);
+            if(document.body.classList.contains('cart')){
+                location.reload();
+            }
         }
 
         openModal() {
@@ -221,6 +233,11 @@
                 .then((data) => {
                     const table =  data.body; // JSON data parsed by `response.json()` call
                     document.body.insertAdjacentHTML('beforeend', table);
+
+                    $(`#${cartModalId}`).on('shown.bs.modal', function ({target}) {
+                        $('[data-toggle="tooltip"]').tooltip();
+                    });
+
                     $(`#${cartModalId}`).modal('show');
 
                     $(`#${cartModalId}`).on('hidden.bs.modal', function (e) {
@@ -244,20 +261,18 @@
                 const upDateBtn = target.closest(`${productUpDateToCartSelector}`);
                 const openModal = target.closest(`${productToCartModalSelector}`);
                 const deleteBtn = target.closest(`${productDeleteCartSelector}`);
+                const clear = target.closest(`${productClearCartSelector}`);
 
                 upDateBtn && this.upDateCart(upDateBtn);
                 openModal && this.openModal();
                 deleteBtn && this.delete(deleteBtn);
+                clear && this.clear();
             }, false);
             document.addEventListener('DOMContentLoaded', this.checkCookieCart, false);
         }
 
         run() {
             this.setEvent();
-            const obj = {
-                'localization' : this.localization,
-            };
-            console.log(obj);
         }
     }
 

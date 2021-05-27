@@ -13,14 +13,21 @@ class sentOrder implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    private $order_id;
+
+    private $order;
+
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param $order_id
+     * @param $order
      */
-    public function __construct()
+    public function __construct($order_id, $order)
     {
-        //
+        $this->order = $order;
+
+        $this->order_id = $order_id;
     }
 
     /**
@@ -30,11 +37,9 @@ class sentOrder implements ShouldQueue
      */
     public function handle()
     {
-        $url = '' ;
+        if($result = (new \App\Http\Controllers\Site\CartController)->sentOrderToB2B($this->order)) {
 
-        if($result = (new \App\Http\Controllers\Site\CartController)->sentOrderToB2B($url)) {
-
-            $order = Orders::find($result['order_id']);
+            $order = Orders::find($this->order_id);
 
             if(!empty($order)) {
 
@@ -42,7 +47,10 @@ class sentOrder implements ShouldQueue
 
                 $order->save();
 
-            } else info('Не удалось обновить статус заказа! Заказ с id = ' . $result['order_id'] . ' не найден!');
+            } else info('Не удалось обновить статус заказа! Заказ с id = ' . $this->order_id . ' не найден!');
+
+            // отнимаем 1 от количества товара
+
         }
     }
 }

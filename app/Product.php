@@ -3,13 +3,14 @@
 namespace App;
 
 use App\Traits\Commentable;
+use Awobaz\Compoships\Compoships;
 use LaravelLocalization;
 use Carbon\Carbon;
 use Spatie\SchemaOrg\Schema;
 
 class Product extends Resource
 {
-    use Commentable;
+    use Compoships;
 
     protected $appends = ['price_updated_at'];
 
@@ -55,6 +56,17 @@ class Product extends Resource
     public function getMetaTitleAttribute()
     {
         return $this->getData('meta_title');
+    }
+
+    public function getDefectiveImagesAttribute()
+    {
+        $additional = ProductImage::where('details->product_sku', $this->sku)->first();
+
+        if (isset($additional) && $additional->getDetails('additional')) {
+            return $additional->getDetails('additional');
+        }
+
+        return [];
     }
 
     public function getMetaDescriptionAttribute()

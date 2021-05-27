@@ -3,19 +3,31 @@
 namespace App;
 
 use App\Traits\Commentable;
+use Awobaz\Compoships\Compoships;
 use LaravelLocalization;
 use Carbon\Carbon;
 use Spatie\SchemaOrg\Schema;
 
 class ProductSort extends Resource
 {
-    use Commentable;
+    use Compoships;
 
     protected $appends = ['price_updated_at'];
+    protected $markup = [3, 10, 15, 20];
 
     public function getNameAttribute()
     {
         return $this->getData('name');
+    }
+
+    public function getNormalPriceAttribute()
+    {
+        return $this->oldPrice ?: $this->price * (100 + $this->markup[$this->grade]) / 100;
+    }
+
+    public function getDifferencePriceAttribute()
+    {
+        return $this->normalPrice - $this->price;
     }
 
     public function getSkuAttribute()
@@ -203,7 +215,7 @@ class ProductSort extends Resource
     {
         return $query->with(['productGroup' => function ($query) use ($joinLocalization) {
             if ($joinLocalization) return $query->select('*')->joinLocalization();
-        }, 'productGroup.category']);
+        }]);
     }
 
     public function productGroup()
@@ -211,8 +223,15 @@ class ProductSort extends Resource
         return $this->hasOne(ProductGroup::class, 'details->sd_code', 'details->sd_code');
     }
 
+    public function scopeWithProducts($query, $joinLocalization = true)
+    {
+        return $query->with(['products' => function ($query) use ($joinLocalization) {
+            if ($joinLocalization) return $query->select('*')->joinLocalization();
+        }]);
+    }
+
     public function products()
     {
-        return $this->hasMany(Product::class, 'details->sd_code', 'details->sd_code')->where('details->grade', $this->grade);
+        return $this->hasMany(Product::class, ['details->sd_code', 'details->grade'], ['details->sd_code', 'details->grade']);
     }
 }

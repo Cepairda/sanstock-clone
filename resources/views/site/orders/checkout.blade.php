@@ -41,7 +41,9 @@
                 <div class="col-8">
                     <div class="main__contacts-form">
 
-                        <form action="">
+                        <form action="{{ route('site.checkout') }}" method="POST">
+
+                            {{ csrf_field() }}
 
                                 <div class="row">
 
@@ -52,8 +54,7 @@
                                             <input id="new_mail_surname"
                                                    class="w-100"
                                                    type="text"
-                                                   name="new_mail_surname"
-                                                   required>
+                                                   name="new_mail_surname">
                                             <label class="required"
                                                    for="new_mail_surname">Фамилия</label>
                                         </div>
@@ -67,8 +68,7 @@
                                                    class="w-100"
                                                    type="text"
                                                    name="new_mail_patronymic"
-                                                   value=""
-                                                   required>
+                                                   value="">
                                             <label class="required"
                                                    for="new_mail_patronymic">Отчество</label>
                                         </div>
@@ -82,8 +82,7 @@
                                                    class="w-100"
                                                    type="text"
                                                    name="new_mail_name"
-                                                   value=""
-                                                   required>
+                                                   value="">
                                             <label class="required" for="new_mail_name">Имя</label>
                                         </div>
 
@@ -96,8 +95,6 @@
                                                    class="w-100"
                                                    type="tel"
                                                    name="new_mail_phone"
-                                                   required
-                                                   pattern="^\+38[\s]\(0\d{2}\)[\s]\d{3}[-]\d{2}[-]\d{2}$"
                                                    size="19" maxlength="19">
                                             <label class="required" for="new_mail_phone">Номер телефона (+38 (0xx) xxx-xx-xx)</label>
                                         </div>
@@ -120,7 +117,7 @@
                                                     class=""
                                                     name="new_mail_delivery_type"
                                                     data-placeholder="Тип доставки"
-                                                    required>
+                                                     style="padding: 4px;">
                                                 <option value="storage_storage">Доставка на отделение</option>
                                                 <option value="storage_door">Доставка за адресом</option>
                                             </select>
@@ -138,8 +135,7 @@
                                             <select id="new_mail_region"
                                                     class="js-example-basic-single1"
                                                     name="new_mail_region"
-                                                    data-placeholder="Нужно выбрать область"
-                                                    required>
+                                                    data-placeholder="Нужно выбрать область">
                                                 <option value=""></option>
                                             </select>
 
@@ -159,8 +155,7 @@
                                                     class="js-example-basic-single"
                                                     name="new_mail_city"
                                                     data-placeholder="Нужно выбрать населенный пункт"
-                                                    disabled
-                                                    required>
+                                                    disabled>
                                             </select>
 
                                             <label class="font-weight-bold" for="new_mail_city">Населенный пункт</label>
@@ -178,8 +173,7 @@
                                                     name="new_mail_warehouse"
                                                     class="js-example-basic-single"
                                                     data-placeholder="Нужно выбрать отделение"
-                                                    disabled
-                                                    required>
+                                                    disabled>
                                             </select>
 
                                             <label for="new_mail_warehouse">Номер отделения</label>
@@ -197,8 +191,7 @@
                                                     name="new_mail_street"
                                                     class="js-example-basic-single"
                                                     data-placeholder="Нужно выбрать адрес"
-                                                    disabled
-                                                    required>
+                                                    disabledd>
                                             </select>
 
                                             <label for="new_mail_street">Адрес доставки</label>
@@ -213,8 +206,7 @@
                                             <input id="new_mail_house"
                                                    name="new_mail_house"
                                                    class="w-100"
-                                                   type="text"
-                                                   required>
+                                                   type="text">
 
                                             <label for="new_mail_house">Номер дома</label>
                                         </div>
@@ -233,122 +225,12 @@
 
                                     </div>
 
-                                    <!-- Наложенный платеж -->
-                                    <div class="col-6">
-
-                                        <div class="form-group form-group-static">
-
-                                            <select class=""
-                                                    name="new_mail_region"
-                                                    data-placeholder="Наложенный платеж">
-                                                <option value="Да">Да</option>
-                                                <option value="Нет">Нет</option>
-                                            </select>
-
-                                            <label for="new_mail_region">Наложенный платеж</label>
-
-                                        </div>
-
-                                    </div>
-
-                                    {{--
-                                    <!-- Сумма -->
-                                    <div class="col-6" hidden>
-
-                                        <div class="form-group">
-
-                                            <input id="new_mail_payment_sum"
-                                                   class="w-100"
-                                                   type="text"
-                                                   name="new_mail_payment_sum"
-                                                   value=""
-                                                   required>
-                                            <label class="required" for="new_mail_payment_sum">Сумма</label>
-
-                                        </div>
-
-                                    </div>
-
-                                    <!-- Безналичный способ оплаты -->
-                                    <div class="col-12" hidden>
-
-                                        <div class="d-flex justify-content-center pt-4">
-                                            <div class="custom-control custom-checkbox">
-                                                <input id="new_mail_non_cash_payment" type="checkbox"
-                                                       name="new_mail_non_cash_payment" value="1" placeholder=""
-                                                       class="custom-control-input  " data-delivery="new_mail"
-                                                       data-checkbox="cash">
-                                                <label class="custom-control-label" for="new_mail_non_cash_payment">Безналичный
-                                                    способ оплаты</label>
-                                            </div>
-                                            <div class="ml-2">
-                                                <style>
-                                                    .text-line-through {
-                                                        text-decoration: line-through;
-                                                    }
-                                                </style>
-                                                (<span class="text-line-through"
-                                                       data-name="new_mail-cash">98.53 UAH</span>
-                                                | <span class="text-danger"
-                                                        data-name="new_mail-cashless">108.38 UAH</span>)
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <!-- Данные фирмы -->
-                                    <div class="col-12" hidden>
-
-                                        <div class="new_mail-сompany-data my-3">
-                                            <h4 class="mb-3">Данные фирмы</h4>
-                                            <div class="form-group">
-                                                <input id="new_mail_company_name" type="text" name="new_mail_company_name" class="form-control" required>
-                                                <label for="new_mail_company_name">Наименование фирмы (на которую необходимо выставить счет)</label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input id="new_mail_company_email" type="email" name="new_mail_company_email" class="form-control" required>
-                                                <label for="new_mail_company_email">Электронный адрес фирмы</label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input id="new_mail_company_user_surname" type="text" name="new_mail_company_user_surname" class="form-control" required>
-                                                <label for="new_mail_company_user_surname">Фамилия контактного лица</label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input id="new_mail_company_user_name" type="text" name="new_mail_company_user_name" class="form-control" required>
-                                                <label for="new_mail_company_user_name">Имя контактного лица</label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input id="new_mail_company_user_patronymic" type="text" name="new_mail_company_user_patronymic" class="form-control" required>
-                                                <label for="new_mail_company_user_patronymic">Отчество контактного лица</label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input id="new_mail_company_phone" type="text" name="new_mail_company_phone" class="form-control" required>
-                                                <label for="new_mail_company_phone">Телефон контактного лица</label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input id="new_mail_company_address" type="text" name="new_mail_company_address" class="form-control" required>
-                                                <label for="new_mail_company_address">Адрес для корреспонденции (для отправки оригиналов документов)</label>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    --}}
-
-                                    <!-- Сумма страховки -->
+                                    <!-- Комментарий к заказу -->
                                     <div class="col-12">
 
                                         <div class="form-group">
-
-                                            <input id="new_mail_insurance_sum"
-                                                   class="w-100"
-                                                   type="number"
-                                                   name="new_mail_insurance_sum"
-                                                   value="200"
-                                                   placeholder=""
-                                                   min="200"
-                                                   required>
-                                            <label class="required" for="new_mail_insurance_sum">Сумма
-                                                страховки (мин. 200 грн.)</label>
+                                            <textarea class="w-100" name="" id="" cols="30" rows="10"></textarea>
+                                            <label for="new_mail_apartment">Комментарий к заказу</label>
                                         </div>
 
                                     </div>
@@ -373,6 +255,5 @@
     @section('javascript')
         <script type="text/javascript" src="{{ mix('js/site/page/checkout.js') }}"></script>
     @endsection
-
 
 @endsection

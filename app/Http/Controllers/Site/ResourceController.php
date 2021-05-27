@@ -12,8 +12,6 @@ use App\Characteristic;
 use App\CharacteristicValue;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Cache;
-use App\HtmlBlock;
 
 class ResourceController extends Controller
 {
@@ -25,6 +23,7 @@ class ResourceController extends Controller
             ->firstOrFail();
         $originalType = class_basename($resource->type);
         $type = Str::snake($originalType);
+        $productsDefectiveAttributes = [];
 
         switch ($type) {
             case 'product_group':
@@ -34,6 +33,7 @@ class ResourceController extends Controller
                     'productGroup' => $resource->type::joinLocalization()
                         ->withCharacteristics()
                         ->whereId($resource->id)
+                        ->withProductsSort()
                         //->where('details->published', 1)
                         ->withCategory()
                         ->withRelateProducts()
@@ -42,35 +42,33 @@ class ResourceController extends Controller
                         ->withPartnerUrl()
                         ->firstOrFail(),
                 ];
-                $data['additional'] = temp_additional($data['productGroup']->sku);
+                $data['additional'] = temp_additional($data['productGroup']->sdCode);
                 $productsSort = [];
                 $sortFromDb = null;
 
                 foreach ($data['productGroup']->productsSort as $productSort) {
-                    /*$sortFromDb = isset($sortFromDb)
-                        ? ($productSort->grade < $sortFromDb
-                            ? $productSort->grade
-                            : $sortFromDb)
-                        : $productSort->grade;*/
                     $productsSort[$productSort->grade] = $productSort;
                 }
 
-                $sort = isset($productsSort[$sortGet]) ? $sortGet : min(array_keys($productsSort));
+                $productsSortKeys = array_keys($productsSort);
+                $sortType = [0, 1, 2, 3];
+                $sort = isset($sortType[$sortGet]) ? $sortGet : min($productsSortKeys);
+                $firstExistSort = min($productsSortKeys);
+
+                $togglePrice = in_array($sort, $productsSortKeys);
 
                 $data['productsSort'] = $productsSort;
                 $data['sort'] = $sort;
-
-                //dd($data['product']['data']);
+                $data['firstExistSort'] = $firstExistSort;
+                $data['togglePrice'] = $togglePrice;
 
                 break;
             case 'category':
                 $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->firstOrFail();
-                //$products = ProductGroup::where('details->category_id', $category->getDetails('ref'))->where('details->price', '>' , 0)->get()->keyBy('id')->keys();
-                //$productGroup = ProductGroup::where('details->category_id', $category->getDetails('ref'))->firstOrFail();
                 $productGroup = ProductGroup::where('details->category_id', $category->getDetails('ref'))->get()->keyBy('details->sd_code')->keys();
                 $productGroupKeys = ProductGroup::where('details->category_id', $category->getDetails('ref'))->get()->keyBy('id')->keys();
-                $productsSort = ProductSort::whereIn('details->sd_code', $productGroup)->get()->keyBy('id')->keys();
-                $productsTotal = $productsSort->count();
+                $productsSort = ProductSort::whereIn('details->sd_code', $productGroup);
+                $sortType = $productsSort->get()->keyBy('details->grade')->keys()->unique()->sort()->values();
 
                 $characteristics = isset($category->characteristic_group[0])
                     ? $category->characteristic_group[0]->getDetails('characteristics')
@@ -108,11 +106,12 @@ class ResourceController extends Controller
 
                 $characteristicsIds = array_keys($valuesForView);
 
-                $productsSort = ProductSort::joinLocalization()
+                $productsSort = $productsSort->joinLocalization()
                     ->withProductGroup()
                     ->withIcons()
-                    ->whereIn('id', $productsSort)
                     ->withCategory();
+
+                $productsTotal = $productsSort->count();
 
                 $mixMaxPriceQuery = (clone $productsSort)->selectRaw("MIN(CAST(JSON_EXTRACT(`details`, '$.price') AS FLOAT)) AS minPrice, MAX(CAST(JSON_EXTRACT(`details`, '$.price') AS FLOAT)) AS maxPrice")->first();
                 $minPrice = $mixMaxPriceQuery->minPrice;
@@ -126,22 +125,31 @@ class ResourceController extends Controller
                     $productsSort = $productsSort->where('details->price', '>=', +$minPriceSelect)->where('details->price', '<=', +$maxPriceSelect);
                 }
 
-                if (Request::has('filter')) {
-                    $filters = Request::input('filter');
+                if (Request::has('sort')) {
+                    $chooseSortType = Request::input('sort');
+                    $productsSort->whereIn('details->grade', $chooseSortType);
+                }
+
+                if (Request::has('filters')) {
+                    $filters = Request::input('filters');
                     $characteristicsV = $filters;
+
+                    $productGroupForFilter = ProductGroup::select();
 
                     foreach ($characteristicsV as $characteristicId => $filters) {
                         $fids = $filters;
 
                         $alias = 'rr' . $characteristicId;
-
-                        $productsSort->join('resource_resource as ' . $alias, function ($q) use ($alias, $fids) {
+                        $productGroupForFilter->join('resource_resource as ' . $alias, function ($q) use ($alias, $fids) {
                             $q->on('resources.id', '=', $alias . '.resource_id')
                                 ->whereIn($alias . '.relation_id', $fids);
                         });
                     }
 
-
+                    $productGroupSdCodes = $productGroupForFilter->get()
+                        ->keyBy('details->sd_code')
+                        ->keys();
+                    $productsSort->whereIn('details->sd_code', $productGroupSdCodes);
                 }
 
                 if (Request::has('name')) {
@@ -179,7 +187,9 @@ class ResourceController extends Controller
 
                 $data = [
                     'category' => $category,
+                    'sortType' => $sortType,
                     'productsSort' => $productsSort,
+                    'productsDefectiveAttributes' => $productsDefectiveAttributes,
                     'productsTotal' => $productsTotal,
                     'minPrice' => $minPrice,
                     'maxPrice' => $maxPrice,
@@ -202,12 +212,6 @@ class ResourceController extends Controller
                 ];
         }
 
-
-//        return Cache::remember('resource_' . $resource->id, 3600, function() use ($type, $data){
-//            return view('site.' . $type . '.show', $data)->render();
-//        });
-
-        //return HtmlBlock::replaceShortCode(view('site.' . $type . '.show', $data)->render());
         return view('site.' . $type . '.show', $data);
     }
 

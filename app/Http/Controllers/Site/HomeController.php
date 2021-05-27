@@ -1,19 +1,27 @@
 <?php
 namespace App\Http\Controllers\Site;
 
-use App\Resource;
-use App\Category;
-use App\Product;
-use Illuminate\Support\Facades\Cache;
+use App\ProductSort;
 
 class HomeController
 {
   public function index()
   {
-//      return Cache::remember('heavy_view', 3600, function() {
-//          return view('site.home.index')->render();
-//      });
+    $productsBySort = [];
 
-    return view('site.home.index');
+    for ($i = 0; $i < 4; $i++) {
+        $productsGrade[] = ProductSort::joinLocalization()->withProductGroup()->where('details->grade', $i)->limit(8)->get();
+    }
+
+    foreach ($productsGrade as $key => $value) {
+        if ($value->isNotEmpty()) {
+            $productsBySort[$key] = $value;
+        }
+    }
+
+    $productsGradeKey = array_keys($productsBySort);
+    $gradeActiveDefault = min($productsGradeKey);
+
+    return view('site.home.index', compact('productsBySort', 'productsGradeKey', 'gradeActiveDefault'));
   }
 }

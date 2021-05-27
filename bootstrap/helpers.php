@@ -1,5 +1,8 @@
 <?php
 
+use App\Resource;
+use App\Classes\Image\Type\BaseType;
+
 if (!function_exists('mb_ucfirst')) {
     function mb_ucfirst($string, $enc = 'UTF-8')
     {
@@ -36,38 +39,46 @@ if (!function_exists('humanFileSize'))
 
 if (!function_exists('img')) {
     /**
-     * Format text.
-     *
-     * @param  string  $text
+     * @param string $type main|additional|defective|category
+     * @param resource $resource need passed for - main: sdCode; additional: sdCode, sku, key; defective: sdCode, sku, key; category: ref
+     * @param array $attributesHtml
+     * @param int|null $size
+     * @param int $key
      * @return string
+     * @throws Exception
      */
-
-    function img($data)
+    function img(string $type, Resource $resource, array $attributesHtml, int $size = null, int $key = 1): string
     {
-        $ikey = $data['size'] . '-' . $data['sku'];
-
-//        if (Cache::has($ikey) ) {
-//            return Cache::get($ikey);
-//        }
-
-        if (!empty($data)) {
-            $class = !empty($data['class']) ? ' class="' . implode(' ', $data['class']) . '"' : '';
-            $alt = !empty($data['alt']) ? ' alt="' . htmlspecialchars($data['alt']) . '"': '';
-
-            if (isset($data['data-src'])) {
-                $uri = 'data-src="' . \App\Classes\ImportImage::getImage($data) . '" src="' . asset('images/site/default_white.jpg') . '"';
-            } else {
-                $uri = ' src="' . \App\Classes\ImportImage::getImage($data) . '"';
-            }
-
-            $tag = '<img' . $class . $alt . $uri . ' />';
-
-            Cache::put($ikey, $tag, now()->addMinutes(60));
-
-            return $tag;
-        } else {
-            return null;
+        switch ($type) {
+            case 'main':
+                $path = "product/{$resource->sdCode}/{$resource->sdCode}";
+                break;
+            case 'additional':
+                $path = "product/{$resource->sdCode}/additional/{$resource->sku}_{$key}";
+                break;
+            case 'defective':
+                $path = "product/{$resource->sdCode}/{$resource->sku}/{$resource->sku}_{$key}";
+                break;
+            case 'category':
+                $path = "category/{$resource['ref']}";
+                break;
+            default:
+                throw new Exception('Not exists type');
         }
+
+        $attributes = '';
+
+        foreach ($attributesHtml as $name => $value) {
+            $attributes .= "{$name}=\"{$value}\" ";
+        }
+
+        $path .= $size ?? "_{$size}";
+
+        $src = '"' . asset('images/no_img.jpg') . '"';
+        $dataSrc = '"' . asset('storage/' . $path) . '.jpg' . '"';
+        $tag = "<img src={$src} data-src={$dataSrc} {$attributes} />";
+
+        return $tag;
     }
 }
 
@@ -141,35 +152,9 @@ if (!function_exists('temp_additional')) {
      * @return string
      */
 
-    function temp_additional($sku, $firstAddition = false)
+    function temp_additional($sdKey, $firstAddition = false)
     {
-
-//        $data = [];
-//
-//        $s = Storage::disk('public');
-//
-//        $additional_path = 'storage/product/' . $sku . '/';
-//
-//        if (file_exists($additional_path)) {
-//
-//            foreach (['-1', '-2', '-3', '_1', '_2', '_3',] as $sufix) {
-//
-//                $file_path = 'product/' . $sku . '/' . $sku . $sufix . '.jpg';
-//
-//                if ($s->exists($file_path)) {
-//
-//                    $data[] = asset('/storage/' . $file_path);
-//
-//                    if ($firstAddition) {
-//                        break;
-//                    }
-//                }
-//
-//            }
-//
-//        }
-
-        $additional = \App\ProductImage::where('details->product_sku', $sku)->first();
+        $additional = \App\ProductGroupImage::where('details->product_sd_code', $sdKey)->first();
 
         if (isset($additional) && $additional->getDetails('additional')) {
             if ($firstAddition) {

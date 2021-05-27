@@ -7,23 +7,23 @@
     @php($i = 2)
     @if (isset($productGroup->category))
         @foreach($productGroup->category->ancestors as $ancestor)
-            <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" >
+            <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
                 <a href="{{ route('site.resource', $ancestor->slug) }}" itemprop="item">
                     <span itemprop="name">
                         {{ $ancestor->name }}
                     </span>
                 </a>
-                <meta itemprop="position" content="{{ $i }}" />
+                <meta itemprop="position" content="{{ $i }}"/>
             </li>
             @php($i++)
         @endforeach
-        <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" >
+        <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
             <a href="{{ route('site.resource', $productGroup->category->slug) }}" itemprop="item">
                 <span itemprop="name">
                      {{ $productGroup->category->name }}
                 </span>
             </a>
-            <meta itemprop="position" content="{{ $i++ }}" />
+            <meta itemprop="position" content="{{ $i++ }}"/>
         </li>
     @endif
     <li class="breadcrumb-item active"
@@ -33,7 +33,7 @@
         <span itemprop="name">
             {{ $productGroup->name }}
         </span>
-        <meta itemprop="position" content="{{ $i }}" />
+        <meta itemprop="position" content="{{ $i }}"/>
     </li>
 @endsection
 
@@ -42,8 +42,6 @@
 @endsection
 
 @section('content')
-
-
 
     <main class="main-container pd-bt{{ false ? ' bgc-grad' : ' bgc-white' }}">
 
@@ -54,64 +52,74 @@
             <div class="row main__card">
 
 
-                        <div class="col-lg-6">
-                            <!-- swipeGallery -->
-                            <div class="gallery-container">
-                                <div class="gallery-images-container">
-                                    <div class="gallery-images"></div>
-                                </div>
-                                <div id="gallery">
-                                    {{--
-                                      swipeGallery:
-                                        src => "thumbnail: 150x150" - small
-                                        data-src => "large: 800x800" - big
-                                        data-full => ">= 1000x1000 (for scale)"
-                                    --}}
-                                    <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462.jpg">
-                                    <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_1.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_1.jpg">
-                                    <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_2.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_2.jpg">
-                                    <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_3.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_3.jpg">
-                                    <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462/29462_4.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462/29462_4.jpg">
-                                    <img src="https://isw.b2b-sandi.com.ua/imagecache/150x150/2/9/29462.jpg" data-src="https://isw.b2b-sandi.com.ua/imagecache/large/2/9/29462.jpg">
-                                </div>
-                            </div>
-                            <!-- END swipeGallery -->
+                <div class="col-12">
+                    <h1 class="card__title py-4">{!! $productGroup->name !!}</h1>
+                </div>
+
+                <div class="col-lg-6">
+                    <!-- swipeGallery -->
+                    <div class="gallery-container">
+                        <div class="gallery-images-container">
+                            <div class="gallery-images"></div>
                         </div>
 
-                        <div class="col-12 col-lg-6 card__wrapper">
-
-                            <h1 class="card__title">{!! $productGroup->name !!}</h1>
-
-                            <p class="card__code">Код товара:<span class="card__code-id ml-1">{{ $productGroup->sku }}</span></p>
-
-                            <div class="card__price--wrapp">
-
-                                @php($addClassToPrice = !isset($productGroup->price_updated_at) || $productGroup->price_updated_at->addHours(8)->lt(\Carbon\Carbon::now()) ? 'updatePriceJs' : '')
-                                <p class="card__price">
-                                    <span>Цена:</span>
-                                    <span data-product-sku="{{ $productGroup->sku }}"
-                                          class="{{ $addClassToPrice }}">{{ number_format(ceil($productGroup->price),0,'',' ')}}</span>
-                                    <span>грн.</span>
-                                </p>
-                            </div>
-
-                            {{--@isset($serie_data)
-                                <p class="card__code">
-                                    <a class="serie-link" style="color: #ef6e20; text-decoration: underline solid;"
-                                       href="{{ $serie_data['url'] }}">@lang('site.content.collection_go') {{ $serie_data['name'] }}</a>
-                                </p>
-                            @endisset--}}
-
-
-                            <p class="card__description">{{ $productGroup->description }}</p>
+                        <div id="gallery">
+                            {{--
+                              swipeGallery:
+                                src => "thumbnail: 150x150" - small
+                                data-src => "large: 800x800" - big
+                                data-full => ">= 1000x1000 (for scale)"
+                            --}}
+                            <img src="/storage/product/{{ $productGroup->sdCode }}/{{ $productGroup->sdCode }}.jpg"
+                                 data-src="/storage/product/{{ $productGroup->sdCode }}/{{ $productGroup->sdCode }}.jpg">
+                            @foreach($additional as $key => $value)
+                                <img src="/storage/product/{{ $productGroup->sdCode }}/additional/{{ $productGroup->sdCode }}_{{ $key }}.jpg"
+                                     data-src="/storage/product/{{ $productGroup->sdCode }}/additional/{{ $productGroup->sdCode }}_{{ $key }}.jpg">
+                            @endforeach
                         </div>
+                    </div>
+                    <!-- END swipeGallery -->
+                </div>
 
-                    {{--<img class="w-100" src="{{ $productGroup->main_image }}" alt="{{ $productGroup->name }}" title="{{ $productGroup->name }}">--}}
-                    {{--{!! img(['type' => 'product', 'name' => $productGroup->sku, 'data_value' => 0, 'format' => 'webp', 'size' => 585, 'class' => 'w-100']) !!}--}}
+                <div class="col-12 col-lg-6 card__wrapper">
+                    <p class="card__code">Код:<span class="card__code-id ml-1">{{ $productGroup->sd_code }}</span></p>
+                    <div class="card__price--inner p-1">
+                        <div class="card__price--wrapp">
+                            @php($addClassToPrice = 'updatePriceJs')
+                            <div class="characteristic-list__wrap">
+                                <div class="characteristic-list__item list-normal">
+                                    <span>{{ __('Old price') }}:</span>
+                                    <span class="price-old">
+                                        <span data-sort="price-normal">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->normalPrice : 0),0,'',' ') }}</span>
+                                        <span>грн.</span>
+                                    </span>
+                                </div>
 
+                                <div class="characteristic-list__item list-price">
+                                    <span>{{ __('Price') }}:</span>
+                                    <span>
+                                        <span class="{{ $addClassToPrice }}" data-product-sku="{{ $productGroup->sku }}" data-sort="price">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->price : 0),0,'',' ') }}</span>
+                                        <span>грн.</span>
+                                    </span>
+                                </div>
+
+                                <div class="characteristic-list__item list-difference">
+                                    <span>{{ __('Profit') }}:</span>
+                                    <span class="price-difference">
+                                        <span data-sort="price-difference">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->differencePrice : 0),0,'',' ') }}</span>
+                                        <span>грн.</span>
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="mt-5">
+                                <a id="to-sort" href="#sort-tab-1" class="button" style="min-width: 200px; font-size: 24px">{{ __('Buy') }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="card__description">{{ $productGroup->description }}</p>
+                </div>
             </div>
-
-
         </div>
 
         <div>
@@ -124,8 +132,7 @@
                         </li>
                         <li class="nav-item" role="presentation" style="width: 50%;">
                             <a class="nav-link-i" id="characteristics-tab" data-toggle="pill"
-                               href="#characteristics" role="tab" aria-controls="characteristics" aria-selected="true">Технисческие
-                                характеристики</a>
+                               href="#characteristics" role="tab" aria-controls="characteristics" aria-selected="true">{{ __('Technical characteristics') }}</a>
                         </li>
                     </ul>
                 </div>
@@ -134,7 +141,7 @@
 
             <div class="container main__tab-content">
                 <div class="row">
-                    <div id="product-tabs" class="col-12 tab-content">
+                    <div id="product-tabs" class="col-12 tab-content" data-active="{{ $sort }}">
                         <div class="tab-pane fade" id="characteristics" role="tabpanel"
                              aria-labelledby="characteristics-tab">
                             <div class="row tab-content__container">
@@ -153,57 +160,45 @@
                         <div class="tab-pane fade show active" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
 
                             <nav>
-                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    @for ($i = 0; $i < 4; $i++)
-                                        @if ($productsSort[$i] ?? null)
-                                            <a class="nav-link w-25 text-center {{ $sort == $i ? 'active' : '' }}"
-                                               data-sort="{{ $i  }}"
-                                               data-toggle="tab" href="#sort-{{ $i}}"
-                                               role="tab"
-                                               aria-controls="nav-home"
-                                               aria-selected="{{ $sort == $i ? 'true' : 'false' }}"
-                                            >
-                                                Сорт-{{ $i}}
-                                            </a>
-                                        @else
-                                            <a class="nav-link w-25 text-center"
-                                               data-sort="{{ $i }}"
-                                               data-toggle="tab" href="#sort-{{ $i}}"
-                                               role="tab"
-                                               aria-controls="nav-home"
-                                               aria-selected="false"
-                                               aria-disabled="true"
-                                            >
-                                                Сорт-{{ $i}}
-                                            </a>
-                                        @endif
+                                <div id="nav-tab" class="nav nav-tabs" role="tablist">
+                                    @for ($_sort = 0; $_sort < 4; $_sort++)
+                                        <a id="sort-tab-{{ $_sort }}"
+                                           class="nav-link w-25 text-center{{ isset($productsSort[$_sort]) ? '' : ' nav-link-gray' }}{{ $_sort == $sort ? ' active' : '' }}"
+                                           data-sort="{{ $_sort }}"
+                                           data-price="{!!  isset($productsSort[$_sort]) ? number_format(ceil($productsSort[$_sort]->price),0,'',' ')  : ''  !!}"
+                                           data-normal="{!! isset($productsSort[$_sort]->normalPrice) ? number_format(ceil($productsSort[$_sort]->normalPrice),0,'',' ') : '' !!}"
+                                           data-difference="{!! isset($productsSort[$_sort]->differencePrice) ? number_format(ceil($productsSort[$_sort]->differencePrice),0,'',' ') : '' !!}"
+                                           data-toggle="tab" href="#sort-{{ $_sort }}"
+                                           role="tab"
+                                           aria-controls="nav-home"
+                                           aria-selected="false">
+                                            Сорт-{{ $_sort }}
+                                        </a>
                                     @endfor
-                                    <!--a class="nav-link w-25 text-center" data-sort="0" data-toggle="tab" href="#sort-0" role="tab" aria-controls="nav-home" aria-selected="true">Сорт-0</a>
-                                    <a class="nav-link w-25 text-center" data-sort="1" data-toggle="tab" href="#sort-1" role="tab" aria-controls="nav-profile" aria-selected="false">Сорт-1</a>
-                                    <a class="nav-link w-25 text-center" data-sort="2" data-toggle="tab" href="#sort-2" role="tab" aria-controls="nav-contact" aria-selected="false">Сорт-2</a>
-                                    <a class="nav-link w-25 text-center" data-sort="3" data-toggle="tab" href="#sort-3" role="tab" aria-controls="nav-contact" aria-selected="false">Сорт-3</a-->
                                 </div>
                             </nav>
-                            <div class="tab-content" id="nav-tabContent">
-                                @for ($i = 0; $i < 4; $i++)
-                                    <div class="tab-pane {{ $sort == $i ? 'active show' : 'fade' }}" id="sort-{{ $i }}" role="tabpanel" aria-labelledby="nav-home-tab">
-                                        @if ($productsSort[$i] ?? null)
-                                            @include('site.product.components.productsTable', ['products' => $productsSort[$i]->products])
+
+                            <div id="nav-tabContent" class="tab-content">
+                                @for ($_sort = 0; $_sort < 4; $_sort++)
+                                    <div id="sort-{{ $_sort }}"
+                                         class="tab-pane{{ $_sort == $sort ? ' active' : '' }}"
+                                         role="tabpanel"
+                                         aria-labelledby="nav-home-tab">
+                                        @if ($productsSort[$_sort] ?? null)
+                                            @include('site.product_group.components.productsTable',
+                                            [
+                                                'products' => $productsSort[$_sort]->products,
+                                                'price' => $productsSort[$_sort]->price,
+                                                'normalPrice' => $productsSort[$_sort]->normalPrice,
+                                                'differencePrice' => $productsSort[$_sort]->differencePrice,
+                                            ])
+                                        @else
+                                            <div style="text-align: center;">
+                                                <p>{{ 'Товара данного сорта - нет' }}</p>
+                                            </div>
                                         @endif
                                     </div>
                                 @endfor
-                                <!--div class="tab-pane fade" id="sort-0" role="tabpanel" aria-labelledby="nav-home-tab">
-                                   {{--@include('site.product.components.productsTable')--}}
-                                </div>
-                                <div class="tab-pane fade" id="sort-1" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                    {{--@include('site.product.components.productsTable')--}}
-                                </div>
-                                <div class="tab-pane fade" id="sort-2" role="tabpanel" aria-labelledby="nav-contact-tab">
-                                    @include('site.product.components.productsTable')
-                                </div>
-                                <div class="tab-pane fade" id="sort-3" role="tabpanel" aria-labelledby="nav-contact-tab">
-                                    нет товара
-                                </div-->
                             </div>
 
                         </div>

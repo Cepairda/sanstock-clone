@@ -64,6 +64,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('queue:work --queue=high,NP_Import  --stop-when-empty')->name('ImportNewPostAreas')->withoutOverlapping();
 
+        $schedule->command('queue:work --queue=high,checkout  --stop-when-empty')->name('Checkout')->withoutOverlapping();
     }
 
     /**

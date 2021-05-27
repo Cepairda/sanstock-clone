@@ -8,6 +8,11 @@ class Category extends Resource
 {
     use NodeTrait;
 
+    public function getRefAttribute()
+    {
+        return $this->getDetails('ref');
+    }
+
     public function getNameAttribute()
     {
         return $this->getData('name');
@@ -53,7 +58,7 @@ class Category extends Resource
     public function scopeWithDescendants($query)
     {
         return $query->with(['descendants' => function ($query) {
-            return $query->with('product')->joinLocalization()->where('details->published', 1);
+            return $query->with('product')->joinLocalization();
         }]);
     }
 

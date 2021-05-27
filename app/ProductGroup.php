@@ -194,8 +194,17 @@ class ProductGroup extends Resource
             ->toScript();
     }
 
+
+
     public function productsSort()
     {
         return $this->hasMany(ProductSort::class, 'details->sd_code', 'details->sd_code');
+    }
+
+    public function scopeWithProductsSort($query)
+    {
+        return $query->with(['productsSort' => function($query) {
+            return $query->withProducts();
+        }]);
     }
 }

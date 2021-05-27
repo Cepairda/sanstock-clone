@@ -4,11 +4,12 @@ namespace App\Classes\Imports;
 
 use App\Jobs\ProcessImportPrice;
 use App\Product;
+use App\ProductSort;
 use GuzzleHttp\Client;
 
 class PriceImport
 {
-    private const DEFAULT_API_URL = 'http://94.131.241.126/api/products?token=368dbc0bf4008db706576eb624e14abf&only_defectives=1';
+    public const DEFAULT_API_URL = 'https://b2b-sandi.com.ua/api/products?token=368dbc0bf4008db706576eb624e14abf&only_defectives=1';
 
     /**
      * @param int|null $ids
@@ -43,17 +44,26 @@ class PriceImport
     {
         try {
             foreach ($jsonData['data'] as $sku => [
-                     'main' => [
-                     //'sku' => $sku,
-                     'price' => $price,
-                     'old_price' => $oldPrice,
-                     'balance' => $balance
-            ]
+                'main' => [
+                    //'sku' => $sku,
+                    'sku' => $sdCode,
+                    'price' => $price,
+                    'old_price' => $oldPrice,
+                    'balance' => $balance,
+                    'defective_attributes' => [
+                        'grade' => $grade,
+                    ],
+                ]
             ]) {
                 Product::where('details->sku', $sku)->update([
+                    //'details->price' => $price,
+                    //'details->old_price' => $oldPrice,
+                    'details->balance' => $balance
+                ]);
+
+                ProductSort::where([['details->sd_code', $sdCode], ['details->grade', $grade]])->update([
                     'details->price' => $price,
                     'details->old_price' => $oldPrice,
-                    'details->balance' => $balance
                 ]);
             }
         } catch (\Exception $e) {
