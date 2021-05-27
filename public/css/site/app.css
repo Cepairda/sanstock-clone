@@ -15727,7 +15727,7 @@ li.footer__element--item-tel {
   margin-bottom: 4px;
   font-family: Open Sans Bold, sans-serif;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 500;
   white-space: nowrap;
   color: #000;
   order: -1;
@@ -15768,6 +15768,16 @@ li.footer__element--item-tel {
   color: #555;
   cursor: text;
   transition: all 0.3s ease-in-out;
+}
+.form-group.is-invalid input {
+  border-color: red;
+}
+.form-group.is-invalid label {
+  color: red !important;
+}
+.form-group.is-invalid .invalid-feedback {
+  font-size: 12px;
+  color: red;
 }
 
 .bgc-grad .form-group textarea {

@@ -367,7 +367,7 @@
                 node.parentElement.hidden = val;
             }
         }
-        valid('storage_storage');
+        //valid('storage_storage');
         deliveryType.addEventListener('change', function ({target}) {
             valid(target.value);
         });
