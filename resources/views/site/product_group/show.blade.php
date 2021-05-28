@@ -84,7 +84,8 @@
                 <div class="col-12 col-lg-6 card__wrapper">
                     <p class="card__code">Код:<span class="card__code-id ml-1">{{ $productGroup->sd_code }}</span></p>
                     <div class="card__price--inner p-1">
-                         <div class="card__price--wrapp"{{ isset($productsSort[$_GET["sort"]]) ? '' : 'hidden' }}>
+                        @php($__sort = $_GET["sort"] ?? null)
+                         <div class="card__price--wrapp"{{ isset($__sort) ?? isset($productsSort[$_GET["sort"]]) ? '' : 'hidden' }}>
                             @php($addClassToPrice = 'updatePriceJs')
                             <div class="characteristic-list__wrap">
                                 <div class="characteristic-list__item list-normal">

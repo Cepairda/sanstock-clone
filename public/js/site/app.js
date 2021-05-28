@@ -26094,30 +26094,35 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     var df = this.dataset.difference;
 
     if (pr !== '') {
-      priceW.hidden = false;
-      document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
-      priceW.hidden = true;
-      priceI.classList.add('collapsing');
-      priceW.hidden = false;
-      priceI.style.height = priceI.scrollHeight + 'px';
-      setTimeout(function () {
-        priceI.classList.remove('collapsing');
-        priceI.style.height = null;
-      }, 350);
+      if (priceW.hidden) {
+        priceW.hidden = false;
+        document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
+        priceW.hidden = true;
+        priceI.classList.add('collapsing');
+        priceW.hidden = false;
+        priceI.style.height = priceI.scrollHeight + 'px';
+        setTimeout(function () {
+          priceI.classList.remove('collapsing');
+          priceI.style.height = null;
+        }, 350);
+      }
+
       price.textContent = pr;
       priceN.textContent = nr;
       priceD.textContent = df;
     } else {
-      priceI.style.height = priceI.scrollHeight + 'px';
-      document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
-      priceI.classList.add('collapsing');
-      setTimeout(function () {
-        priceI.style.height = null;
-      }, 160);
-      setTimeout(function () {
-        priceW.hidden = true;
-        priceI.classList.remove('collapsing');
-      }, 350);
+      if (!priceW.hidden) {
+        priceI.style.height = priceI.scrollHeight + 'px';
+        document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
+        priceI.classList.add('collapsing');
+        setTimeout(function () {
+          priceI.style.height = null;
+        }, 160);
+        setTimeout(function () {
+          priceW.hidden = true;
+          priceI.classList.remove('collapsing');
+        }, 350);
+      }
     }
 
     toSort.href = "#sort-tab-".concat(sortNumber);
