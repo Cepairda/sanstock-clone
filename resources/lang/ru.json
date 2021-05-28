@@ -87,7 +87,9 @@
     "Read more": "Читать дальше",
 
     "Cart": "Корзина",
+    "Cart products": "Корзина товаров",
     "Add to cart": "В корзину",
+    "Add cart": "Добавить корзину",
     "Empty cart": "Очистить корзину",
     "Cart empty": "Корзина пуста",
     "Checkout": "Оформить",
@@ -118,5 +120,9 @@
     "Delivery address": "Адрес доставки",
     "House number": "Номер дома",
     "Flat": "Квартира",
-    "Comment on the order": "Комментарий к заказу"
+    "Comment on the order": "Комментарий к заказу",
+    "Filters": "Фильтры",
+    "Product code": "Код товара",
+    "Name of": "Наименование",
+    "Go to checkout": "Перейти к оформлению"
 }

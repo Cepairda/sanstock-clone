@@ -68,7 +68,7 @@
             <div class="row">
                 <div class="copyright--lg  col-sm-12">
                     <i class="icon-copyright"></i>
-                    <span>©&nbsp;{{ date('Y') }} SanStock. {{ __('copy') }}</span>
+                    <span>©&nbsp;{{ date('Y') }} SandiStock. {{ __('copy') }}</span>
                 </div>
             </div>
         </div>

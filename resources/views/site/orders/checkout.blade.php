@@ -38,7 +38,8 @@
 
                 </div>
 
-                <div class="col-8">
+                <div class="col-12 col-lg-8">
+
                     <div class="main__contacts-form">
 
                         <form action="{{ route('site.checkout') }}" method="POST">
@@ -48,8 +49,7 @@
                                 <div class="row">
 
                                     <!-- Фамилия -->
-                                    <div class="col-6">
-
+                                    <div class="col-12 col-xl-6">
                                         <div class="form-group @error('new_mail_surname') is-invalid @enderror">
                                             <input id="new_mail_surname"
                                                    class="w-100"
@@ -64,11 +64,10 @@
                                                 </span>
                                             @enderror
                                         </div>
-
                                     </div>
 
                                     <!-- Отчество -->
-                                    <div class="col-6">
+                                    <div class="col-12 col-xl-6">
                                         <div class="form-group @error('new_mail_patronymic') is-invalid @enderror">
                                             <input id="new_mail_patronymic"
                                                    class="w-100"
@@ -87,8 +86,7 @@
                                     </div>
 
                                     <!-- Имя -->
-                                    <div class="col-6">
-
+                                    <div class="col-12 col-xl-6">
                                         <div class="form-group @error('new_mail_name') is-invalid @enderror">
                                             <input id="new_mail_name"
                                                    class="w-100"
@@ -103,11 +101,10 @@
                                                 </span>
                                             @enderror
                                         </div>
-
                                     </div>
 
                                     <!-- Номер телефона -->
-                                    <div class="col-6">
+                                    <div class="col-12 col-xl-6">
                                         <div class="form-group form-group-static @error('new_mail_phone') is-invalid @enderror">
                                             <input id="new_mail_phone"
                                                    class="w-100"
@@ -138,7 +135,6 @@
                                     <!-- Тип доставки -->
                                     <div class="col-12">
                                         <div class="form-group form-group-static @error('new_mail_delivery_type') is-invalid @enderror">
-
                                             <select id="new_mail_delivery_type"
                                                     class=""
                                                     name="new_mail_delivery_type"
@@ -155,15 +151,12 @@
                                                     {{ $message }}
                                                 </span>
                                             @enderror
-
                                         </div>
                                     </div>
 
                                     <!-- Область -->
                                     <div class="col-12">
-
                                         <div class="form-group form-group-static @error('new_mail_region') is-invalid @enderror">
-
                                             <select id="new_mail_region"
                                                     class="js-example-basic-single1"
                                                     name="new_mail_region"
@@ -185,10 +178,7 @@
 
                                     <!-- Населенный пункт -->
                                     <div class="col-12">
-
                                         <div class="form-group form-group-static @error('new_mail_city') is-invalid @enderror">
-
-
                                             <select id="new_mail_city"
                                                     class="js-example-basic-single"
                                                     name="new_mail_city"
@@ -206,12 +196,10 @@
                                                 </span>
                                             @enderror
                                         </div>
-
                                     </div>
 
                                     <!-- Номер отделения -->
                                     <div class="col-12">
-
                                         <div class="form-group form-group-static @error('new_mail_warehouse') is-invalid @enderror">
 
                                             <select id="new_mail_warehouse"
@@ -232,12 +220,10 @@
                                             @enderror
 
                                         </div>
-
                                     </div>
 
                                     <!-- Адрес доставки -->
                                     <div class="col-12">
-
                                         <div class="form-group form-group-static @error('new_mail_street') is-invalid @enderror" hidden>
 
                                             <select id="new_mail_street"
@@ -256,18 +242,17 @@
                                                 </span>
                                             @enderror
                                         </div>
-
                                     </div>
 
                                     <!-- Номер дома -->
-                                    <div class="col-6">
+                                    <div class="col-12 col-xl-6">
                                         <div class="form-group @error('new_mail_house') is-invalid @enderror" hidden>
                                             <input id="new_mail_house"
                                                    name="new_mail_house"
                                                    class="w-100"
                                                    type="text"
-                                                   required>
-
+                                                   required
+                                                   disabled>
                                             <label for="new_mail_house">{{ __('House number') }}</label>
                                             @error('new_mail_house')
                                                 <span class="invalid-feedback">
@@ -278,26 +263,23 @@
                                     </div>
 
                                     <!-- Квартира -->
-                                    <div class="col-6">
-
+                                    <div class="col-12 col-xl-6">
                                         <div class="form-group" hidden>
                                             <input id="new_mail_apartment"
                                                    name="new_mail_apartment"
                                                    class="w-100"
+                                                   placeholder="Введить номер квартири"
                                                    type="text">
                                             <label for="new_mail_apartment">{{ __('Flat') }}</label>
                                         </div>
-
                                     </div>
 
                                     <!-- Комментарий к заказу -->
                                     <div class="col-12">
-
                                         <div class="form-group">
                                             <textarea class="w-100" name="" id="" cols="30" rows="10"></textarea>
                                             <label for="new_mail_apartment">{{ __('Comment on the order') }}</label>
                                         </div>
-
                                     </div>
 
                                 </div>
