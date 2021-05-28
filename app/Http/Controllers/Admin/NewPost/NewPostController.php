@@ -249,7 +249,6 @@ class NewPostController
         $areas = NewPostAreas::where('status', 1)->get();
 
         $result = [];
-        $result[] = ['id' => '', 'text' => '', 'alt' => ''];
 
         foreach($areas as $region):
 
@@ -282,7 +281,6 @@ class NewPostController
         $settlements = NewPostSettlements::where('area_ref', $area_ref)->get();
 
         $result = [];
-        $result[] = ['id' => '', 'text' => '', 'alt' => ''];
 
         foreach($settlements as $region):
 
@@ -317,7 +315,6 @@ class NewPostController
         $streets = NewPostStreets::where('city_ref', $city_ref)->get();
 
         $result = [];
-        $result[] = ['id' => '', 'text' => '', 'alt' => ''];
 
         foreach($streets as $region):
 
@@ -352,7 +349,6 @@ class NewPostController
         $warehouses = NewPostWarehouses::where('city_ref', $city_ref)->get();
 
         $result = [];
-        $result[] = ['id' => '', 'text' => '', 'alt' => ''];
 
         foreach($warehouses as $region):
 
@@ -409,6 +405,8 @@ class NewPostController
         $descriptions = NewPostDescriptions::where('group', $resource_key)->whereIn('affiliated_id', $arrId)->get()->toArray();
 
         $result = [];
+
+        $result[] = ['id' => '', 'text' => '', 'alt' => ''];
 
         $descriptionMap = [];
 
