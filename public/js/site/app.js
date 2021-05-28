@@ -25369,7 +25369,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   var productClearCartSelector = '[data-add="clear"]';
   var cartModalId = 'cartModal';
   var cartCounterNode = document.getElementById("".concat(cartCounterId));
-  var toast = "<div class=\"toast hide\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-delay=\"2500\">\n                    <div class=\"toast-header\">\n                        <strong class=\"mr-auto\">Bootstrap</strong>\n                        <small>11 \u043C\u0438\u043D \u043D\u0430\u0437\u0430\u0434</small>\n                        <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"toast\" aria-label=\"Close\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                    </div>\n                    <div class=\"toast-body\">\n                        \u041F\u0440\u0438\u0432\u0435\u0442, \u043C\u0438\u0440! \u042D\u0442\u043E \u0442\u043E\u0441\u0442-\u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435.\n                    </div>\n                </div>";
+  var toast = "<div class=\"toast hide\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-delay=\"2500\">\n            <div class=\"toast-header\">\n                <strong class=\"mr-auto\">Bootstrap</strong>\n                <small>11 \u043C\u0438\u043D \u043D\u0430\u0437\u0430\u0434</small>\n                <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"toast\" aria-label=\"Close\">\n                    <span aria-hidden=\"true\">&times;</span>\n                </button>\n            </div>\n            <div class=\"toast-body\">\n                \u041F\u0440\u0438\u0432\u0435\u0442, \u043C\u0438\u0440! \u042D\u0442\u043E \u0442\u043E\u0441\u0442-\u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435.\n            </div>\n        </div>";
+
+  var emptyCart = function emptyCart(text) {
+    return "<div class=\"cart__empty\">\n            <div class=\"cart__empty--img\">\n                <span class=\"icon-cart\"></span>\n            </div>\n            <p class=\"cart__empty--title\">\n                ".concat(text, "\n            </p>\n        </div>");
+  };
 
   var Cart = /*#__PURE__*/function () {
     function Cart() {
@@ -25384,11 +25388,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       this.i18n = {
         ru: {
           'button-add': 'В корзину',
-          'button-added': 'В корзине'
+          'button-added': 'В корзине',
+          'cart-empty': 'Корзина пуста'
         },
         uk: {
           'button-add': 'В кошик',
-          'button-added': 'В кошику'
+          'button-added': 'В кошику',
+          'cart-empty': 'Кошик порожній'
         }
       };
       this.getLocalization = this.getLocalization.bind(this);
@@ -25453,6 +25459,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         cartCounterNode.textContent = "".concat(count);
+        count ? cartCounterNode.hidden = false : cartCounterNode.hidden = true;
       }
     }, {
       key: "buttonsChange",
@@ -25484,12 +25491,33 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         var productSku = button.dataset.barcode;
         var cartData = this.getCookie(cookieKeyCart);
 
+        function isEmpty(obj) {
+          for (var key in obj) {
+            return false;
+          }
+
+          return true;
+        }
+
         if (cartData) {
           var products = JSON.parse(cartData);
           delete products[productSku];
           this.setCookie(products);
-          var tr = button.closest('tr');
-          tr && tr.remove();
+
+          if (isEmpty(products)) {
+            if (document.body.classList.contains('cart')) {
+              this.clear();
+            } else {
+              var table = button.closest('table');
+              var parent = table.parentElement;
+              table && table.remove();
+              parent.insertAdjacentHTML('beforeend', emptyCart(this.i18n[this.getLocalization()]['cart-empty']));
+            }
+          } else {
+            var tr = button.closest('tr');
+            tr && tr.remove();
+          }
+
           this.buttonsChange(productSku);
         }
       }
@@ -25512,7 +25540,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         cartCounterNode.textContent = "".concat(count);
-        cartCounterNode.hidden = false;
+        count ? cartCounterNode.hidden = false : cartCounterNode.hidden = true;
       }
     }, {
       key: "upDateCart",
@@ -26066,28 +26094,35 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     var df = this.dataset.difference;
 
     if (pr !== '') {
-      document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
-      priceI.classList.add('collapsing');
-      priceW.hidden = false;
-      priceI.style.height = priceI.scrollHeight + 'px';
-      setTimeout(function () {
-        priceI.classList.remove('collapsing');
-        priceI.style.height = null;
-      }, 350);
+      if (priceW.hidden) {
+        priceW.hidden = false;
+        document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
+        priceW.hidden = true;
+        priceI.classList.add('collapsing');
+        priceW.hidden = false;
+        priceI.style.height = priceI.scrollHeight + 'px';
+        setTimeout(function () {
+          priceI.classList.remove('collapsing');
+          priceI.style.height = null;
+        }, 350);
+      }
+
       price.textContent = pr;
       priceN.textContent = nr;
       priceD.textContent = df;
     } else {
-      priceI.style.height = priceI.scrollHeight + 'px';
-      document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
-      priceI.classList.add('collapsing');
-      setTimeout(function () {
-        priceI.style.height = null;
-      }, 160);
-      setTimeout(function () {
-        priceW.hidden = true;
-        priceI.classList.remove('collapsing');
-      }, 350);
+      if (!priceW.hidden) {
+        priceI.style.height = priceI.scrollHeight + 'px';
+        document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
+        priceI.classList.add('collapsing');
+        setTimeout(function () {
+          priceI.style.height = null;
+        }, 160);
+        setTimeout(function () {
+          priceW.hidden = true;
+          priceI.classList.remove('collapsing');
+        }, 350);
+      }
     }
 
     toSort.href = "#sort-tab-".concat(sortNumber);
@@ -28850,8 +28885,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Work\OpenServer\domains\sanstock\resources\js\site\app.js */"./resources/js/site/app.js");
-module.exports = __webpack_require__(/*! D:\Work\OpenServer\domains\sanstock\resources\sass\site\app.scss */"./resources/sass/site/app.scss");
+__webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\js\site\app.js */"./resources/js/site/app.js");
+module.exports = __webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\sass\site\app.scss */"./resources/sass/site/app.scss");
 
 
 /***/ })

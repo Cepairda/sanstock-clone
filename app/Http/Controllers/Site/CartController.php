@@ -91,7 +91,10 @@ class CartController
             'new_mail_surname' => 'required',
             'new_mail_name' => 'required',
             'new_mail_patronymic' => 'required',
-            'new_mail_phone' => 'required',
+            'new_mail_phone' => 'required|regex:/^\+38[\s]\(0\d{2}\)[\s]\d{3}[-]\d{2}[-]\d{2}$/',
+            'new_mail_delivery_type' => 'required',
+            'new_mail_region' => 'required|size:36',
+            'new_mail_city' => 'required|size:36',
             //'new_mail_delivery_type' => 'required',
 //            'new_mail_insurance_sum' => 'required|numeric|min:200',
         ];
@@ -125,7 +128,6 @@ class CartController
 //            $rules['new_mail_house'] = 'required';
 //        }
         //dd('************');
-        $validated = $request->validate($rules);
 
         $shipping = [];
 //dd($request->new_mail_surname);
@@ -185,6 +187,8 @@ class CartController
 
             $shipping['new_mail_apartment'] = '';
 
+            $rules['new_mail_warehouse'] = 'required|size:36';
+
         } else {
 
             $orderData['new_mail_street'] = $shipping['new_mail_street'];
@@ -195,8 +199,18 @@ class CartController
 
             $shipping['new_mail_warehouse'] = '';
 
+            $rules['new_mail_house'] = 'required';
+
         }
 
+        $validated = $request->validate($rules);
+// dd($validated);
+//        if ($validated->fails()) {
+//            return Redirect::back()->withErrors('Не заполнены все обязательные поля!');
+////            return view("user.home", [
+////                "errors" => $validator->errors()
+////            ]);
+//        }
 
 //        if($order['new_mail_delivery_type'] === 'storage_door') {
 //
@@ -338,11 +352,12 @@ class CartController
         // $this->sentOrderToB2B($order);
 // dd($order);
 
-        \App\Jobs\sentOrder::dispatch($newOrder->id, $order)->onQueue('checkout');
+       \App\Jobs\sentOrder::dispatch($newOrder->id, $order)->onQueue('checkout');
 
         //unset($_COOKIE["products_cart"]);
         //$cookie = Cookie::forget('products_cart');
         Cookie::queue(Cookie::forget('products_cart'));
+
         return view('site.orders.stripe_checkout', [
             'order_id' => $newOrder->id,
         ]);
@@ -487,13 +502,13 @@ class CartController
         $err = curl_error($curl);
         $info = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
-info($data);
+        info($data);
         //        var_dump('Время получения ответа: ' . (time() - $start));
         //        var_dump('Код ответа: ' . $info);
         //        var_dump('Ответ:');
-        //        dd(json_decode($response, true));
 
-        if($err || $info !== 200) {
+
+        if($err || $info !== 200 ) {
             info("Ошибка! Не удалось получить ответ от сервера. Код ошибки: $info!");
             info($response);
             return false;
@@ -501,8 +516,8 @@ info($data);
 
         //$result = json_decode($response, true);
 
-        echo "Код ответа: $info" . PHP_EOL;
-        echo "Страница " . $response . PHP_EOL;
+        //echo "Код ответа: $info" . PHP_EOL;
+        //echo "Страница " . $response . PHP_EOL;
 
         return $response;
     }

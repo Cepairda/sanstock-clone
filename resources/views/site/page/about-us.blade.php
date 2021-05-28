@@ -16,12 +16,12 @@
 @section('content')
 
     <main class="main-container bgc-gray">
-        @include('site.components.breadcrumbs', ['title' => __('Contacts')])
+        @include('site.components.breadcrumbs')
         <main>
             <div class="container">
                 <div class="row">
                     <div class="col-12" style="font-size: 16px">
-                        <h1 class="mb-4">О нас</h1>
+                        <h1 class="mb-4">{{ __('About us') }}</h1>
                         <p class="mb-4">Интернет-магазин «Sandi Stock» является аналогом аутлета, который
                             специализируется на продаже сантехнических и теплотехнических изделий. Более 18 лет мы
                             занимаемся поставкой и продажей продукции на территории Украины, имеем колоссальный опыт и

@@ -1,13 +1,13 @@
 <div class="table-responsive cart__table">
     <table class="table table-hover">
-        <caption>Корзина товаров</caption>
+        <caption>{{ __('Cart products') }}</caption>
         <thead>
         <tr>
-            <td>Код товара</td>
+            <td>{{ __('Product code') }}</td>
             <td>Фото</td>
-            <td>Наименование</td>
+            <td>{{ __('Name of') }}</td>
             <td>Сорт</td>
-            <td>Цена</td>
+            <td>{{ __('Price') }}</td>
             <td></td>
         </tr>
         </thead>
@@ -32,7 +32,7 @@
                 <td>
                     <span data-toggle="tooltip" data-placement="top"
                           title="{{ __('descriptions.desc_sort-' . $product["grade"]) }}"
-                          class="label">Сорт-{{ $product["grade"] }}</span>
+                          class="label" data-sort="{{ $product["grade"] }}">Сорт-{{ $product["grade"] }}</span>
 
 
                 </td>

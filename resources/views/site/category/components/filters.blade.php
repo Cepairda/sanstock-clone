@@ -2,7 +2,7 @@
     <div class="main-filter__prev">
         <span>Назад</span>
     </div>
-    <div class="main-filter__title">Фильтры</div>
+    <div class="main-filter__title">{{ __('Filters') }}</div>
 </div>
 <form id="sidebar-filter" class="left-sidebar__form" action="">
     <!-- Range-->
