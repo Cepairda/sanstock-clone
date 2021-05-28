@@ -91,7 +91,10 @@ class CartController
             'new_mail_surname' => 'required',
             'new_mail_name' => 'required',
             'new_mail_patronymic' => 'required',
-            'new_mail_phone' => 'required|min:19',
+            'new_mail_phone' => 'required|regex:/^\+38[\s]\(0\d{2}\)[\s]\d{3}[-]\d{2}[-]\d{2}$/',
+            'new_mail_delivery_type' => 'required',
+            'new_mail_region' => 'required|size:36',
+            'new_mail_city' => 'required|size:36',
             //'new_mail_delivery_type' => 'required',
 //            'new_mail_insurance_sum' => 'required|numeric|min:200',
         ];
@@ -125,10 +128,6 @@ class CartController
 //            $rules['new_mail_house'] = 'required';
 //        }
         //dd('************');
-
-
-
-        $validated = $request->validate($rules);
 
         $shipping = [];
 //dd($request->new_mail_surname);
@@ -182,6 +181,14 @@ class CartController
 
             $orderData['new_mail_warehouse'] = $shipping['new_mail_warehouse'];
 
+            $shipping['new_mail_street'] = '';
+
+            $shipping['new_mail_house'] = '';
+
+            $shipping['new_mail_apartment'] = '';
+
+            $rules['new_mail_warehouse'] = 'required|size:36';
+
         } else {
 
             $orderData['new_mail_street'] = $shipping['new_mail_street'];
@@ -190,8 +197,20 @@ class CartController
 
             $orderData['new_mail_apartment'] = $shipping['new_mail_apartment'];
 
+            $shipping['new_mail_warehouse'] = '';
+
+            $rules['new_mail_house'] = 'required';
+
         }
 
+        $validated = $request->validate($rules);
+// dd($validated);
+//        if ($validated->fails()) {
+//            return Redirect::back()->withErrors('Не заполнены все обязательные поля!');
+////            return view("user.home", [
+////                "errors" => $validator->errors()
+////            ]);
+//        }
 
 //        if($order['new_mail_delivery_type'] === 'storage_door') {
 //
@@ -269,11 +288,11 @@ class CartController
 
         $orderShipping->settlement_ref = $shipping['new_mail_city'];
 
-        $orderShipping->street_ref = '';
+        $orderShipping->street_ref = $shipping['new_mail_street'];
 
-        $orderShipping->house = '';
+        $orderShipping->house = $shipping['new_mail_house'];
 
-        $orderShipping->apartment = '';
+        $orderShipping->apartment = $shipping['new_mail_apartment'];
 
         $orderShipping->warehouse_ref = $shipping['new_mail_warehouse'] ;
 
@@ -314,6 +333,12 @@ class CartController
             $orderProduct->save();
 
            $products[$product['sku']] = $product['quantity'];
+
+            Product::where('details->sku', $product['sku'])->update([
+                //'details->price' => $price,
+                //'details->old_price' => $oldPrice,
+                'details->balance' => 0
+            ]);
 
         endforeach;
 
@@ -462,7 +487,7 @@ class CartController
         curl_setopt_array($curl,
             array(
                 CURLOPT_URL => "https://b2b-sandi.com.ua/api/orders/checkout?token=368dbc0bf4008db706576eb624e14abf",
-                //CURLOPT_RETURNTRANSFER => TRUE,
+                CURLOPT_RETURNTRANSFER => TRUE,
                 CURLOPT_CONNECTTIMEOUT => 20,
                 CURLOPT_TIMEOUT => 1000,
                 CURLOPT_POST => true,

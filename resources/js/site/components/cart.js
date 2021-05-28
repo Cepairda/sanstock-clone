@@ -115,6 +115,8 @@
                 cartData && (count = Object.keys(cartData).length);
             }
             cartCounterNode.textContent = `${count}`;
+            count ? cartCounterNode.hidden = false : cartCounterNode.hidden = true;
+
         }
 
         buttonsChange(sku) {
@@ -197,7 +199,7 @@
 
             }
             cartCounterNode.textContent = `${count}`;
-            cartCounterNode.hidden= false;
+            count ? cartCounterNode.hidden = false : cartCounterNode.hidden = true;
         }
 
         upDateCart(addToCartBtn) {

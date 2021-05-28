@@ -26,7 +26,9 @@
         let nr = this.dataset.normal;
         let df = this.dataset.difference;
         if(pr !== '') {
+            priceW.hidden = false;
             document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
+            priceW.hidden = true;
             priceI.classList.add('collapsing');
             priceW.hidden = false;
             priceI.style.height = priceI.scrollHeight + 'px';

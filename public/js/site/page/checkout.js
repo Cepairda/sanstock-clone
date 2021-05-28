@@ -11412,16 +11412,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var deliveryType = document.querySelector('#new_mail_delivery_type');
     var action = {
       'storage_storage': {
-        'new_mail_warehouse': false,
-        'new_mail_street': true,
-        'new_mail_house': true,
-        'new_mail_apartment': true
+        'new_mail_warehouse': {
+          hidden: false,
+          disabled: true
+        },
+        'new_mail_street': {
+          hidden: true,
+          disabled: true
+        },
+        'new_mail_house': {
+          hidden: true,
+          disabled: true
+        },
+        'new_mail_apartment': {
+          hidden: true,
+          disabled: true
+        }
       },
       'storage_door': {
-        'new_mail_warehouse': true,
-        'new_mail_street': false,
-        'new_mail_house': false,
-        'new_mail_apartment': false
+        'new_mail_warehouse': {
+          hidden: true,
+          disabled: true
+        },
+        'new_mail_street': {
+          hidden: false,
+          disabled: true
+        },
+        'new_mail_house': {
+          hidden: false,
+          disabled: false
+        },
+        'new_mail_apartment': {
+          hidden: false,
+          disabled: false
+        }
       }
     };
 
@@ -11429,12 +11453,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       for (var id in action[value]) {
         var node = container.querySelector("#".concat(id));
         var val = action[value][id];
-        node.disabled = val;
-        node.parentElement.hidden = val;
+        node.disabled = val.disabled;
+        node.parentElement.hidden = val.hidden;
       }
-    }
+    } //valid('storage_storage');
 
-    valid('storage_storage');
+
     deliveryType.addEventListener('change', function (_ref2) {
       var target = _ref2.target;
       valid(target.value);

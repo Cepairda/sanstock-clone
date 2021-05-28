@@ -345,16 +345,40 @@
         const deliveryType = document.querySelector('#new_mail_delivery_type');
         const action = {
             'storage_storage': {
-                'new_mail_warehouse' : false,
-                'new_mail_street' : true,
-                'new_mail_house' : true,
-                'new_mail_apartment' : true
+                'new_mail_warehouse' : {
+                    hidden: false,
+                    disabled: true
+                },
+                'new_mail_street' : {
+                    hidden: true,
+                    disabled: true
+                },
+                'new_mail_house' : {
+                    hidden: true,
+                    disabled: true
+                },
+                'new_mail_apartment' : {
+                    hidden: true,
+                    disabled: true
+                },
             },
             'storage_door' : {
-                'new_mail_warehouse' : true,
-                'new_mail_street' : false,
-                'new_mail_house' : false,
-                'new_mail_apartment' : false
+                'new_mail_warehouse' : {
+                    hidden: true,
+                    disabled: true
+                },
+                'new_mail_street' : {
+                    hidden: false,
+                    disabled: true
+                },
+                'new_mail_house' : {
+                    hidden: false,
+                    disabled: false
+                },
+                'new_mail_apartment' : {
+                    hidden: false,
+                    disabled: false
+                },
 
             }
         };
@@ -363,11 +387,11 @@
             for(let id  in action[value]) {
                 const node = container.querySelector(`#${id}`);
                 const val = action[value][id];
-                node.disabled = val;
-                node.parentElement.hidden = val;
+                node.disabled = val.disabled;
+                node.parentElement.hidden = val.hidden;
             }
         }
-        valid('storage_storage');
+        //valid('storage_storage');
         deliveryType.addEventListener('change', function ({target}) {
             valid(target.value);
         });

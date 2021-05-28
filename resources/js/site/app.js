@@ -27,6 +27,7 @@ require('owl.carousel');
 require('./plugins/swipeGallery');
 require('./plugins/characteristicsLists');
 require('./plugins/lazyLoadImg');
+require('./plugins/jquery.mask');
 
 //components
 require('./components/backdrop');

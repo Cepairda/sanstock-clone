@@ -14223,11 +14223,6 @@ p.text--hide.active {
   }
 
   /*---main-filter_end---*/
-  /*-----main-----*/
-  .main-container, .main-collection, .main-category {
-    padding-top: 70px;
-  }
-
   .main__sort {
     padding-left: 15px;
     padding-right: 15px;
@@ -15727,7 +15722,7 @@ li.footer__element--item-tel {
   margin-bottom: 4px;
   font-family: Open Sans Bold, sans-serif;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 500;
   white-space: nowrap;
   color: #000;
   order: -1;
@@ -15768,6 +15763,16 @@ li.footer__element--item-tel {
   color: #555;
   cursor: text;
   transition: all 0.3s ease-in-out;
+}
+.form-group.is-invalid input {
+  border-color: red;
+}
+.form-group.is-invalid label {
+  color: red !important;
+}
+.form-group.is-invalid .invalid-feedback {
+  font-size: 12px;
+  color: red;
 }
 
 .bgc-grad .form-group textarea {
@@ -16283,6 +16288,18 @@ button:active {
   outline: none;
 }
 
+::-moz-placeholder {
+  color: #ccc;
+}
+
+:-ms-input-placeholder {
+  color: #ccc;
+}
+
+::placeholder {
+  color: #ccc;
+}
+
 input:focus {
   outline: none;
 }
@@ -16326,6 +16343,9 @@ footer {
   padding-top: 150px;
 }
 
+.cart__table {
+  min-height: 300px;
+}
 .cart__table table td {
   text-align: center;
   vertical-align: middle;
