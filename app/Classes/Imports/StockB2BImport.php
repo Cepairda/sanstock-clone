@@ -159,14 +159,12 @@ class StockB2BImport
             $sdCode = $dataProduct['sku'];
             $price = $dataProduct['price'];
             $oldPrice = $dataProduct['old_price'];
-            $balance = $dataProduct['balance'];
 
             $productSort->setRequest([
                 'details' => [
                     'sd_code' => $sdCode,
                     'price' => $price,
                     'old_price' => $oldPrice,
-                    //'balance' => $balance,
                     'grade' => $grade,
                     'published' => 0,
                 ],
@@ -178,27 +176,23 @@ class StockB2BImport
     }
 
     /**
-     * @param $ref
-     * @param $dataProduct
+     * @param string $ref
+     * @param array $dataProduct
      *
      * @return void
      */
     protected function stockProduct(string $ref, array $dataProduct) : void
     {
         $product = Product::where('details->sku', $ref)->first();
+        $grade = $dataProduct['defective_attributes']['grade'];
 
         if (!isset($product)) {
             $product = new Product();
 
             $sdCode = $dataProduct['sku'];
-            $name = $dataProduct['name'];
-            $description = $dataProduct['description'];
             $brand = $dataProduct['brand'];
             $category = $dataProduct['category'];
-            $price = $dataProduct['price'];
-            $oldPrice = $dataProduct['old_price'];
             $balance = $dataProduct['balance'];
-            $grade = $dataProduct['defective_attributes']['grade'];
 
             $defectiveDescriptionRu = $dataProduct['defective_attributes']['descriptions']['ru'];
             $defectiveDescriptionUk = $dataProduct['defective_attributes']['descriptions']['uk'];
@@ -210,14 +204,10 @@ class StockB2BImport
                     'brand_id' => $brand['ref'],
                     'category_id' => $category['ref'],
                     'published' => 0,
-                    'price' => $price,
-                    'old_price' => $oldPrice,
                     'balance' => $balance,
                     'grade' => $grade
                 ],
                 'data' => [
-                    'name' => $name['ru'],
-                    'description' => $description['ru'],
                     'defective_attributes' => $defectiveDescriptionRu
                 ]
             ]);
@@ -227,14 +217,16 @@ class StockB2BImport
 
             $product->setRequest([
                 'data' => [
-                    'name' => $name['uk'],
-                    'description' => $description['uk'],
                     'defective_attributes' => $defectiveDescriptionUk
                 ]
             ]);
 
             LaravelLocalization::setLocale('uk');
             $product->storeOrUpdate();
+        } else {
+            Product::where('details->sku', $ref)->update([
+                'details->grade' => $grade,
+            ]);
         }
     }
 
