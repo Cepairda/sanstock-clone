@@ -17,6 +17,7 @@
             <input id="priceRangeSlider" type="text" data-slider-min="{{ $minPrice }}"
                    data-slider-max="{{ $maxPrice }}" data-slider-value="[{{ $minPriceSelect }},{{ $maxPriceSelect }}]"
                    data-slider-step="10">
+            <button class="button mx-auto d-block" type="submit">OK</button>
         </div>
     @endif
     <hr>
@@ -59,6 +60,6 @@
         @endif
     @endforeach
     <div class="left-sidebar__view--btn">
-        <button type="reset" class="button">{{ __('Reset') }}</button>
+        <a href="{{ Request::url() }}" class="button">{{ __('Reset') }}</a>
     </div>
 </form>

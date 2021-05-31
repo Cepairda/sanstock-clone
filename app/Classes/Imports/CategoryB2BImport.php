@@ -64,17 +64,17 @@ class CategoryB2BImport
 
     public function import()
     {
-        $jsonData = self::$data;
-
-        foreach ($jsonData as $ref => [
-            'parent_ref' => $parentRef,
-            'name' => $name,
-            'image' => $image
-        ]) {
-            $this->categoryImport($ref, $parentRef, $name, $image);
-        }
-
-        $this->fixParent();
+//        $jsonData = self::$data;
+//
+//        foreach ($jsonData as $ref => [
+//            'parent_ref' => $parentRef,
+//            'name' => $name,
+//            'image' => $image
+//        ]) {
+//            $this->categoryImport($ref, $parentRef, $name, $image);
+//        }
+//
+//        $this->fixParent();
         $tree = Category::get()->toTree();
         $this->recursiveCheck($tree);
     }
@@ -94,6 +94,8 @@ class CategoryB2BImport
         if (!isset($category)) {
             $category = new Category();
         }
+
+        //$sort = Category::max('details->sort');
 
         /**
          * If this is the root category, we must trim the numbers
@@ -161,7 +163,7 @@ class CategoryB2BImport
         $isEmpty = true;
         $isEmptyDeep = true;
 
-        foreach ($categories as $category) {
+        foreach ($categories as $key => $category) {
             $children = $category->children;
 
             if ($children->isNotEmpty()) {
@@ -181,6 +183,15 @@ class CategoryB2BImport
 
             if ($isEmpty) {
                 $category->forceDelete();
+            }
+
+            $maxSort = $categories->max('details->sort') ?? 0;
+            $sort = ++$maxSort;
+            $checkSort = $categories[$key]['details']['sort'] ?? null;
+
+            if (!$checkSort) {
+                Category::where('id', $category->id)->update(['details->sort' => $sort]);
+                $categories[$key]['details'] = $categories[$key]['details']->merge(['sort' => $sort]);
             }
         }
 

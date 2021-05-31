@@ -62,8 +62,8 @@ class PriceImport
                 ]);
 
                 ProductSort::where([['details->sd_code', $sdCode], ['details->grade', $grade]])->update([
-                    'details->price' => $price,
-                    'details->old_price' => $oldPrice,
+                    'details->price' => ceil($price),
+                    'details->old_price' => ceil($oldPrice),
                 ]);
             }
         } catch (\Exception $e) {

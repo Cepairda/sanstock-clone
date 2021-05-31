@@ -8,6 +8,14 @@ class Category extends Resource
 {
     use NodeTrait;
 
+    public static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(function ($query) {
+            $query->orderBy('details->sort');
+        });
+    }
+
     public function getRefAttribute()
     {
         return $this->getDetails('ref');

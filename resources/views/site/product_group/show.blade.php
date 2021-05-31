@@ -127,11 +127,11 @@
                 <div class="row">
                     <ul class="col-12 nav nav-pills" id="pills-tab" role="tablist" style="padding-left: 15px;">
                         <li class="nav-item" role="presentation" style="width: 50%;">
-                            <a class="nav-link-i active" id="tab2-tab" data-toggle="pill" href="#tab2" role="tab"
+                            <a class="nav-link-i {{ !$togglePrice ?: 'active' }}" id="tab2-tab" data-toggle="pill" href="#tab2" role="tab"
                                aria-controls="tab2" aria-selected="false">Сорт</a>
                         </li>
-                        <li class="nav-item" role="presentation" style="width: 50%;">
-                            <a class="nav-link-i" id="characteristics-tab" data-toggle="pill"
+                        <li class="nav-item active" role="presentation" style="width: 50%;">
+                            <a class="nav-link-i {{ $togglePrice ?: 'active' }}" id="characteristics-tab" data-toggle="pill"
                                href="#characteristics" role="tab" aria-controls="characteristics" aria-selected="true">{{ __('Technical characteristics') }}</a>
                         </li>
                     </ul>
@@ -142,7 +142,7 @@
             <div class="container main__tab-content">
                 <div class="row">
                     <div id="product-tabs" class="col-12 tab-content" data-active="{{ $sort }}">
-                        <div class="tab-pane fade" id="characteristics" role="tabpanel"
+                        <div class="tab-pane fade {{ $togglePrice ?: 'show active' }}" id="characteristics" role="tabpanel"
                              aria-labelledby="characteristics-tab">
                             <div class="row tab-content__container">
                                 @foreach($productGroup->characteristics->chunk(ceil($productGroup->characteristics->count() / 2)) as $characteristics)
@@ -157,7 +157,7 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="tab-pane fade show active" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                        <div class="tab-pane fade {{ !$togglePrice ?: 'show active' }}" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
 
                             <nav>
                                 <div id="nav-tab" class="nav nav-tabs" role="tablist">
