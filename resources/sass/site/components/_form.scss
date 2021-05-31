@@ -30,6 +30,17 @@
     width: 100%;
   }
 
+  textarea {
+    &:required ~ label::after{
+      content: "*";
+      position: absolute;
+      top: -1px;
+      right: -8px;
+      font-size: 12px;
+      color: #e74c3c;
+    }
+  }
+
   label {
     position: relative;
     width: fit-content;
