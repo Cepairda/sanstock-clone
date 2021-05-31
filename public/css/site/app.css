@@ -8614,9 +8614,9 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .lg-actions .lg-next, .lg-actions .lg-prev {
-  background-color: rgba(0, 0, 0, 0.45);
+  background-color: #cde2f2;
   border-radius: 2px;
-  color: #999;
+  color: #cde2f2;
   cursor: pointer;
   display: block;
   font-size: 22px;
@@ -8634,7 +8634,7 @@ a.text-dark:hover, a.text-dark:focus {
   opacity: 0.5;
 }
 .lg-actions .lg-next:hover, .lg-actions .lg-prev:hover {
-  color: #FFF;
+  color: #016fc0;
 }
 .lg-actions .lg-next {
   right: 20px;
@@ -16465,6 +16465,11 @@ footer {
 /*input price*/
 .text-lg {
   font-size: 11px;
+}
+
+.lg-actions .lg-next,
+.lg-actions .lg-prev {
+  font-size: 30px;
 }
 
 .inp-price-min, .inp-price-max {

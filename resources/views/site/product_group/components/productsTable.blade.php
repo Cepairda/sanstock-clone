@@ -19,12 +19,14 @@
                 <td>{{ $product["sku"] }}</td>
                 <td>
                     <div class="_bl">
-                        <div class="_bl-g th-gallery">
-                            @if(empty($product->defectiveImages))
+                        @if(empty($product->defectiveImages))
+                            <div class="_bl-g">
                                 <img class="lazy img-data-path" width="75"
                                      data-src=""
                                      src="{{ asset('images/white_fone_150x150.jpg' )}}" alt="">
-                            @else
+                            </div>
+                        @else
+                            <div class="_bl-g th-gallery">
                                 @foreach($product->defectiveImages as $key => $value)
                                     <a href="/storage/product/{{ $productGroup->sdCode }}/{{ $product->sku }}/{{ $product->sku }}_{{ $key }}.jpg">
                                         <img class="_bl-g--img lazy img-data-path" width="75"
@@ -32,8 +34,8 @@
                                              src="{{ asset('images/white_fone_150x150.jpg' )}}" alt="">
                                     </a>
                                 @endforeach
-                            @endif
-                        </div>
+                            </div>
+                        @endif
                     </div>
                 </td>
                 <td style="text-align: left;" data-price="{{ $price }}" data-oldprice="{{ $normalPrice }}">
