@@ -8614,9 +8614,9 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .lg-actions .lg-next, .lg-actions .lg-prev {
-  background-color: rgba(0, 0, 0, 0.45);
+  background-color: #cde2f2;
   border-radius: 2px;
-  color: #999;
+  color: #cde2f2;
   cursor: pointer;
   display: block;
   font-size: 22px;
@@ -8634,7 +8634,7 @@ a.text-dark:hover, a.text-dark:focus {
   opacity: 0.5;
 }
 .lg-actions .lg-next:hover, .lg-actions .lg-prev:hover {
-  color: #FFF;
+  color: #016fc0;
 }
 .lg-actions .lg-next {
   right: 20px;
@@ -15714,6 +15714,14 @@ li.footer__element--item-tel {
 .form-group select {
   width: 100%;
 }
+.form-group textarea:required ~ label::after {
+  content: "*";
+  position: absolute;
+  top: -1px;
+  right: -8px;
+  font-size: 12px;
+  color: #e74c3c;
+}
 .form-group label {
   position: relative;
   width: -webkit-fit-content;
@@ -16359,12 +16367,55 @@ label {
   flex: 1 0 auto;
 }
 
+#to-top {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 3px;
+  border: 1px solid #009acf;
+  opacity: 0;
+  z-index: 1000;
+  background-color: #009acf;
+  color: #fff;
+  cursor: pointer;
+  visibility: hidden;
+  transition: 0.3s;
+}
+#to-top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline fill='none' stroke='%23fff' stroke-width='1.03' points='4 13 10 7 16 13'%3E%3C/polyline%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  z-index: 1050;
+}
+#to-top.show {
+  visibility: visible;
+  opacity: 0.5;
+}
+#to-top.show:hover {
+  opacity: 1;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+
 footer {
   flex-shrink: 0;
 }
 
 .main-container {
-  padding-bottom: 70px;
+  padding-bottom: 75px;
 }
 .main-container__title h1 {
   padding-top: 18px;
@@ -16389,6 +16440,11 @@ footer {
 .cart__table table td {
   text-align: center;
   vertical-align: middle;
+}
+
+.table-hover tbody tr.not-hover:hover {
+  color: inherit;
+  background-color: inherit;
 }
 
 .nav-tabs {
@@ -16417,6 +16473,11 @@ footer {
 /*input price*/
 .text-lg {
   font-size: 11px;
+}
+
+.lg-actions .lg-next,
+.lg-actions .lg-prev {
+  font-size: 30px;
 }
 
 .inp-price-min, .inp-price-max {

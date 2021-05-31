@@ -41,6 +41,26 @@ $(document).ready(function () {
     $('[type="tel"]').mask('+38 (000) 000-00-00');
 });
 
+//To top
+(() => {
+    const selector = '#to-top';
+    const coefficient = 2;
+    const toTop = document.querySelector(selector);
+    const clientHeight = document.documentElement.clientHeight / coefficient;
+    if (!toTop) {
+        return;
+    }
+    function visibleToTop() {
+        window.pageYOffset > clientHeight ? toTop.classList.add('show') : toTop.classList.remove('show')
+    }
+    document.addEventListener('DOMContentLoaded', visibleToTop ,false);
+    document.addEventListener('scroll', visibleToTop, false);
+    document.addEventListener('click', ({target}) => {
+        const toTop = target.closest(selector);
+        toTop && window.scrollTo({top: 0, left: 0, behavior: "smooth"});
+    }, false);
+})();
+
 
 
 //Reload page checkbox category

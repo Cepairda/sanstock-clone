@@ -207,11 +207,22 @@
             select2Options = select2Options || {};
             let afterActions = [],
                 _setOptions = function (node, options) {
+                    const x = document.querySelector('#new_mail_delivery_type').value;
+                    let disabledSelect = () => {
+                        if (x === 'storage_door' && node[0].id === 'new_mail_warehouse') {
+                            return true
+                        }
+                        if (x === 'storage_storage' && node[0].id === 'new_mail_street') {
+                            return true
+                        }
+                        return options.length === 0
+                    };
 
                     if (node.attr("data-select2-id")) {
                         node.select2('destroy');
                     }
-                    node.html('').prop("disabled", options.length === 0).select2($.extend({}, select2Options, {data: options})).trigger("change");
+
+                    node.html('').prop("disabled", disabledSelect()).select2($.extend({}, select2Options, {data: options})).trigger("change");
                 };
 
             // Register functions to be called after cascading data loading done
@@ -293,7 +304,6 @@
                 $city = $("#" + delivery + "_city"),
                 $delivery_type = $("#" + delivery + "_delivery_type");//"#" + delivery + "_delivery_type"
 
-
             if (!($region && $city)) {
                 return;
             }
@@ -362,6 +372,7 @@
                     disabled: true
                 },
             },
+
             'storage_door' : {
                 'new_mail_warehouse' : {
                     hidden: true,
@@ -384,14 +395,31 @@
         };
 
         function valid(value) {
-            for(let id  in action[value]) {
+
+            const data = {
+                id: "",
+                text: "",
+                alt: ""
+            };
+            const  $city = $("#new_mail_city");
+            const  $warehouse = $("#new_mail_warehouse");
+            const  $street = $("#new_mail_street");
+            const newOption = new Option(data.text, data.id, false, false);
+            $city.append(newOption).trigger('change');
+            $warehouse.append(newOption).trigger('change');
+            $street.append(newOption).trigger('change');
+
+            for (let id  in action[value]) {
                 const node = container.querySelector(`#${id}`);
                 const val = action[value][id];
                 node.disabled = val.disabled;
                 node.parentElement.hidden = val.hidden;
+
             }
         }
+
         //valid('storage_storage');
+
         deliveryType.addEventListener('change', function ({target}) {
             valid(target.value);
         });

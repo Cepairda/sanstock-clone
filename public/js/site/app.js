@@ -25804,7 +25804,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               window.lazyLoadImg.toRun();
               val = liveSearchForm.querySelector('.search_error');
               val && val.insertAdjacentHTML('beforeend', "<p class=\"search-text-info\">".concat(i18n.notFound[localization()], ":<span class=\"text-body ml-1\">\"").concat(value, "\"</span></p>"));
-              searchResult.style.height = searchResult.firstElementChild.scrollHeight + +1 + 'px';
+              setTimeout(function () {
+                return searchResult.style.height = searchResult.firstElementChild.scrollHeight + +1 + 'px';
+              }, 160);
               mark(value);
 
             case 15:
@@ -25818,6 +25820,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   }
 
   inputSearch.oninput = function () {
+    console.log('oninput');
     var value = this.value.trim();
 
     var enter = function enter() {
@@ -25833,10 +25836,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     };
 
-    debounce(enter(), 500); //delay(function () {}, 500);
+    debounce(enter(), 500);
   };
 
   inputSearch.onfocus = function () {
+    console.log('onfocus');
     liveSearchForm.classList.add('active');
   };
 
@@ -28833,7 +28837,35 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   });
   $('[data-toggle="tooltip"]').tooltip();
   $('[type="tel"]').mask('+38 (000) 000-00-00');
-}); //Reload page checkbox category
+}); //To top
+
+(function () {
+  var selector = '#to-top';
+  var coefficient = 2;
+  var toTop = document.querySelector(selector);
+  var clientHeight = document.documentElement.clientHeight / coefficient;
+
+  if (!toTop) {
+    return;
+  }
+
+  function visibleToTop() {
+    window.pageYOffset > clientHeight ? toTop.classList.add('show') : toTop.classList.remove('show');
+  }
+
+  document.addEventListener('DOMContentLoaded', visibleToTop, false);
+  document.addEventListener('scroll', visibleToTop, false);
+  document.addEventListener('click', function (_ref) {
+    var target = _ref.target;
+    var toTop = target.closest(selector);
+    toTop && window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth"
+    });
+  }, false);
+})(); //Reload page checkbox category
+
 
 (function () {
   var form = document.querySelector('#sidebar-filter') || false;

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class CartController
 {
+    private $order_sum = 0;
     /**
      * Получение данных о товарах в корзине
      */
@@ -39,6 +40,8 @@ class CartController
 
             $orderItem['price'] = $product->getPriceAttribute();
 
+            $this->order_sum += $orderItem['price'];
+
             $orderItem['grade'] = $product->getDetails('grade');
 
             $orderItem['defective_attributes'] = $product->data['defective_attributes'];
@@ -56,9 +59,10 @@ class CartController
 
     public function getCartProductsTable() {
         $orderProducts = $this->getCartProducts();
+        $order_sum = $this->order_sum;
         return response()->json(
             [
-                'body' => view('site.orders.components.modal', compact('orderProducts'))->render()
+                'body' => view('site.orders.components.modal', compact('orderProducts','order_sum'))->render()
             ]
         );
     }
@@ -78,6 +82,7 @@ class CartController
         return view('site.orders.cart', [
             'orderProducts' => $orderProducts,
             'areas' => $areas,
+            'order_sum' => $this->order_sum
         ]);
     }
 

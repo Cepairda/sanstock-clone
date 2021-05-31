@@ -77,12 +77,58 @@ label {
 	flex: 1 0 auto;
 }
 
+#to-top {
+	position: fixed;
+	right: 30px;
+	bottom: 30px;
+	bottom: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 35px;
+	height: 35px;
+	border-radius: 3px;
+	border: 1px solid $color-base;
+	opacity: 0;
+	z-index: 1000;
+	background-color: $color-base;
+	color: #fff;
+	cursor: pointer;
+	visibility: hidden;
+	transition: .3s;
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		background-color: transparent;
+		background-image: url($chevron-up-white);
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 24px;
+		z-index: 1050;
+	}
+
+	&.show {
+		visibility: visible;
+		opacity: .5;
+
+		&:hover {
+			opacity: 1;
+			box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+		}
+	}
+}
+
 footer {
 	flex-shrink: 0;
 }
 
 .main-container {
-	padding-bottom: 70px;
+	padding-bottom: $gap;
 
 	&__title {
 
@@ -118,6 +164,11 @@ footer {
 	}
 }
 
+.table-hover tbody tr.not-hover:hover {
+	color: inherit;
+	background-color: inherit;
+}
+
 //nav tabs
 .nav-tabs {
 	border-color: $color-base;
@@ -143,6 +194,12 @@ footer {
 /*input price*/
 .text-lg {
 	font-size: 11px;
+}
+
+//lightGallery
+.lg-actions .lg-next,
+.lg-actions .lg-prev {
+	font-size: 30px;
 }
 
 .inp-price-min, .inp-price-max {
