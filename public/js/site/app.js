@@ -28833,7 +28833,32 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   });
   $('[data-toggle="tooltip"]').tooltip();
   $('[type="tel"]').mask('+38 (000) 000-00-00');
-}); //Reload page checkbox category
+}); //To top
+
+(function () {
+  var selector = '#to-top';
+  var coefficient = 2;
+  var toTop = document.querySelector(selector);
+  var clientHeight = document.documentElement.clientHeight / coefficient;
+
+  if (!toTop) {
+    return;
+  }
+
+  document.addEventListener('scroll', function () {
+    return window.pageYOffset > clientHeight ? toTop.classList.add('show') : toTop.classList.remove('show');
+  }, false);
+  document.addEventListener('click', function (_ref) {
+    var target = _ref.target;
+    var toTop = target.closest(selector);
+    toTop && window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth"
+    });
+  }, false);
+})(); //Reload page checkbox category
+
 
 (function () {
   var form = document.querySelector('#sidebar-filter') || false;
