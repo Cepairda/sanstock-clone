@@ -100,6 +100,7 @@
     "Recent receipts": "Останні надходження",
     "Profit": "Вигода",
     "Old price": "Стара ціна",
+    "There is no product of this sort": "Товару даного сорту - немає",
     "Checkout order": "Оформлення",
     "Surname": "Прізвище",
     "Patronymic": "По батькові",
@@ -122,5 +123,6 @@
     "Filters": "Фільтри",
     "Product code": "Код товару",
     "Name of": "Найменування",
-    "Go to checkout": "Перейти до оформлення"
+    "Go to checkout": "Перейти до оформлення",
+    "Enter apartment number": "Введіть номер квартири"
 }

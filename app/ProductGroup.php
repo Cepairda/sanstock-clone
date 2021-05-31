@@ -204,7 +204,9 @@ class ProductGroup extends Resource
     public function scopeWithProductsSort($query)
     {
         return $query->with(['productsSort' => function($query) {
-            return $query->withProducts();
+            return $query->whereHas('products', function ($query) {
+                $query->where('details->balance', '>', 0);
+            })->withProducts();
         }]);
     }
 }

@@ -84,13 +84,13 @@
                 <div class="col-12 col-lg-6 card__wrapper">
                     <p class="card__code">Код:<span class="card__code-id ml-1">{{ $productGroup->sd_code }}</span></p>
                     <div class="card__price--inner p-1">
-                        <div class="card__price--wrapp">
+                         <div class="card__price--wrapp"{{ $togglePrice ?: 'hidden' }}>
                             @php($addClassToPrice = 'updatePriceJs')
                             <div class="characteristic-list__wrap">
                                 <div class="characteristic-list__item list-normal">
                                     <span>{{ __('Old price') }}:</span>
                                     <span class="price-old">
-                                        <span data-sort="price-normal">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->normalPrice : 0),0,'',' ') }}</span>
+                                        <span data-sort="price-normal">{{ number_format(ceil($togglePrice ? $productsSort[$sort]->normalPrice : 0),0,'',' ') }}</span>
                                         <span>грн.</span>
                                     </span>
                                 </div>
@@ -98,7 +98,7 @@
                                 <div class="characteristic-list__item list-price">
                                     <span>{{ __('Price') }}:</span>
                                     <span>
-                                        <span class="{{ $addClassToPrice }}" data-product-sku="{{ $productGroup->sku }}" data-sort="price">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->price : 0),0,'',' ') }}</span>
+                                        <span class="{{ $addClassToPrice }}" data-product-sku="{{ $productGroup->sku }}" data-sort="price">{{ number_format(ceil($togglePrice ? $productsSort[$sort]->price : 0),0,'',' ') }}</span>
                                         <span>грн.</span>
                                     </span>
                                 </div>
@@ -106,7 +106,7 @@
                                 <div class="characteristic-list__item list-difference">
                                     <span>{{ __('Profit') }}:</span>
                                     <span class="price-difference">
-                                        <span data-sort="price-difference">{{ number_format(ceil($togglePrice ? $productsSort[$firstExistSort]->differencePrice : 0),0,'',' ') }}</span>
+                                        <span data-sort="price-difference">{{ number_format(ceil($togglePrice ? $productsSort[$sort]->differencePrice : 0),0,'',' ') }}</span>
                                         <span>грн.</span>
                                     </span>
                                 </div>
@@ -193,8 +193,8 @@
                                                 'differencePrice' => $productsSort[$_sort]->differencePrice,
                                             ])
                                         @else
-                                            <div style="text-align: center;">
-                                                <p>{{ 'Товара данного сорта - нет' }}</p>
+                                            <div class="text-center h5 pt-5">
+                                                {{ __('There is no product of this sort') }}
                                             </div>
                                         @endif
                                     </div>

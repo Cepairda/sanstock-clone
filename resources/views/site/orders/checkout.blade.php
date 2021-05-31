@@ -66,6 +66,24 @@
                                         </div>
                                     </div>
 
+                                    <!-- Имя -->
+                                    <div class="col-12 col-xl-6">
+                                        <div class="form-group @error('new_mail_name') is-invalid @enderror">
+                                            <input id="new_mail_name"
+                                                   class="w-100"
+                                                   type="text"
+                                                   name="new_mail_name"
+                                                   value=""
+                                                   required>
+                                            <label class="required" for="new_mail_name">{{ __('Name') }}</label>
+                                            @error('new_mail_name')
+                                            <span class="invalid-feedback">
+                                                    {{ $message }}
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
                                     <!-- Отчество -->
                                     <div class="col-12 col-xl-6">
                                         <div class="form-group @error('new_mail_patronymic') is-invalid @enderror">
@@ -85,23 +103,7 @@
                                         </div>
                                     </div>
 
-                                    <!-- Имя -->
-                                    <div class="col-12 col-xl-6">
-                                        <div class="form-group @error('new_mail_name') is-invalid @enderror">
-                                            <input id="new_mail_name"
-                                                   class="w-100"
-                                                   type="text"
-                                                   name="new_mail_name"
-                                                   value=""
-                                                   required>
-                                            <label class="required" for="new_mail_name">{{ __('Name') }}</label>
-                                            @error('new_mail_name')
-                                                <span class="invalid-feedback">
-                                                    {{ $message }}
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
+
 
                                     <!-- Номер телефона -->
                                     <div class="col-12 col-xl-6">
@@ -268,7 +270,7 @@
                                             <input id="new_mail_apartment"
                                                    name="new_mail_apartment"
                                                    class="w-100"
-                                                   placeholder="Введить номер квартири"
+                                                   placeholder="{{ __('Enter apartment number') }}"
                                                    type="text">
                                             <label for="new_mail_apartment">{{ __('Flat') }}</label>
                                         </div>

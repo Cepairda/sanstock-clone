@@ -69,7 +69,7 @@
                     <div class="row main__filter">
                         @if($productsSort->isNotEmpty())
                             <main class="col-sm-12 col-lg-8 col-xl-9 order-2">
-                                <div class="main__title">{!! $category->h1 !!}</div>
+                                <div class="main__title">{!! $category->getData('name') !!}</div>
                                 {!! isset($json_ld) ? $json_ld : '' !!}
                                 <div class="main__sort">
                                     {{--<p>{{ __('Sort') }}:</p>--}}

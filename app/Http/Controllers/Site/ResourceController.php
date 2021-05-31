@@ -44,7 +44,6 @@ class ResourceController extends Controller
                 ];
                 $data['additional'] = temp_additional($data['productGroup']->sdCode);
                 $productsSort = [];
-                $sortFromDb = null;
 
                 foreach ($data['productGroup']->productsSort as $productSort) {
                     $productsSort[$productSort->grade] = $productSort;
@@ -52,8 +51,9 @@ class ResourceController extends Controller
 
                 $productsSortKeys = array_keys($productsSort);
                 $sortType = [0, 1, 2, 3];
-                $sort = isset($sortType[$sortGet]) ? $sortGet : min($productsSortKeys);
-                $firstExistSort = min($productsSortKeys);
+                $firstExistSort = $productsSortKeys ? min($productsSortKeys) : null;
+                $sort = isset($sortType[$sortGet]) ? $sortGet : $firstExistSort;
+
 
                 $togglePrice = in_array($sort, $productsSortKeys);
 

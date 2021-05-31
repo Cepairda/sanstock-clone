@@ -1,7 +1,7 @@
 (function () {
     "use strict";
     require('select2/dist/js/select2.full.min');
-    window.removeDiacritics = function (str) {
+    function removeDiacritics(str) {
         let diacriticsRemovalMap = [
             {
                 'base': 'A',

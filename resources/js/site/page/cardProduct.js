@@ -26,28 +26,35 @@
         let nr = this.dataset.normal;
         let df = this.dataset.difference;
         if(pr !== '') {
-            document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
-            priceI.classList.add('collapsing');
-            priceW.hidden = false;
-            priceI.style.height = priceI.scrollHeight + 'px';
-            setTimeout( () => {
-                priceI.classList.remove('collapsing');
-                priceI.style.height = null
-            }, 350);
+            if (priceW.hidden) {
+                priceW.hidden = false;
+                document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
+                priceW.hidden = true;
+                priceI.classList.add('collapsing');
+                priceW.hidden = false;
+                priceI.style.height = priceI.scrollHeight + 'px';
+                setTimeout(() => {
+                    priceI.classList.remove('collapsing');
+                    priceI.style.height = null
+                }, 350);
+            }
             price.textContent = pr;
             priceN.textContent = nr;
             priceD.textContent = df;
         } else {
+            if(!priceW.hidden) {
             priceI.style.height = priceI.scrollHeight + 'px';
-            document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
-            priceI.classList.add('collapsing');
-            setTimeout( () => {
-                priceI.style.height = null;
+                document.querySelector('.card__wrapper').style.height = document.querySelector('.card__wrapper').scrollHeight + 'px';
+                priceI.classList.add('collapsing');
+                setTimeout(() => {
+                    priceI.style.height = null;
                 }, 160);
-            setTimeout( () => {
-                priceW.hidden = true;
-                priceI.classList.remove('collapsing');
-            }, 350);
+                setTimeout(() => {
+                    priceW.hidden = true;
+                    priceI.classList.remove('collapsing');
+                }, 350);
+            }
+
         }
 
         toSort.href = `#sort-tab-${sortNumber}`;

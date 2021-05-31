@@ -11004,7 +11004,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   __webpack_require__(/*! select2/dist/js/select2.full.min */ "./node_modules/select2/dist/js/select2.full.min.js");
 
-  window.removeDiacritics = function (str) {
+  function removeDiacritics(str) {
     var diacriticsRemovalMap = [{
       'base': 'A',
       'letters': /[\u0041\u24B6\uFF21\u00C0\u00C1\u00C2\u1EA6\u1EA4\u1EAA\u1EA8\u00C3\u0100\u0102\u1EB0\u1EAE\u1EB4\u1EB2\u0226\u01E0\u00C4\u01DE\u1EA2\u00C5\u01FA\u01CD\u0200\u0202\u1EA0\u1EAC\u1EB6\u1E00\u0104\u023A\u2C6F]/g
@@ -11264,8 +11264,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
 
     return str;
-  };
+  }
 
+  ;
   $(document).ready(function () {
     var container = document.querySelector('div.container-delivery-form');
     var defaultSelect2Options = {
@@ -11475,7 +11476,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Work\OpenServer\domains\sanstock\resources\js\site\page\checkout.js */"./resources/js/site/page/checkout.js");
+module.exports = __webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\js\site\page\checkout.js */"./resources/js/site/page/checkout.js");
 
 
 /***/ })

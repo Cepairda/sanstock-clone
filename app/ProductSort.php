@@ -226,7 +226,7 @@ class ProductSort extends Resource
     public function scopeWithProducts($query, $joinLocalization = true)
     {
         return $query->with(['products' => function ($query) use ($joinLocalization) {
-            if ($joinLocalization) return $query->select('*')->joinLocalization();
+            if ($joinLocalization) return $query->select('*')->where('details->balance', '>', 0)->joinLocalization();
         }]);
     }
 

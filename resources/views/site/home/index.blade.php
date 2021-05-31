@@ -21,7 +21,7 @@
                         <div class="tabs-products__btn-group">
                             <!--button class="btn btn-item active" data-toggle="#sort-0">Сорт - 0</button-->
                             @foreach($productsGradeKey as $key => $value)
-                                <button class="btn btn-item {{ $value == $gradeActiveDefault ? 'active' : ''}}" data-toggle="#sort-{{ $value }}">Сорт - {{ $value }}</button>
+                                <button class="btn btn-item {{ $value == $gradeActiveDefault ? 'active' : ''}}" data-toggle="#sort-{{ $value }}" style="font-style: italic">Сорт-{{ $value }}</button>
                             @endforeach
                         </div>
                     </div>
@@ -50,72 +50,7 @@
             </div>
         </div>
 
-        <!-- Info-blocks -->
-        <div class="info-blocks">
-            <div class="container">
-                <div class="row">
-
-                    <!-- Sort-0 -->
-                    <div class="col-12">
-                        <div class="info-block">
-                            <div class="info-block__image">
-                                <img src="{{ asset('images/site/home-popular-category/' . 5428 . '_230.webp') }}"
-                                     alt="ceramics-title">
-                            </div>
-
-                            <div class="info-block__desc">
-                                <h3>Сорт-0</h3>
-                                <p>{{ __('descriptions.desc_sort-0') }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sort-1 -->
-                    <div class="col-12">
-                        <div class="info-block">
-                            <div class="info-block__desc">
-                                <h3><i>Сорт-1</i></h3>
-                                <p>{{ __('descriptions.desc_sort-1') }}</p>
-                            </div>
-                            <div class="info-block__image">
-                                <img src="{{ asset('images/site/home-popular-category/' . 5452 . '_230.webp') }}"
-                                     alt="ceramics-title">
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!-- Sort-2 -->
-                    <div class="col-12">
-                        <div class="info-block">
-                            <div class="info-block__image">
-                                <img src="{{ asset('images/site/home-popular-category/' . 5443 . '_230.webp') }}"
-                                     alt="ceramics-title">
-                            </div>
-
-                            <div class="info-block__desc">
-                                <h3>Сорт-2</h3>
-                                <p>{{ __('descriptions.desc_sort-2') }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sort-3 -->
-                    <div class="col-12">
-                        <div class="info-block">
-                            <div class="info-block__desc">
-                                <h3><i>Сорт-3</i></h3>
-                                <p>{{ __('descriptions.desc_sort-3') }}</p>
-                            </div>
-                            <div class="info-block__image">
-                                <img src="{{ asset('images/site/home-popular-category/' . 5442 . '_230.webp') }}"
-                                     alt="ceramics-title">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       @include('site.home.components.infoBlock')
 
     </main>
 
