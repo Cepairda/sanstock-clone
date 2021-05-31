@@ -36,7 +36,7 @@
                         </li>
 
                         <li class="header-nav__item">
-                            <a class="disabled" href="#">{{ __('Delivery') }}</a>
+                            <a href="{{ asset('/delivery') }}">{{ __('Delivery') }}</a>
                         </li>
 
                         <li class="header-nav__item">
