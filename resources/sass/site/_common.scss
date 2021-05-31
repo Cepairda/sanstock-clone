@@ -110,7 +110,7 @@ label {
 		background-image: url($chevron-up-white);
 		background-position: center;
 		background-repeat: no-repeat;
-		background-size: 18px;
+		background-size: 24px;
 		z-index: 1050;
 	}
 
@@ -164,6 +164,11 @@ footer {
 		text-align: center;
 		vertical-align: middle;
 	}
+}
+
+.table-hover tbody tr.not-hover:hover {
+	color: inherit;
+	background-color: inherit;
 }
 
 //nav tabs

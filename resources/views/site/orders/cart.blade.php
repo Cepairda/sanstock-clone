@@ -35,16 +35,16 @@
                     @include('site.orders.components.cartNavigations')
 
                     @else
-                    <div class="col-12">
-                        <div class="cart__empty">
-                            <div class="cart__empty--img">
-                                <span class="icon-cart"></span>
+                        <div class="col-12">
+                            <div class="cart__empty">
+                                <div class="cart__empty--img">
+                                    <span class="icon-cart"></span>
+                                </div>
+                                <p class="cart__empty--title">
+                                    {{ __('Cart empty') }}
+                                </p>
                             </div>
-                            <p class="cart__empty--title">
-                                {{ __('Cart empty') }}
-                            </p>
                         </div>
-                    </div>
                 @endif
             </div>
         </div>

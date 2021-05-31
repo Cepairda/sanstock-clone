@@ -16393,7 +16393,7 @@ label {
   background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline fill='none' stroke='%23fff' stroke-width='1.03' points='4 13 10 7 16 13'%3E%3C/polyline%3E%3C/svg%3E");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 18px;
+  background-size: 24px;
   z-index: 1050;
 }
 #to-top.show {
@@ -16435,6 +16435,11 @@ footer {
 .cart__table table td {
   text-align: center;
   vertical-align: middle;
+}
+
+.table-hover tbody tr.not-hover:hover {
+  color: inherit;
+  background-color: inherit;
 }
 
 .nav-tabs {
