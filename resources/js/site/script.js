@@ -50,7 +50,11 @@ $(document).ready(function () {
     if (!toTop) {
         return;
     }
-    document.addEventListener('scroll', () => (window.pageYOffset > clientHeight ? toTop.classList.add('show') : toTop.classList.remove('show')), false);
+    function visibleToTop() {
+        window.pageYOffset > clientHeight ? toTop.classList.add('show') : toTop.classList.remove('show')
+    }
+    document.addEventListener('DOMContentLoaded', visibleToTop ,false);
+    document.addEventListener('scroll', visibleToTop, false);
     document.addEventListener('click', ({target}) => {
         const toTop = target.closest(selector);
         toTop && window.scrollTo({top: 0, left: 0, behavior: "smooth"});

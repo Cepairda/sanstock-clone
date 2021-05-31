@@ -28849,9 +28849,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     return;
   }
 
-  document.addEventListener('scroll', function () {
-    return window.pageYOffset > clientHeight ? toTop.classList.add('show') : toTop.classList.remove('show');
-  }, false);
+  function visibleToTop() {
+    window.pageYOffset > clientHeight ? toTop.classList.add('show') : toTop.classList.remove('show');
+  }
+
+  document.addEventListener('DOMContentLoaded', visibleToTop, false);
+  document.addEventListener('scroll', visibleToTop, false);
   document.addEventListener('click', function (_ref) {
     var target = _ref.target;
     var toTop = target.closest(selector);

@@ -59,9 +59,10 @@ class CartController
 
     public function getCartProductsTable() {
         $orderProducts = $this->getCartProducts();
+        $order_sum = $this->order_sum;
         return response()->json(
             [
-                'body' => view('site.orders.components.modal', compact('orderProducts'))->render()
+                'body' => view('site.orders.components.modal', compact('orderProducts','order_sum'))->render()
             ]
         );
     }
