@@ -33,6 +33,7 @@
 		right: 0;
 		bottom: 0;
 		left: 0;
+        display: none;
         max-width: 320px;
 		background-color: #fff;
 		transform: translateX(-100%);
@@ -47,6 +48,7 @@
 
 		@media (min-width: 992px) {
 			position: static;
+            display: block;
 			min-height: 60px;
 			max-width: none;
 			transform: translateX(0);

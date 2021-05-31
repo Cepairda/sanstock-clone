@@ -14918,6 +14918,7 @@ p.text--hide.active {
   right: 0;
   bottom: 0;
   left: 0;
+  display: none;
   max-width: 320px;
   background-color: #fff;
   transform: translateX(-100%);
@@ -14930,6 +14931,7 @@ p.text--hide.active {
 @media (min-width: 992px) {
   .header-nav {
     position: static;
+    display: block;
     min-height: 60px;
     max-width: none;
     transform: translateX(0);

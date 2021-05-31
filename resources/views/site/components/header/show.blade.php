@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-12">
 
-                <div class="header-top__btn">
+                <div class="header-top__btn" hidden>
 
                     <button id="open-nav" type="button" class="open">Навигация</button>
 

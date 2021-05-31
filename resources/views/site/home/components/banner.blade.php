@@ -6,12 +6,13 @@
             <div class="col-12">
 
                 @php
+                    $local = LaravelLocalization::getCurrentLocale();
                     $slides = [
 
-                        ['link' => 'images/site/home-slider/slide-1.png', 'title' => 'Lorem.', 'sub_title' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, pariatur.'],
-                        ['link' => 'images/site/home-slider/slide-2.png', 'title' => 'Lorem ipsum dolor sit.', 'sub_title' => 'Lorem ipsum dolor sit amet.'],
-                        ['link' => 'images/site/home-slider/slide-3.png', 'title' => 'Lorem ipsum dolor sit.', 'sub_title' => 'Lorem ipsum dolor sit amet.'],
-                        ['link' => 'images/site/home-slider/slide-4.png', 'title' => 'Lorem ipsum dolor sit.', 'sub_title' => 'Lorem ipsum dolor sit amet.'],
+                        ['link' => 'images/site/home-slider/' . $local . '/slide-1.png', 'title' => 'Lorem.', 'sub_title' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, pariatur.'],
+                        ['link' => 'images/site/home-slider/' . $local . '/slide-2.png', 'title' => 'Lorem ipsum dolor sit.', 'sub_title' => 'Lorem ipsum dolor sit amet.'],
+                        ['link' => 'images/site/home-slider/' . $local . '/slide-3.png', 'title' => 'Lorem ipsum dolor sit.', 'sub_title' => 'Lorem ipsum dolor sit amet.'],
+                        ['link' => 'images/site/home-slider/' . $local . '/slide-4.png', 'title' => 'Lorem ipsum dolor sit.', 'sub_title' => 'Lorem ipsum dolor sit amet.'],
                     ];
                     $slide_active = 0;
                 @endphp

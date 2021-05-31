@@ -28917,8 +28917,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\js\site\app.js */"./resources/js/site/app.js");
-module.exports = __webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\sass\site\app.scss */"./resources/sass/site/app.scss");
+__webpack_require__(/*! D:\Work\OpenServer\domains\sanstock\resources\js\site\app.js */"./resources/js/site/app.js");
+module.exports = __webpack_require__(/*! D:\Work\OpenServer\domains\sanstock\resources\sass\site\app.scss */"./resources/sass/site/app.scss");
 
 
 /***/ })

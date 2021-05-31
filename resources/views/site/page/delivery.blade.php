@@ -32,7 +32,7 @@
                         >Наша цель, чтобы купленный в интернет-магазине «SandiStock» товар, в кратчайшие сроки был доставлен покупателю.</h6>
 
                         <div class="mb-4">
-                            <img class="w-100" src="{{ asset('images/site/delivery.jpg') }}" alt="{{ __('Delivery') }}">
+                            <img class="w-100" src="{{ asset('images/site/banners/' . LaravelLocalization::getCurrentLocale() . '/delivery.png') }}" alt="{{ __('Delivery') }}">
                         </div>
 
                         <h4 class="pt-4 mb-2">Условия доставки</h4>
