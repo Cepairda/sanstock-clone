@@ -56,12 +56,14 @@
 
 
             @endforeach
+            @if(isset($order_sum))
             <tr class="not-hover">
                 <td colspan="3"></td>
                 <td class="text-right">{{ __('Total') }}:</td>
                 <td>{{  number_format(ceil($order_sum),0,'',' ') }} грн.</td>
                 <td></td>
             </tr>
+            @endif
         </tbody>
     </table>
 </div>
