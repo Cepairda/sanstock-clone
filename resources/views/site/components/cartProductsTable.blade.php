@@ -52,6 +52,8 @@
 
             </tr>
             </tbody>
+
         @endforeach
+        Итого: {{ $order_sum }}
     </table>
 </div>
