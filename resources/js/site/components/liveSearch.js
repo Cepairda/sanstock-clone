@@ -71,12 +71,13 @@
             window.lazyLoadImg.toRun();
             let val  = liveSearchForm.querySelector('.search_error');
             val && val.insertAdjacentHTML('beforeend', `<p class="search-text-info">${i18n.notFound[localization()]}:<span class="text-body ml-1">"${value}"</span></p>`);
-            searchResult.style.height = (searchResult.firstElementChild.scrollHeight + +1) + 'px';
+            setTimeout(()=> searchResult.style.height = (searchResult.firstElementChild.scrollHeight + +1) + 'px', 160);
             mark(value);
         }
     }
 
     inputSearch.oninput = function () {
+        console.log('oninput');
         let value = this.value.trim();
         const enter = () => {
             if (value.length >= 3) {
@@ -92,10 +93,10 @@
         };
 
         debounce(enter(), 500);
-  //delay(function () {}, 500);
     };
 
     inputSearch.onfocus = function () {
+        console.log('onfocus');
         liveSearchForm.classList.add('active');
     };
 

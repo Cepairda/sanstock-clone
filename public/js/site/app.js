@@ -25804,7 +25804,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               window.lazyLoadImg.toRun();
               val = liveSearchForm.querySelector('.search_error');
               val && val.insertAdjacentHTML('beforeend', "<p class=\"search-text-info\">".concat(i18n.notFound[localization()], ":<span class=\"text-body ml-1\">\"").concat(value, "\"</span></p>"));
-              searchResult.style.height = searchResult.firstElementChild.scrollHeight + +1 + 'px';
+              setTimeout(function () {
+                return searchResult.style.height = searchResult.firstElementChild.scrollHeight + +1 + 'px';
+              }, 160);
               mark(value);
 
             case 15:
@@ -25818,6 +25820,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   }
 
   inputSearch.oninput = function () {
+    console.log('oninput');
     var value = this.value.trim();
 
     var enter = function enter() {
@@ -25833,10 +25836,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     };
 
-    debounce(enter(), 500); //delay(function () {}, 500);
+    debounce(enter(), 500);
   };
 
   inputSearch.onfocus = function () {
+    console.log('onfocus');
     liveSearchForm.classList.add('active');
   };
 
