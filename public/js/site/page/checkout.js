@@ -11285,11 +11285,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var afterActions = [],
           _setOptions = function _setOptions(node, options) {
+        var x = document.querySelector('#new_mail_delivery_type').value;
+
+        var disabledSelect = function disabledSelect() {
+          if (x === 'storage_door' && node[0].id === 'new_mail_warehouse') {
+            return true;
+          }
+
+          if (x === 'storage_storage' && node[0].id === 'new_mail_street') {
+            return true;
+          }
+
+          return options.length === 0;
+        };
+
         if (node.attr("data-select2-id")) {
           node.select2('destroy');
         }
 
-        node.html('').prop("disabled", options.length === 0).select2($.extend({}, select2Options, {
+        node.html('').prop("disabled", disabledSelect()).select2($.extend({}, select2Options, {
           data: options
         })).trigger("change");
       }; // Register functions to be called after cascading data loading done
@@ -11450,6 +11464,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
 
     function valid(value) {
+      var data = {
+        id: "",
+        text: "",
+        alt: ""
+      };
+      var $city = $("#new_mail_city");
+      var $warehouse = $("#new_mail_warehouse");
+      var $street = $("#new_mail_street");
+      var newOption = new Option(data.text, data.id, false, false);
+      $city.append(newOption).trigger('change');
+      $warehouse.append(newOption).trigger('change');
+      $street.append(newOption).trigger('change');
+
       for (var id in action[value]) {
         var node = container.querySelector("#".concat(id));
         var val = action[value][id];

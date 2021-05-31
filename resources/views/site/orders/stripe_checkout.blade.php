@@ -4,13 +4,7 @@
 @section('meta_description',  __('Checkout description'))
 
 @section('breadcrumbs')
-{{--    <li class="breadcrumb-item" itemprop="itemListElement"--}}
-{{--        itemscope itemtype="https://schema.org/ListItem">--}}
-{{--        <a href="{{ asset('/cart') }}" itemprop="item" content="{{ asset('/cart') }}">--}}
-{{--            <span itemprop="name">{{ __('Cart') }}</span>--}}
-{{--        </a>--}}
-{{--        <meta itemprop="position" content="2"/>--}}
-{{--    </li>--}}
+
     <li class="breadcrumb-item active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
         <span itemprop="name">
            Заказ оформлен
