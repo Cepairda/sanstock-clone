@@ -31,8 +31,7 @@
 
                     for (let productData in dataApi) {
                         if (data.dataset.productSortSdCode == dataApi[productData]['sdCode'] && +data.dataset.productSortGrade == dataApi[productData]['grade']) {
-                            data.innerHTML = parseInt(dataApi[productData]['price']).toLocaleString('ru-Ru');
-
+                            data.innerHTML = parseInt(Math.ceil(dataApi[productData]['price'])).toLocaleString('ru-Ru');
                             /* if (dataApi[skuApi]['discount_price']) {
                                 sku.innerHTML = "<span>" + parseInt(dataApi[skuApi]['discount_price']).toLocaleString('ru-Ru') +"</span>  &nbsp;&nbsp;&nbsp;<span>" + parseInt(dataApi[skuApi]['price']).toLocaleString('ru-Ru') +"</span>";
                             } else {

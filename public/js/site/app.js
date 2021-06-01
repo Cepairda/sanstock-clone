@@ -25992,7 +25992,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
             for (var productData in dataApi) {
               if (data.dataset.productSortSdCode == dataApi[productData]['sdCode'] && +data.dataset.productSortGrade == dataApi[productData]['grade']) {
-                data.innerHTML = parseInt(dataApi[productData]['price']).toLocaleString('ru-Ru');
+                data.innerHTML = parseInt(Math.ceil(dataApi[productData]['price'])).toLocaleString('ru-Ru');
                 /* if (dataApi[skuApi]['discount_price']) {
                     sku.innerHTML = "<span>" + parseInt(dataApi[skuApi]['discount_price']).toLocaleString('ru-Ru') +"</span>  &nbsp;&nbsp;&nbsp;<span>" + parseInt(dataApi[skuApi]['price']).toLocaleString('ru-Ru') +"</span>";
                 } else {
@@ -28921,8 +28921,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\js\site\app.js */"./resources/js/site/app.js");
-module.exports = __webpack_require__(/*! C:\Project\OpenServer\domains\sanstock.local\resources\sass\site\app.scss */"./resources/sass/site/app.scss");
+__webpack_require__(/*! /var/www/resources/js/site/app.js */"./resources/js/site/app.js");
+module.exports = __webpack_require__(/*! /var/www/resources/sass/site/app.scss */"./resources/sass/site/app.scss");
 
 
 /***/ })

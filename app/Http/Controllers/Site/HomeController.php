@@ -10,7 +10,10 @@ class HomeController
     $productsBySort = [];
 
     for ($i = 0; $i < 4; $i++) {
-        $productsGrade[] = ProductSort::joinLocalization()->withProductGroup()->where('details->grade', $i)->limit(8)->get();
+        $productsGrade[] = ProductSort::joinLocalization()
+            ->withProductGroup()
+            ->withNotShowProductsBalanceZero()
+            ->where('details->grade', $i)->limit(8)->get();
     }
 
     foreach ($productsGrade as $key => $value) {
