@@ -30,11 +30,11 @@
                     </div>
                 </div>
 
-                <div class="col-sm-5  main__contacts-form">
+                <div class="col-sm-5 main__contacts-form">
 
                     <p class="main__contacts-form--title">{{ __('Write to Email') }}</p>
 
-                    <form class="contacts-form--lg" action="{{-- url('contact-form') --}}" method="post">
+                    <form class="contacts-form--lg" action="{{-- url('contact-form') --}}" method="">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <input type="text" id="name" name="name" required>
