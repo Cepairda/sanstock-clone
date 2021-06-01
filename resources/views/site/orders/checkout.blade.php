@@ -279,8 +279,8 @@
                                     <!-- Комментарий к заказу -->
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <textarea class="w-100" name="" id="" cols="30" rows="10"></textarea>
-                                            <label for="new_mail_apartment">{{ __('Comment on the order') }}</label>
+                                            <textarea class="w-100" name="new_mail_comment" id="" cols="30" rows="10"></textarea>
+                                            <label for="new_mail_comment">{{ __('Comment on the order') }}</label>
                                         </div>
                                     </div>
 
