@@ -20,7 +20,7 @@
 
         @include('site.components.breadcrumbs', ['title' => __('Contacts')])
 
-        <div class="container">
+        <div class="container container-gap-sm">
 
             <div class="row justify-content-center">
 

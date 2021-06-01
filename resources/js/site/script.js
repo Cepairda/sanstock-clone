@@ -39,6 +39,12 @@ $(document).ready(function () {
 
     $('[data-toggle="tooltip"]').tooltip();
     $('[type="tel"]').mask('+38 (000) 000-00-00');
+
+
+    document.addEventListener('click', (e) => {
+        const nLink = e.target.closest('a.disabled');
+        nLink && e.preventDefault();
+    })
 });
 
 //To top

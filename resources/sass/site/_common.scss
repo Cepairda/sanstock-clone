@@ -40,7 +40,11 @@ a {
 
 	&.disabled {
 		cursor: default;
-		color: $grey-midl-light !important;
+		//color: $grey-midl-light !important;
+		opacity: .5;
+		&:hover {
+			color: inherit;
+		}
 	}
 }
 

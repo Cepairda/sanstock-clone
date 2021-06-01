@@ -27,16 +27,17 @@ $grey-light: lighten($grey, 18%);
 //Gap
 $gap-xl: 150px;
 $gap: 75px;
-$gap-sm: 35px;
+$gap-sm: 50px;
 
+
+
+//For bgc lightgallery.js
 $lg-path-fonts : '../../../fonts/site/lg';
 $lg-path-images: '../../../images/site/lg';
 
 $lg-next-prev-bg: $c6; //Next prev controls background color
 $lg-next-prev-color: $c6; //Next prev controls icon color
 $lg-next-prev-hover-color: $c5; //Next prev controls icon color on hover
-
-//For bgc lightgallery.js
 $backdrop-opacity: .35;
 
 //
