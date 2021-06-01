@@ -6,9 +6,9 @@
         <div class="row">
             <div class="col-12">
 
-                <div class="header-top__btn">
+                <div class="header-top__btn" hidden>
 
-                    <button id="open-nav" type="button" class="open">Навигация</button>
+                    <button id="open-nav" type="button" class="open"></button>
 
                 </div>
 
@@ -46,7 +46,7 @@
                         <li class="header-nav__item item-right">
                             <div class="header-nav__item--phone">
                                 <span class="icon-callback"></span>
-                                <a href="tel:0800212124">0-800-21-21-24</a >
+                                <a href="tel:0800217122">0-800-21-71-22</a >
                             </div>
                         </li>
                         <li class="header-nav__item">

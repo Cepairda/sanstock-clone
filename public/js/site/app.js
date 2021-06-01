@@ -28837,6 +28837,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   });
   $('[data-toggle="tooltip"]').tooltip();
   $('[type="tel"]').mask('+38 (000) 000-00-00');
+  document.addEventListener('click', function (e) {
+    var nLink = e.target.closest('a.disabled');
+    nLink && e.preventDefault();
+  });
 }); //To top
 
 (function () {

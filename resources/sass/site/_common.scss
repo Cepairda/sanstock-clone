@@ -40,7 +40,11 @@ a {
 
 	&.disabled {
 		cursor: default;
-		color: $grey-midl-light !important;
+		//color: $grey-midl-light !important;
+		opacity: .5;
+		&:hover {
+			color: inherit;
+		}
 	}
 }
 
@@ -78,15 +82,12 @@ label {
 }
 
 #to-top {
-	position: fixed;
-	right: 30px;
-	bottom: 30px;
-	bottom: 40px;
+	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 35px;
-	height: 35px;
+	width: 40px;
+	height: 40px;
 	border-radius: 3px;
 	border: 1px solid $color-base;
 	opacity: 0;
@@ -147,10 +148,46 @@ footer {
 	padding-top: $gap;
 
 	&-sm {
-		padding-top: $gap-sm;
+		padding-top: $gap-xs;
+		@media (min-width: 992px) {
+			padding-top: $gap-sm;
+		}
+
 	}
 	&-xl {
 		padding-top: $gap-xl;
+	}
+}
+
+//links-to-message
+.links-fixed {
+	position: fixed;
+	right: 30px;
+	bottom: 40px;
+
+	li {
+		transition: transform 300ms ease;
+		&:not(:last-of-type) {
+			margin-bottom: 15px;
+		}
+
+		&:hover {
+			transform: scale(1.1);
+		}
+		a {
+			font-size: 0;
+			display: block;
+			width: 40px;
+			height: 40px;
+			background-size: cover;
+		}
+	}
+
+	.link-viber  a {
+		background-image: url("../../images/site/icons/viber.png");
+	}
+	.link-telegram  a {
+		background-image: url("../../images/site/icons/telegram.png");
 	}
 }
 

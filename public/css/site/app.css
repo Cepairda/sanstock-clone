@@ -14918,6 +14918,7 @@ p.text--hide.active {
   right: 0;
   bottom: 0;
   left: 0;
+  display: none;
   max-width: 320px;
   background-color: #fff;
   transform: translateX(-100%);
@@ -14930,6 +14931,7 @@ p.text--hide.active {
 @media (min-width: 992px) {
   .header-nav {
     position: static;
+    display: block;
     min-height: 60px;
     max-width: none;
     transform: translateX(0);
@@ -16324,7 +16326,10 @@ a:active, a:hover {
 }
 a.disabled {
   cursor: default;
-  color: #d7d7d7 !important;
+  opacity: 0.5;
+}
+a.disabled:hover {
+  color: inherit;
 }
 
 i {
@@ -16368,15 +16373,12 @@ label {
 }
 
 #to-top {
-  position: fixed;
-  right: 30px;
-  bottom: 30px;
-  bottom: 40px;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   border-radius: 3px;
   border: 1px solid #009acf;
   opacity: 0;
@@ -16430,8 +16432,41 @@ footer {
 .container-gap-sm {
   padding-top: 35px;
 }
+@media (min-width: 992px) {
+  .container-gap-sm {
+    padding-top: 50px;
+  }
+}
 .container-gap-xl {
   padding-top: 150px;
+}
+
+.links-fixed {
+  position: fixed;
+  right: 30px;
+  bottom: 40px;
+}
+.links-fixed li {
+  transition: transform 300ms ease;
+}
+.links-fixed li:not(:last-of-type) {
+  margin-bottom: 15px;
+}
+.links-fixed li:hover {
+  transform: scale(1.1);
+}
+.links-fixed li a {
+  font-size: 0;
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+}
+.links-fixed .link-viber a {
+  background-image: url("../../images/site/icons/viber.png");
+}
+.links-fixed .link-telegram a {
+  background-image: url("../../images/site/icons/telegram.png");
 }
 
 .cart__table {
