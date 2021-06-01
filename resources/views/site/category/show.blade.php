@@ -44,7 +44,7 @@
 
         @include('site.components.breadcrumbs', ['title' => $category->getData('name'), 'h1' => true])
 
-        <div class="container">
+        <div class="container container-gap-sm">
             @if($descendants->isNotEmpty())
                 <div class="row">
                     @foreach($descendants as $descendant)
