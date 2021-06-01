@@ -16373,15 +16373,12 @@ label {
 }
 
 #to-top {
-  position: fixed;
-  right: 30px;
-  bottom: 30px;
-  bottom: 40px;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   border-radius: 3px;
   border: 1px solid #009acf;
   opacity: 0;
@@ -16433,10 +16430,43 @@ footer {
   padding-top: 75px;
 }
 .container-gap-sm {
-  padding-top: 50px;
+  padding-top: 35px;
+}
+@media (min-width: 992px) {
+  .container-gap-sm {
+    padding-top: 50px;
+  }
 }
 .container-gap-xl {
   padding-top: 150px;
+}
+
+.links-fixed {
+  position: fixed;
+  right: 30px;
+  bottom: 40px;
+}
+.links-fixed li {
+  transition: transform 300ms ease;
+}
+.links-fixed li:not(:last-of-type) {
+  margin-bottom: 15px;
+}
+.links-fixed li:hover {
+  transform: scale(1.1);
+}
+.links-fixed li a {
+  font-size: 0;
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+}
+.links-fixed .link-viber a {
+  background-image: url("../../images/site/icons/viber.png");
+}
+.links-fixed .link-telegram a {
+  background-image: url("../../images/site/icons/telegram.png");
 }
 
 .cart__table {

@@ -36,7 +36,7 @@
                     <span class="footer__element__title">{{ __('Feedback') }}</span>
                     <ul>
                         <li class="footer__element--item-tel">Call-центр:</li>
-                        <li><a class="footer__element-phone" href="tel:0800212124">0-800-21-21-24</a></li>
+                        <li><a class="footer__element-phone" href="tel:0800217122">0-800-21-71-22</a></li>
                     </ul>
                 </div>
             </div>

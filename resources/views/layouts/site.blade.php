@@ -33,8 +33,22 @@
         <div class="content">
             @include('site.components.header.show')
             @yield('content')
-            <div id="to-top"></div>
+            <div class="links-fixed">
+                <ul>
+                    <li>
+                        <div id="to-top"></div>
+                    </li>
+                    <li class="link-viber">
+                        <a href="viber://chat?number=%2B380671097122" target="_blank" {{-- data-toggle="tooltip"--}} data-placement="left" title="Viber">Viber</a>
+                    </li>
+                    <li class="link-telegram">
+                        <a href="https://t.me/sandi_stock" target="_blank" {{--data-toggle="tooltip"--}} data-placement="left" title="Telegram">Telegram</a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
+
         @include('site.components.footer')
     </div>
     <script type="text/javascript" src="{{ mix('js/site/app.js') }}"></script>

@@ -60,7 +60,7 @@
                 <div class="col-sm-5 main__contacts-dest mb-5">
                     <div class="contacts-dest__title">{{ __('Hot line') }}</div>
                     {{--<p class="contacts-dest__descriptipon">З питань співпраці та ідеям поліпшення роботи компанії звертайтеся до Єдиного Call-Центру:</p>--}}
-                    <a class="footer__element-phone text-center" href="tel:0800212124">0-800-21-21-24</a>
+                    <a class="footer__element-phone text-center" href="tel:0800217122">0-800-21-71-22</a>
                 </div>
 
             </div>
