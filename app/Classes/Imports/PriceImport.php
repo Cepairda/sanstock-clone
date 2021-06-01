@@ -36,13 +36,15 @@ class PriceImport
     }
 
     /**
-     * @param array $jsonData
-     *
+     * @param array $jsonData Products from API
+     * @param array|null $skuArray SKU products from DB
      * @return void
      */
-    public static function import(array $jsonData) : void
+    public static function import(array $jsonData, array $skuArray = null) : void
     {
         try {
+            $skuExistsAPI = [];
+
             foreach ($jsonData['data'] as $sku => [
                 'main' => [
                     //'sku' => $sku,
@@ -55,20 +57,35 @@ class PriceImport
                     ],
                 ]
             ]) {
-                Product::where('details->sku', $sku)->update([
-                    //'details->price' => $price,
-                    //'details->old_price' => $oldPrice,
-                    'details->balance' => $balance
-                ]);
+                $skuExistsAPI[] = $sku;
 
-                ProductSort::where([['details->sd_code', $sdCode], ['details->grade', $grade]])->update([
-                    'details->price' => ceil($price),
-                    'details->old_price' => ceil($oldPrice),
-                ]);
+                self::updateBalance($sku, $balance);
+                self::updatePrice($sdCode, $grade, $price, $oldPrice);
+            }
+
+            $missingSkuInApi = array_diff($skuArray, $skuExistsAPI);
+
+            foreach ($missingSkuInApi as $sku) {
+                self::updateBalance($sku, 0);
             }
         } catch (\Exception $e) {
 
         }
+    }
+
+    protected static function updateBalance($sku, $balance)
+    {
+        Product::where('details->sku', $sku)->update([
+            'details->balance' => $balance
+        ]);
+    }
+
+    protected static function updatePrice($sdCode, $grade, $price, $oldPrice)
+    {
+        ProductSort::where([['details->sd_code', $sdCode], ['details->grade', $grade]])->update([
+            'details->price' => ceil($price),
+            'details->old_price' => ceil($oldPrice),
+        ]);
     }
 
     /**
@@ -83,7 +100,7 @@ class PriceImport
         $apiUrl = self::DEFAULT_API_URL . "&sku_in={$skuStr}";
         $dataJson = PriceImport::pricesApi($apiUrl);
 
-        PriceImport::import($dataJson);
+        PriceImport::import($dataJson, $skuArray);
     }
 
     /**

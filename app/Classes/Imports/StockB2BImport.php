@@ -146,9 +146,9 @@ class StockB2BImport
      * @param string $ref
      * @param array $dataProduct
      *
-     * @return void
+     * @return int
      */
-    protected function stockProductSort(string $ref, array $dataProduct) : void
+    protected function stockProductSort(string $ref, array $dataProduct) : int
     {
         $grade = $dataProduct['defective_attributes']['grade'];
         $productSort = ProductSort::where([['details->sd_code', $ref], ['details->grade', $grade]])->first();
@@ -157,8 +157,8 @@ class StockB2BImport
             $productSort = new ProductSort();
 
             $sdCode = $dataProduct['sku'];
-            $price = $dataProduct['price'];
-            $oldPrice = $dataProduct['old_price'];
+            $price = ceil($dataProduct['price']);
+            $oldPrice = ceil($dataProduct['old_price']);
 
             $productSort->setRequest([
                 'details' => [
@@ -173,15 +173,18 @@ class StockB2BImport
             LaravelLocalization::setLocale('ru');
             $productSort->storeOrUpdate();
         }
+
+        return $productSort->id;
     }
 
     /**
+     * @param int $productSort
      * @param string $ref
      * @param array $dataProduct
      *
      * @return void
      */
-    protected function stockProduct(string $ref, array $dataProduct) : void
+    protected function stockProduct(int $productSort, string $ref, array $dataProduct) : void
     {
         $product = Product::where('details->sku', $ref)->first();
         $grade = $dataProduct['defective_attributes']['grade'];
@@ -228,6 +231,14 @@ class StockB2BImport
                 'details->grade' => $grade,
             ]);
         }
+
+        $product->setRequest([
+            'relations' => [
+                ProductSort::class => [$productSort]
+            ]
+        ]);
+
+        $product->updateRelations();
     }
 
     /**
@@ -427,8 +438,8 @@ class StockB2BImport
             $attributes = $dataProduct['attributes'];
             $sdCode = $dataProduct['main']['sku'];
             $this->stockProductGroup($sdCode, $main);
-            $this->stockProductSort($sdCode, $main);
-            $this->stockProduct($sku, $main);
+            $productSortId = $this->stockProductSort($sdCode, $main);
+            $this->stockProduct($productSortId, $sku, $main);
             $this->stockAttributes($sdCode, $attributes);
         }
     }
