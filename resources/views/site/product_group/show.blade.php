@@ -70,10 +70,10 @@
                                 data-src => "large: 800x800" - big
                                 data-full => ">= 1000x1000 (for scale)"
                             --}}
-                            <img class="lazy img-data-path" src="{{ asset('images/white_fone_150x150.jpg') }}"
+                            <img src="/storage/product/{{ $productGroup->sdCode }}/{{ $productGroup->sdCode }}.jpg"
                                  data-src="/storage/product/{{ $productGroup->sdCode }}/{{ $productGroup->sdCode }}.jpg">
                             @foreach($additional as $key => $value)
-                                <img class="lazy img-data-path" src="{{ asset('images/white_fone_150x150.jpg') }}"
+                                <img src="/storage/product/{{ $productGroup->sdCode }}/additional/{{ $productGroup->sdCode }}_{{ $key }}.jpg"
                                      data-src="/storage/product/{{ $productGroup->sdCode }}/additional/{{ $productGroup->sdCode }}_{{ $key }}.jpg">
                             @endforeach
                         </div>
