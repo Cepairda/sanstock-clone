@@ -25,11 +25,13 @@
         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
     </form>
     <div class="page">
+
         <div id="page-loader">
             <div class="cssload-container">
                 <div class="cssload-speeding-wheel"></div>
             </div>
         </div>
+
         <div class="content">
             @include('site.components.header.show')
             @yield('content')
