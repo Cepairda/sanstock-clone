@@ -64,17 +64,17 @@ class CategoryB2BImport
 
     public function import()
     {
-//        $jsonData = self::$data;
-//
-//        foreach ($jsonData as $ref => [
-//            'parent_ref' => $parentRef,
-//            'name' => $name,
-//            'image' => $image
-//        ]) {
-//            $this->categoryImport($ref, $parentRef, $name, $image);
-//        }
-//
-//        $this->fixParent();
+        $jsonData = self::$data;
+
+        foreach ($jsonData as $ref => [
+            'parent_ref' => $parentRef,
+            'name' => $name,
+            'image' => $image
+        ]) {
+            $this->categoryImport($ref, $parentRef, $name, $image);
+        }
+
+        $this->fixParent();
         $tree = Category::get()->toTree();
         $this->recursiveCheck($tree);
     }
@@ -185,6 +185,20 @@ class CategoryB2BImport
                 $category->forceDelete();
             }
 
+            /**
+             * Sort: the field in the details
+             *
+             * Functional for generation Sort(for sort in the menu)
+             * Generation the follow structure for sorting
+             * - Sort 1
+             * -- Sub Sort 1
+             * -- Sub Sort 2
+             * --Sub Sort 3
+             * - Sort 2
+             * -- Sub Sort 1
+             * -- Sub Sort 2
+             * --- Sub Sub Sort 1
+             */
             $maxSort = $categories->max('details->sort') ?? 0;
             $sort = ++$maxSort;
             $checkSort = $categories[$key]['details']['sort'] ?? null;

@@ -218,6 +218,7 @@ class ProductSort extends Resource
         }]);
     }
 
+
     public function productGroup()
     {
         return $this->hasOne(ProductGroup::class, 'details->sd_code', 'details->sd_code');
@@ -226,12 +227,28 @@ class ProductSort extends Resource
     public function scopeWithProducts($query, $joinLocalization = true)
     {
         return $query->with(['products' => function ($query) use ($joinLocalization) {
-            if ($joinLocalization) return $query->select('*')->where('details->balance', '>', 0)->joinLocalization();
+            if ($joinLocalization) {
+                return $query->select('*')->where('details->balance', '>', 0)->joinLocalization();
+            }
         }]);
     }
 
     public function products()
     {
         return $this->hasMany(Product::class, ['details->sd_code', 'details->grade'], ['details->sd_code', 'details->grade']);
+    }
+
+    public function scopeWithNotShowProductsBalanceZero($query, $joinLocalization = true)
+    {
+        return $query->whereHas('balance', function ($query) {
+            $query->where('details->balance', '>', 0);
+        });
+    }
+
+    public function balance()
+    {
+        return $this->belongsToMany(Product::class, 'resource_resource',
+            'relation_id', 'resource_id')
+            ->where('resource_type', Product::class);
     }
 }
