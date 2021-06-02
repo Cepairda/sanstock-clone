@@ -33,7 +33,7 @@
 		right: 0;
 		bottom: 0;
 		left: 0;
-        display: none;
+        //display: none;
         max-width: 320px;
 		background-color: #fff;
 		transform: translateX(-100%);
@@ -43,6 +43,10 @@
 
 		&.show {
 			transform: translateX(0);
+
+			.item-toggle__close {
+				box-shadow: 1px 0 3px 0 rgb(0 0 0 / 20%) inset;
+			}
 		}
 
 
@@ -53,7 +57,6 @@
 			max-width: none;
 			transform: translateX(0);
 		}
-
 
 		&__wrap {
 			display: flex;
@@ -71,13 +74,45 @@
               border-bottom: 1px solid #f5f5f5;
             }
 
+			&.item-close {
+				order: -1;
+				cursor: pointer;
+				@media (min-width: 992px) {
+					display: none;
+				}
+			}
+
+			&.item-toggle {
+				position: absolute;
+				top: 50%;
+				left: calc(100% + 1px);
+				transform: translateY(-50%);
+				border-radius: 0 3px 3px 0;
+				box-shadow: 0 0 3px 0 rgba(0, 0, 0, .2);
+
+				.item-toggle__close {
+					display: flex;
+					align-items: center;
+					padding: 10px 12px;
+					margin-left: -1px;
+					border: none;
+					border-radius: 0 3px 3px 0;
+					font-family: Open Sans Semibold, sans-serif;
+					background-color: #ececec;
+
+					@media (min-width: 992px) {
+						display: none;
+					}
+				}
+			}
+
 			@media (min-width: 992px) {
 				border-bottom: none !important;
-				&:not(:first-of-type) {
+				&:not(:nth-child(1)) {
 					padding-left: 24px;
 				}
 
-				&:nth-child(2) {
+				&:nth-child(3) {
 					padding-left: 28px;
 				}
 
@@ -95,38 +130,22 @@
 				}
 			}
 
-			& > a {
+			& > a,
+			& > span {
 				color: $grey-dark;
 
 				&:hover {
-					//background-color: #f5f5f5;
+					background-color: #f5f5f5;
 					color: #000;
+					svg polyline {
+						stroke: #000;
+					}
+
+					@media (min-width: 992px) {
+						background-color: transparent;
+					}
 				}
 			}
-
-
-
-			.close {
-				display: flex;
-				align-items: center;
-				padding: 10px 16px;
-				margin-left: -1px;
-				border: 1px solid #cccccc;
-				border-radius: 3px;
-				font-family: Open Sans Semibold, sans-serif;
-				background-color: #fff;
-				color: #9d9d9c;
-
-				&:hover {
-					background-color: #ececec;
-					color: #000;
-				}
-
-				@media (min-width: 992px) {
-					display: none;
-				}
-			}
-
 
 			&--phone {
 				display: flex;
