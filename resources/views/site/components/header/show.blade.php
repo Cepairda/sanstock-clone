@@ -6,49 +6,43 @@
         <div class="row">
             <div class="col-12">
 
-                <div class="header-top__btn" hidden>
 
-                    <button id="open-nav" type="button" class="open"></button>
-
-                </div>
 
                 <nav class="header-nav">
-
                     <ul class="header-nav__wrap">
-
+                        <!-- Logo -->
                         <li class="header-nav__item">
-                            <div>
                                 <a href="{{ asset('/') }}">
                                     <img src="{{ asset('images/logo/logo.svg') }}" width="150" alt="Sanstok">
                                 </a>
-                                <button id="close-nav" type="button" class="close">
-                                    <span>&times;</span>
-                                </button>
-                            </div>
                         </li>
-
+                        <!-- Close -->
+                        <li class="header-nav__item item-close">
+                            <span class="text-right" data-action="nav-toggle">
+                                {{ __('Back') }}
+                                <svg width="16" height="16" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#8a8a8a" stroke-width="1.03" points="7 4 13 10 7 16"></polyline></svg>
+                            </span>
+                        </li>
                         <li class="header-nav__item">
                             <a href="{{ asset('/about-us') }}">{{ __('About us') }}</a>
                         </li>
-
                         <li class="header-nav__item">
                             <a href="{{ asset('/contacts') }}">{{ __('Contacts') }}</a>
                         </li>
-
                         <li class="header-nav__item">
                             <a href="{{ asset('/delivery') }}">{{ __('Delivery') }}</a>
                         </li>
-
                         <li class="header-nav__item">
                             <a class="disabled" href="#">{{ __('FAQ') }}</a>
                         </li>
-
+                        <!-- Phone -->
                         <li class="header-nav__item item-right">
                             <div class="header-nav__item--phone">
                                 <span class="icon-callback"></span>
                                 <a href="tel:0800217122">0-800-21-71-22</a >
                             </div>
                         </li>
+                        <!-- Localization -->
                         <li class="header-nav__item">
                             <div class="language__inner">
                                 @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
@@ -61,6 +55,16 @@
                                     @endif
                                 @endforeach
                             </div>
+                        </li>
+                        <!-- Toggle -->
+                        <li class="header-nav__item item-toggle">
+                            <button class="item-toggle__close" data-action="nav-toggle" type="button">
+                                <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="6" y="4" width="12" height="1"></rect><rect x="6" y="9" width="12" height="1"></rect>
+                                    <rect x="6" y="14" width="12" height="1"></rect><rect x="2" y="4" width="2" height="1"></rect>
+                                    <rect x="2" y="9" width="2" height="1"></rect><rect x="2" y="14" width="2" height="1"></rect>
+                                </svg>
+                            </button>
                         </li>
                     </ul>
                 </nav>
@@ -109,5 +113,4 @@
         </div>
     </div>
 </header>
-
 <!-- End Header -->
