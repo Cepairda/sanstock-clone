@@ -57,9 +57,35 @@ class ProductGroup extends Resource
         return $this->getData('meta_title');
     }
 
-    public function getMetaDescriptionAttribute()
+    public function getMainImagePathAttribute()
     {
-        return $this->getData('meta_description');
+        $path = public_path("storage/product/{$this->sdCode}");
+        $mainImagePath = "/storage/product/{$this->sdCode}/{$this->sdCode}.jpg";
+
+        if(!file_exists(public_path($mainImagePath)) && file_exists($path)) {
+            $mainImagePath = "/storage/product/{$this->sdCode}/additional/{$this->sdCode}_1.jpg";
+
+            if (!file_exists(public_path($mainImagePath))) {
+                $dirPath = public_path("storage/product/{$this->sdCode}");
+                $dir = scandir($dirPath);
+
+                for ($i = 0; $i < count($dir); $i++) {
+                    if (
+                        is_dir($dirPath . '/' . $dir[$i]) &&
+                        $dir[$i] != '.' &&
+                        $dir[$i] != '..' &&
+                        $dir[$i] != 'additional'
+                    ) {
+                        $sku = $dir[$i];
+                        break;
+                    }
+                }
+
+                $mainImagePath = "/storage/product/{$this->sdCode}/{$sku}/{$sku}_1.jpg";
+            }
+        }
+
+        return $mainImagePath;
     }
 
     public function getRelatedAttribute()

@@ -15,7 +15,7 @@
                 <a class="product__img"
                    href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}">
                     <img class="product__img-lg img-data-path lazy"
-                         data-src="/storage/product/{{ $productGroup->sdCode }}/{{ $productGroup->sdCode }}.jpg"
+                         data-src="{{ $productGroup->mainImagePath }}"
                          src="{{ asset('images/no_img.jpg') }}"
                          title="{{ $productGroup->name }}">
                 </a>

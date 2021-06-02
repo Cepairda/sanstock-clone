@@ -70,8 +70,8 @@
                                 data-src => "large: 800x800" - big
                                 data-full => ">= 1000x1000 (for scale)"
                             --}}
-                            <img src="/storage/product/{{ $productGroup->sdCode }}/{{ $productGroup->sdCode }}.jpg"
-                                 data-src="/storage/product/{{ $productGroup->sdCode }}/{{ $productGroup->sdCode }}.jpg">
+                            <img src="{{ $productGroup->mainImagePath }}"
+                                 data-src="{{ $productGroup->mainImagePath }}">
                             @foreach($additional as $key => $value)
                                 <img src="/storage/product/{{ $productGroup->sdCode }}/additional/{{ $productGroup->sdCode }}_{{ $key }}.jpg"
                                      data-src="/storage/product/{{ $productGroup->sdCode }}/additional/{{ $productGroup->sdCode }}_{{ $key }}.jpg">
@@ -157,6 +157,7 @@
                                 @endforeach
                             </div>
                         </div>
+                        <div class="tab-pane fade {{ !$togglePrice ?: 'show active' }}" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
                         <div class="tab-pane fade {{ !$togglePrice ?: 'show active' }}" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
 
                             <nav>
