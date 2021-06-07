@@ -30,23 +30,22 @@
                             text-align: center;
                             line-height: 1.5;
                             color: #757575;"
-                    >Наша цель, чтобы купленный в интернет-магазине «SandiStock» товар, в кратчайшие сроки был доставлен покупателю.</h6>
+                    >{{ __('descriptions.delivery-1-1') }}</h6>
 
                     <div class="mb-4">
                         <img class="w-100" src="{{ asset('images/site/banners/' . LaravelLocalization::getCurrentLocale() . '/delivery.png') }}" alt="{{ __('Delivery') }}">
                     </div>
 
-                    <h4 class="pt-4 mb-2">Условия доставки</h4>
-                    <p class="mb-4">Доставка продукции по Украине осуществляется службой доставки «Новая Почта», указывая номер отделения или адреса для курьерской доставки. Оплата за доставку осуществляется покупателем при получении заказа, по тарифам службы доставки «Новая почта».</p>
-                    <p class="mb-4">Заказы от 500 грн отправлются клиентам на отделение за счет интернет-магазина
-                        «SandiStock», при заказах от 1000 грн можно выбрать курьерскую доставку, расходы за которую
-                        несет наш магазин.</p>
-                    <h4 class="pt-4 mb-4">Сроки отправления заказов?</h4>
+                    <h3 class="pt-4 mb-2">{{ __('descriptions.delivery-2-title') }}</h3>
+                    <p class="mb-4">{{ __('descriptions.delivery-2-1') }}</p>
+                    <p class="mb-4">{{ __('descriptions.delivery-2-2') }}</p>
+
+                    <h3 class="pt-4 mb-4">{{ __('descriptions.delivery-3-title') }}</h3>
                     <table>
                         <tbody>
                             <tr style="height: 75px;">
                                 <td style="width: 80px; padding: 0 15px;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Слой_1" x="0px" y="0px" viewBox="0 0 280 280" style="enable-background:new 0 0 280 280;" xml:space="preserve">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 280 280" style="enable-background:new 0 0 280 280;" xml:space="preserve">
 <g>
 <g>
     <path d="M120.57,216.98c-13.66,0-24.78-11.11-24.78-24.78s11.11-24.78,24.78-24.78s24.78,11.11,24.78,24.78    S134.23,216.98,120.57,216.98z M120.57,174.51c-9.76,0-17.7,7.94-17.7,17.7s7.94,17.7,17.7,17.7s17.7-7.94,17.7-17.7    S130.33,174.51,120.57,174.51z"/>
@@ -75,12 +74,12 @@
 </g>
 </svg>
                                 </td>
-                                <td style="padding-right: 15px">день в день</td>
-                                <td>При условии оформления заказа до 11:00 с понедельника по четверг</td>
+                                <td style="padding-right: 15px">{{ __('descriptions.delivery-3-list-1') }}</td>
+                                <td>{{ __('descriptions.delivery-3-list-1-1') }}</td>
                             </tr>
                             <tr style="height: 75px;">
                                 <td style="width: 80px; padding: 0 15px">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Слой_1" x="0px" y="0px" viewBox="0 0 280 280" style="enable-background:new 0 0 280 280;" xml:space="preserve">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 280 280" style="enable-background:new 0 0 280 280;" xml:space="preserve">
 <g>
 <g>
     <path d="M120.57,216.98c-13.66,0-24.78-11.11-24.78-24.78s11.11-24.78,24.78-24.78s24.78,11.11,24.78,24.78    S134.23,216.98,120.57,216.98z M120.57,174.51c-9.76,0-17.7,7.94-17.7,17.7s7.94,17.7,17.7,17.7s17.7-7.94,17.7-17.7    S130.33,174.51,120.57,174.51z"/>
@@ -109,12 +108,12 @@
 </g>
 </svg>
                                 </td>
-                                <td style="padding-right: 15px">на следующий день</td>
-                                <td>При условии оформления заказа после 11:00 с понедельника по четверг</td>
+                                <td style="padding-right: 15px">{{ __('descriptions.delivery-3-list-2') }}</td>
+                                <td>{{ __('descriptions.delivery-3-list-2-1') }}</td>
                             </tr>
                             <tr style="height: 75px;">
                                 <td style="width: 80px; padding: 0 15px">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Слой_1" x="0px" y="0px" viewBox="0 0 280 280" style="enable-background:new 0 0 280 280;" xml:space="preserve">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 280 280" style="enable-background:new 0 0 280 280;" xml:space="preserve">
 <g>
 <g>
     <path d="M120.57,216.98c-13.66,0-24.78-11.11-24.78-24.78s11.11-24.78,24.78-24.78s24.78,11.11,24.78,24.78    S134.23,216.98,120.57,216.98z M120.57,174.51c-9.76,0-17.7,7.94-17.7,17.7s7.94,17.7,17.7,17.7s17.7-7.94,17.7-17.7    S130.33,174.51,120.57,174.51z"/>
@@ -143,8 +142,8 @@
 </g>
 </svg>
                                 </td>
-                                <td style="padding-right: 15px">в понедельник</td>
-                                <td>При условии оформления заказа в пятницу после 11:00</td>
+                                <td style="padding-right: 15px">{{ __('descriptions.delivery-3-list-3') }}</td>
+                                <td>{{ __('descriptions.delivery-3-list-3-1') }}</td>
                             </tr>
                         </tbody>
                     </table>
