@@ -133,5 +133,11 @@
     "Send message": "Отправить",
     "Hot line": "Горячая линия",
     "Feedback": "Обратная связь",
-    "Back": "Назад"
+    "Back": "Назад",
+    "Payments": "Способы оплаты",
+    "Cashless payment": "Безналичная оплата",
+    "Cash": "Наличный расчет",
+    "Online payment on the site": "Онлайн-оплата на сайте",
+    "Importantly": "Важно"
+
 }

@@ -33,7 +33,7 @@
                             <a href="{{ asset('/delivery') }}">{{ __('Delivery') }}</a>
                         </li>
                         <li class="header-nav__item">
-                            <a class="disabled" href="#">{{ __('FAQ') }}</a>
+                            <a href="{{ asset('/payments') }}">{{ __('Payments') }}</a>
                         </li>
                         <!-- Phone -->
                         <li class="header-nav__item item-right">
