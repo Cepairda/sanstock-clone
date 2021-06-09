@@ -13,7 +13,7 @@ class ProductSort extends Resource
     use Compoships;
 
     protected $appends = ['price_updated_at'];
-    protected $markup = [3, 10, 15, 20];
+    //protected $markup = [3, 10, 15, 20];
 
     public function getNameAttribute()
     {
@@ -22,7 +22,7 @@ class ProductSort extends Resource
 
     public function getNormalPriceAttribute()
     {
-        return $this->oldPrice ?: $this->price * (100 + $this->markup[$this->grade]) / 100;
+        return $this->oldPrice;// ?: $this->price * (100 + $this->markup[$this->grade]) / 100;
     }
 
     public function getDifferencePriceAttribute()
