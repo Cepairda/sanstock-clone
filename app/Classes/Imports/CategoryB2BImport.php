@@ -173,7 +173,7 @@ class CategoryB2BImport
                     $isEmptyDeep = false;
                 }
             } else {
-                $product = Product::where('details->category_id', $category->getDetails('ref'))->first();
+                $product = Product::where([['details->category_id', $category->getDetails('ref')], ['details->balance', '>', 0]])->first();
                 $isEmpty = !$product;
 
                 if ($product) {
