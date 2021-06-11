@@ -29,6 +29,11 @@ class Product extends Resource
         return $this->getDetails('sd_code');
     }
 
+    public function getGradeAttribute()
+    {
+        return $this->getDetails('grade');
+    }
+
     public function getDescriptionAttribute()
     {
         return $this->attributes['description'] ?? $this->attributes['description'] =

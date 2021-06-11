@@ -33,15 +33,16 @@ class ProductController extends Controller
             ->get();
 
         //if ($productsSort->isEmpty()) {
-            $productsSdCode = Product::where('details->sku', 'LIKE', '%' . request()->get('query') . '%')->get()->pluck('details->grade', 'details->sd_code');
+            //$productsSdCode = Product::where('details->sku', 'LIKE', '%' . request()->get('query') . '%')->get()->pluck('details->grade', 'details->sd_code');
+            $productsSdCode = Product::where('details->sku', 'LIKE', '%' . request()->get('query') . '%')->get();
 
             $productsSortByBarCode = collect([]);
 
             if ($productsSdCode->isNotEmpty()) {
                 $productsSortByBarCode = ProductSort::joinLocalization()->withProductGroup()->where('details->published', 0);
                 $productsSortByBarCode = $productsSortByBarCode->where(function ($query) use ($productsSdCode) {
-                    foreach ($productsSdCode as $sdCode => $sort) {
-                        $query->orWhere([['details->grade', $sort], ['details->sd_code', $sdCode]]);
+                    foreach ($productsSdCode as $product) {
+                        $query->orWhere([['details->grade', $product->grade], ['details->sd_code', $product->sdCode]]);
                     }
                 })
                 ->limit(15)
