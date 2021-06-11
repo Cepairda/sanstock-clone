@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\ImageController;
 use App\Classes\Imports\ProductWithDataImport;
 use App\Product;
+use App\ProductGroup;
 use App\ProductSort;
 use Illuminate\Http\Request;
 
@@ -46,7 +47,7 @@ class ProductSortController extends Controller
     }
 
     public function createSearchString() {
-        $products = Product::select('id', 'details', 'ua.data as ua_name', 'ru.data as ru_name')
+        $products = ProductGroup::select('id', 'details', 'ua.data as ua_name', 'ru.data as ru_name')
             ->join('resource_localizations as ua', function($q) {
                 $q->on('ua.resource_id', '=', 'resources.id')
                     ->where('ua.locale', 'uk');
