@@ -6,6 +6,7 @@ use App\Brand;
 use App\Category;
 use App\Characteristic;
 use App\CharacteristicValue;
+use App\Classes\ImportImage;
 use App\ProductGroup;
 use App\ProductSort;
 use App\Product;
@@ -377,7 +378,7 @@ class StockB2BImport
     }
 
     /**
-     * @param int $sku
+     * @param string $sdCode
      * @param array $attributes
      *
      * @return void
@@ -427,6 +428,7 @@ class StockB2BImport
      * @param string $apiUrl
      *
      * @return void
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     protected function importProductWithAttributes(string $apiUrl) : void
     {
@@ -441,6 +443,8 @@ class StockB2BImport
             $productSortId = $this->stockProductSort($sdCode, $main);
             $this->stockProduct($productSortId, $sku, $main);
             $this->stockAttributes($sdCode, $attributes);
+
+            ImportImage::importInsideB2BImport($sdCode, $sku, $jsonData);
         }
     }
 

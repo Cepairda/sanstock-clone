@@ -152,6 +152,60 @@ class ImportImage
     }
 
     /**
+     * @param string $sdCode
+     * @param int $sku
+     * @param $imageRegister
+     * @return void
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    private static function importInsideB2BImport(string $sdCode, int $sku, $imageRegister): void
+    {
+        self::$imageRegister = $imageRegister;
+        self::$apiProductImage = self::$imageRegister;
+        self::$dbProductImage = ProductImage::where('details->product_sku', $sku)->first();
+
+        if (!self::$dbProductImage) {
+            self::$dbProductImage = new ProductImage();
+            self::$dbProductImage->setRequest([
+                'details' => [
+                    'product_sku' => $sku
+                ]
+            ]);
+            self::$dbProductImage->storeOrUpdate();
+        }
+
+        self::$dbProductGroupImage = ProductGroupImage::where('details->product_sd_code', $sdCode)->first();
+
+        if (!self::$dbProductGroupImage) {
+            self::$dbProductGroupImage = new ProductGroupImage();
+            self::$dbProductGroupImage->setRequest([
+                'details' => [
+                    'product_sd_code' => $sdCode
+                ]
+            ]);
+            self::$dbProductGroupImage->storeOrUpdate();
+        }
+
+        self::downloadMainImage($sdCode, $sku);
+        self::downloadAdditional($sdCode, $sku);
+        self::downloadDefectiveImages($sdCode, $sku);
+
+        self::$requestProductImage['details']['product_sku'] = $sku;
+        self::$dbProductImage->setRequest(self::$requestProductImage);
+        self::$dbProductImage->storeOrUpdate();
+
+        self::$requestProductGroupImage['details']['product_sd_code'] = $sdCode;
+        self::$dbProductGroupImage->setRequest(self::$requestProductGroupImage);
+        self::$dbProductGroupImage->storeOrUpdate();
+
+        self::$apiProductImage = null;
+        self::$requestProductImage = null;
+        self::$dbProductImage = null;
+        self::$requestProductGroupImage = null;
+        self::$dbProductGroupImage = null;
+    }
+
+    /**
      * @param $data
      * @return string
      */
