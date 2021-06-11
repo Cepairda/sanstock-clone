@@ -67,7 +67,7 @@ class ResourceController extends Controller
                 $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->firstOrFail();
                 $productGroup = ProductGroup::where('details->category_id', $category->getDetails('ref'))->get()->keyBy('details->sd_code')->keys();
                 $productGroupKeys = ProductGroup::where('details->category_id', $category->getDetails('ref'))->get()->keyBy('id')->keys();
-                $productsSort = ProductSort::whereIn('details->sd_code', $productGroup);
+                $productsSort = ProductSort::whereIn('details->sd_code', $productGroup)->withNotShowProductsBalanceZero();
                 $sortType = $productsSort->get()->keyBy('details->grade')->keys()->unique()->sort()->values();
 
                 $characteristics = isset($category->characteristic_group[0])
