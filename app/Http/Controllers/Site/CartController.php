@@ -182,6 +182,8 @@ class CartController
 
         $orderData['new_mail_comment'] = $shipping['new_mail_comment'];
 
+        $orderData['new_mail_delivery_type'] = $shipping['new_mail_delivery_type'];
+
         if($shipping['new_mail_delivery_type'] === 'storage_storage') {
 
             $orderData['new_mail_warehouse'] = $shipping['new_mail_warehouse'];
@@ -337,7 +339,7 @@ class CartController
 
             $orderProduct->save();
 
-           $products[$product['sku']] = $product['quantity'];
+            $products[$product['sku']] = $product['quantity'];
 
             Product::where('details->sku', $product['sku'])->update([
                 //'details->price' => $price,
