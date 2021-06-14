@@ -17,7 +17,7 @@ class CheckIP
             || $request->get('access') == 'true'
             || $request->cookie('access')
         ) {
-            Cookie::queue(Cookie::forever('access', 'true'));
+            Cookie::queue('access', 'true', 60 * 24);
             return $next($request);
         } else {
             return abort(403);
