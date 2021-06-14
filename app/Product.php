@@ -63,9 +63,9 @@ class Product extends Resource
         return $this->getData('meta_title');
     }
 
-    public function getDefectiveImagesAttribute()
+    public function getAllDefectiveImagesAttribute()
     {
-        $additional = ProductImage::where('details->product_sku', $this->sku)->first();
+        $additional = $this->defectiveImages;
 
         if (isset($additional) && $additional->getDetails('additional')) {
             return $additional->getDetails('additional');
@@ -156,6 +156,11 @@ class Product extends Resource
     public function category()
     {
         return $this->hasOne(Category::class, 'id', 'details->category_id');
+    }
+
+    public function defectiveImages()
+    {
+        return $this->hasOne(ProductImage::class, 'details->product_sku', 'details->sku');
     }
 
     public function relateProducts()

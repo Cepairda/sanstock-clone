@@ -230,7 +230,7 @@ class ProductSort extends Resource
             if ($joinLocalization) {
                 return $query->select('*')->where('details->balance', '>', 0)->joinLocalization();
             }
-        }]);
+        }, 'products.defectiveImages']);
     }
 
     public function products()
