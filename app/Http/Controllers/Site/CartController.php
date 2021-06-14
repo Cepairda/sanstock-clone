@@ -350,6 +350,7 @@ class CartController
         endforeach;
 
         //dd($products);
+        $orderData['order_id'] = $newOrder->id;
 
         $order = [
             'order' => $products,
