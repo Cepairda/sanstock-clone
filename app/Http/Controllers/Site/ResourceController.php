@@ -64,9 +64,10 @@ class ResourceController extends Controller
 
                 break;
             case 'category':
-                $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->firstOrFail();
-                $productGroup = ProductGroup::where('details->category_id', $category->getDetails('ref'))->get()->keyBy('details->sd_code')->keys();
-                $productGroupKeys = ProductGroup::where('details->category_id', $category->getDetails('ref'))->get()->keyBy('id')->keys();
+                $category = $resource->type::withAncestors()->withDescendants()->whereId($resource->id)->firstOrFail();
+                $productGroupBase = ProductGroup::where('details->category_id', $category->getDetails('ref'))->get();
+                $productGroup = $productGroupBase->keyBy('details->sd_code')->keys();
+                $productGroupKeys = $productGroupBase->keyBy('id')->keys();
                 $productsSort = ProductSort::whereIn('details->sd_code', $productGroup)->withNotShowProductsBalanceZero();
                 $sortType = $productsSort->get()->keyBy('details->grade')->keys()->unique()->sort()->values();
 
@@ -108,9 +109,9 @@ class ResourceController extends Controller
 
                 $productsSort = $productsSort->joinLocalization()
                     ->withProductGroup()
-                    ->withNotShowProductsBalanceZero()
-                    ->withIcons()
-                    ->withCategory();
+                    ->withNotShowProductsBalanceZero();
+                    //->withIcons()
+                    //->withCategory();
 
                 $productsTotal = $productsSort->count();
 

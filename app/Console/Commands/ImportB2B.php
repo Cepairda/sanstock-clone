@@ -30,7 +30,7 @@ class ImportB2B extends Command
     {
         try {
             $stockB2BImport->addToQueue();
-
+            info('Products Add to Queue');
             $this->info('Prices have been successfully added to the queue');
         } catch (\Exception $exception) {
             $this->error('Something went wrong.' . $exception->getMessage());
