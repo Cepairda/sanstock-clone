@@ -188,7 +188,8 @@
                                         @if ($productsSort[$_sort] ?? null)
                                             @include('site.product_group.components.productsTable',
                                             [
-                                                'products' => $productsSort[$_sort]->products,
+                                                //'products' => $productsSort[$_sort]->products,
+                                                'products' => $productsSort[$_sort]->products()->with('defectiveImages')->limit(25)->get(),//$productsSort[$_sort]->products,
                                                 'price' => $productsSort[$_sort]->price,
                                                 'normalPrice' => $productsSort[$_sort]->normalPrice,
                                                 'differencePrice' => $productsSort[$_sort]->differencePrice,

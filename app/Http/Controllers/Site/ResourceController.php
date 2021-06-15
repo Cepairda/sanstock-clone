@@ -36,10 +36,10 @@ class ResourceController extends Controller
                         ->withProductsSort()
                         //->where('details->published', 1)
                         ->withCategory()
-                        ->withRelateProducts()
-                        ->withComments()
-                        ->withReviews()
-                        ->withPartnerUrl()
+                        //->withRelateProducts()
+                        //->withComments()
+                        //->withReviews()
+                        //->withPartnerUrl()
                         ->firstOrFail(),
                 ];
                 $data['additional'] = temp_additional($data['productGroup']->sdCode);

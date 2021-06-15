@@ -230,12 +230,18 @@ class ProductSort extends Resource
             if ($joinLocalization) {
                 return $query->select('*')->where('details->balance', '>', 0)->joinLocalization();
             }
-        }, 'products.defectiveImages']);
+        }]);
     }
+
+//    public function products()
+//    {
+//        //return $this->hasMany(Product::class, ['details->sd_code', 'details->grade'], ['details->sd_code', 'details->grade'])->where('details->balance', '>', 0)->limit(10);
+//    }
 
     public function products()
     {
-        return $this->hasMany(Product::class, ['details->sd_code', 'details->grade'], ['details->sd_code', 'details->grade']);
+        return $this->belongsToMany(Product::class, 'resource_resource',
+            'relation_id', 'resource_id')->where('details->balance', '>', 0);
     }
 
     public function scopeWithNotShowProductsBalanceZero($query, $joinLocalization = true)
