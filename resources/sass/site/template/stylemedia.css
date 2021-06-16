@@ -788,9 +788,22 @@
         padding: 0;
     }
 
-    footer > .container{
+    /*footer > .container{*/
+    /*    display: none;*/
+    /*}*/
+
+    footer > .container .footer__element:nth-child(odd) {
         display: none;
     }
+
+    footer > .container .row {
+        justify-content: space-around;
+    }
+
+    footer > .container .footer__element {
+        width: auto;
+    }
+
 
     .footer_mb-vr {
         display: block;
@@ -1252,6 +1265,15 @@
 
 }
 
+@media (max-width: 768px) {
+    .table-products > .table-products__row:first-child {
+        display: none;
+    }
+
+    .table-products__row-reverse {
+        flex-direction: row-reverse;
+    }
+}
 
 @media (min-width: 576px) and (max-width: 768px) {
     .certificate--item a {
