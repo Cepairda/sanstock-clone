@@ -28,18 +28,16 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //info('Schedule Work');
-        //$schedule->command('queue:work --queue=high,b2bImport  --stop-when-empty')->name('b2bImport')->withoutOverlapping();
 
-//        $schedule->command('import:price')->hourly();
-//        //$schedule->command('import:image')->hourly();
-//        $schedule->command('queue:work --queue=high,priceImport  --stop-when-empty')->name('priceImport')->withoutOverlapping();
-//        $schedule->command('queue:work --queue=high,imageImport  --stop-when-empty --timeout=600')->name('imageImport')->withoutOverlapping();
+        $schedule->command('import:b2b')->everyFourHours();
+        $schedule->command('queue:work --queue=high,b2bImport  --stop-when-empty --timeout=600')->name('b2bImport')->withoutOverlapping();
 
-//        if ($cache = Cache::get('lastIdPriceImport')) {
-//            info('PRICEIMPORTCACHE' . $cache);
-//            $lastIdPriceImport = Jobs::where('id', $cache)->first();
-//        }
+        $schedule->command('import:category')->everyThirtyMinutes();
+        $schedule->command('import:image-category')->everyThirtyMinutes();
+        $schedule->command('queue:work --queue=high,imageCategoryImport  --stop-when-empty --timeout=600')->name('imageCategoryImport')->withoutOverlapping();
+
+        $schedule->command('import:price')->everyThirtyMinutes();
+        $schedule->command('queue:work --queue=high,priceImport  --stop-when-empty --timeout=600')->name('priceImport')->withoutOverlapping();
 
         //yyyyy
         // New Post Areas Import

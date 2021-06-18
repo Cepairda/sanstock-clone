@@ -30,9 +30,7 @@ class CartController
 
     function __construct() {
 
-        // dd(request()->ip());
-
-        $this->is_employee = $_COOKIE["access"]??0;
+        $this->is_employee = (isset($_COOKIE["access"]) && !empty($_COOKIE["access"])) ? 1 : 0;
     }
 
     /**
@@ -130,14 +128,20 @@ class CartController
             'new_mail_name' => 'required',
             'new_mail_patronymic' => 'required',
             'new_mail_phone' => 'required|regex:/^\+38[\s]\(0\d{2}\)[\s]\d{3}[-]\d{2}[-]\d{2}$/',
-            'new_mail_delivery_type' => 'required',
-            'new_mail_region' => 'required|size:36',
-            'new_mail_city' => 'required|size:36',
             //'new_mail_delivery_type' => 'required',
 //            'new_mail_insurance_sum' => 'required|numeric|min:200',
         ];
 
-        dd($this->is_employee);
+        if(empty($this->is_employee)) {
+
+            $rules['new_mail_delivery_type'] = 'required';
+
+            $rules['new_mail_region'] = 'required|size:36';
+
+            $rules['new_mail_city'] = 'required|size:36';
+        }
+
+        //dd($this->is_employee);
 
 
 //        if($request->input['new_mail_non_cash_payment'] === 1) {
@@ -231,7 +235,7 @@ class CartController
 
             $shipping['new_mail_apartment'] = '';
 
-            $rules['new_mail_warehouse'] = 'required|size:36';
+            if(empty($this->is_employee)) $rules['new_mail_warehouse'] = 'required|size:36';
 
         } else {
 
@@ -243,11 +247,12 @@ class CartController
 
             $shipping['new_mail_warehouse'] = '';
 
-            $rules['new_mail_house'] = 'required';
+            if(empty($this->is_employee)) $rules['new_mail_house'] = 'required';
 
         }
 
-        $validated = $request->validate($rules);
+        $orderData['is_employee'] = $this->is_employee??0;
+
 // dd($validated);
 //        if ($validated->fails()) {
 //            return Redirect::back()->withErrors('Не заполнены все обязательные поля!');
@@ -720,7 +725,8 @@ class CartController
     {
         // $start = time();
         // $url = 'http://94.131.241.126/api/nova-poshta/cities';
-        return;
+
+        // return;
         unset($data['order_id']);
 
         $curl = curl_init();

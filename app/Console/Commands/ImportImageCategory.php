@@ -31,6 +31,8 @@ class ImportImageCategory extends Command
         try {
             $ref = $this->option('ref');
 
+            info('UpdatePrice Add to Queue');
+
             ImportImgCategory::addToQueue($ref);
 
             $this->info('Images categories have been successfully added to the queue');

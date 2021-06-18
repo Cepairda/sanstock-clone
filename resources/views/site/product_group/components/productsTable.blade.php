@@ -19,7 +19,8 @@
                 <td>{{ $product["sku"] }}</td>
                 <td>
                     <div class="_bl">
-                        @if(empty($product->defectiveImages))
+                        @php($defectiveImages = $product->allDefectiveImages)
+                        @if(empty($defectiveImages))
                             <div class="_bl-g">
                                 <img class="lazy img-data-path" width="75"
                                      data-src=""
@@ -27,7 +28,8 @@
                             </div>
                         @else
                             <div class="_bl-g th-gallery">
-                                @foreach($product->defectiveImages as $key => $value)
+
+                                @foreach($defectiveImages as $key => $value)
                                     <a href="/storage/product/{{ $productGroup->sdCode }}/{{ $product->sku }}/{{ $product->sku }}_{{ $key }}.jpg">
                                         <img class="_bl-g--img lazy img-data-path" width="75"
                                              data-src="/storage/product/{{ $productGroup->sdCode }}/{{ $product->sku }}/{{ $product->sku }}_{{ $key }}.jpg"

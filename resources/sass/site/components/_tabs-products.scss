@@ -51,15 +51,20 @@
 		.btn-item {
 			display: flex;
 			align-items: center;
-			padding: 10px 25px;
-			margin-left: -1px;
+
+            @media (min-width: 576px) {
+                padding: 10px 25px;
+            }
+            padding: 10px 15px;
+
+            margin-left: -1px;
 			border: 1px solid #cccccc;
 			border-radius: 0;
 			font-family: Open Sans Semibold, sans-serif;
 			background-color: #fff;
 			color: #9d9d9c;
 			white-space: normal;
-			
+
 			&.active {
 				//background-color: #ef6f20;
 				//border-color: #ef6f20;

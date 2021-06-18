@@ -32,6 +32,8 @@ class ImportPrice extends Command
         try {
             PriceImport::addToQueue();
 
+            info('UpdatePrice Add to Queue');
+
             $this->info('Prices have been successfully added to the queue');
         } catch (\Exception $exception) {
             $this->error('Something went wrong.' . $exception->getMessage());

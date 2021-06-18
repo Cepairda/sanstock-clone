@@ -32,6 +32,8 @@ class ImportCategory extends Command
         try {
             $categoryB2BImport->importQueue();
 
+            info('UpdatePrice Add to Queue');
+
             $this->info('Categories have been successfully added');
         } catch (\Exception $exception) {
             $this->error('Something went wrong.' . $exception->getMessage());

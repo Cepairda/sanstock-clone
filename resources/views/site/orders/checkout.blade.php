@@ -127,6 +127,8 @@
 
                                 </div>
 
+                                @if((!isset($_COOKIE["access"]) || empty($_COOKIE["access"]))):
+
                                 <div class="row container-delivery-form">
 
                                     <div class="col-12">
@@ -277,35 +279,31 @@
                                     </div>
 
                                     <!-- Способ облата -->
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <select id="payments_form"
-                                                    class=""
-                                                    name="payments_form"
-                                                    data-placeholder="Способ оплаты"
-                                                    style="padding: 4px;">
-                                                <option value="0">Наложенный платеж</option>
 
-                                                @if(isset($paymentMethods))
+{{--                                    <div class="col-12">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <select id="payments_form"--}}
+{{--                                                    class=""--}}
+{{--                                                    name="payments_form"--}}
+{{--                                                    data-placeholder="Способ оплаты"--}}
+{{--                                                    style="padding: 4px;">--}}
+{{--                                                <option value="0">Наложенный платеж</option>--}}
 
-                                                    @foreach($paymentMethods as $key => $payment_title)
+{{--                                                @if(isset($paymentMethods))--}}
 
-                                                        <option value="{{ $key }}">{{ $payment_title }}</option>
+{{--                                                    @foreach($paymentMethods as $key => $payment_title)--}}
 
-                                                    @endforeach
+{{--                                                        <option value="{{ $key }}">{{ $payment_title }}</option>--}}
 
-                                                @endif
-                                            </select>
+{{--                                                    @endforeach--}}
 
-                                            <label for="payments_form">Способ оплаты</label>
+{{--                                                @endif--}}
+{{--                                            </select>--}}
 
-    {{--                                        @error('new_mail_delivery_type')--}}
-    {{--                                        <span class="invalid-feedback">--}}
-    {{--                                                    {{ $message }}--}}
-    {{--                                                </span>--}}
-    {{--                                        @enderror--}}
-                                        </div>
-                                    </div>
+{{--                                            <label for="payments_form">Способ оплаты</label>--}}
+
+{{--                                        </div>--}}
+{{--                                    </div>--}}
 
 
                                     <!-- Комментарий к заказу -->
@@ -317,6 +315,8 @@
                                     </div>
 
                                 </div>
+
+                                @endif
 
                             <div class="col-12">
                                 <div class="pt-5 d-flex justify-content-end">
