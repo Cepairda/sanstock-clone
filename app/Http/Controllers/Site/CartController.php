@@ -469,8 +469,8 @@ class CartController
 
         session()->keep(['order']);
 
-        $key = env('PLATON_PAYMENT_KEY');
-        $pass = env('PLATON_PAYMENT_PASSWORD');
+        $key = config('app.PLATON_PAYMENT_KEY');
+        $pass = config('app.PLATON_PAYMENT_PASSWORD');
         $payment = 'CC';
         $data = base64_encode(
             json_encode(
@@ -510,12 +510,12 @@ class CartController
      * Create request for google pay
      * @param $order_id
      * @param $amount
-     * @return array
+     * @return array|Application|Factory|View
      */
-    public function requestGooglePay($order_id, $amount): array
+    public function createGooglePayRequest($order_id, $amount)
     {
-        $key = env('PLATON_PAYMENT_KEY');
-        $pass = env('PLATON_PAYMENT_PASSWORD');
+        $key = config('app.PLATON_PAYMENT_KEY');
+        $pass = config('app.PLATON_PAYMENT_PASSWORD');
 
         $CLIENT_PASS = $pass;
         $data['action'] = 'GOOGLEPAY';
@@ -539,10 +539,14 @@ class CartController
             )
         );
 
-        return [
+        $request = [
             'data' => $data,
             'hash' => $hash
         ];
+
+        return view('site.orders.googlePaymentFrame',
+            $request
+        );
     }
 
     /**
@@ -728,13 +732,13 @@ class CartController
         // $start = time();
         // $url = 'http://94.131.241.126/api/nova-poshta/cities';
 
-        //return;
+        // return;
         if(isset($data['order_id'])) unset($data['order_id']);
 
         $curl = curl_init();
         curl_setopt_array($curl,
             array(
-                CURLOPT_URL => "https://b2b-sandi.com.ua/api/orders/checkout?token=" . env('ORDER_TOKEN_FOR_B2B'),
+                CURLOPT_URL => "https://b2b-sandi.com.ua/api/orders/checkout?token=" . config('app.ORDER_TOKEN_FOR_B2B'),
                 CURLOPT_RETURNTRANSFER => TRUE,
                 CURLOPT_CONNECTTIMEOUT => 20,
                 CURLOPT_TIMEOUT => 1000,

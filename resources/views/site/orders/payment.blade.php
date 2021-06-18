@@ -238,7 +238,11 @@
             // show returned data in developer console for debugging
             console.log(paymentData);
             // @todo pass payment token to your gateway to process payment
-            paymentToken = paymentData.paymentMethodData.tokenizationData.token;
+            let paymentToken = paymentData.paymentMethodData.tokenizationData.token;
+        }
+
+        function loadGooglePayPlaton() {
+            document.getElementById('frame').src = '{{  }}';
         }
 
     </script>

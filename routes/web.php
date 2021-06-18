@@ -248,6 +248,9 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::get('/checkout', 'CartController@successCheckout')->name('success-checkout');
         Route::get('/success-checkout', 'CartController@moveToSuccessCheckoutPage')->name('move-to-success-checkout-page');
 
+        // Google Pay
+        Route::get('/google-pay', 'CartController@requestGooglePay')->name('google-pay-request-to-platon');
+
         Route::get('search', 'SearchController@search')->name('products.search');
         Route::post('products/update-price', 'ProductController@updatePrice')->name('products.update-price');
         Route::post('products/get-first-additional', 'ProductController@getFirstAdditional')->name('products.get-first-additional');

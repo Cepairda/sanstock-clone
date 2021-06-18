@@ -125,6 +125,12 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'ORDER_TOKEN_FOR_B2B' => env('ORDER_TOKEN_FOR_B2B'),
+
+    'PLATON_PAYMENT_KEY' => env('PLATON_PAYMENT_KEY'),
+
+    'PLATON_PAYMENT_PASSWORD' => env('PLATON_PAYMENT_PASSWORD'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

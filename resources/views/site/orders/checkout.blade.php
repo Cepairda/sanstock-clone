@@ -282,30 +282,30 @@
 
                                     <!-- Способ облата -->
 
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <select id="payments_form"
-                                                    class=""
-                                                    name="payments_form"
-                                                    data-placeholder="Способ оплаты"
-                                                    style="padding: 4px;">
-                                                <option value="0">Наложенный платеж</option>
+{{--                                    <div class="col-12">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <select id="payments_form"--}}
+{{--                                                    class=""--}}
+{{--                                                    name="payments_form"--}}
+{{--                                                    data-placeholder="Способ оплаты"--}}
+{{--                                                    style="padding: 4px;">--}}
+{{--                                                <option value="0">Наложенный платеж</option>--}}
 
-                                                @if(isset($paymentMethods))
+{{--                                                @if(isset($paymentMethods))--}}
 
-                                                    @foreach($paymentMethods as $key => $payment_title)
+{{--                                                    @foreach($paymentMethods as $key => $payment_title)--}}
 
-                                                        <option value="{{ $key }}">{{ $payment_title }}</option>
+{{--                                                        <option value="{{ $key }}">{{ $payment_title }}</option>--}}
 
-                                                    @endforeach
+{{--                                                    @endforeach--}}
 
-                                                @endif
-                                            </select>
+{{--                                                @endif--}}
+{{--                                            </select>--}}
 
-                                            <label for="payments_form">Способ оплаты</label>
+{{--                                            <label for="payments_form">Способ оплаты</label>--}}
 
-                                        </div>
-                                    </div>
+{{--                                        </div>--}}
+{{--                                    </div>--}}
 
                                 @endif
                                     <!-- Комментарий к заказу -->
