@@ -404,6 +404,8 @@ class CartController
             'data' => $orderData,
         ];
 
+        // Cookie::queue('access', 'true', 60 * 24);
+
         // $this->sentOrderToB2B($order);
         // dd($order);
         if(!empty($shipping['payments_form'])) {
@@ -726,8 +728,8 @@ class CartController
         // $start = time();
         // $url = 'http://94.131.241.126/api/nova-poshta/cities';
 
-        // return;
-        unset($data['order_id']);
+        //return;
+        if(isset($data['order_id'])) unset($data['order_id']);
 
         $curl = curl_init();
         curl_setopt_array($curl,
