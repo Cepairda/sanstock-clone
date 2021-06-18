@@ -276,6 +276,38 @@
                                         </div>
                                     </div>
 
+                                    <!-- Способ облата -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <select id="payments_form"
+                                                    class=""
+                                                    name="payments_form"
+                                                    data-placeholder="Способ оплаты"
+                                                    style="padding: 4px;">
+                                                <option value="0">Наложенный платеж</option>
+
+                                                @if(isset($paymentMethods))
+
+                                                    @foreach($paymentMethods as $key => $payment_title)
+
+                                                        <option value="{{ $key }}">{{ $payment_title }}</option>
+
+                                                    @endforeach
+
+                                                @endif
+                                            </select>
+
+                                            <label for="payments_form">Способ оплаты</label>
+
+    {{--                                        @error('new_mail_delivery_type')--}}
+    {{--                                        <span class="invalid-feedback">--}}
+    {{--                                                    {{ $message }}--}}
+    {{--                                                </span>--}}
+    {{--                                        @enderror--}}
+                                        </div>
+                                    </div>
+
+
                                     <!-- Комментарий к заказу -->
                                     <div class="col-12">
                                         <div class="form-group">

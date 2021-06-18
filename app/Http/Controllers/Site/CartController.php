@@ -5,14 +5,36 @@ namespace App\Http\Controllers\Site;
 use App\OrderProduct;
 use App\Orders;
 use App\OrderShipping;
+use App\PaymentOrder;
 use App\Product;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class CartController
 {
     private $order_sum = 0;
+
+    const BANK_CARD = 'bank_card';
+
+    const GOOGLE_PAY = 'google_pay';
+
+    const APPLE_PAY = 'apple_pay';
+
+    public $is_employee = 0;
+
+
+    function __construct() {
+
+        // dd(request()->ip());
+
+        $this->is_employee = $_COOKIE["access"]??0;
+    }
+
     /**
      * Получение данных о товарах в корзине
      */
@@ -82,7 +104,18 @@ class CartController
         return view('site.orders.cart', [
             'orderProducts' => $orderProducts,
             'areas' => $areas,
-            'order_sum' => $this->order_sum
+            'order_sum' => $this->order_sum,
+        ]);
+    }
+
+    /**
+     * Show checkout view
+     * @return Application|Factory|RedirectResponse|View
+     */
+    public function loadCheckout() {
+        if(!isset($_COOKIE["products_cart"])) return redirect()->route('site./');
+        return view('site.orders.checkout', [
+            'paymentMethods' => $this->paymentMethods(),
         ]);
     }
 
@@ -103,6 +136,9 @@ class CartController
             //'new_mail_delivery_type' => 'required',
 //            'new_mail_insurance_sum' => 'required|numeric|min:200',
         ];
+
+        dd($this->is_employee);
+
 
 //        if($request->input['new_mail_non_cash_payment'] === 1) {
 //
@@ -163,8 +199,7 @@ class CartController
 
         $shipping['new_mail_insurance_sum'] = $request->new_mail_insurance_sum ?? 0 ;
 
-        $shipping['new_mail_payment_type'] = ($request->new_mail_payment_type === 'yes') ? 1 : 0 ;
-
+        $shipping['payments_form'] = (isset($request->payments_form)) ? $request->payments_form : 0 ;
 
         $orderData = [];
 
@@ -183,6 +218,8 @@ class CartController
         $orderData['new_mail_comment'] = $shipping['new_mail_comment'];
 
         $orderData['new_mail_delivery_type'] = $shipping['new_mail_delivery_type'];
+
+        $orderData['payments_form'] = $shipping['payments_form'];
 
         if($shipping['new_mail_delivery_type'] === 'storage_storage') {
 
@@ -313,7 +350,7 @@ class CartController
 
         $orderShipping->cashless_payment = 0;
 
-        $orderShipping->payments_form = 0;
+        $orderShipping->payments_form = $orderData['payments_form'];
 
         $orderShipping->cash_sum = 0;
 
@@ -326,6 +363,8 @@ class CartController
         $orderShipping->save();
 
         $products = [];
+
+        $orderData['price_sum'] = 0;
 
         foreach($orderProducts as $product):
             // order products
@@ -341,6 +380,8 @@ class CartController
 
             $products[$product['sku']] = $product['quantity'];
 
+            $orderData['price_sum'] += (int)$product['price'];
+
             Product::where('details->sku', $product['sku'])->update([
                 //'details->price' => $price,
                 //'details->old_price' => $oldPrice,
@@ -350,6 +391,7 @@ class CartController
         endforeach;
 
         //dd($products);
+
         $orderData['order_id'] = $newOrder->id;
 
         $order = [
@@ -358,29 +400,217 @@ class CartController
         ];
 
         // $this->sentOrderToB2B($order);
-// dd($order);
+        // dd($order);
+        if(!empty($shipping['payments_form'])) {
+            return Redirect::route('site.payment')->with( ['order' => $order] );
+        }
 
-       \App\Jobs\sentOrder::dispatch($newOrder->id, $order)->onQueue('checkout');
+        return $this->moveToSuccessCheckoutPage($order);
+    }
 
-        //unset($_COOKIE["products_cart"]);
-        //$cookie = Cookie::forget('products_cart');
+    /**
+     * Payment page
+     * @param Request $request
+     * @return Application|Factory|View
+     */
+    public function payment(Request $request) {
+
+        $order = session('order');
+
+        session()->keep(['order']);
+
+        return view('site.orders.payment', [
+            'order_id' => $order['data']['order_id'],
+            'order' => $order
+        ]);
+    }
+
+    /**
+     * Load platon bank card form
+     * @return Application|Factory|View
+     */
+    public function orderPayment() {
+
+        $order = session('order');
+
+        session()->keep(['order']);
+
+        $order_id = $order['data']['order_id'];
+
+        $amount = number_format($order['data']['price_sum'], 2, '.', '');
+
+        // $order_id = $order['data']['order_id'];
+        // $order_id = 118;
+
+        $dataPayment = $this->requestBankCardPayment($order_id, $amount);
+
+        return view('site.orders.paymentFrame',
+            $dataPayment
+        );
+    }
+
+    /**
+     * Create request for bank card payment
+     * @param $order_id
+     * @param $amount
+     * @return array
+     */
+    public function requestBankCardPayment($order_id, $amount): array
+    {
+
+        $order = session('order');
+
+        session()->keep(['order']);
+
+        $key = env('PLATON_PAYMENT_KEY');
+        $pass = env('PLATON_PAYMENT_PASSWORD');
+        $payment = 'CC';
+        $data = base64_encode(
+            json_encode(
+                array(
+                    'amount' => $amount,
+                    'description' => 'Оплата заказа #' . $order_id,
+                    'currency' => 'UAH',
+                    'recurring' => 'Y'
+                )
+            )
+        );
+
+        $req_token = 'Y';
+        $url = route('site.check-transaction-status');
+        $sign = md5(
+            strtoupper(
+                strrev($key).
+                strrev($payment).
+                strrev($data).
+                strrev($url).
+                strrev($pass)
+            )
+        );
+
+        return [
+            'order' => session()->get('data'),
+            'payment' => $payment,
+            'key' => $key,
+            'url' => $url,
+            'data' => $data,
+            'req_token' => $req_token,
+            'sign' => $sign
+        ];
+    }
+
+    /**
+     * Create request for google pay
+     * @param $order_id
+     * @param $amount
+     * @return array
+     */
+    public function requestGooglePay($order_id, $amount): array
+    {
+        $key = env('PLATON_PAYMENT_KEY');
+        $pass = env('PLATON_PAYMENT_PASSWORD');
+
+        $CLIENT_PASS = $pass;
+        $data['action'] = 'GOOGLEPAY';
+        $data['CLIENT_KEY'] = $key;
+        $data['order_id'] = $order_id;
+        $data['order_amount'] = $amount;
+        $data['order_currency'] = 'UAH';
+        $data['order_description'] = 'test';
+        $data['payment_token'] = '{"signature":"MEUCIQD+9/PnFvB+Lo6d/eHpgqQrMvmRDZdW1AcjQKavHrcPmQIgeVjR1hXqH7hkCn+VZqx/kjdofMIYbyL15Xp52mR9+2s\u003d","intermediateSigningKey":{"signedKey":"{\"keyValue\":\"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEBOHyOhwWk6SK5nqhFBBI1hSvWHAaOO0Ukbrl56zx7fPNttFFKs2U10f6EWbdhULrv4QT4qMNbyVAq8ig1jdsYA\\u003d\\u003d\",\"keyExpiration\":\"1570945959000\"}","signatures":["MEYCIQCe6t42U5OemtGGdYC6npBNbVxe1HbTF8pUkSD7mO+CWAIhAI/0M/XQuW6i8reT0LCNHKoNfgWYwOWHBoj2wpZdgKHh"]},"protocolVersion":"ECv2","signedMessage":{\"encryptedMessage\":\"U9ChAIukmQ85TdZKAU/26mJUwUt3cVpJmx/JtFi350F/KiRNiIEGi1CmkgVe+ohzikkKLo37Ty3YQjyjVHNTHmF3AyNVTIJCL7qYybt+aFNI1XFlpv3ArWU+fH8Bi190tl7lLyyeNjWx8L402spsLpuUe9OLLjazIq0Vfjw3wRZ2B2+ybUrnoz5Iydapn8B7c/QqR7w53n6svIK58q7eL159Ano0GyfLpUOLLQ949MhP1ze***UzapUGtMd0k0c/4Nnkfs2TnN6ETEtP8y9J29hYKGVOCo79rRSN2xLsYXGNawIiPc6082HWB82JyuW2bfWAL1R0W+2iql2dBWY\\u003d\",\"ephemeralPublicKey\":\"BPYYpVT5INyXSwoNbP/HuGkjQnfnUwUPMH2bCp6Od3EoihnegFZObjP0IVvDA5YfNlLDJjHutBDj30GW5Fei8xw\\u003d\",\"tag\":\"qt4FcCGO4rp969CBBTPJ0nhAeQeR+rOM0FmXk8DdGLQ\\u003d\"}"}';
+        $data['payer_email'] = '';
+        $data['term_url_3ds'] = 'http://google.com';
+        $hash = md5(
+            strtoupper(
+                strrev(
+                    $data['payer_email']
+                ).
+                ($CLIENT_PASS).
+                strrev(
+                    $data['payment_token']
+                )
+            )
+        );
+
+        return [
+            'data' => $data,
+            'hash' => $hash
+        ];
+    }
+
+    /**
+     * Check transaction status
+     */
+    public function checkTransactionStatus() {
+
+        session()->keep(['order']);
+
+        return  view('site.orders.checkTransactionStatus', [
+
+        ]);
+    }
+
+    /**
+     * Redirect to success checkout page
+     * @param null $order
+     * @return RedirectResponse
+     */
+    public function moveToSuccessCheckoutPage($order = null)
+    {
+        if($order === null) {
+
+            $order = session('order');
+
+            session()->keep(['order']);
+//dd($order);
+
+            $payment = new PaymentOrder;
+
+            $payment->order_id = $order['data']['order_id'];
+
+            $payment->payment_method = $order['data']['payments_form'];
+
+            $payment->status = 1;
+
+            $payment->save();
+
+            session()->forget('order');
+        }
+
+        \App\Jobs\sentOrder::dispatch($order['data']['order_id'], $order)->onQueue('checkout');
+
         Cookie::queue(Cookie::forget('products_cart'));
 
+        return Redirect::route('site.success-checkout')->with(['order_id' => $order['data']['order_id'], 'payments_form' => $order['data']['payments_form'] ]);
+    }
+
+    /**
+     * Success checkout page
+     * @return Application|Factory|RedirectResponse|View
+     */
+    public function successCheckout()
+    {
+        if(empty($order_id = session('order_id'))) return Redirect::route('site./');
+
+        $payments_form = session('payments_form');
+
         return view('site.orders.stripe_checkout', [
-            'order_id' => $newOrder->id,
+            'order_id' => $order_id,
+            'payments_form' => $payments_form,
         ]);
-//
-//        if(!$order_id = $this->saveNewOrder($order, $orderProducts)) {
-//
-//            return view('site.orders.cart', [
-//                'order_id' => $order_id,
-//                'message' => 'Ваш заказ принят и отправлен в обработку!',
-//            ]);
-//
-//
-//        }
-//
-//        return Redirect::back()->withErrors('Не удалось оформить заказ!');
+    }
+
+    /**
+     * Payment methods
+     * @return string[]
+     */
+    public function paymentMethods(): array
+    {
+        return [
+            self::BANK_CARD => 'Оплата банковской картой',
+            self::GOOGLE_PAY => 'Оплата GooglePay',
+            self::APPLE_PAY => 'Оплата ApplePay',
+        ];
     }
 
     /**
@@ -490,11 +720,13 @@ class CartController
     {
         // $start = time();
         // $url = 'http://94.131.241.126/api/nova-poshta/cities';
+        return;
+        unset($data['order_id']);
 
         $curl = curl_init();
         curl_setopt_array($curl,
             array(
-                CURLOPT_URL => "https://b2b-sandi.com.ua/api/orders/checkout?token=368dbc0bf4008db706576eb624e14abf",
+                CURLOPT_URL => "https://b2b-sandi.com.ua/api/orders/checkout?token=" . env('ORDER_TOKEN_FOR_B2B'),
                 CURLOPT_RETURNTRANSFER => TRUE,
                 CURLOPT_CONNECTTIMEOUT => 20,
                 CURLOPT_TIMEOUT => 1000,

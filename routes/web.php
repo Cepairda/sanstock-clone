@@ -239,12 +239,14 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::get('/cart', 'CartController@loadCartView')->name('cart');
         Route::get('/order-products', 'CartController@getCartProducts')->name('order-products');
         Route::get('/order-products-table', 'CartController@getCartProductsTable')->name('order-products');
-        Route::get('/cart/checkout', function() {
-            if(!isset($_COOKIE["products_cart"])) return redirect()->route('site./');
-            return view('site.orders.checkout');
-        });
+        Route::get('/cart/checkout', 'CartController@loadCheckout')->name('order-checkout');
         // оформить заказ
         Route::post('/checkout', 'CartController@checkout')->name('checkout');
+        Route::get('/payment', 'CartController@payment')->name('payment');
+        Route::get('/payment-platon', 'CartController@orderPayment')->name('payment-form');
+        Route::get('/check-transaction-status', 'CartController@checkTransactionStatus')->name('check-transaction-status');
+        Route::get('/checkout', 'CartController@successCheckout')->name('success-checkout');
+        Route::get('/success-checkout', 'CartController@moveToSuccessCheckoutPage')->name('move-to-success-checkout-page');
 
         Route::get('search', 'SearchController@search')->name('products.search');
         Route::post('products/update-price', 'ProductController@updatePrice')->name('products.update-price');
