@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Classes\ImportImage as ImportImg;
 use App\Classes\Imports\CategoryB2BImport;
+use App\Classes\TelegramBot;
 use Illuminate\Console\Command;
 
 class ImportCategory extends Command
@@ -27,10 +28,10 @@ class ImportCategory extends Command
      *
      * @return mixed
      */
-    public function handle(CategoryB2BImport $categoryB2BImport)
+    public function handle(TelegramBot $bot, CategoryB2BImport $categoryB2BImport)
     {
         try {
-            $categoryB2BImport->importQueue();
+            $categoryB2BImport->importQueue($bot);
 
             info('UpdatePrice Add to Queue');
 

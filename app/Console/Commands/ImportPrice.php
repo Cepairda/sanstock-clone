@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Classes\ImportImage as ImportImg;
 use App\Classes\Imports\PriceImport;
+use App\Classes\TelegramBot;
 use Illuminate\Console\Command;
 
 class ImportPrice extends Command
@@ -27,10 +28,10 @@ class ImportPrice extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(TelegramBot $bot)
     {
         try {
-            PriceImport::addToQueue();
+            PriceImport::addToQueue($bot);
 
             info('UpdatePrice Add to Queue');
 

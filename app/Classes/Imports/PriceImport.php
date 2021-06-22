@@ -2,6 +2,9 @@
 
 namespace App\Classes\Imports;
 
+use App\Classes\TelegramBot;
+use Exception;
+
 use App\Jobs\ProcessImportPrice;
 use App\Product;
 use App\ProductSort;
@@ -16,22 +19,31 @@ class PriceImport
      *
      * @return void
      */
-    public static function addToQueue( int $ids = null) : void
+    public static function addToQueue(TelegramBot $bot, int $ids = null) : void
     {
-        $products = isset($ids)
-            ? Product::whereIn('details->sku', $ids)->get()
-            : Product::get();
+        try {
+            $products = isset($ids)
+                ? Product::whereIn('details->sku', $ids)->get()
+                : Product::get();
+            $productsCount = $products->count();
 
-        $tenPartJsonDate = $products->chunk(10);
+            $tenPartJsonDate = $products->chunk(25);
 
-        foreach ($tenPartJsonDate as $key => $products) {
-            $skuArray = [];
+            foreach ($tenPartJsonDate as $key => $products) {
+                $skuArray = [];
 
-            foreach ($products as $sku => $product) {
-                $skuArray[] = $product->getDetails('sku');
+                foreach ($products as $sku => $product) {
+                    $skuArray[] = $product->getDetails('sku');
+                }
+
+                ProcessImportPrice::dispatch($skuArray)->onQueue('priceImport');
             }
 
-            ProcessImportPrice::dispatch($skuArray)->onQueue('priceImport');
+            $message = "Добавлено в очередь на обновление цен и остатков для {$productsCount} товаров";
+        } catch (Exception $e) {
+            $message = $e;
+        } finally {
+            $bot->sendSubscribes('sendMessage', $message);
         }
     }
 
@@ -42,7 +54,7 @@ class PriceImport
      */
     public static function import(array $jsonData, array $skuArray = null) : void
     {
-        try {
+        //try {
             $skuExistsAPI = [];
 
             foreach ($jsonData['data'] as $sku => [
@@ -68,9 +80,11 @@ class PriceImport
             foreach ($missingSkuInApi as $sku) {
                 self::updateBalance($sku, 0);
             }
-        } catch (\Exception $e) {
 
-        }
+            throw new Exception();
+        //} catch (\Exception $e) {
+
+        //}
     }
 
     protected static function updateBalance($sku, $balance)

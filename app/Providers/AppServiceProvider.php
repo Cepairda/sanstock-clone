@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(TelegramBot $bot)
     {
         Queue::failing(function (JobFailed $event) use ($bot) {
-            $bot->sendSubscribes('sendMessage', class_basename($event->job));
+            $bot->sendSubscribes('sendMessage', "Ошибка: {}" . class_basename($event->job->getQueue()));
         });
     }
 }

@@ -2,11 +2,14 @@
 
 namespace App\Classes\Imports;
 
+use App\Classes\TelegramBot;
+use Exception;
+use GuzzleHttp\Client;
+use LaravelLocalization;
+
 use App\Category;
 use App\Jobs\ProcessCategoryB2BImport;
 use App\Product;
-use GuzzleHttp\Client;
-use LaravelLocalization;
 use App\Classes\Slug;
 
 class CategoryB2BImport
@@ -41,12 +44,12 @@ class CategoryB2BImport
         ProcessCategoryB2BImport::dispatch()->onQueue('b2bImportCategory');
     }
 
-    public function importQueue()
+    public function importQueue(TelegramBot $bot)
     {
-        $this->importCommand();
+        $this->importCommand($bot);
     }
 
-    public function importCommand()
+    public function importCommand(TelegramBot $bot)
     {
         if (empty(self::$data)) {
             self::$data = $this->getDataJson();
@@ -59,24 +62,31 @@ class CategoryB2BImport
         ] = self::$data[$ref];
         $this->categoryImport($ref, $parentRef, $name, $image);*/
 
-        $this->import();
+        $this->import($bot);
     }
 
-    public function import()
+    public function import(TelegramBot $bot)
     {
-        $jsonData = self::$data;
+        try {
+            $jsonData = self::$data;
 
-        foreach ($jsonData as $ref => [
-            'parent_ref' => $parentRef,
-            'name' => $name,
-            'image' => $image
-        ]) {
-            $this->categoryImport($ref, $parentRef, $name, $image);
+            foreach ($jsonData as $ref => [
+                     'parent_ref' => $parentRef,
+                     'name' => $name,
+                     'image' => $image
+            ]) {
+                $this->categoryImport($ref, $parentRef, $name, $image);
+            }
+
+            $this->fixParent();
+            $tree = Category::get()->toTree();
+            $this->recursiveCheck($tree);
+            $text = "Категории обновлены";
+        } catch (Exception $e) {
+            $text = "Ошибка: {$e->getMessage()}";
+        } finally {
+            $bot->sendSubscribes('sendMessage', $text);
         }
-
-        $this->fixParent();
-        $tree = Category::get()->toTree();
-        $this->recursiveCheck($tree);
     }
 
     /**

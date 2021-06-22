@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
-        $schedule->command('import:b2b')->everyFourHours();
+/*        $schedule->command('import:b2b')->everyFourHours();
         $schedule->command('queue:work --queue=high,b2bImport  --stop-when-empty --timeout=600')->name('b2bImport')->withoutOverlapping();
 
         $schedule->command('import:category')->everyThirtyMinutes();
@@ -37,7 +37,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('queue:work --queue=high,imageCategoryImport  --stop-when-empty --timeout=600')->name('imageCategoryImport')->withoutOverlapping();
 
         $schedule->command('import:price')->everyThirtyMinutes();
-        $schedule->command('queue:work --queue=high,priceImport  --stop-when-empty --timeout=600')->name('priceImport')->withoutOverlapping();
+        $schedule->command('queue:work --queue=high,priceImport  --stop-when-empty --timeout=600')->name('priceImport')->withoutOverlapping();*/
 
         //yyyyy
         // New Post Areas Import

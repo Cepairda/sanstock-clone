@@ -10,7 +10,8 @@ class TelegramBotController extends Controller
 {
     public function index(TelegramBot $bot)
     {
-        $bot->sendMessage($bot->getChatId(), 'Добро пожаловать !');
-        TelegramChat::updateOrCreate(['id' => $bot->getChatId()]);
+        //$bot->sendMessage($bot->getChatId(), 'Добро пожаловать !');
+        $bot->sendSubscribes('sendMessage', 'Working (:');
+        //TelegramChat::updateOrCreate(['id' => $bot->getChatId()]);
     }
 }
