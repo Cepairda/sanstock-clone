@@ -127,7 +127,11 @@
 
                                 </div>
 
+
+
                                 <div class="row container-delivery-form">
+
+                                    @if((!isset($_COOKIE["access"]) || empty($_COOKIE["access"]))):
 
                                     <div class="col-12">
                                         <h4 class="pt-5 text-center font-weight-bold">{{ __('New mail') }}</h4>
@@ -276,6 +280,34 @@
                                         </div>
                                     </div>
 
+                                    <!-- Способ облата -->
+
+{{--                                    <div class="col-12">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <select id="payments_form"--}}
+{{--                                                    class=""--}}
+{{--                                                    name="payments_form"--}}
+{{--                                                    data-placeholder="Способ оплаты"--}}
+{{--                                                    style="padding: 4px;">--}}
+{{--                                                <option value="0">Наложенный платеж</option>--}}
+
+{{--                                                @if(isset($paymentMethods))--}}
+
+{{--                                                    @foreach($paymentMethods as $key => $payment_title)--}}
+
+{{--                                                        <option value="{{ $key }}">{{ $payment_title }}</option>--}}
+
+{{--                                                    @endforeach--}}
+
+{{--                                                @endif--}}
+{{--                                            </select>--}}
+
+{{--                                            <label for="payments_form">Способ оплаты</label>--}}
+
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+
+                                @endif
                                     <!-- Комментарий к заказу -->
                                     <div class="col-12">
                                         <div class="form-group">
@@ -285,6 +317,8 @@
                                     </div>
 
                                 </div>
+
+
 
                             <div class="col-12">
                                 <div class="pt-5 d-flex justify-content-end">
