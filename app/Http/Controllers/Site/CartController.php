@@ -128,8 +128,8 @@ class CartController
             'new_mail_name' => 'required',
             'new_mail_patronymic' => 'required',
             'new_mail_phone' => 'required|regex:/^\+38[\s]\(0\d{2}\)[\s]\d{3}[-]\d{2}[-]\d{2}$/',
-            //'new_mail_delivery_type' => 'required',
-//            'new_mail_insurance_sum' => 'required|numeric|min:200',
+            // 'new_mail_delivery_type' => 'required',
+            // 'new_mail_insurance_sum' => 'required|numeric|min:200',
         ];
 
         if(empty($this->is_employee)) {
@@ -205,29 +205,31 @@ class CartController
 
         $shipping['payments_form'] = (isset($request->payments_form)) ? $request->payments_form : 0 ;
 
-        $orderData = [];
+        $orderData = $this->createDataOrder($shipping);
 
-        $orderData['new_mail_surname'] = $shipping['new_mail_surname'];
+        //$orderData = [];
 
-        $orderData['new_mail_name'] = $shipping['new_mail_name'];
-
-        $orderData['new_mail_patronymic'] = $shipping['new_mail_patronymic'];
-
-        $orderData['new_mail_phone'] = $shipping['new_mail_phone'];
-
-        $orderData['new_mail_region'] = $shipping['new_mail_region'];
-
-        $orderData['new_mail_city'] = $shipping['new_mail_city'];
-
-        $orderData['new_mail_comment'] = $shipping['new_mail_comment'];
-
-        $orderData['new_mail_delivery_type'] = $shipping['new_mail_delivery_type'];
-
-        $orderData['payments_form'] = $shipping['payments_form'];
+//        $orderData['new_mail_surname'] = $shipping['new_mail_surname'];
+//
+//        $orderData['new_mail_name'] = $shipping['new_mail_name'];
+//
+//        $orderData['new_mail_patronymic'] = $shipping['new_mail_patronymic'];
+//
+//        $orderData['new_mail_phone'] = $shipping['new_mail_phone'];
+//
+//        $orderData['new_mail_region'] = $shipping['new_mail_region'];
+//
+//        $orderData['new_mail_city'] = $shipping['new_mail_city'];
+//
+//        $orderData['new_mail_comment'] = $shipping['new_mail_comment'];
+//
+//        $orderData['new_mail_delivery_type'] = $shipping['new_mail_delivery_type'];
+//
+//        $orderData['payments_form'] = $shipping['payments_form'];
 
         if($shipping['new_mail_delivery_type'] === 'storage_storage') {
 
-            $orderData['new_mail_warehouse'] = $shipping['new_mail_warehouse'];
+//            $orderData['new_mail_warehouse'] = $shipping['new_mail_warehouse'];
 
             $shipping['new_mail_street'] = '';
 
@@ -239,11 +241,11 @@ class CartController
 
         } else {
 
-            $orderData['new_mail_street'] = $shipping['new_mail_street'];
-
-            $orderData['new_mail_house'] = $shipping['new_mail_house'];
-
-            $orderData['new_mail_apartment'] = $shipping['new_mail_apartment'];
+//            $orderData['new_mail_street'] = $shipping['new_mail_street'];
+//
+//            $orderData['new_mail_house'] = $shipping['new_mail_house'];
+//
+//            $orderData['new_mail_apartment'] = $shipping['new_mail_apartment'];
 
             $shipping['new_mail_warehouse'] = '';
 
@@ -326,6 +328,8 @@ class CartController
 
         $newOrder->status = 0;
 
+        $newOrder->attempts = 0;
+
         $newOrder->save();
 
         // shipping details
@@ -404,7 +408,9 @@ class CartController
             'data' => $orderData,
         ];
 
-        // Cookie::queue('access', 'true', 60 * 24);
+        //Cookie::queue('order', $order, 60);
+
+        // dd(Cookie::get('order'));
 
         // $this->sentOrderToB2B($order);
         // dd($order);
@@ -412,7 +418,49 @@ class CartController
             return Redirect::route('site.payment')->with( ['order' => $order] );
         }
 
-        return $this->moveToSuccessCheckoutPage($order);
+        return $this->moveToSuccessCheckoutPage($orderData['order_id'], $shipping['payments_form'], false);
+    }
+
+    /**
+     * Create data order for request
+     */
+    public function createDataOrder($data) {
+
+        $result = [];
+
+        $result['new_mail_surname'] = $data['new_mail_surname'];
+
+        $result['new_mail_name'] = $data['new_mail_name'];
+
+        $result['new_mail_patronymic'] = $data['new_mail_patronymic'];
+
+        $result['new_mail_phone'] = $data['new_mail_phone'];
+
+        $result['new_mail_region'] = $data['new_mail_region'];
+
+        $result['new_mail_city'] = $data['new_mail_city'];
+
+        $result['new_mail_comment'] = $data['new_mail_comment'];
+
+        $result['new_mail_delivery_type'] = $data['new_mail_delivery_type'];
+
+        $result['payments_form'] = $data['payments_form'];
+
+        if($data['new_mail_delivery_type'] === 'storage_storage') {
+
+            $result['new_mail_warehouse'] = $data['new_mail_warehouse'];
+
+        } else {
+
+            $result['new_mail_street'] = $data['new_mail_street'];
+
+            $result['new_mail_house'] = $data['new_mail_house'];
+
+            $result['new_mail_apartment'] = $data['new_mail_apartment'];
+
+        }
+
+        return $result;
     }
 
     /**
@@ -428,7 +476,8 @@ class CartController
 
         return view('site.orders.payment', [
             'order_id' => $order['data']['order_id'],
-            'order' => $order
+            'payment_method' => $order['data']['payments_form'],
+            'paymentMethods' => $this->paymentMethods(),
         ]);
     }
 
@@ -464,7 +513,7 @@ class CartController
      */
     public function requestBankCardPayment($order_id, $amount): array
     {
-
+        // $order = session()->get('data');
         $order = session('order');
 
         session()->keep(['order']);
@@ -496,7 +545,7 @@ class CartController
         );
 
         return [
-            'order' => session()->get('data'),
+            'order' => $order['data'],
             'payment' => $payment,
             'key' => $key,
             'url' => $url,
@@ -563,23 +612,24 @@ class CartController
 
     /**
      * Redirect to success checkout page
-     * @param null $order
+     * @param $order_id
+     * @param $payment_method
+     * @param bool $paid
      * @return RedirectResponse
      */
-    public function moveToSuccessCheckoutPage($order = null)
+    public function moveToSuccessCheckoutPage($order_id, $payment_method, $paid = true)
     {
-        if($order === null) {
+        if($paid) {
+            // dd(session()->all());
+            // $order = session('order');
 
-            $order = session('order');
-
-            session()->keep(['order']);
-//dd($order);
+            // session()->keep(['order']);
 
             $payment = new PaymentOrder;
 
-            $payment->order_id = $order['data']['order_id'];
+            $payment->order_id = $order_id;
 
-            $payment->payment_method = $order['data']['payments_form'];
+            $payment->payment_method = $payment_method;
 
             $payment->status = 1;
 
@@ -588,11 +638,11 @@ class CartController
             session()->forget('order');
         }
 
-        \App\Jobs\sentOrder::dispatch($order['data']['order_id'], $order)->onQueue('checkout');
+        \App\Jobs\sentOrder::dispatch($order_id)->onQueue('checkout');
 
         Cookie::queue(Cookie::forget('products_cart'));
 
-        return Redirect::route('site.success-checkout')->with(['order_id' => $order['data']['order_id'], 'payments_form' => $order['data']['payments_form'] ]);
+        return Redirect::route('site.success-checkout')->with(['order_id' => $order_id, 'payment_method' => $payment_method ]);
     }
 
     /**
@@ -603,11 +653,15 @@ class CartController
     {
         if(empty($order_id = session('order_id'))) return Redirect::route('site./');
 
-        $payments_form = session('payments_form');
+        $payment_method = session('payment_method');
+
+        session()->forget('payment_method');
+
+        session()->forget('order_id');
 
         return view('site.orders.stripe_checkout', [
             'order_id' => $order_id,
-            'payments_form' => $payments_form,
+            'payment_method' => $payment_method,
         ]);
     }
 
@@ -618,7 +672,7 @@ class CartController
     public function paymentMethods(): array
     {
         return [
-            self::BANK_CARD => 'Оплата банковской картой',
+            self::BANK_CARD => 'Оплата банковской картой (Visa, MasterCard)',
             self::GOOGLE_PAY => 'Оплата GooglePay',
             self::APPLE_PAY => 'Оплата ApplePay',
         ];
@@ -731,8 +785,8 @@ class CartController
     {
         // $start = time();
         // $url = 'http://94.131.241.126/api/nova-poshta/cities';
-
-        // return;
+info($data);
+        return false;
         if(isset($data['order_id'])) unset($data['order_id']);
 
         $curl = curl_init();
@@ -772,6 +826,83 @@ class CartController
         //echo "Страница " . $response . PHP_EOL;
 
         return $response;
+    }
+
+//    private function memorizeOrder($order) {
+//        cookie('order', json_encode($order), 15);
+//    }
+//
+//    private function getOrder() {
+//        json_decode(cookie('order'));
+//    }
+
+    /**
+     * Get order
+     * @param $order_id
+     * @return array
+     */
+    public function getOrder($order_id): array
+    {
+
+        $order = Orders::where('id', $order_id)->limit(1)->first();
+
+        $restoreOrder = [];
+
+        $products = $order->products()->get();
+
+        $orderProducts = [];
+
+        foreach($products as $product):
+
+            $orderProducts[$product['product_barcode']] = 1;
+
+        endforeach;
+
+        $restoreOrder['order'] = $orderProducts;
+
+        $dataShipping = $order->shipping()->limit(1)->first();
+
+        $dataOrderShipping = [];
+
+        $dataOrderShipping['new_mail_surname'] = $dataShipping->last_name;
+
+        $dataOrderShipping['new_mail_name'] = $dataShipping->first_name;
+
+        $dataOrderShipping['new_mail_patronymic'] = $dataShipping->middle_name;
+
+        $dataOrderShipping['new_mail_phone'] = $dataShipping->phone;
+
+        $dataOrderShipping['new_mail_region'] = $dataShipping->areas_ref;
+
+        $dataOrderShipping['new_mail_city'] = $dataShipping->settlement_ref;
+
+        $dataOrderShipping['new_mail_warehouse'] = $dataShipping->warehouse_ref;
+
+        $dataOrderShipping['new_mail_comment'] = $dataShipping->comments;
+
+        $dataOrderShipping['new_mail_street'] = $dataShipping->street_ref;
+
+        $dataOrderShipping['new_mail_house'] = $dataShipping->house;
+
+        $dataOrderShipping['new_mail_apartment'] = $dataShipping->apartment;
+
+        $dataOrderShipping['new_mail_insurance_sum'] = $dataShipping->insurance_sum;
+
+        $dataOrderShipping['payments_form'] = $dataShipping->payments_form;
+
+        if(!empty($dataOrderShipping['new_mail_warehouse'])) $dataOrderShipping['new_mail_delivery_type'] = 'storage_storage';
+        else $dataOrderShipping['new_mail_delivery_type'] = 'storage_door';
+
+        $dataOrder = (new \App\Http\Controllers\Site\CartController())->createDataOrder($dataOrderShipping);
+
+        if(empty($dataOrder['new_mail_warehouse']) && empty($dataOrder['new_mail_warehouse'])) $dataOrder['is_employee'] = 1;
+        else $dataOrder['is_employee'] = 0;
+
+        $dataOrder['order_id'] = $order->id;
+
+        $restoreOrder['data'] = $dataOrder;
+
+        return $restoreOrder;
     }
 
 

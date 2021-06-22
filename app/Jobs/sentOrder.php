@@ -15,18 +15,13 @@ class sentOrder implements ShouldQueue
 
     private $order_id;
 
-    private $order;
-
     /**
      * Create a new job instance.
      *
      * @param $order_id
-     * @param $order
      */
-    public function __construct($order_id, $order)
+    public function __construct($order_id)
     {
-        $this->order = $order;
-
         $this->order_id = $order_id;
     }
 
@@ -37,19 +32,51 @@ class sentOrder implements ShouldQueue
      */
     public function handle()
     {
-        if($result = (new \App\Http\Controllers\Site\CartController)->sentOrderToB2B($this->order)) {
+        $order = (new \App\Http\Controllers\Site\CartController)->getOrder($this->order_id);
 
-            $order = Orders::find($this->order_id);
+        if($result = (new \App\Http\Controllers\Site\CartController)->sentOrderToB2B($order)) {
 
-            if(!empty($order)) {
+            $ord = Orders::find($this->order_id);
 
-                $order->status = 1;
+            if(!empty($ord)) {
 
-                $order->save();
+                $ord->status = 1;
 
-            } else info('Не удалось обновить статус заказа! Заказ с id = ' . $this->order_id . ' не найден!');
+                $ord->save();
+
+            } else {
+
+                info('Не удалось обновить статус заказа! Заказ с id = ' . $this->order_id . ' не найден!');
+            }
 
             // отнимаем 1 от количества товара
+
+        } else {
+            // пишем попытки отправки заказа на b2b
+
+            // attempts
+            $ord = Orders::find($this->order_id);
+
+            if(!empty($ord)) {
+
+                if($ord->attempts < 3) {
+
+                    \App\Jobs\sentOrder::dispatch($order['data']['order_id'])->onQueue('checkout');
+
+                    $ord->attempts = $ord->attempts + 1;
+
+                    $ord->save();
+
+                } else {
+
+                    // Отправляем сообщение о неудачных отправках заказа
+
+                }
+
+            } else {
+
+                info('Не удалось обновить статус заказа! Заказ с id = ' . $this->order_id . ' не найден!');
+            }
 
         }
     }
