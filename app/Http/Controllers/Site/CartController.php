@@ -786,7 +786,7 @@ class CartController
         // $start = time();
         // $url = 'http://94.131.241.126/api/nova-poshta/cities';
 info($data);
-        return false;
+ //       return false;
         if(isset($data['order_id'])) unset($data['order_id']);
 
         $curl = curl_init();
@@ -808,7 +808,7 @@ info($data);
         $err = curl_error($curl);
         $info = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
-        info($data);
+
         //        var_dump('Время получения ответа: ' . (time() - $start));
         //        var_dump('Код ответа: ' . $info);
         //        var_dump('Ответ:');
