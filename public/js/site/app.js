@@ -25238,7 +25238,9 @@ __webpack_require__(/*! ./components/tabsProducs */ "./resources/js/site/compone
 
 __webpack_require__(/*! ./components/updatePriceBalance */ "./resources/js/site/components/updatePriceBalance.js");
 
-__webpack_require__(/*! ./components/menu */ "./resources/js/site/components/menu.js"); //page
+__webpack_require__(/*! ./components/menu */ "./resources/js/site/components/menu.js");
+
+__webpack_require__(/*! ./components/category-menu */ "./resources/js/site/components/category-menu.js"); //page
 
 
 __webpack_require__(/*! ./page/cardProduct */ "./resources/js/site/page/cardProduct.js");
@@ -25689,6 +25691,51 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   window.cart = new Cart();
 })();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
+/***/ "./resources/js/site/components/category-menu.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/site/components/category-menu.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function () {
+  if (window.innerWidth < 992) {
+    var navHeadMenu = document.querySelector('.head-menu--title');
+    navHeadMenu.addEventListener('click', function () {
+      if (navHeadMenu.classList.contains('active')) {
+        navHeadMenu.classList.remove('active');
+      } else {
+        navHeadMenu.classList.add('active');
+      }
+
+      backdroup.action();
+    });
+    var menuItemLinks = document.querySelectorAll('.box-list__link a');
+    menuItemLinks.forEach(function (element) {
+      element.addEventListener('click', function (e) {
+        var boxListInner = element.parentElement.parentElement;
+        boxListInner.classList.toggle('active');
+        var box = boxListInner.querySelector('.box');
+        var boxList = box.querySelector('.box-list__link');
+
+        if (boxList) {
+          e.preventDefault(); //headerNav.classList.remove('show');
+
+          console.log('Has link');
+        } else {
+          console.log('Not has link');
+        }
+      });
+    });
+    var closeHeadMenu = document.querySelector('.box-list__close');
+    closeHeadMenu.addEventListener('click', function () {
+      navHeadMenu.classList.remove('active');
+    });
+  }
+})();
 
 /***/ }),
 

@@ -36,6 +36,7 @@ require('./components/cart');
 require('./components/tabsProducs');
 require('./components/updatePriceBalance');
 require('./components/menu');
+require('./components/category-menu');
 
 //page
 require('./page/cardProduct');
