@@ -41,7 +41,7 @@ class PriceImport
 
             $message = "Добавлено в очередь обновление цен и остатков для {$productsCount} товаров";
         } catch (Exception $e) {
-            $message = $e;
+            $message = "PriceImport. Ошибка: {$e->getMessage()}";
         } finally {
             $bot->sendSubscribes('sendMessage', $message);
         }

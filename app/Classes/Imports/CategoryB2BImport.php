@@ -83,7 +83,7 @@ class CategoryB2BImport
             $this->recursiveCheck($tree);
             $text = "Категории обновлены";
         } catch (Exception $e) {
-            $text = "Ошибка: {$e->getMessage()}";
+            $text = "CategoryB2BImport. Ошибка: {$e->getMessage()}";
         } finally {
             $bot->sendSubscribes('sendMessage', $text);
         }
