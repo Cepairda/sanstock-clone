@@ -127,14 +127,63 @@
 
                                 </div>
 
-
-
                                 <div class="row container-delivery-form">
 
-                                    @if((!isset($_COOKIE["access"]) || empty($_COOKIE["access"]))):
+                                @if((isset($_COOKIE["access"])))
+
+                                    <div class="mt-4 col-12">
+                                        <input id="new_post_delivery" type="checkbox" name="new_post_delivery" class="mr-2">
+                                        <label for="new_post_delivery">Доставка Новой почтой</label>
+                                    </div>
+
+                                    <script>
+
+                                        document.getElementById('new_post_delivery').addEventListener('change', function(e) {
+                                            let newPostForm = document.getElementById('new_post_form');
+                                            let employeeRegionContainer = document.getElementById('employee-region-container');
+                                            if(e.target.checked && newPostForm.classList.contains('d-none')) newPostForm.classList.remove('d-none');
+                                            if(!e.target.checked && !newPostForm.classList.contains('d-none')) newPostForm.classList.add('d-none');
+
+                                            if(e.target.checked && !employeeRegionContainer.classList.contains('d-none')) employeeRegionContainer.classList.add('d-none');
+                                            if(!e.target.checked && employeeRegionContainer.classList.contains('d-none')) employeeRegionContainer.classList.remove('d-none');
+                                        }, false);
+
+                                    </script>
+
+                                    <!-- Регион -->
+                                        <div id="employee-region-container" class="col-12">
+                                            <div class="form-group form-group-static">
+                                                <select id="employee_region"
+                                                        class=""
+                                                        name="employee_region"
+                                                        data-placeholder="Выбрать регион ..."
+                                                        required>
+
+                                                    @foreach($regions as $region)
+
+                                                        <option value="{{ $region->ref }}">{{ $region->description }}</option>
+
+                                                    @endforeach
+
+                                                </select>
+
+                                                <label for="employee_region">Регион</label>
+
+                                                @error('employee_region')
+                                                    <span class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </span>
+                                                @enderror
+                                            </div>
+
+                                        </div>
+
+                                    @endif
+
+                                <div id="new_post_form" @if((isset($_COOKIE["access"]) || !empty($_COOKIE["access"])))class="col-12 p-0 d-none" @else class="col-12 p-0"@endif>
 
                                     <div class="col-12">
-                                        <h4 class="pt-5 text-center font-weight-bold">{{ __('New mail') }}</h4>
+                                        <h4 class="pt-3 text-center font-weight-bold">{{ __('New mail') }}</h4>
                                     </div>
 
 
@@ -279,9 +328,11 @@
                                             <label for="new_mail_apartment">{{ __('Flat') }}</label>
                                         </div>
                                     </div>
+                                </div>
 
+
+                                    @if((!isset($_COOKIE["access"]) || empty($_COOKIE["access"])))
                                     <!-- Способ облата -->
-
                                     <div class="col-12">
                                         <div class="form-group">
                                             <select id="payments_form"
@@ -309,6 +360,7 @@
                                     </div>
 
                                 @endif
+
                                     <!-- Комментарий к заказу -->
                                     <div class="col-12">
                                         <div class="form-group">
