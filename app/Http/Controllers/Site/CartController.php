@@ -7,6 +7,7 @@ use App\Orders;
 use App\OrderShipping;
 use App\PaymentOrder;
 use App\Product;
+use App\Regions;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -30,7 +31,7 @@ class CartController
 
     function __construct() {
 
-        $this->is_employee = (isset($_COOKIE["access"]) && !empty($_COOKIE["access"])) ? 1 : 0;
+        $this->is_employee = (isset($_COOKIE["access"])) ? 1 : 0;
     }
 
     /**
@@ -111,9 +112,14 @@ class CartController
      * @return Application|Factory|RedirectResponse|View
      */
     public function loadCheckout() {
+
         if(!isset($_COOKIE["products_cart"])) return redirect()->route('site./');
+
+        $regions = Regions::get();
+
         return view('site.orders.checkout', [
             'paymentMethods' => $this->paymentMethods(),
+            'regions' => $regions,
         ]);
     }
 
@@ -131,8 +137,8 @@ class CartController
             // 'new_mail_delivery_type' => 'required',
             // 'new_mail_insurance_sum' => 'required|numeric|min:200',
         ];
-
-        if(empty($this->is_employee)) {
+        // dd($request->new_post_delivery);
+        if(empty($this->is_employee) || (!empty($this->is_employee) && isset($request->new_post_delivery))) {
 
             $rules['new_mail_delivery_type'] = 'required';
 
@@ -205,7 +211,8 @@ class CartController
 
         $shipping['payments_form'] = (isset($request->payments_form)) ? $request->payments_form : 0 ;
 
-        $orderData = $this->createDataOrder($shipping);
+        $shipping['employee_region'] = (empty($this->is_employee) && !empty($request->employee_region))
+            ? $request->employee_region : '' ;
 
         //$orderData = [];
 
@@ -253,7 +260,21 @@ class CartController
 
         }
 
-        $orderData['is_employee'] = $this->is_employee??0;
+        $shipping['is_employee'] = $this->is_employee??0;
+
+        $orderData = $this->createDataOrder($shipping);
+
+        $new_post_delivery_employee = (!empty($this->is_employee) && isset($request->new_post_delivery) && $request->new_post_delivery == 'on')
+            ? 1 : 0 ;
+
+        if(!empty($this->is_employee)) {
+            $employee = [
+                'is_employee' => 1,
+                'new_post_delivery' => $new_post_delivery_employee,
+                'employee_region' => $shipping['employee_region'],
+            ];
+        } else $employee = [];
+
 
 // dd($validated);
 //        if ($validated->fails()) {
@@ -367,7 +388,7 @@ class CartController
 
         $orderShipping->insurance_sum = 0;
 
-        $orderShipping->comments = '';
+        $orderShipping->comments = json_encode($employee);
 
         $orderShipping->save();
 
@@ -445,6 +466,10 @@ class CartController
         $result['new_mail_delivery_type'] = $data['new_mail_delivery_type'];
 
         $result['payments_form'] = $data['payments_form'];
+
+//        $result['is_employee'] = $data['is_employee'];
+//
+//        $result['employee_region'] = $data['employee_region'];
 
         if($data['new_mail_delivery_type'] === 'storage_storage') {
 
@@ -785,8 +810,9 @@ class CartController
     {
         // $start = time();
         // $url = 'http://94.131.241.126/api/nova-poshta/cities';
-info($data);
- //       return false;
+        info($data);
+        if(empty($data['data']['is_employee'])) return;
+return;
         if(isset($data['order_id'])) unset($data['order_id']);
 
         $curl = curl_init();
@@ -890,6 +916,8 @@ info($data);
 
         $dataOrderShipping['payments_form'] = $dataShipping->payments_form;
 
+        $dataOrderShipping['payments_form'] = $dataShipping->payments_form;
+
         if(!empty($dataOrderShipping['new_mail_warehouse'])) $dataOrderShipping['new_mail_delivery_type'] = 'storage_storage';
         else $dataOrderShipping['new_mail_delivery_type'] = 'storage_door';
 
@@ -897,6 +925,19 @@ info($data);
 
         if(empty($dataOrder['new_mail_warehouse']) && empty($dataOrder['new_mail_warehouse'])) $dataOrder['is_employee'] = 1;
         else $dataOrder['is_employee'] = 0;
+
+        if(!empty($dataShipping->comments)) {
+
+            $employee = json_decode($dataShipping->comments, true);
+
+            if(!empty($employee)) {
+
+                $dataOrder['new_mail'] = $employee['new_post_delivery'];
+
+                $dataOrder['region_ref'] = (!empty($dataOrder['new_mail'])) ? $employee['employee_region'] : null;
+
+            }
+        }
 
         $dataOrder['order_id'] = $order->id;
 
