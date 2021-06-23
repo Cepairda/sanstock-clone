@@ -44,7 +44,7 @@ class CartController
 
         $sku = array_keys($orderProducts);
 
-        $products = Product::joinLocalization()->withCharacteristics()->whereIn('details->sku', $sku)->get()->keyBy('sku');
+        $products = Product::joinLocalization()->withProductSort()->withCharacteristics()->whereIn('details->sku', $sku)->get()->keyBy('sku');
 
         // получаем товары из базы и формируем данные для отображения корзины
         foreach($products as $product):
@@ -59,7 +59,7 @@ class CartController
 
             $orderItem['quantity'] = $orderProducts[$product->getDetails('sku')];
 
-            $orderItem['price'] = $product->getPriceAttribute();
+            $orderItem['price'] = $product->productSort->price;
 
             $this->order_sum += $orderItem['price'];
 
@@ -518,7 +518,8 @@ class CartController
     public function orderPayment() {
 
         $order = session('order');
-
+info($order);
+info('------------------------------');
         session()->keep(['order']);
 
         $order_id = $order['data']['order_id'];
@@ -593,6 +594,8 @@ class CartController
      */
     public function createGooglePayRequest($order_id, $amount)
     {
+        session()->keep(['order']);
+
         $key = config('app.PLATON_PAYMENT_KEY');
         $pass = config('app.PLATON_PAYMENT_PASSWORD');
 
@@ -816,7 +819,7 @@ class CartController
         // $start = time();
         // $url = 'http://94.131.241.126/api/nova-poshta/cities';
         info($data);
-        if(empty($data['data']['is_employee'])) return;
+ //       if(empty($data['data']['is_employee'])) return;
 //return;
         if(isset($data['order_id'])) unset($data['order_id']);
 
@@ -936,7 +939,7 @@ class CartController
 
             if(!empty($employee)) {
 
-                if(isset($employee['is_employee'])) $dataOrder['is_employee'] = $employee['is_employee'];
+                if(isset($employee['is_employee'])) $dataOrder['is_employee'] = (int)$employee['is_employee'];
 
                 if(isset($employee['new_post_delivery']) && isset($employee['employee_region'])) {
                     if(empty($employee['new_post_delivery']) && !empty($employee['employee_region'])) $dataOrder['region_ref'] = $employee['employee_region'];
