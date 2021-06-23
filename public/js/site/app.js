@@ -25702,14 +25702,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 /***/ (function(module, exports) {
 
 (function () {
+  window.addEventListener('resize', function (event) {
+    mobileMenu();
+  });
+  mobileMenu();
+})();
+
+function mobileMenu() {
   if (window.innerWidth < 992) {
     var navHeadMenu = document.querySelector('.head-menu--title');
     navHeadMenu.addEventListener('click', function () {
-      //if(navHeadMenu.classList.contains('active')) {
-      //    navHeadMenu.classList.remove('active');
-      //} else {
-      navHeadMenu.classList.add('active'); //}
-
+      navHeadMenu.classList.add('active');
       backdroup.action();
     });
     var menuItemLinks = document.querySelectorAll('.box-list__link a');
@@ -25730,7 +25733,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       navHeadMenu.classList.remove('active');
     });
   }
-})();
+}
 
 /***/ }),
 

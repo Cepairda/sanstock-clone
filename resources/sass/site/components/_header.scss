@@ -3,7 +3,7 @@
 	position: sticky;
 	top: 0;
 	background: #fff;
-	z-index: 1050;
+	z-index: 1049;
 	box-shadow: 0 3px 3px rgba(0, 0, 0, .05);
 	@media (min-width: 992px) {
 		z-index: 1000; //хз зачем
@@ -37,11 +37,12 @@
         max-width: 320px;
 		background-color: #fff;
 		transform: translateX(-100%);
-		z-index: 1050;
+		z-index: 1049;
 		transition: transform 350ms ease;
 
 
 		&.show {
+			z-index: 1050;
 			transform: translateX(0);
 
 			.item-toggle__close {
