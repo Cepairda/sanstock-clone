@@ -211,7 +211,7 @@ class CartController
 
         $shipping['payments_form'] = (isset($request->payments_form)) ? $request->payments_form : 0 ;
 
-        $shipping['employee_region'] = (empty($this->is_employee) && !empty($request->employee_region))
+        $shipping['employee_region'] = (!empty($this->is_employee) && !empty($request->employee_region))
             ? $request->employee_region : '' ;
 
         //$orderData = [];
@@ -267,13 +267,18 @@ class CartController
         $new_post_delivery_employee = (!empty($this->is_employee) && isset($request->new_post_delivery) && $request->new_post_delivery == 'on')
             ? 1 : 0 ;
 
+        $region_employee = (empty($new_post_delivery_employee)) ? $shipping['employee_region'] : '';
+
         if(!empty($this->is_employee)) {
             $employee = [
                 'is_employee' => 1,
                 'new_post_delivery' => $new_post_delivery_employee,
-                'employee_region' => $shipping['employee_region'],
+                'employee_region' => $region_employee,
+                'comments' => $shipping['new_mail_comment'],
             ];
-        } else $employee = [];
+        } else $employee = [
+            'comments' => $shipping['new_mail_comment'],
+        ];
 
 
 // dd($validated);
@@ -812,7 +817,7 @@ class CartController
         // $url = 'http://94.131.241.126/api/nova-poshta/cities';
         info($data);
         if(empty($data['data']['is_employee'])) return;
-return;
+//return;
         if(isset($data['order_id'])) unset($data['order_id']);
 
         $curl = curl_init();
@@ -904,7 +909,7 @@ return;
 
         $dataOrderShipping['new_mail_warehouse'] = $dataShipping->warehouse_ref;
 
-        $dataOrderShipping['new_mail_comment'] = $dataShipping->comments;
+        $dataOrderShipping['new_mail_comment'] = null;
 
         $dataOrderShipping['new_mail_street'] = $dataShipping->street_ref;
 
@@ -932,9 +937,14 @@ return;
 
             if(!empty($employee)) {
 
-                $dataOrder['new_mail'] = $employee['new_post_delivery'];
+                if(isset($employee['new_post_delivery']) && isset($employee['employee_region'])) {
+                    if(empty($employee['new_post_delivery']) && !empty($employee['employee_region'])) $dataOrder['region_ref'] = $employee['employee_region'];
+                    else $dataOrder['new_mail'] = $employee['new_post_delivery'];
+                }
 
-                $dataOrder['region_ref'] = (!empty($dataOrder['new_mail'])) ? $employee['employee_region'] : null;
+                // $dataOrder['region_ref'] = (empty($dataOrder['new_mail'])) ? $employee['employee_region'] : null;
+
+                if(!empty($employee['comments'])) $dataOrderShipping['new_mail_comment'] = $employee['comments'];
 
             }
         }

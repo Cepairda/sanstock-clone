@@ -127,11 +127,11 @@
 
                                 </div>
 
-                                <div class="row container-delivery-form">
+                                <div class="container-delivery-form">
 
                                 @if((isset($_COOKIE["access"])))
 
-                                    <div class="mt-4 col-12">
+                                    <div class="mt-4 ">
                                         <input id="new_post_delivery" type="checkbox" name="new_post_delivery" class="mr-2">
                                         <label for="new_post_delivery">Доставка Новой почтой</label>
                                     </div>
@@ -141,17 +141,20 @@
                                         document.getElementById('new_post_delivery').addEventListener('change', function(e) {
                                             let newPostForm = document.getElementById('new_post_form');
                                             let employeeRegionContainer = document.getElementById('employee-region-container');
+                                            let selectArea = document.getElementById('new_mail_region');
                                             if(e.target.checked && newPostForm.classList.contains('d-none')) newPostForm.classList.remove('d-none');
                                             if(!e.target.checked && !newPostForm.classList.contains('d-none')) newPostForm.classList.add('d-none');
+                                            if(!e.target.checked) selectArea.disabled = true;
 
                                             if(e.target.checked && !employeeRegionContainer.classList.contains('d-none')) employeeRegionContainer.classList.add('d-none');
                                             if(!e.target.checked && employeeRegionContainer.classList.contains('d-none')) employeeRegionContainer.classList.remove('d-none');
+                                            if(e.target.checked) selectArea.disabled = false;
                                         }, false);
 
                                     </script>
 
                                     <!-- Регион -->
-                                        <div id="employee-region-container" class="col-12">
+                                        <div id="employee-region-container" class="">
                                             <div class="form-group form-group-static">
                                                 <select id="employee_region"
                                                         class=""
@@ -180,7 +183,7 @@
 
                                     @endif
 
-                                <div id="new_post_form" @if((isset($_COOKIE["access"]) || !empty($_COOKIE["access"])))class="col-12 p-0 d-none" @else class="col-12 p-0"@endif>
+                                <div id="new_post_form" @if((isset($_COOKIE["access"]) || !empty($_COOKIE["access"])))class="row d-none" @else class="row"@endif>
 
                                     <div class="col-12">
                                         <h4 class="pt-3 text-center font-weight-bold">{{ __('New mail') }}</h4>
@@ -216,7 +219,7 @@
                                                     class="js-example-basic-single1"
                                                     name="new_mail_region"
                                                     data-placeholder="{{ __('You need to select an region') }}"
-                                                    required>
+                                                    required @if(isset($_COOKIE["access"]) ) disabled @endif>
                                                 <option value="" selected></option>
                                             </select>
 
@@ -333,7 +336,7 @@
 
                                     @if((!isset($_COOKIE["access"]) || empty($_COOKIE["access"])))
                                     <!-- Способ облата -->
-                                    <div class="col-12">
+                                    <div class="">
                                         <div class="form-group">
                                             <select id="payments_form"
                                                     class=""
@@ -362,7 +365,7 @@
                                 @endif
 
                                     <!-- Комментарий к заказу -->
-                                    <div class="col-12">
+                                    <div class="">
                                         <div class="form-group">
                                             <textarea class="w-100" name="new_mail_comment" id="" cols="30" rows="10"></textarea>
                                             <label for="new_mail_comment">{{ __('Comment on the order') }}</label>
