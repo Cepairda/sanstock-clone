@@ -39,7 +39,7 @@ class PriceImport
                 ProcessImportPrice::dispatch($skuArray)->onQueue('priceImport');
             }
 
-            $message = "Добавлено в очередь на обновление цен и остатков для {$productsCount} товаров";
+            $message = "Добавлено в очередь обновление цен и остатков для {$productsCount} товаров";
         } catch (Exception $e) {
             $message = $e;
         } finally {
@@ -81,7 +81,7 @@ class PriceImport
                 self::updateBalance($sku, 0);
             }
 
-            throw new Exception();
+
         //} catch (\Exception $e) {
 
         //}

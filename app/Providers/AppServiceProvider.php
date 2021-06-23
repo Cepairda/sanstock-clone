@@ -27,7 +27,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(TelegramBot $bot)
     {
         Queue::failing(function (JobFailed $event) use ($bot) {
-            $bot->sendSubscribes('sendMessage', "Ошибка: {}" . class_basename($event->job->getQueue()));
+            $str = strpos($event->exception, 'Stack trace:');
+            $exception = substr($event->exception, 0, $str);
+
+            $bot->sendSubscribes('sendMessage', "Ошибка очереди: {$event->job->getQueue()}." . PHP_EOL . "{$exception}");
         });
     }
 }
