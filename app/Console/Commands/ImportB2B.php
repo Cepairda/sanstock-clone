@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Classes\Imports\StockB2BImport;
+use App\Classes\TelegramBot;
 use Illuminate\Console\Command;
 
 class ImportB2B extends Command
@@ -26,10 +27,10 @@ class ImportB2B extends Command
      *
      * @return mixed
      */
-    public function handle(StockB2BImport $stockB2BImport)
+    public function handle(StockB2BImport $stockB2BImport, TelegramBot $bot)
     {
         try {
-            $stockB2BImport->addToQueue();
+            $stockB2BImport->addToQueue($bot);
             info('Products Add to Queue');
             $this->info('Prices have been successfully added to the queue');
         } catch (\Exception $exception) {

@@ -7,9 +7,9 @@ use GuzzleHttp\Client;
 
 class TelegramBot
 {
-    private const TOKEN_ACCESS = '1720582810:AAGhvUgXxixOseClvyvN7NpzD4AF2NjLHZw';
+    private const TOKEN_ACCESS = '1702301518:AAE6AmNZWUD9eokuTdZP4ZV6kC-ocwKhn4Q';
     private const API_LINK = 'https://api.telegram.org/bot';
-    private const CHAT_ID = '-414037561';
+    private const CHAT_ID = '-502792664';
 
     protected $response;
 
@@ -63,6 +63,6 @@ class TelegramBot
      */
     public function sendSubscribes($methodName, $content)
     {
-        //$this->$methodName(self::CHAT_ID, $content);
+        $this->$methodName(self::CHAT_ID, $content);
     }
 }

@@ -2,11 +2,14 @@
 
 namespace App\Classes\Imports;
 
+use Exception;
+
 use App\Brand;
 use App\Category;
 use App\Characteristic;
 use App\CharacteristicValue;
 use App\Classes\ImportImage;
+use App\Classes\TelegramBot;
 use App\ProductGroup;
 use App\ProductSort;
 use App\Product;
@@ -47,28 +50,37 @@ class StockB2BImport
     }
 
     /**
+     * @param TelegramBot $bot
      * @return void
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function addToQueue() : void
+    public function addToQueue(TelegramBot $bot) : void
     {
-        $this->apiUrl = self::DEFAULT_API_URL;
+        try {
+            $this->apiUrl = self::DEFAULT_API_URL;
 
-        do {
-            $this->getDataJson($this->apiUrl);
-            $jsonData = self::$data;
-            $tenPartJsonDate = array_chunk($jsonData['data'], 10, true);
+            do {
+                $this->getDataJson($this->apiUrl);
+                $jsonData = self::$data;
+                $tenPartJsonDate = array_chunk($jsonData['data'], 20, true);
 
-            foreach ($tenPartJsonDate as $key => $products) {
-                $skuArray = [];
+                foreach ($tenPartJsonDate as $key => $products) {
+                    $skuArray = [];
 
-                foreach ($products as $sku => $product) {
-                    $skuArray[] = $sku;
+                    foreach ($products as $sku => $product) {
+                        $skuArray[] = $sku;
+                    }
+
+                    ProcessImportB2B::dispatch($skuArray)->onQueue('b2bImport');
                 }
+            } while ($this->apiUrl = $jsonData['next_page_url'] ?? null);
 
-                ProcessImportB2B::dispatch($skuArray)->onQueue('b2bImport');
-            }
-
-        } while ($this->apiUrl = $jsonData['next_page_url'] ?? null);
+            $message = "Добавлено в очередь продуктов {$jsonData['total']}";
+        } catch (Exception $e) {
+            $message = "Ошибка: {$e->getMessage()}";
+        } finally {
+            $bot->sendSubscribes('sendMessage', $message);
+        }
     }
 
     /**
