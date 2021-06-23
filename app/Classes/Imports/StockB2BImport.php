@@ -77,7 +77,7 @@ class StockB2BImport
 
             $message = "Добавлено в очередь продуктов {$jsonData['total']}";
         } catch (Exception $e) {
-            $message = "Ошибка: {$e->getMessage()}";
+            $message = "StockB2BImport. Ошибка: {$e->getMessage()}";
         } finally {
             $bot->sendSubscribes('sendMessage', $message);
         }
