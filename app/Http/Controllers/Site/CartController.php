@@ -928,14 +928,15 @@ class CartController
 
         $dataOrder = (new \App\Http\Controllers\Site\CartController())->createDataOrder($dataOrderShipping);
 
-        if(empty($dataOrder['new_mail_warehouse']) && empty($dataOrder['new_mail_warehouse'])) $dataOrder['is_employee'] = 1;
-        else $dataOrder['is_employee'] = 0;
+        $dataOrder['is_employee'] = 0;
 
         if(!empty($dataShipping->comments)) {
 
             $employee = json_decode($dataShipping->comments, true);
 
             if(!empty($employee)) {
+
+                if(isset($employee['is_employee'])) $dataOrder['is_employee'] = $employee['is_employee'];
 
                 if(isset($employee['new_post_delivery']) && isset($employee['employee_region'])) {
                     if(empty($employee['new_post_delivery']) && !empty($employee['employee_region'])) $dataOrder['region_ref'] = $employee['employee_region'];
