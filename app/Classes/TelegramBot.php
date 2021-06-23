@@ -9,7 +9,7 @@ class TelegramBot
 {
     private const TOKEN_ACCESS = '1702301518:AAE6AmNZWUD9eokuTdZP4ZV6kC-ocwKhn4Q';
     private const API_LINK = 'https://api.telegram.org/bot';
-    private const CHAT_ID = '412825252';
+    private const CHAT_ID = '-502792664';
 
     protected $response;
 
