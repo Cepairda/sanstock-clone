@@ -30,15 +30,23 @@
                         <h1 class="">Оплата заказа #{{ $order_id }}</h1>
 
                     </div>
-                    <div id="GooglePay"></div>
 
                 </div>
 
                 <div class="col-8">
                     <div class="main__contacts-form" style="height: 980px">
 
+                        @foreach($paymentMethods as $key => $paymentMethod)
+
+                            <div class="w-100">
+                                <input type="radio" name="paymentType" value="{{ $key }}" class="mr-2" @if($key === $payment_method) checked @endif>{{ $paymentMethod }}
+                                @if($key === 'google_pay') <div id="GooglePay"></div> @endif
+                            </div>
+
+                        @endforeach
+
                         <div style="width:100%; height:100%; margin:0 auto;">
-                            <iframe src="{{ route('site.payment-form') }}" seamless name="frame" id="frame" width="100%" height="100%" frameborder="0" scrolling="no" style="overflow: hidden;"></iframe>
+                            <iframe src="@if($payment_method === 'bank_card'){{ route('site.payment-form') }}@endif" seamless name="frame" id="frame" width="100%" height="100%" frameborder="0" scrolling="no" style="overflow: hidden;"></iframe>
                         </div>
 
                     </div>
@@ -49,11 +57,11 @@
     </main>
 
     <script>
-        {{ session()->keep(['order']) }}
+
         // redirect bank card payment
         window.onmessage = function(event){
             if (event.data === 'success') {
-                document.location.href = '{{ route('site.move-to-success-checkout-page') }}';
+                document.location.href = '{!! route('site.move-to-success-checkout-page', ['order_id' => $order_id, 'payment_method' => $payment_method]) !!} ';
             }
         };
 
@@ -242,7 +250,7 @@
         }
 
         function loadGooglePayPlaton() {
-            document.getElementById('frame').src = '{{  }}';
+            document.getElementById('frame').src = '{{ route('site.google-pay-request-to-platon') }}';
         }
 
     </script>
@@ -251,6 +259,36 @@
         async
         src="https://pay.google.com/gp/p/js/pay.js"
         onload="onGooglePayLoaded(); console.log('TODO: add onload function')">
+    </script>
+
+    <script>
+
+        function sentPaymentForm(route) {
+            document.getElementById('frame').src = route;
+        }
+
+        @if($paymentMethod === 'bank_card')
+            sentPaymentForm('{{ route('site.payment-form') }}');
+        @else
+            sentPaymentForm('');
+        @endif
+
+        let radios = document.querySelectorAll('[name="paymentType"]')
+
+        for(let i = radios.length; i--;) {
+            radios[i].addEventListener("change", function(e){
+                let frame = document.getElementById('frame');
+                if(e.target.value === 'bank_card') {
+
+                    if(frame.classList.contains('d-none')) frame.classList.remove('d-none');
+                    sentPaymentForm('{{ route('site.payment-form') }}');
+                }
+                else {
+                    if(!frame.classList.contains('d-none')) frame.classList.add('d-none');
+                }
+            }, false);
+        }
+
     </script>
 
 

@@ -35,7 +35,7 @@
                 <div class="col-8">
                     <div class="main__contacts-form">
 
-                        @if(empty($payments_form))
+                        @if(empty($payment_method))
                             Заказ #{{ $order_id }} отправлен в обработку!
                         @else
                             Заказ #{{ $order_id }} успешно оплачен и отправлен в обработку!
