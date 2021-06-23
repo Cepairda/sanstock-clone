@@ -25705,11 +25705,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   if (window.innerWidth < 992) {
     var navHeadMenu = document.querySelector('.head-menu--title');
     navHeadMenu.addEventListener('click', function () {
-      if (navHeadMenu.classList.contains('active')) {
-        navHeadMenu.classList.remove('active');
-      } else {
-        navHeadMenu.classList.add('active');
-      }
+      //if(navHeadMenu.classList.contains('active')) {
+      //    navHeadMenu.classList.remove('active');
+      //} else {
+      navHeadMenu.classList.add('active'); //}
 
       backdroup.action();
     });
@@ -25722,11 +25721,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         var boxList = box.querySelector('.box-list__link');
 
         if (boxList) {
-          e.preventDefault(); //headerNav.classList.remove('show');
-
-          console.log('Has link');
-        } else {
-          console.log('Not has link');
+          e.preventDefault();
         }
       });
     });
