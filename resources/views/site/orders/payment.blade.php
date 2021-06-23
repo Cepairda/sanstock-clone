@@ -183,7 +183,7 @@
             const paymentsClient = getGooglePaymentsClient();
             const button =
                 paymentsClient.createButton({onClick: onGooglePaymentButtonClicked});
-            document.getElementById('container').appendChild(button);
+            document.getElementById('GooglePay').appendChild(button);
         }
 
         /**
@@ -268,7 +268,7 @@
         }
 
         @if($paymentMethod === 'bank_card')
-            sentPaymentForm('{{ route('site.payment-form') }}');
+            sentPaymentForm('{{ route('site.payment-form', ['success' => 'true']) }}');
         @else
             sentPaymentForm('');
         @endif
