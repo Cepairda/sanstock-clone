@@ -94,6 +94,11 @@ class StockB2BImport
         $apiUrl = self::DEFAULT_API_URL . "&sku_in={$skuStr}";
 
         $this->importProductWithAttributes($apiUrl);
+
+        /**
+         * Use capture to restrict requests to the server
+         */
+        usleep(25_000);
     }
 
     public function parse()

@@ -115,6 +115,11 @@ class PriceImport
         $dataJson = PriceImport::pricesApi($apiUrl);
 
         PriceImport::import($dataJson, $skuArray);
+
+        /**
+         * Use capture to restrict requests to the server
+         */
+        usleep(50_000);
     }
 
     /**
