@@ -41,6 +41,13 @@
                             <div class="w-100">
                                 <input type="radio" name="paymentType" value="{{ $key }}" class="mr-2" @if($key === $payment_method) checked @endif>{{ $paymentMethod }}
                                 @if($key === 'google_pay') <div id="GooglePay"></div> @endif
+
+                                @if($key === 'apple_pay')
+                                    <div class="apple-pay-button-with-text apple-pay-button-white-with-text">
+                                        <span class="text">Buy with</span>
+                                        <span class="logo"></span>
+                                    </div>
+                                @endif
                             </div>
 
                         @endforeach
@@ -202,7 +209,7 @@
                 currencyCode: 'UAH',
                 totalPriceStatus: 'FINAL',
                 // set to cart total
-                totalPrice: '111.00'
+                totalPrice: '{{ $total }}'
             };
         }
 
@@ -251,6 +258,8 @@
             console.log(paymentData);
             // @todo pass payment token to your gateway to process payment
             let paymentToken = paymentData.paymentMethodData.tokenizationData.token;
+            document.cookie = "pay=google_pay";
+            document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + JSON.stringify(paymentToken) ;
         }
 
         function loadGooglePayPlaton() {
@@ -265,6 +274,38 @@
         onload="onGooglePayLoaded(); console.log('TODO: add onload function')">
     </script>
 
+    <!-- Apple Pay -->
+    <script>
+
+        if (window.ApplePaySession) {
+            // The Apple Pay JS API is available.
+
+            var request = {
+                countryCode: 'US',
+                currencyCode: 'USD',
+                supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
+                merchantCapabilities: ['supports3DS'],
+                total: { label: 'Your Merchant Name', amount: '{{ $total }}' },
+            }
+            var session = new ApplePaySession(3, request);
+        }
+
+        const options= {
+            url: endpointURL,
+            cert: merchIdentityCert,
+            key: merchIdentityCert,
+            method: 'post',
+            body:{
+                merchantIdentifier: "merchant.com.example.mystore",
+                displayName: "MyStore",
+                initiative: "web",
+                initiativeContext: "mystore.example.com"
+            },
+            json: true,
+        }
+
+    </script>
+
     <script>
 
         function sentPaymentForm(route) {
@@ -273,17 +314,20 @@
 
         @if($paymentMethod === 'bank_card')
             sentPaymentForm('{{ route('site.payment-form', ['success' => 'true']) }}');
+
         @else
             sentPaymentForm('{{ route('site.start-frame', ['success' => 'true']) }}');
         @endif
+
+        document.cookie = "pay={{ $paymentMethod }}";
 
         let radios = document.querySelectorAll('[name="paymentType"]')
 
         for(let i = radios.length; i--;) {
             radios[i].addEventListener("change", function(e){
                 let frame = document.getElementById('frame');
+                document.cookie = "pay=" + e.target.value;
                 if(e.target.value === 'bank_card') {
-
                     if(frame.classList.contains('d-none')) frame.classList.remove('d-none');
                     sentPaymentForm('{{ route('site.payment-form', ['success' => 'true']) }}');
                 }

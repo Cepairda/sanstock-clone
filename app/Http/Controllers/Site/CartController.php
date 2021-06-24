@@ -502,13 +502,14 @@ class CartController
     public function payment(Request $request) {
 
         if(session()->has('order')) $order = session('order');
-        if(!($order = $this->getCookieOrder())) return redirect()->route('site.cart');
+        if(!session()->has('order') && !($order = $this->getCookieOrder())) return redirect()->route('site.cart');
 
         return view('site.orders.payment', [
             'order_id' => $order['data']['order_id'],
             'payment_method' => $order['data']['payments_form'],
             'paymentMethods' => $this->paymentMethods(),
             'order' => base64_encode(json_encode($order)),
+            'total' => $order['data']['price_sum'],
         ]);
     }
 
@@ -601,19 +602,26 @@ class CartController
      * @param $amount
      * @return array|Application|Factory|View
      */
-    public function createGooglePayRequest($order_id, $amount)
+    public function requestGooglePay()
     {
+        $paymentToken = request()->get('paymentToken');
+        if(empty($paymentToken)) return redirect()->route('site.cart');
+
+        $order = $this->getCookieOrder();
+
+        $amount = number_format($order['data']['price_sum'], 2, '.', '');
+
         $key = config('app.PLATON_PAYMENT_KEY');
         $pass = config('app.PLATON_PAYMENT_PASSWORD');
 
         $CLIENT_PASS = $pass;
         $data['action'] = 'GOOGLEPAY';
         $data['CLIENT_KEY'] = $key;
-        $data['order_id'] = $order_id;
+        $data['order_id'] = $order['data']['order_id'];
         $data['order_amount'] = $amount;
         $data['order_currency'] = 'UAH';
         $data['order_description'] = 'test';
-        $data['payment_token'] = '{"signature":"MEUCIQD+9/PnFvB+Lo6d/eHpgqQrMvmRDZdW1AcjQKavHrcPmQIgeVjR1hXqH7hkCn+VZqx/kjdofMIYbyL15Xp52mR9+2s\u003d","intermediateSigningKey":{"signedKey":"{\"keyValue\":\"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEBOHyOhwWk6SK5nqhFBBI1hSvWHAaOO0Ukbrl56zx7fPNttFFKs2U10f6EWbdhULrv4QT4qMNbyVAq8ig1jdsYA\\u003d\\u003d\",\"keyExpiration\":\"1570945959000\"}","signatures":["MEYCIQCe6t42U5OemtGGdYC6npBNbVxe1HbTF8pUkSD7mO+CWAIhAI/0M/XQuW6i8reT0LCNHKoNfgWYwOWHBoj2wpZdgKHh"]},"protocolVersion":"ECv2","signedMessage":{\"encryptedMessage\":\"U9ChAIukmQ85TdZKAU/26mJUwUt3cVpJmx/JtFi350F/KiRNiIEGi1CmkgVe+ohzikkKLo37Ty3YQjyjVHNTHmF3AyNVTIJCL7qYybt+aFNI1XFlpv3ArWU+fH8Bi190tl7lLyyeNjWx8L402spsLpuUe9OLLjazIq0Vfjw3wRZ2B2+ybUrnoz5Iydapn8B7c/QqR7w53n6svIK58q7eL159Ano0GyfLpUOLLQ949MhP1ze***UzapUGtMd0k0c/4Nnkfs2TnN6ETEtP8y9J29hYKGVOCo79rRSN2xLsYXGNawIiPc6082HWB82JyuW2bfWAL1R0W+2iql2dBWY\\u003d\",\"ephemeralPublicKey\":\"BPYYpVT5INyXSwoNbP/HuGkjQnfnUwUPMH2bCp6Od3EoihnegFZObjP0IVvDA5YfNlLDJjHutBDj30GW5Fei8xw\\u003d\",\"tag\":\"qt4FcCGO4rp969CBBTPJ0nhAeQeR+rOM0FmXk8DdGLQ\\u003d\"}"}';
+        $data['payment_token'] = $paymentToken;
         $data['payer_email'] = '';
         $data['term_url_3ds'] = 'http://google.com';
         $hash = md5(
@@ -637,6 +645,67 @@ class CartController
             $request
         );
     }
+
+    /**
+     * Create request for apple pay
+     * @return array
+     */
+//    public function requestApplePay(): array
+//    {
+//        // $order = session()->get('data');
+//        $order = $this->getCookieOrder();
+//
+//        $key = config('app.PLATON_PAYMENT_KEY');
+//        $pass = config('app.PLATON_PAYMENT_PASSWORD');
+//
+//        $amount = number_format($order['data']['price_sum'], 2, '.', '');
+//
+//        $request = [
+//            'action' => 'APPLEPAY',
+//            'client_key' => $key,
+//            'order_id' => $order['data']['order_id'],
+//            'order_amount' => $amount,
+//            'order_currency' => 'UAH',
+//            'order_description' => ''
+//        ];
+//
+//
+//
+//
+//        $payment = 'CC';
+//        $data = base64_encode(
+//            json_encode(
+//                array(
+//                    'amount' => $amount,
+//                    'description' => 'Оплата заказа #' . $order_id,
+//                    'currency' => 'UAH',
+//                    'recurring' => 'Y'
+//                )
+//            )
+//        );
+//
+//        $req_token = 'Y';
+//        $url = route('site.check-transaction-status');
+//        $sign = md5(
+//            strtoupper(
+//                strrev($key).
+//                strrev($payment).
+//                strrev($data).
+//                strrev($url).
+//                strrev($pass)
+//            )
+//        );
+//
+//        return [
+//            'order' => $order['data'],
+//            'payment' => $payment,
+//            'key' => $key,
+//            'url' => $url,
+//            'data' => $data,
+//            'req_token' => $req_token,
+//            'sign' => $sign
+//        ];
+//    }
 
     /**
      * Check transaction status
@@ -687,13 +756,25 @@ class CartController
      */
     public function successCheckout()
     {
-        if(empty($order_id = session('order_id'))) return Redirect::route('site./');
+        if(empty($order_id = session('order_id'))) {
+            $order = $this->getCookieOrder();
 
-        $payment_method = session('payment_method');
+            if(!empty($order)) $order_id = $order['data']['order_id'];
+        }
+
+        if(empty($order_id)) return Redirect::route('site./');
+
+        $payment_method = $_COOKIE["pay"];
+
+        Cookie::queue(Cookie::forget('pay'));
+
+        Cookie::queue(Cookie::forget('order'));
 
         session()->forget('payment_method');
 
         session()->forget('order_id');
+
+        Cookie::queue(Cookie::forget('pay'));
 
         return view('site.orders.stripe_checkout', [
             'order_id' => $order_id,
