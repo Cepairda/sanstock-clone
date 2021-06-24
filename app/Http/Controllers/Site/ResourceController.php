@@ -64,7 +64,7 @@ class ResourceController extends Controller
 
                 break;
             case 'category':
-                $category = $resource->type::withAncestors()->withDescendants()->whereId($resource->id)->firstOrFail();
+                $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->whereId($resource->id)->firstOrFail();
                 $productGroupBase = ProductGroup::where('details->category_id', $category->getDetails('ref'))->get();
                 $productGroup = $productGroupBase->keyBy('details->sd_code')->keys();
                 $productGroupKeys = $productGroupBase->keyBy('id')->keys();
