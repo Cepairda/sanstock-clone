@@ -46,7 +46,7 @@
                         @endforeach
 
                         <div style="width:100%; height:100%; margin:0 auto;">
-                            <iframe src="@if($payment_method === 'bank_card'){{ route('site.payment-form') }}@endif" seamless name="frame" id="frame" width="100%" height="100%" frameborder="0" scrolling="no" style="overflow: hidden;"></iframe>
+                            <iframe src="@if($payment_method === 'bank_card'){{ route('site.payment-form', ['success' => 'true']) }}@endif" seamless name="frame" id="frame" width="100%" height="100%" frameborder="0" scrolling="no" style="overflow: hidden;"></iframe>
                         </div>
 
                     </div>
@@ -74,10 +74,10 @@
 
         const tokenizationSpecification = {
             type: 'PAYMENT_GATEWAY',
-            {{--parameters: {--}}
-            {{--    'gateway': 'platon',--}}
-            {{--    'gatewayMerchantId': '{{ env('PLATON_PAYMENT_KEY') }}'--}}
-            {{--}--}}
+            parameters: {
+                'gateway': 'platon',
+                'gatewayMerchantId': '{{ env('PLATON_PAYMENT_KEY') }}'
+            }
         };
 
         const allowedCardNetworks = ['MASTERCARD', 'VISA'];
@@ -128,7 +128,7 @@
         function getGooglePaymentDataRequest() {
             const paymentDataRequest = Object.assign({}, baseRequest);
             paymentDataRequest.allowedPaymentMethods = [cardPaymentMethod];
-            // paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
+            paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
             paymentDataRequest.merchantInfo = {
                 // @todo a merchant ID is available for a production environment after approval by Google
                 // See {@link https://developers.google.com/pay/api/web/guides/test-and-deploy/integration-checklist|Integration checklist}
@@ -192,15 +192,15 @@
          * @see {@link https://developers.google.com/pay/api/web/reference/request-objects#TransactionInfo|TransactionInfo}
          * @returns {object} transaction info, suitable for use as transactionInfo property of PaymentDataRequest
          */
-        // function getGoogleTransactionInfo() {
-        //     return {
-        //         countryCode: 'UA',
-        //         currencyCode: 'UAH',
-        //         totalPriceStatus: 'FINAL',
-        //         // set to cart total
-        //         totalPrice: '111.00'
-        //     };
-        // }
+        function getGoogleTransactionInfo() {
+            return {
+                countryCode: 'UA',
+                currencyCode: 'UAH',
+                totalPriceStatus: 'FINAL',
+                // set to cart total
+                totalPrice: '111.00'
+            };
+        }
 
         /**
          * Prefetch payment data to improve performance
@@ -223,7 +223,7 @@
          */
         function onGooglePaymentButtonClicked() {
             const paymentDataRequest = getGooglePaymentDataRequest();
-            //paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
+            paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
 
             const paymentsClient = getGooglePaymentsClient();
             paymentsClient.loadPaymentData(paymentDataRequest)
@@ -281,7 +281,7 @@
                 if(e.target.value === 'bank_card') {
 
                     if(frame.classList.contains('d-none')) frame.classList.remove('d-none');
-                    sentPaymentForm('{{ route('site.payment-form') }}');
+                    sentPaymentForm('{{ route('site.payment-form', ['success' => 'true']) }}');
                 }
                 else {
                     if(!frame.classList.contains('d-none')) frame.classList.add('d-none');
