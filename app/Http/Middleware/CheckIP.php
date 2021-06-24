@@ -11,6 +11,7 @@ class CheckIP
 {
     public function handle(Request $request, Closure $next)
     {
+        session()->keep(['order']);
         if($request->get('access') == 'true') {
             Cookie::queue('access', 'true', 60 * 24);
         }

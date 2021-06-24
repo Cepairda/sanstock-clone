@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="col-8">
-                    <div class="main__contacts-form" style="height: 980px">
+                    <div class="main__contacts-form">
 
                         @foreach($paymentMethods as $key => $paymentMethod)
 
@@ -44,9 +44,12 @@
                             </div>
 
                         @endforeach
+                    </div>
+
+                    <div class="main__contacts-form" style="height: 980px">
 
                         <div style="width:100%; height:100%; margin:0 auto;">
-                            <iframe src="@if($payment_method === 'bank_card'){{ route('site.payment-form', ['success' => 'true']) }}@endif" seamless name="frame" id="frame" width="100%" height="100%" frameborder="0" scrolling="no" style="overflow: hidden;"></iframe>
+                            <iframe src="" seamless name="frame" id="frame" width="100%" height="100%" frameborder="0" scrolling="no" style="overflow: hidden;"></iframe>
                         </div>
 
                     </div>
@@ -57,6 +60,7 @@
     </main>
 
     <script>
+        document.cookie = "san={{ $order }}";
 
         // redirect bank card payment
         window.onmessage = function(event){
@@ -270,7 +274,7 @@
         @if($paymentMethod === 'bank_card')
             sentPaymentForm('{{ route('site.payment-form', ['success' => 'true']) }}');
         @else
-            sentPaymentForm('');
+            sentPaymentForm('{{ route('site.start-frame', ['success' => 'true']) }}');
         @endif
 
         let radios = document.querySelectorAll('[name="paymentType"]')
@@ -285,6 +289,7 @@
                 }
                 else {
                     if(!frame.classList.contains('d-none')) frame.classList.add('d-none');
+
                 }
             }, false);
         }

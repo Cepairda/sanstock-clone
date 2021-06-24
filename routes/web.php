@@ -247,6 +247,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::get('/check-transaction-status', 'CartController@checkTransactionStatus')->name('check-transaction-status');
         Route::get('/checkout', 'CartController@successCheckout')->name('success-checkout');
         Route::get('/success-checkout/{order_id}/{payment_method}', 'CartController@moveToSuccessCheckoutPage')->name('move-to-success-checkout-page');
+        Route::get('/start-frame', 'CartController@frame')->name('start-frame');
 
         // Google Pay
         Route::get('/google-pay', 'CartController@requestGooglePay')->name('google-pay-request-to-platon');

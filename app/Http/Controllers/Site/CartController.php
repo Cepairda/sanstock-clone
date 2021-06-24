@@ -18,6 +18,7 @@ use Illuminate\View\View;
 
 class CartController
 {
+
     private $order_sum = 0;
 
     const BANK_CARD = 'bank_card';
@@ -435,13 +436,13 @@ class CartController
         ];
 
         //Cookie::queue('order', $order, 60);
-
+        session(['order' => $order]);
         // dd(Cookie::get('order'));
 
         // $this->sentOrderToB2B($order);
         // dd($order);
         if(!empty($shipping['payments_form'])) {
-            return Redirect::route('site.payment')->with( ['order' => $order] );
+            return Redirect::route('site.payment');
         }
 
         return $this->moveToSuccessCheckoutPage($orderData['order_id'], $shipping['payments_form'], false);
@@ -496,18 +497,18 @@ class CartController
     /**
      * Payment page
      * @param Request $request
-     * @return Application|Factory|View
+     * @return RedirectResponse
      */
     public function payment(Request $request) {
 
-        $order = session('order');
-
-        session()->keep(['order']);
+        if(session()->has('order')) $order = session('order');
+        if(!($order = $this->getCookieOrder())) return redirect()->route('site.cart');
 
         return view('site.orders.payment', [
             'order_id' => $order['data']['order_id'],
             'payment_method' => $order['data']['payments_form'],
             'paymentMethods' => $this->paymentMethods(),
+            'order' => base64_encode(json_encode($order)),
         ]);
     }
 
@@ -517,10 +518,13 @@ class CartController
      */
     public function orderPayment() {
 
-        $order = session('order');
-info($order);
-info('------------------------------');
-        session()->keep(['order']);
+        // $order = session('order');
+
+        //session()->keep(['order']);
+        $order = $this->getCookieOrder();
+
+        info($order);
+        info('------------------------------');
 
         $order_id = $order['data']['order_id'];
 
@@ -545,9 +549,7 @@ info('------------------------------');
     public function requestBankCardPayment($order_id, $amount): array
     {
         // $order = session()->get('data');
-        $order = session('order');
-
-        session()->keep(['order']);
+        $order = $this->getCookieOrder();
 
         $key = config('app.PLATON_PAYMENT_KEY');
         $pass = config('app.PLATON_PAYMENT_PASSWORD');
@@ -587,6 +589,13 @@ info('------------------------------');
     }
 
     /**
+     * Load empty page in frame
+     */
+    public function frame() {
+        return view('site.orders.frame');
+    }
+
+    /**
      * Create request for google pay
      * @param $order_id
      * @param $amount
@@ -594,8 +603,6 @@ info('------------------------------');
      */
     public function createGooglePayRequest($order_id, $amount)
     {
-        session()->keep(['order']);
-
         $key = config('app.PLATON_PAYMENT_KEY');
         $pass = config('app.PLATON_PAYMENT_PASSWORD');
 
@@ -636,8 +643,6 @@ info('------------------------------');
      */
     public function checkTransactionStatus() {
 
-        session()->keep(['order']);
-
         return  view('site.orders.checkTransactionStatus', [
 
         ]);
@@ -656,8 +661,6 @@ info('------------------------------');
             // dd(session()->all());
             // $order = session('order');
 
-            // session()->keep(['order']);
-
             $payment = new PaymentOrder;
 
             $payment->order_id = $order_id;
@@ -668,7 +671,7 @@ info('------------------------------');
 
             $payment->save();
 
-            session()->forget('order');
+            // session()->forget('order');
         }
 
         \App\Jobs\sentOrder::dispatch($order_id)->onQueue('checkout');
@@ -808,10 +811,21 @@ info('------------------------------');
         return false;
     }
 
+    /**
+     * Get order from cookie
+     */
+    public function getCookieOrder() {
+
+        $order = (isset($_COOKIE["san"])) ? json_decode(base64_decode($_COOKIE["san"]), true) : [];
+
+        if(!empty($order)) return $order;
+
+        return false;
+    }
 
     /**
      * Get data resources of New Post from b2b
-     * @param $url
+     * @param $data
      * @return false|mixed
      */
     public function sentOrderToB2B($data)

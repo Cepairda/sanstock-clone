@@ -20,9 +20,9 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
+        // \Illuminate\Session\Middleware\StartSession::class,
         \App\Http\Middleware\CheckIP::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \Illuminate\Session\Middleware\StartSession::class,
        // \App\Http\Middleware\ResponseCacheMiddleware::class,
        // \Spatie\ResponseCache\Middlewares\CacheResponse::class,
     ];
@@ -34,6 +34,7 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
+            \Illuminate\Session\Middleware\StartSession::class,
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
 
