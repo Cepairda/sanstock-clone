@@ -1039,7 +1039,7 @@ class CartController
 
                 if(isset($employee['new_post_delivery']) && isset($employee['employee_region'])) {
                     // if(empty($employee['new_post_delivery']) && !empty($employee['employee_region'])) $dataOrder['region_ref'] = $employee['employee_region'];
-                    if(empty($employee['new_post_delivery']) && !empty($employee['employee_region'])) $dataOrder['region'] = $employee['employee_region'];
+                    if(empty($employee['new_post_delivery']) && !empty($employee['employee_region'])) $dataOrder['region'] = str_replace("Регион ", "", $employee['employee_region']);
                     else $dataOrder['new_mail'] = $employee['new_post_delivery'];
                 }
 
