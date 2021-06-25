@@ -6,6 +6,7 @@ use App\Classes\TelegramBot;
 use Exception;
 use GuzzleHttp\Client;
 use LaravelLocalization;
+use Illuminate\Support\Facades\DB;
 
 use App\Category;
 use App\Jobs\ProcessCategoryB2BImport;
@@ -68,19 +69,22 @@ class CategoryB2BImport
     public function import(TelegramBot $bot)
     {
         try {
-            $jsonData = self::$data;
+            DB::transaction(function () {
+                $jsonData = self::$data;
 
-            foreach ($jsonData as $ref => [
-                     'parent_ref' => $parentRef,
-                     'name' => $name,
-                     'image' => $image
-            ]) {
-                $this->categoryImport($ref, $parentRef, $name, $image);
-            }
+                foreach ($jsonData as $ref => [
+                         'parent_ref' => $parentRef,
+                         'name' => $name,
+                         'image' => $image
+                ]) {
+                    $this->categoryImport($ref, $parentRef, $name, $image);
+                }
 
-            $this->fixParent();
-            $tree = Category::get()->toTree();
-            $this->recursiveCheck($tree);
+                $this->fixParent();
+                $tree = Category::get()->toTree();
+                $this->recursiveCheck($tree);
+            });
+
             $text = "Категории обновлены";
         } catch (Exception $e) {
             $text = "CategoryB2BImport. Ошибка: {$e->getMessage()}";
