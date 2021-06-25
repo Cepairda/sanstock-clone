@@ -116,7 +116,8 @@ class CartController
 
         if(!isset($_COOKIE["products_cart"])) return redirect()->route('site./');
 
-        $regions = Regions::get();
+        // $regions = Regions::get();
+        $regions = config('regions');
 
         return view('site.orders.checkout', [
             'paymentMethods' => $this->paymentMethods(),
@@ -212,8 +213,8 @@ class CartController
 
         $shipping['payments_form'] = (isset($request->payments_form)) ? $request->payments_form : 0 ;
 
-        $shipping['employee_region'] = (!empty($this->is_employee) && !empty($request->employee_region))
-            ? $request->employee_region : '' ;
+        $shipping['employee_region'] = (!empty($this->is_employee) && !empty($request->employee_region) && isset(config('regions')[$request->employee_region]))
+            ? config('regions')[$request->employee_region] : '' ;
 
         //$orderData = [];
 

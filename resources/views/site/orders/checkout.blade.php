@@ -142,13 +142,16 @@
                                             let newPostForm = document.getElementById('new_post_form');
                                             let employeeRegionContainer = document.getElementById('employee-region-container');
                                             let selectArea = document.getElementById('new_mail_region');
+                                            let selectRegion = document.getElementById('employee_region');
                                             if(e.target.checked && newPostForm.classList.contains('d-none')) newPostForm.classList.remove('d-none');
                                             if(!e.target.checked && !newPostForm.classList.contains('d-none')) newPostForm.classList.add('d-none');
                                             if(!e.target.checked) selectArea.disabled = true;
+                                            if(e.target.checked) selectRegion.disabled = true;
 
                                             if(e.target.checked && !employeeRegionContainer.classList.contains('d-none')) employeeRegionContainer.classList.add('d-none');
                                             if(!e.target.checked && employeeRegionContainer.classList.contains('d-none')) employeeRegionContainer.classList.remove('d-none');
                                             if(e.target.checked) selectArea.disabled = false;
+                                            if(!e.target.checked) selectRegion.disabled = false;
                                         }, false);
 
                                     </script>
@@ -162,9 +165,11 @@
                                                         data-placeholder="Выбрать регион ..."
                                                         required>
 
-                                                    @foreach($regions as $region)
+                                                    <option disabled selected value="">Выбрать регион ...</option>
 
-                                                        <option value="{{ $region->ref }}">{{ $region->description }}</option>
+                                                    @foreach($regions as $key => $region)
+
+                                                        <option value="{{ $key }}">{{ $region }}</option>
 
                                                     @endforeach
 
