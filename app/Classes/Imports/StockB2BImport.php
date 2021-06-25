@@ -116,8 +116,8 @@ class StockB2BImport
     }
 
     /**
-     * @param $ref
-     * @param $dataProduct
+     * @param string $ref
+     * @param array $dataProduct
      *
      * @return void
      */
