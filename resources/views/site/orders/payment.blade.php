@@ -281,13 +281,19 @@
             // The Apple Pay JS API is available.
 
             var request = {
-                countryCode: 'US',
-                currencyCode: 'USD',
+                countryCode: 'UA',
+                currencyCode: 'UAH',
                 supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
                 merchantCapabilities: ['supports3DS'],
-                total: { label: 'Your Merchant Name', amount: '{{ $total }}' },
+                total: { label: 'Test order#{{ $order_id }}', amount: '{{ $total }}' },
             }
             var session = new ApplePaySession(3, request);
+
+            var promise = ApplePaySession.canMakePaymentsWithActiveCard(merchantIdentifier);
+            promise.then(function (canMakePayments) {
+                if (canMakePayments) {
+                    $('#apple-pay').show(); //кнопка Apple Pay        }
+                });
         }
 
         const options= {

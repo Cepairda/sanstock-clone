@@ -116,7 +116,8 @@ class CartController
 
         if(!isset($_COOKIE["products_cart"])) return redirect()->route('site./');
 
-        $regions = Regions::get();
+        // $regions = Regions::get();
+        $regions = config('regions');
 
         return view('site.orders.checkout', [
             'paymentMethods' => $this->paymentMethods(),
@@ -212,8 +213,8 @@ class CartController
 
         $shipping['payments_form'] = (isset($request->payments_form)) ? $request->payments_form : 0 ;
 
-        $shipping['employee_region'] = (!empty($this->is_employee) && !empty($request->employee_region))
-            ? $request->employee_region : '' ;
+        $shipping['employee_region'] = (!empty($this->is_employee) && !empty($request->employee_region) && isset(config('regions')[$request->employee_region]))
+            ? config('regions')[$request->employee_region] : '' ;
 
         //$orderData = [];
 
@@ -641,7 +642,7 @@ class CartController
             'hash' => $hash
         ];
 
-        return view('site.orders.googlePaymentFrame',
+        return view('site.orders.googlePayFrame',
             $request
         );
     }
@@ -650,9 +651,9 @@ class CartController
      * Create request for apple pay
      * @return array
      */
-//    public function requestApplePay(): array
-//    {
-//        // $order = session()->get('data');
+    public function requestApplePay(): array
+    {
+        // $order = session()->get('data');
 //        $order = $this->getCookieOrder();
 //
 //        $key = config('app.PLATON_PAYMENT_KEY');
@@ -705,7 +706,7 @@ class CartController
 //            'req_token' => $req_token,
 //            'sign' => $sign
 //        ];
-//    }
+    }
 
     /**
      * Check transaction status
@@ -764,7 +765,7 @@ class CartController
 
         if(empty($order_id)) return Redirect::route('site./');
 
-        $payment_method = $_COOKIE["pay"];
+        $payment_method = $_COOKIE["pay"]??0;
 
         Cookie::queue(Cookie::forget('pay'));
 
@@ -1019,7 +1020,7 @@ class CartController
 
         $dataOrderShipping['payments_form'] = $dataShipping->payments_form;
 
-        $dataOrderShipping['payments_form'] = $dataShipping->payments_form;
+        // $dataOrderShipping['payments_form'] = $dataShipping->payments_form;
 
         if(!empty($dataOrderShipping['new_mail_warehouse'])) $dataOrderShipping['new_mail_delivery_type'] = 'storage_storage';
         else $dataOrderShipping['new_mail_delivery_type'] = 'storage_door';
@@ -1037,7 +1038,8 @@ class CartController
                 if(isset($employee['is_employee'])) $dataOrder['is_employee'] = (int)$employee['is_employee'];
 
                 if(isset($employee['new_post_delivery']) && isset($employee['employee_region'])) {
-                    if(empty($employee['new_post_delivery']) && !empty($employee['employee_region'])) $dataOrder['region_ref'] = $employee['employee_region'];
+                    // if(empty($employee['new_post_delivery']) && !empty($employee['employee_region'])) $dataOrder['region_ref'] = $employee['employee_region'];
+                    if(empty($employee['new_post_delivery']) && !empty($employee['employee_region'])) $dataOrder['region'] = str_replace("Регион ", "", $employee['employee_region']);
                     else $dataOrder['new_mail'] = $employee['new_post_delivery'];
                 }
 
