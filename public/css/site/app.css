@@ -15589,11 +15589,19 @@ p.text--hide.active {
     background-color: #f5f5f5;
   }
 }
+.box-list__inner.active .box-view.box-white {
+  background-color: #f5f5f5;
+}
 .box-list__link {
   position: relative;
 }
 .box-list__link.box-list-white a {
   border-color: #f5f5f5;
+}
+@media (max-width: 992px) {
+  .box-list__inner.active .box-list__link.box-list-white a {
+    border-color: #ffffff;
+  }
 }
 .box-list__link.box-list-grey a {
   border-color: #ffffff;
@@ -15631,15 +15639,16 @@ p.text--hide.active {
   transition: transform 0.15s ease-in-out;
 }
 
-ul {
-  counter-reset: section;
-}
+@media (max-width: 992px) {
+  ul {
+    counter-reset: section;
+  }
 
-ul.box-list > li a:before {
-  counter-increment: section;
-  content: counter(section) ". ";
+  ul.box-list > li a:before {
+    counter-increment: section;
+    content: counter(section) ". ";
+  }
 }
-
 .body-wrapper {
   position: relative;
   display: flex;

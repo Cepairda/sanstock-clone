@@ -25709,11 +25709,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 })();
 
 function mobileMenu() {
+  var navHeadMenu = document.querySelector('.head-menu--title');
+
   if (window.innerWidth < 992) {
-    var navHeadMenu = document.querySelector('.head-menu--title');
     navHeadMenu.addEventListener('click', function () {
-      navHeadMenu.classList.add('active');
-      backdroup.action();
+      navHeadMenu.classList.add('active'); //backdroup.action();
     });
     var menuItemLinks = document.querySelectorAll('.box-list__link a');
     menuItemLinks.forEach(function (element) {
@@ -25731,6 +25731,12 @@ function mobileMenu() {
     var closeHeadMenu = document.querySelector('.box-list__close');
     closeHeadMenu.addEventListener('click', function () {
       navHeadMenu.classList.remove('active');
+    });
+  } else {
+    navHeadMenu.classList.remove('active');
+    var boxListInnerActive = navHeadMenu.querySelectorAll('.box-list__inner');
+    boxListInnerActive.forEach(function (e) {
+      return e.classList.remove('active');
     });
   }
 }
