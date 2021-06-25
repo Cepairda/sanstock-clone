@@ -1020,7 +1020,7 @@ class CartController
 
         $dataOrderShipping['payments_form'] = $dataShipping->payments_form;
 
-        $dataOrderShipping['payments_form'] = $dataShipping->payments_form;
+        // $dataOrderShipping['payments_form'] = $dataShipping->payments_form;
 
         if(!empty($dataOrderShipping['new_mail_warehouse'])) $dataOrderShipping['new_mail_delivery_type'] = 'storage_storage';
         else $dataOrderShipping['new_mail_delivery_type'] = 'storage_door';
@@ -1038,7 +1038,8 @@ class CartController
                 if(isset($employee['is_employee'])) $dataOrder['is_employee'] = (int)$employee['is_employee'];
 
                 if(isset($employee['new_post_delivery']) && isset($employee['employee_region'])) {
-                    if(empty($employee['new_post_delivery']) && !empty($employee['employee_region'])) $dataOrder['region_ref'] = $employee['employee_region'];
+                    // if(empty($employee['new_post_delivery']) && !empty($employee['employee_region'])) $dataOrder['region_ref'] = $employee['employee_region'];
+                    if(empty($employee['new_post_delivery']) && !empty($employee['employee_region'])) $dataOrder['region'] = $employee['employee_region'];
                     else $dataOrder['new_mail'] = $employee['new_post_delivery'];
                 }
 
