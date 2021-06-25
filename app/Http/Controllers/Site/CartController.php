@@ -641,7 +641,7 @@ class CartController
             'hash' => $hash
         ];
 
-        return view('site.orders.googlePaymentFrame',
+        return view('site.orders.googlePayFrame',
             $request
         );
     }
@@ -650,9 +650,9 @@ class CartController
      * Create request for apple pay
      * @return array
      */
-//    public function requestApplePay(): array
-//    {
-//        // $order = session()->get('data');
+    public function requestApplePay(): array
+    {
+        // $order = session()->get('data');
 //        $order = $this->getCookieOrder();
 //
 //        $key = config('app.PLATON_PAYMENT_KEY');
@@ -705,7 +705,7 @@ class CartController
 //            'req_token' => $req_token,
 //            'sign' => $sign
 //        ];
-//    }
+    }
 
     /**
      * Check transaction status
@@ -764,7 +764,7 @@ class CartController
 
         if(empty($order_id)) return Redirect::route('site./');
 
-        $payment_method = $_COOKIE["pay"];
+        $payment_method = $_COOKIE["pay"]??0;
 
         Cookie::queue(Cookie::forget('pay'));
 
