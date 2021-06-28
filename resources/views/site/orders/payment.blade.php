@@ -304,7 +304,7 @@
                     }
                 });
         } else {
-            document.getElementById('ApplePay').remove();
+            document.querySelector('input[value="apple_pay"]').remove();
         }
 
         let merchIdentityCert;
