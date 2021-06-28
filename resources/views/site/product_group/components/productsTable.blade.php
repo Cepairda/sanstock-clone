@@ -145,7 +145,7 @@
                         @if ($normalPrice ?? null)
                             <p><span class="text-nowrap"><s>{{ number_format(ceil($normalPrice),0,'',' ') }} грн.</s></span></p>
                         @endif
-                        <span class="text-nowrap">{{ number_format(ceil($price),0,'',' ') }} грн.</span>
+                        <span class="text-nowrap font-weight-bold">{{ number_format(ceil($price),0,'',' ') }} грн.</span>
 
                         <div class="pt-3">
                             <p class="mb-1">{{ __('Profit') }}:</p>

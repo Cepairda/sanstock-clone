@@ -34,15 +34,10 @@
                         <p>
                             <span class="product-price__item--old">{{ number_format(ceil($product->normalPrice),0,'',' ') }}<span style="margin-left: 6px;">грн.</span></span>
                         </p>
-                        <p>
+                        <p class="font-weight-bold">
                             <span data-product-sort-sd-code="{{ $productGroup->sdCode }}" data-product-sort-grade="{{ $product->grade }}">{{ number_format(ceil($product->price),0,'',' ') }}</span>
                             <span>грн.</span>
                         </p>
-                        <p style="color: #e74c3c;">
-                            <span>{{ number_format(ceil($product->differencePrice),0,'',' ') }}</span>
-                            <span>грн.</span>
-                        </p>
-
                     </div>
                     <a class="button" href="{{ route('site.resource', $productGroup->slug) }}?sort={{ $product->grade }}" alt="{{ $product->name }}"
                        data-target="add" data-barcode="{{ $product->sku }}">{{ __('Buy')}}</a>
