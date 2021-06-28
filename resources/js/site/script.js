@@ -79,27 +79,27 @@ $(document).ready(function () {
             checkbox && form.submit();
         }, false);
 
-        let reset = form.querySelector('button[type="reset"]');
+        //let reset = form.querySelector('button[type="reset"]');
         let checkboxes = form.querySelectorAll('input[type="checkbox"]');
 
 
 
-        reset.addEventListener('click', e => {
-            e.preventDefault();
-
-            for (let i = 0; i < checkboxes.length; i++) {
-                checkboxes[i].checked = false;
-            }
-
-            const priceRangeSlider = $('#priceRangeSlider');
-            const min = priceRangeSlider.slider('getAttribute', 'min');
-            const max = priceRangeSlider.slider('getAttribute', 'max');
-            priceRangeSlider.slider('setValue', [min, max]);
-
-            const minPriceInp = form.querySelector('.inp-price-min');
-                minPriceInp.value = min;
-            const maxPriceInp = form.querySelector('.inp-price-max');
-                maxPriceInp.value = max;
-        }, false);
+        // reset.addEventListener('click', e => {
+        //     e.preventDefault();
+        //
+        //     for (let i = 0; i < checkboxes.length; i++) {
+        //         checkboxes[i].checked = false;
+        //     }
+        //
+        //     const priceRangeSlider = $('#priceRangeSlider');
+        //     const min = priceRangeSlider.slider('getAttribute', 'min');
+        //     const max = priceRangeSlider.slider('getAttribute', 'max');
+        //     priceRangeSlider.slider('setValue', [min, max]);
+        //
+        //     const minPriceInp = form.querySelector('.inp-price-min');
+        //         minPriceInp.value = min;
+        //     const maxPriceInp = form.querySelector('.inp-price-max');
+        //         maxPriceInp.value = max;
+        // }, false);
     }
 }());
