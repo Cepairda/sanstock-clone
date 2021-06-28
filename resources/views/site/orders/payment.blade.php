@@ -151,8 +151,8 @@
             paymentDataRequest.merchantInfo = {
                 // @todo a merchant ID is available for a production environment after approval by Google
                 // See {@link https://developers.google.com/pay/api/web/guides/test-and-deploy/integration-checklist|Integration checklist}
-                // merchantId: '12345678901234567890',
-                merchantName: 'Example Merchant'
+                merchantId: '{{ $googlePayMerchantId }}',
+                merchantName: '{{ $googlePayMerchantName }}'
             };
             return paymentDataRequest;
         }
