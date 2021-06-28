@@ -131,6 +131,14 @@ return [
 
     'PLATON_PAYMENT_PASSWORD' => env('PLATON_PAYMENT_PASSWORD'),
 
+    'GOOGLE_MERCHANT_ID' => env('GOOGLE_MERCHANT_ID'),
+
+    'GOOGLE_MERCHANT_NAME' => env('GOOGLE_MERCHANT_NAME'),
+
+    'APPLE_MERCHANT_ID' => env('APPLE_MERCHANT_ID'),
+
+    'APPLE_MERCHANT_NAME' => env('APPLE_MERCHANT_NAME'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

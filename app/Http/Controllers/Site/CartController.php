@@ -510,6 +510,8 @@ class CartController
             'paymentMethods' => $this->paymentMethods(),
             'order' => base64_encode(json_encode($order)),
             'total' => $order['data']['price_sum'],
+            'googlePayMerchantId' => config('app.GOOGLE_MERCHANT_ID'),
+            'googlePayMerchantName' => config('app.GOOGLE_MERCHANT_NAME'),
         ]);
     }
 
