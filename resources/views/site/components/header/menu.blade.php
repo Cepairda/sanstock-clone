@@ -13,7 +13,7 @@
             <div class="box-view box-white">
 
                 <ul class="box-list">
-
+                    <div class="box-list__close"></div>
                     @foreach($categories as $category)
 
                         <li>
