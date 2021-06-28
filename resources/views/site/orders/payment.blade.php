@@ -16,6 +16,8 @@
 
 @section('content')
 
+    <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
+
     <main class="main-container">
         @include('site.components.breadcrumbs')
 
