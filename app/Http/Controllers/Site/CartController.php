@@ -40,7 +40,6 @@ class CartController
      */
     public function getCartProducts(): array
     {
-
         $orderProducts = (isset($_COOKIE["products_cart"])) ? json_decode($_COOKIE["products_cart"], true) : [];
 
         $sku = array_keys($orderProducts);
@@ -618,7 +617,7 @@ class CartController
         $CLIENT_PASS = $pass;
         $data['action'] = 'GOOGLEPAY';
         $data['CLIENT_KEY'] = $key;
-        $data['order_id'] = $order['data']['order_id'];
+        $data['order_id'] = 'GooglePay-' . $order['data']['order_id'];
         $data['order_amount'] = $amount;
         $data['order_currency'] = 'UAH';
         $data['order_description'] = 'test';

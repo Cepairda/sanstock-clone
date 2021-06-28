@@ -396,6 +396,15 @@
         </div>
     </main>
 
+    <script>
+
+        if (!window.ApplePaySession) {
+            let paymentForm = document.querySelector('#payments_form option[value="apple_pay"]');
+            paymentForm && paymentForm.remove();
+        }
+
+    </script>
+
     @section('javascript')
         <script type="text/javascript" src="{{ mix('js/site/page/checkout.js') }}"></script>
     @endsection
