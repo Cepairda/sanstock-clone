@@ -4,23 +4,15 @@ namespace App;
 
 use App\Traits\Commentable;
 use LaravelLocalization;
-use Carbon\Carbon;
 use Spatie\SchemaOrg\Schema;
 
 class ProductGroup extends Resource
 {
     use Commentable;
 
-    protected $appends = ['price_updated_at'];
-
     public function getNameAttribute()
     {
         return $this->getData('name');
-    }
-
-    public function getSkuAttribute()
-    {
-        return $this->getDetails('sku');
     }
 
     public function getSdCodeAttribute()
@@ -35,21 +27,6 @@ class ProductGroup extends Resource
                 (($description = $this->characteristics->where('name', (LaravelLocalization::getCurrentLocale() == 'ru' ? 'Описание' : 'Опис'))->first())
                     ? $description->value
                     : null);
-    }
-
-    public function getPriceAttribute()
-    {
-        return +($this->getDetails('price'));
-    }
-
-    public function getOldPriceAttribute()
-    {
-        return +($this->getDetails('old_price'));
-    }
-
-    public function getPriceUpdatedAtAttribute()
-    {
-        return Carbon::parse($this->getDetails('price_updated_at'), config('timezone'));
     }
 
     public function getMetaTitleAttribute()
@@ -88,24 +65,6 @@ class ProductGroup extends Resource
         return $mainImagePath;
     }
 
-    public function getRelatedAttribute()
-    {
-        return $this->attributes['related'] ?? $this->attributes['related'] =
-                self::where('details->category_id', $this->getDetails('category_id'))->
-                whereType(self::class)->where('id', '!=', $this->id)->inRandomOrder()->take(4)->get();
-    }
-
-    public function scopeWhereExistsCategoryIds($query, $categoryIds)
-    {
-        $categoryIds = (is_object($categoryIds) || is_array($categoryIds)) ? $categoryIds : [$categoryIds];
-        return $query->whereExists(function ($query) use ($categoryIds) {
-            return $query->select('resource_resource.resource_id')->from('resource_resource')
-                ->whereRelationType(Category::class)->whereResourceType(self::class)
-                ->whereRaw('resource_resource.resource_id = resources.id')
-                ->whereIn('resource_resource.relation_id', $categoryIds);
-        });
-    }
-
     public function scopeWithCategories($query, $joinLocalization = true)
     {
         return $query->with(['categories' => function ($query) use ($joinLocalization) {
@@ -118,27 +77,6 @@ class ProductGroup extends Resource
         return $query->with(['characteristics' => function ($query) use ($joinLocalization) {
             if ($joinLocalization) return $query->select('*')->joinLocalization()->withCharacteristic();
         }]);
-    }
-
-    public function scopeWithRelateProducts($query, $joinLocalization = true)
-    {
-        return $query->with(['relateProducts' => function ($query) use ($joinLocalization) {
-            if ($joinLocalization) return $query->select('*')->joinLocalization();
-        }, 'relateProducts.icons']);
-    }
-
-    public function scopeWithIcons($query, $joinLocalization = true)
-    {
-        return $query->with(['icons' => function ($query) use ($joinLocalization) {
-            if ($joinLocalization) return $query->select('*')->joinLocalization();
-        }]);
-    }
-
-    public function scopeWithPartnerUrl($query)
-    {
-        return $query->with(['partnersUrl' => function($query) {
-            return $query->joinLocalization();
-        }, 'partnersUrl.partner']);
     }
 
     public function categories()
@@ -165,31 +103,6 @@ class ProductGroup extends Resource
     public function category()
     {
         return $this->hasOne(Category::class, 'details->ref', 'details->category_id');
-    }
-
-    public function relateProducts()
-    {
-        return $this->belongsToMany(Product::class, 'resource_resource',
-            'resource_id', 'relation_id')
-            ->where('relation_type', Product::class)
-            ->where('details->price', '>' , 0)
-            ->where('details->published', 1);
-    }
-
-    public function icons()
-    {
-        return $this->belongsToMany(Icon::class, 'resource_resource',
-            'resource_id', 'relation_id');
-    }
-
-    public function partnersUrl()
-    {
-        return $this->hasMany(PartnerUrl::class, 'details->sku', 'details->sku');
-    }
-
-    public function stars()
-    {
-        return +$this->getDetails('enable_stars') ?? null;
     }
 
     public function getJsonLd()
@@ -219,8 +132,6 @@ class ProductGroup extends Resource
             )
             ->toScript();
     }
-
-
 
     public function productsSort()
     {

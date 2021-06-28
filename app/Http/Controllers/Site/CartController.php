@@ -44,7 +44,7 @@ class CartController
 
         $sku = array_keys($orderProducts);
 
-        $products = Product::joinLocalization()->withCharacteristics()->whereIn('details->sku', $sku)->get()->keyBy('sku');
+        $products = Product::joinLocalization()->whereIn('details->sku', $sku)->get()->keyBy('sku');
 
         // получаем товары из базы и формируем данные для отображения корзины
         foreach($products as $product):

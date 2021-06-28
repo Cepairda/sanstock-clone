@@ -73,6 +73,11 @@ class StockB2BImport
 
                     ProcessImportB2B::dispatch($skuArray)->onQueue('b2bImport');
                 }
+
+                /**
+                 * Use capture to restrict requests to the server
+                 */
+                usleep(50_000);
             } while ($this->apiUrl = $jsonData['next_page_url'] ?? null);
 
             $message = "Добавлено в очередь продуктов {$jsonData['total']}";
@@ -111,8 +116,8 @@ class StockB2BImport
     }
 
     /**
-     * @param $ref
-     * @param $dataProduct
+     * @param string $ref
+     * @param array $dataProduct
      *
      * @return void
      */
