@@ -16446,6 +16446,11 @@ body.cart .add__to-cart {
 .nav-tabs .nav-link {
   font-style: italic;
 }
+@media (max-width: 992px) {
+  .nav-tabs .nav-link {
+    padding: 0.5rem 0.5rem;
+  }
+}
 
 .nav-link-gray {
   color: #ccc;
