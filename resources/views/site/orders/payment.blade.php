@@ -16,6 +16,8 @@
 
 @section('content')
 
+    <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
+
     <main class="main-container">
         @include('site.components.breadcrumbs')
 
@@ -265,7 +267,7 @@
             // @todo pass payment token to your gateway to process payment
             let paymentToken = paymentData.paymentMethodData.tokenizationData.token;
             document.cookie = "pay=google_pay";
-            // document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + JSON.stringify(paymentToken) ;
+            document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + JSON.stringify(paymentToken) ;
         }
 
         function loadGooglePayPlaton() {
@@ -302,7 +304,7 @@
                     }
                 });
         } else {
-            document.getElementById('apple-pay').remove();
+            document.getElementById('ApplePay').remove();
         }
 
         let merchIdentityCert;
