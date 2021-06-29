@@ -20,7 +20,6 @@ class CheckIP
             $request->ip() == '93.183.206.50'
             || Str::startsWith($request->ip(), ['172.19', '127.0.0.1'])
             || $request->cookie('access')
-            || true
         ) {
 
             return $next($request);
