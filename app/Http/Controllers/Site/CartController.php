@@ -512,6 +512,8 @@ class CartController
             'total' => $order['data']['price_sum'],
             'googlePayMerchantId' => config('app.GOOGLE_MERCHANT_ID'),
             'googlePayMerchantName' => config('app.GOOGLE_MERCHANT_NAME'),
+            'applePayMerchantId' => config('app.APPLE_MERCHANT_ID'),
+            'applePayMerchantName' => config('app.APPLE_MERCHANT_NAME'),
         ]);
     }
 
@@ -638,7 +640,7 @@ info(json_decode($paymentToken, true));
                 )
             )
         );
-
+        info($data);
         $request = [
             'data' => $data,
             'hash' => $hash
@@ -793,8 +795,8 @@ info(json_decode($paymentToken, true));
     {
         return [
             self::BANK_CARD => 'Оплата банковской картой (Visa, MasterCard)',
-            self::GOOGLE_PAY => 'Оплата GooglePay',
-            self::APPLE_PAY => 'Оплата ApplePay',
+            self::GOOGLE_PAY => 'Google Pay',
+            self::APPLE_PAY => 'Apple Pay',
         ];
     }
 

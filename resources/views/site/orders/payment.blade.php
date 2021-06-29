@@ -40,7 +40,7 @@
 
                         @foreach($paymentMethods as $key => $paymentMethod)
 
-                            <div class="w-100">
+                            <div id="{{ $key }}" class="w-100">
                                 <input type="radio" name="paymentType" value="{{ $key }}" class="mr-2" @if($key === $payment_method) checked @endif>{{ $paymentMethod }}
 
                                 @if($key === 'google_pay')
@@ -72,6 +72,15 @@
             </div>
         </div>
     </main>
+
+    <script>
+
+        let is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+        if(!is_safari) {
+            document.getElementById('apple_pay').remove();
+        }
+    </script>
 
     <script>
         document.cookie = "san={{ $order }}";
@@ -284,45 +293,43 @@
 
     <!-- Apple Pay -->
     <script>
+        if(is_safari) {
+            if (window.ApplePaySession) {
+                // The Apple Pay JS API is available.
 
-        if (window.ApplePaySession) {
-            // The Apple Pay JS API is available.
+                var request = {
+                    countryCode: 'UA',
+                    currencyCode: 'UAH',
+                    supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
+                    merchantCapabilities: ['supports3DS'],
+                    total: {label: 'Test order#{{ $order_id }}', amount: '{{ $total }}'},
+                }
+                var session = new ApplePaySession(3, request);
 
-            var request = {
-                countryCode: 'UA',
-                currencyCode: 'UAH',
-                supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
-                merchantCapabilities: ['supports3DS'],
-                total: { label: 'Test order#{{ $order_id }}', amount: '{{ $total }}' },
-            }
-            var session = new ApplePaySession(3, request);
-
-            var promise = ApplePaySession.canMakePaymentsWithActiveCard(merchantIdentifier);
-            promise.then(function (canMakePayments) {
-                if (canMakePayments) {
-                    document.getElementById('apple-pay').show(); //кнопка Apple Pay
+                var promise = ApplePaySession.canMakePaymentsWithActiveCard(merchantIdentifier);
+                promise.then(function (canMakePayments) {
+                    if (canMakePayments) {
+                        document.getElementById('apple-pay').show(); //кнопка Apple Pay
                     }
                 });
-        } else {
-            document.querySelector('input[value="apple_pay"]').remove();
+            }
+
+            let merchIdentityCert;
+
+            const options = {
+                url: "https://apple-pay-gateway.apple.com/paymentservices/paymentSession",
+                cert: merchIdentityCert,
+                key: merchIdentityCert,
+                method: 'post',
+                body: {
+                    merchantIdentifier: '{{ $applePayMerchantId }}',
+                    displayName: '{{ $applePayMerchantName }}',
+                    initiative: "web",
+                    initiativeContext: "sandistock.com.ua"
+                },
+                json: true,
+            }
         }
-
-        let merchIdentityCert;
-
-        const options= {
-            url: "https://apple-pay-gateway.apple.com/paymentservices/paymentSession",
-            cert: merchIdentityCert,
-            key: merchIdentityCert,
-            method: 'post',
-            body:{
-                merchantIdentifier: "sandistock.com.ua",
-                displayName: "SANDI STOCK",
-                initiative: "web",
-                initiativeContext: "sandistock.com.ua"
-            },
-            json: true,
-        }
-
     </script>
 
     <script>
@@ -353,17 +360,17 @@
                 document.cookie = "pay=" + e.target.value;
                 if(e.target.value === 'bank_card') {
                     if(frame.classList.contains('d-none')) frame.classList.remove('d-none');
-                    if(!applePayButton.classList.contains('d-none')) applePayButton.classList.add('d-none');
+                    if(is_safari && !applePayButton.classList.contains('d-none')) applePayButton.classList.add('d-none');
                     if(!googlePayButton.classList.contains('d-none')) googlePayButton.classList.add('d-none');
                     sentPaymentForm('{{ route('site.payment-form', ['success' => 'true']) }}');
                 }
                 else {
                     if(!frame.classList.contains('d-none')) frame.classList.add('d-none');
                     if(e.target.value === 'google_pay') {
-                        if(!applePayButton.classList.contains('d-none')) applePayButton.classList.add('d-none');
+                        if(is_safari && !applePayButton.classList.contains('d-none')) applePayButton.classList.add('d-none');
                         if(googlePayButton.classList.contains('d-none')) googlePayButton.classList.remove('d-none');
                     }
-                    if(e.target.value === 'apple_pay') {
+                    if(is_safari && e.target.value === 'apple_pay') {
                         if(!googlePayButton.classList.contains('d-none')) googlePayButton.classList.add('d-none');
                         if(applePayButton.classList.contains('d-none')) applePayButton.classList.remove('d-none');
                     }
