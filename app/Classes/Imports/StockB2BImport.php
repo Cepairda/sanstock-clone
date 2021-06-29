@@ -77,7 +77,7 @@ class StockB2BImport
                 /**
                  * Use capture to restrict requests to the server
                  */
-                usleep(50_000);
+                usleep(75_000);
             } while ($this->apiUrl = $jsonData['next_page_url'] ?? null);
 
             $message = "Добавлено в очередь продуктов {$jsonData['total']}";

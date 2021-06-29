@@ -1222,8 +1222,6 @@
         padding-right: 30px;
     }
 
-    ::-webkit-scrollbar { width: 0; }
-
     .main-title {
         padding-top: 35px;
     }
