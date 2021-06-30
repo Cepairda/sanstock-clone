@@ -149,26 +149,12 @@
 
                         <div class="pt-3">
                             <p class="mb-1">{{ __('Profit') }}:</p>
-                            <span style="
-                                min-width: 12px;
-                                height: 20px;
-                                margin-top: 2px;
-                                padding: 2px 12px;
-                                border-radius: 50px;
-                                background-color: #ec3f33;
-                                text-align: center;
-                                color: #ffffff;
-                                font-size: 14px;
-                                font-weight: 700;
-                                line-height: 20px;
-                                white-space: nowrap;
-                                box-shadow: 0 0 3px 0 rgba(0, 0, 0, .35)"
-                            >{{ number_format(ceil($differencePrice),0,'',' ') }} грн.</span>
+                            <span class="tabs-products__profit">{{ number_format(ceil($differencePrice),0,'',' ') }} грн.</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-2 align-self-center">
+            <div class="col-12 col-md-2 align-self-center tabs-products__add-to-cart">
                 <div class="d-flex flex-row justify-content-around">
                     <div class="col-12 text-center">
                         <button class="button" data-add="upDate" data-barcode="{{ $product->sku }}">{{ __('Add to cart') }}</button>

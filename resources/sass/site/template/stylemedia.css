@@ -1271,6 +1271,10 @@
     .table-products__row-reverse {
         flex-direction: row-reverse;
     }
+
+    .table-products__row-reverse .col-md-3 {
+        padding: unset;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 768px) {

@@ -34,12 +34,7 @@ class ResourceController extends Controller
                         ->withCharacteristics()
                         ->whereId($resource->id)
                         ->withProductsSort()
-                        //->where('details->published', 1)
                         ->withCategory()
-                        //->withRelateProducts()
-                        //->withComments()
-                        //->withReviews()
-                        //->withPartnerUrl()
                         ->firstOrFail(),
                 ];
                 $data['additional'] = temp_additional($data['productGroup']->sdCode);
@@ -116,13 +111,7 @@ class ResourceController extends Controller
                 $productsTotal = $productsSort->count();
 
                 $mixMaxPriceQuery = (clone $productsSort)->selectRaw("MIN(CAST(JSON_EXTRACT(`details`, '$.price') AS FLOAT)) AS minPrice, MAX(CAST(JSON_EXTRACT(`details`, '$.price') AS FLOAT)) AS maxPrice")->first();
-//                $mixMaxPriceQuery = (clone $productsSort)->selectRaw("MIN(CAST(JSON_EXTRACT(`resources`.`details`, '$.price') AS FLOAT)) AS minPrice, MAX(CAST(JSON_EXTRACT(`resources`.`details`, '$.price') AS FLOAT)) AS maxPrice")
-//                    ->join('resources as product', function ($q) {
-//                        $q->on('resources.details->sd_code', '=', 'product.details->sd_code')
-//                        ->on('resources.details->grade', '=', 'product.details->grade')
-//                        ->where('product.type', 'App\Product');
-//                    })
-//                    ->first();
+
                 $minPrice = $mixMaxPriceQuery->minPrice;
                 $maxPrice = $mixMaxPriceQuery->maxPrice;
 
