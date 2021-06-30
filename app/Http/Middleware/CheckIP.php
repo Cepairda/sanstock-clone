@@ -13,7 +13,7 @@ class CheckIP
     {
         session()->keep(['order']);
         if($request->get('access') == 'true') {
-            Cookie::queue('access', 'true', 60 * 24);
+            Cookie::queue(Cookie::forever('access', 'true'));
         }
 
         if (
