@@ -124,12 +124,17 @@ $menu: "data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xml
     }
   }
 }
-
-.nav-head-menu:hover {
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2)
+@media (min-width: 992px) {
+  .nav-head-menu:hover {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2)
+  }
 }
 
-
+@media (max-width: 992px) {
+  .nav-head-menu:focus {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2)
+  }
+}
 
 .box {
 
