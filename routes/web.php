@@ -252,6 +252,9 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         // Google Pay
         Route::get('/google-pay', 'CartController@requestGooglePay')->name('google-pay-request-to-platon');
 
+        // Apple Pay
+        Route::get('/apple-pay-validation', 'CartController@applePayValidation')->name('apple-pay-validation');
+
         Route::get('search', 'SearchController@search')->name('products.search');
         Route::post('products/update-price', 'ProductController@updatePrice')->name('products.update-price');
         Route::post('products/get-first-additional', 'ProductController@getFirstAdditional')->name('products.get-first-additional');
