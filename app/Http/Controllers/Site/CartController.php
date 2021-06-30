@@ -652,64 +652,117 @@ info(json_decode($paymentToken, true));
     }
 
     /**
-     * Create request for apple pay
-     * @return array
+     * Apple validation request
      */
-    public function requestApplePay(): array
+    public function applePayValidation() {
+
+        $validation_url = request()->get('u');
+
+        if( "https" == parse_url($validation_url, PHP_URL_SCHEME) && substr( parse_url($validation_url, PHP_URL_HOST), -10 )  == ".apple.com" ){
+
+            // require_once ('/your/path/to/applepay_includes/apple_pay_conf.php');
+            info("ApplePay validation ############ $validation_url ##########");
+            // create a new cURL resource
+            $ch = curl_init();
+
+            $data = '{"merchantIdentifier":"'. config('app.APPLE_MERCHANT_ID') .'", "domainName":"' . $_SERVER["HTTP_HOST"] . '", "displayName":"'. config('app.APPLE_MERCHANT_NAME') .'"}';
+
+            curl_setopt($ch, CURLOPT_URL, $validation_url);
+            curl_setopt($ch, CURLOPT_SSLCERT, PRODUCTION_CERTIFICATE_PATH);            // <= !!!!!!!!!!!!!!!
+            curl_setopt($ch, CURLOPT_SSLKEY, PRODUCTION_CERTIFICATE_KEY);              // <= !!!!!!!!!!!!!!!
+            curl_setopt($ch, CURLOPT_SSLKEYPASSWD, PRODUCTION_CERTIFICATE_KEY_PASS);   // <= !!!!!!!!!!!!!!!
+            //curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
+            //curl_setopt($ch, CURLOPT_SSLVERSION, 'CURL_SSLVERSION_TLSv1_2');
+            //curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, 'rsa_aes_128_gcm_sha_256,ecdhe_rsa_aes_128_gcm_sha_256');
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+            if(curl_exec($ch) === false)
+            {
+                info("Error: ApplePay validation ############ " . curl_error($ch) . " ##########");
+                echo '{"curlError":"' . curl_error($ch) . '"}';
+            }
+
+            // close cURL resource, and free up system resources
+            curl_close($ch);
+
+        } else {
+            info('Failed get Apple url:' . $validation_url);
+        }
+    }
+
+    /**
+     * Create request for apple pay
+     */
+    public function requestApplePayPlaton()
     {
-        // $order = session()->get('data');
-//        $order = $this->getCookieOrder();
-//
-//        $key = config('app.PLATON_PAYMENT_KEY');
-//        $pass = config('app.PLATON_PAYMENT_PASSWORD');
-//
-//        $amount = number_format($order['data']['price_sum'], 2, '.', '');
-//
-//        $request = [
-//            'action' => 'APPLEPAY',
-//            'client_key' => $key,
-//            'order_id' => $order['data']['order_id'],
-//            'order_amount' => $amount,
-//            'order_currency' => 'UAH',
-//            'order_description' => ''
-//        ];
-//
-//
-//
-//
-//        $payment = 'CC';
-//        $data = base64_encode(
-//            json_encode(
-//                array(
-//                    'amount' => $amount,
-//                    'description' => 'Оплата заказа #' . $order_id,
-//                    'currency' => 'UAH',
-//                    'recurring' => 'Y'
-//                )
-//            )
-//        );
-//
-//        $req_token = 'Y';
-//        $url = route('site.check-transaction-status');
-//        $sign = md5(
-//            strtoupper(
-//                strrev($key).
-//                strrev($payment).
-//                strrev($data).
-//                strrev($url).
-//                strrev($pass)
-//            )
-//        );
-//
-//        return [
-//            'order' => $order['data'],
-//            'payment' => $payment,
-//            'key' => $key,
-//            'url' => $url,
-//            'data' => $data,
-//            'req_token' => $req_token,
-//            'sign' => $sign
-//        ];
+        // $validation_url = request()->get('u');
+        $payment_token = '';
+        $email = '';
+
+        $order = $this->getCookieOrder();
+
+        $key = config('app.PLATON_PAYMENT_KEY');
+        $pass = config('app.PLATON_PAYMENT_PASSWORD');
+
+        $amount = number_format($order['data']['price_sum'], 2, '.', '');
+
+        $hash = md5(
+            strtoupper(
+                strrev($email).
+                $pass.
+                strrev($payment_token)
+            )
+        );
+
+        $data = [
+            'action' => 'APPLEPAY',
+            'client_key' => $key,
+            'order_id' => 'Order id(Apple Pay)#' . $order['data']['order_id'],
+            'order_amount' => $amount,
+            'order_currency' => 'UAH',
+            'order_description' => '',
+
+
+            'payment_token' => '',
+            'payer_first_name' => '',
+            'payer_last_name' => '',
+            'payer_middle_name' => '',
+            'payer_birth_date' => '',
+            'payer_address' => '',
+            'payer_address2' => '',
+            'payer_country' => '',
+            'payer_state' => '',
+            'payer_city' => '',
+            'payer_zip' => '',
+            'payer_email' => '',
+            'payer_phone' => '',
+            'payer_ip' => '',
+            'term_url_3ds' => '',
+            'hash' => $hash
+        ];
+
+        info("sent ApplePay to Platon @@@ ");
+        info(json_encode($data));
+        // create a new cURL resource
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://secure.platononline.com/post/');
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+        if($response = curl_exec($ch) === false)
+        {
+            info("*** Error *** : ApplePay Platon");
+            info(curl_error($ch));
+            echo '{"ApplePay Platon error":"' . curl_error($ch) . '"}';
+        }
+
+        info('------------- Platon response after ApplePay ------------------');
+        info($response);
+
+        // close cURL resource, and free up system resources
+        curl_close($ch);
     }
 
     /**
@@ -1049,8 +1102,7 @@ info(json_decode($paymentToken, true));
 
                 // $dataOrder['region_ref'] = (empty($dataOrder['new_mail'])) ? $employee['employee_region'] : null;
 
-                if(!empty($employee['comments'])) $dataOrderShipping['new_mail_comment'] = $employee['comments'];
-
+                if(!empty($employee['comments'])) $dataOrder['new_mail_comment'] = $employee['comments'];
             }
         }
 
