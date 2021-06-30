@@ -1,3 +1,7 @@
+body .container-gap-sm {
+    padding-top: unset;
+}
+
 .jsLink {
     cursor: pointer;
 }
