@@ -285,7 +285,7 @@
             let paymentToken = paymentData.paymentMethodData.tokenizationData.token;
             console.log('PaymentToken: ' + paymentToken);
             document.cookie = "pay=google_pay";
-            document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + paymentToken ;
+            document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + JSON.parse(paymentToken) ;
         }
 
         function loadGooglePayPlaton() {
