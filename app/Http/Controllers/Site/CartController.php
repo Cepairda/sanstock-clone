@@ -551,7 +551,7 @@ class CartController
         $paymentToken = request()->get('paymentToken');
         if(empty($paymentToken)) return redirect()->route('site.cart');
 info('!!! ****************** Payment token Google Pay ******************** !!!');
-info(json_decode($paymentToken, true));
+info($paymentToken, true);
 
         $order = $this->getCookieOrder();
 
