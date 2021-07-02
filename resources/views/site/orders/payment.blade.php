@@ -50,9 +50,9 @@
                                 @if($key === 'apple_pay')
                                     <div>
                                         <button type="button" id="ApplePay" style="width: 150px; height: 50px; display: none; border-radius: 5px; margin-left: auto; margin-right: auto; margin-top: 20px; background-image: -webkit-named-image(apple-pay-logo-white); background-position: 50% 50%; background-color: black; background-size: 60%; background-repeat: no-repeat;"></button>
-                                        <p style="display:none" id="got_notactive">ApplePay is possible on this browser, but not currently activated.</p>
-                                        <p style="display:none" id="notgot">Ваш браузер не поддерживает работу с ApplePay</p>
-                                        <p style="display:none" id="success">Test transaction completed, thanks. <a href="<?=$_SERVER["SCRIPT_URL"]?>">reset</a></p>
+{{--                                        <p style="display:none" id="got_notactive">ApplePay is possible on this browser, but not currently activated.</p>--}}
+{{--                                        <p style="display:none" id="notgot">Ваш браузер не поддерживает работу с ApplePay</p>--}}
+{{--                                        <p style="display:none" id="success">Test transaction completed, thanks. <a href="<?=$_SERVER["SCRIPT_URL"]?>">reset</a></p>--}}
                                     </div>
 
 {{--                                    <div id="ApplePay" class="apple-pay-button-with-text apple-pay-button-white-with-text @if($payment_method !== 'apple_pay')d-none @endif"--}}
@@ -442,7 +442,7 @@
                             resolve(data);
                         };
                         xhr.onerror = reject;
-                        xhr.open('GET', '{{ route('apple-pay-validation') }}?u=' + valURL);
+                        xhr.open('GET', '{{ route('site.apple-pay-validation') }}?u=' + valURL);
                         xhr.send();
                     });
                 }
@@ -599,8 +599,8 @@
     </script>
 
 
-    @section('javascript')
+{{--    @section('javascript')--}}
 {{--        <script type="text/javascript" src="{{ mix('js/site/page/checkout.js') }}"></script>--}}
-    @endsection
+{{--    @endsection--}}
 
 @endsection
