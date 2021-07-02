@@ -44,6 +44,7 @@
             <div class="left-sidebar__view">
                 <div class="left-sidebar__view--wrapp">
                     <h3 class="left-sidebar__view--title">{{ $characteristic->getData('name') }}</h3>
+                    <div class="characteristics-values">
                     @foreach ($valuesForView[$characteristic->id] as $value)
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" name="filters[{{ $characteristic->id }}][]"
@@ -54,6 +55,7 @@
                                    for="valueID{{ $value->id }}">{{ $value->getData('value') }}</label>
                         </div>
                     @endforeach
+                    </div>
                 </div>
             </div>
             <hr>

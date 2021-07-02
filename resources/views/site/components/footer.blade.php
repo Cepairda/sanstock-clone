@@ -38,6 +38,8 @@
                     <ul>
                         <li class="footer__element--item-tel">Call-центр:</li>
                         <li><a class="footer__element-phone" href="tel:0800217122">0-800-21-71-22</a></li>
+                        <li class="footer__element--item-tel">{{ __('Schedule') }}</li>
+                        <li class="footer__element-phone">{{ __('Schedule Time') }}</li>
                     </ul>
                 </div>
             </div>

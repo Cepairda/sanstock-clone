@@ -870,6 +870,11 @@ body .container-gap-sm {
 
 }
 
+.characteristics-values {
+    max-height: 190px;
+    overflow: hidden;
+}
+
 .bgc-grad .left-sidebar__form {
     background-color: transparent;
 }

@@ -1,3 +1,18 @@
+document.addEventListener("DOMContentLoaded", function() {
+    OverlayScrollbars(document.querySelectorAll(".characteristics-values"), {
+        className       : "os-theme-dark",
+        resize          : "none",
+        sizeAutoCapable : true,
+        paddingAbsolute : false,
+        scrollbars : {
+            clickScrolling : true
+        },
+        overflowBehavior: {
+            x: 'h',
+        }
+    });
+});
+
 $(document).ready(function () {
     var priceRangeSlider = $('#priceRangeSlider');
     if (priceRangeSlider.length) {
