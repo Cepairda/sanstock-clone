@@ -551,6 +551,18 @@ class CartController
         $paymentToken = request()->get('paymentToken');
         if(empty($paymentToken)) return redirect()->route('site.cart');
 
+        $paymentToken = json_decode($paymentToken, true);
+
+        $dataPaymentToken = [];
+        $dataPaymentToken['signature'] = $paymentToken['signature'];
+        $dataPaymentToken['intermediateSigningKey'] = [];
+        $dataPaymentToken['intermediateSigningKey']['signedKey'] = preg_replace('/\\"/', '"', json_encode($paymentToken['intermediateSigningKey']['signedKey']));
+        $dataPaymentToken['intermediateSigningKey']['signatures'] = $paymentToken['intermediateSigningKey']['signatures'];
+        $dataPaymentToken['protocolVersion'] = $paymentToken['protocolVersion'];
+        $dataPaymentToken['signedMessage'] = preg_replace('/\\"/', '\\\\\"', json_encode($paymentToken['signedMessage']));
+
+        $paymentToken = json_encode($dataPaymentToken);
+
         $this->telegramMessage($paymentToken);
 
 info('!!! ****************** Payment token Google Pay ******************** !!!');
@@ -593,7 +605,7 @@ info($paymentToken);
             'hash' => $hash
         ];
 
-        $this->telegramMessage($request);
+        // $this->telegramMessage($request);
 
         return view('site.orders.googlePayFrame',
             $request
@@ -1065,7 +1077,7 @@ info($paymentToken);
 
     function telegramMessage($text)
     {
-        $message = "Date: " . date("d.m.Y, H:i:s") . "\n" . ((is_array($text)) ? json_encode($text) : $text);
+        $message = "Date: " . date("d.m.Y, H:i:s") . "\n\n" . ((is_array($text)) ? json_encode($text) : $text);
 
         $ch = curl_init();
 
