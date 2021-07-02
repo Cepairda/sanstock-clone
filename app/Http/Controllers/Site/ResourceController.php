@@ -96,8 +96,26 @@ class ResourceController extends Controller
                         $valuesForView[$value->attribute_id] = [];
                         $a = $value->attribute_id;
                     }*/
+                    if (!empty($value->value)) {
+                        $valuesForView[$value->getDetails('characteristic_id')][] = $value;
+                    }
+                }
 
-                    $valuesForView[$value->getDetails('characteristic_id')][] = $value;
+                /**
+                 * Sorting Characteristics Values
+                 */
+                foreach ($valuesForView as $cId => &$cValues) {
+                    //sort($cValues);
+                    usort($cValues, function ($a, $b) {
+                        $first = str_replace(',', '.', $a->value);
+                        $second = str_replace(',', '.', $b->value);
+
+                        if (is_numeric($first) && is_numeric($second)) {
+                            return $first <=> $second;
+                        }
+
+                        return strcmp($a->value, $b->value);
+                    });
                 }
 
                 $characteristicsIds = array_keys($valuesForView);
