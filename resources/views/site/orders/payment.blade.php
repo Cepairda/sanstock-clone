@@ -283,10 +283,12 @@
             console.log(paymentData);
             // @todo pass payment token to your gateway to process payment
             let paymentToken = paymentData.paymentMethodData.tokenizationData.token;
-            console.log('PaymentToken: ' + paymentToken);
 
-            var re = /\\"/g;
-            let ReppaymentToken = paymentToken.replace(re, '"');
+            console.log('PaymentToken: ');
+            console.log(paymentToken);
+
+            //var re = /\\"/g;
+            //let ReppaymentToken = paymentToken.replace(re, '"');
             // paymentToken = paymentToken.replace(re, '"');
 
 // console.log(paymentToken);
