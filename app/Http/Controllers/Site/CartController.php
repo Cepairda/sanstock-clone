@@ -551,10 +551,19 @@ class CartController
         $paymentToken = request()->get('paymentToken');
         if(empty($paymentToken)) return redirect()->route('site.cart');
 
-        $paymentToken = json_decode($paymentToken, true, 1);
+        $paymentToken = json_decode($paymentToken, true);
 
+        $dataPaymentToken = [];
+        $dataPaymentToken['signature'] = $paymentToken['signature'];
+        $dataPaymentToken['intermediateSigningKey'] = [];
+        $dataPaymentToken['intermediateSigningKey']['signedKey'] = json_encode($paymentToken['intermediateSigningKey']['signedKey']);
+        $dataPaymentToken['intermediateSigningKey']['signatures'] = $paymentToken['intermediateSigningKey']['signatures'];
+        $dataPaymentToken['protocolVersion'] = $paymentToken['protocolVersion'];
+        $dataPaymentToken['signedMessage'] = json_encode($paymentToken['signedMessage']);
 
-        $this->telegramMessage(json_encode($paymentToken));
+        $paymentToken = json_encode($dataPaymentToken);
+
+        $this->telegramMessage($paymentToken);
 
 info('!!! ****************** Payment token Google Pay ******************** !!!');
 info($paymentToken);
