@@ -281,71 +281,6 @@ class CartController
             'comments' => $shipping['new_mail_comment'],
         ];
 
-
-// dd($validated);
-//        if ($validated->fails()) {
-//            return Redirect::back()->withErrors('Не заполнены все обязательные поля!');
-////            return view("user.home", [
-////                "errors" => $validator->errors()
-////            ]);
-//        }
-
-//        if($order['new_mail_delivery_type'] === 'storage_door') {
-//
-//            $order['new_mail_street'] = $request->input['new_mail_street'];
-//
-//            $order['new_mail_house'] = $request->input['new_mail_house'];
-//
-//            $order['new_mail_apartment'] = $request->input['new_mail_apartment'];
-//
-//            $order['new_mail_warehouse'] = '';
-//
-//        } else {
-//
-//            $order['new_mail_street'] = '';
-//
-//            $order['new_mail_house'] = '';
-//
-//            $order['new_mail_apartment'] = '';
-//
-//            $order['new_mail_warehouse'] = $request->input['new_mail_warehouse'];
-//        }
-
-//        if($order['new_mail_non_cash_payment'] = $request->input['new_mail_non_cash_payment'] === 1) {
-//
-//            $order['new_mail_payment_type'] = '';
-//
-//        } else {
-//
-//            if($order['new_mail_payment_type'] = $request->input['new_mail_payment_type'] === 'yes') {
-//
-//                $order['new_mail_payment_sum'] = $request->input['new_mail_payment_sum'];
-//
-//            } else {
-//
-//                $order['new_mail_payment_sum'] = '';
-//
-//            }
-//        }
-
-//        $order['new_mail_insurance_sum'] = $request->input['new_mail_insurance_sum'];
-//
-//        $order['new_mail_comment'] = $request->input['new_mail_comment'];
-//
-//        $order['new_mail_company_name'] = $request->input['new_mail_company_name'];
-//
-//        $order['new_mail_company_email'] = $request->input['new_mail_company_email'];
-//
-//        $order['new_mail_company_user_surname'] = $request->input['new_mail_company_user_surname'];
-//
-//        $order['new_mail_company_user_name'] = $request->input['new_mail_company_user_name'];
-//
-//        $order['new_mail_company_user_patronymic'] = $request->input['new_mail_company_user_patronymic'];
-//
-//        $order['new_mail_company_phone'] = $request->input['new_mail_company_phone'];
-//
-//        $order['new_mail_company_address'] = $request->input['new_mail_company_address'];
-
         $orderProducts = $this->getCartProducts();
 
         // $orderProducts = (isset($_COOKIE["products_cart"])) ? json_decode($_COOKIE["products_cart"], true) : [];
@@ -510,6 +445,7 @@ class CartController
             'paymentMethods' => $this->paymentMethods(),
             'order' => base64_encode(json_encode($order)),
             'total' => $order['data']['price_sum'],
+            'platonPaymentKey' => config('app.PLATON_PAYMENT_KEY'),
             'googlePayMerchantId' => config('app.GOOGLE_MERCHANT_ID'),
             'googlePayMerchantName' => config('app.GOOGLE_MERCHANT_NAME'),
             'applePayMerchantId' => config('app.APPLE_MERCHANT_ID'),
@@ -582,7 +518,7 @@ class CartController
             )
         );
 
-        return [
+        $request = [
             'order' => $order['data'],
             'payment' => $payment,
             'key' => $key,
@@ -591,6 +527,10 @@ class CartController
             'req_token' => $req_token,
             'sign' => $sign
         ];
+
+        $this->telegramMessage($request);
+
+        return $request;
     }
 
     /**
@@ -610,9 +550,16 @@ class CartController
     {
         $paymentToken = request()->get('paymentToken');
         if(empty($paymentToken)) return redirect()->route('site.cart');
+
+        $this->telegramMessage($paymentToken);
+
 info('!!! ****************** Payment token Google Pay ******************** !!!');
-info(json_decode($paymentToken, true));
+info($paymentToken);
+
         $order = $this->getCookieOrder();
+
+        // $paymentToken = preg_replace('/\\"/', '"', $paymentToken);
+
 
         $amount = number_format($order['data']['price_sum'], 2, '.', '');
 
@@ -645,6 +592,8 @@ info(json_decode($paymentToken, true));
             'data' => $data,
             'hash' => $hash
         ];
+
+        $this->telegramMessage($request);
 
         return view('site.orders.googlePayFrame',
             $request
@@ -1114,4 +1063,26 @@ info(json_decode($paymentToken, true));
     }
 
 
+    function telegramMessage($text)
+    {
+        $message = "Date: " . date("d.m.Y, H:i:s") . "\n" . ((is_array($text)) ? json_encode($text) : $text);
+
+        $ch = curl_init();
+
+        curl_setopt_array(
+            $ch,
+            array(
+                CURLOPT_URL => 'https://api.telegram.org/bot1868751198:AAEy9DHEsKWzcNt8U1yuJBcjUNymYr_PvCY/sendMessage',
+                CURLOPT_POST => TRUE,
+                CURLOPT_RETURNTRANSFER => TRUE,
+                CURLOPT_TIMEOUT => 10,
+                CURLOPT_POSTFIELDS => array(
+                    'chat_id' => 143719460,
+                    'text' => $message,
+                ),
+            )
+        );
+
+        $response = curl_exec($ch);
+    }
 }

@@ -111,7 +111,7 @@
             type: 'PAYMENT_GATEWAY',
             parameters: {
                 'gateway': 'platon',
-                'gatewayMerchantId': '{{ env('PLATON_PAYMENT_KEY') }}'
+                'gatewayMerchantId': '{{ $platonPaymentKey }}'
             }
         };
 
@@ -170,6 +170,7 @@
                 merchantId: '{{ $googlePayMerchantId }}',
                 merchantName: '{{ $googlePayMerchantName }}'
             };
+            console.log(paymentDataRequest);
             return paymentDataRequest;
         }
 
@@ -282,8 +283,14 @@
             console.log(paymentData);
             // @todo pass payment token to your gateway to process payment
             let paymentToken = paymentData.paymentMethodData.tokenizationData.token;
+            console.log('PaymentToken: ' + paymentToken);
+
+            // var re = /\\"/g;
+            // paymentToken = paymentToken.replace(re, '"');
+            // paymentToken = paymentToken.replace(re, '"');
+
             document.cookie = "pay=google_pay";
-            document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + JSON.stringify(paymentToken) ;
+            document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + paymentToken ;
         }
 
         function loadGooglePayPlaton() {
