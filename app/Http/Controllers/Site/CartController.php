@@ -558,7 +558,7 @@ info($paymentToken);
 
         $order = $this->getCookieOrder();
 
-        // $paymentToken = preg_replace('/\\"/', '"', $paymentToken);
+        $paymentToken = preg_replace('/\\"/', '"', $paymentToken);
 
 
         $amount = number_format($order['data']['price_sum'], 2, '.', '');
