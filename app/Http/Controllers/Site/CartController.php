@@ -550,14 +550,16 @@ class CartController
     {
         $paymentToken = request()->get('paymentToken');
         if(empty($paymentToken)) return redirect()->route('site.cart');
+
+        $this->telegramMessage($paymentToken);
+
 info('!!! ****************** Payment token Google Pay ******************** !!!');
-info($paymentToken, true);
+info($paymentToken);
 
         $order = $this->getCookieOrder();
 
-        $paymentToken = preg_replace('/\\"/', '"', $paymentToken);
+        // $paymentToken = preg_replace('/\\"/', '"', $paymentToken);
 
-        $this->telegramMessage($paymentToken);
 
         $amount = number_format($order['data']['price_sum'], 2, '.', '');
 
