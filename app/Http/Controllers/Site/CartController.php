@@ -556,10 +556,10 @@ class CartController
         $dataPaymentToken = [];
         $dataPaymentToken['signature'] = $paymentToken['signature'];
         $dataPaymentToken['intermediateSigningKey'] = [];
-        $dataPaymentToken['intermediateSigningKey']['signedKey'] = preg_replace('/\\\"/', '"', json_encode($paymentToken['intermediateSigningKey']['signedKey']));
+        $dataPaymentToken['intermediateSigningKey']['signedKey'] = preg_replace('/\\"/', '"', json_encode($paymentToken['intermediateSigningKey']['signedKey']));
         $dataPaymentToken['intermediateSigningKey']['signatures'] = $paymentToken['intermediateSigningKey']['signatures'];
         $dataPaymentToken['protocolVersion'] = $paymentToken['protocolVersion'];
-        $dataPaymentToken['signedMessage'] = preg_replace('/\\\"/', '"', json_encode($paymentToken['signedMessage']));
+        $dataPaymentToken['signedMessage'] = preg_replace('/\\"/', '\\\\\"', json_encode($paymentToken['signedMessage']));
 
         $paymentToken = json_encode($dataPaymentToken);
 
@@ -605,7 +605,7 @@ info($paymentToken);
             'hash' => $hash
         ];
 
-        $this->telegramMessage($request);
+        // $this->telegramMessage($request);
 
         return view('site.orders.googlePayFrame',
             $request
