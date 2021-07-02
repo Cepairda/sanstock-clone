@@ -510,6 +510,7 @@ class CartController
             'paymentMethods' => $this->paymentMethods(),
             'order' => base64_encode(json_encode($order)),
             'total' => $order['data']['price_sum'],
+            'platonPaymentKey' => config('app.PLATON_PAYMENT_KEY'),
             'googlePayMerchantId' => config('app.GOOGLE_MERCHANT_ID'),
             'googlePayMerchantName' => config('app.GOOGLE_MERCHANT_NAME'),
             'applePayMerchantId' => config('app.APPLE_MERCHANT_ID'),

@@ -111,7 +111,7 @@
             type: 'PAYMENT_GATEWAY',
             parameters: {
                 'gateway': 'platon',
-                'gatewayMerchantId': '{{ env('PLATON_PAYMENT_KEY') }}'
+                'gatewayMerchantId': '{{ $platonPaymentKey }}'
             }
         };
 
