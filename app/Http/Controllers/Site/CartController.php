@@ -551,7 +551,10 @@ class CartController
         $paymentToken = request()->get('paymentToken');
         if(empty($paymentToken)) return redirect()->route('site.cart');
 
-        $this->telegramMessage(json_decode($paymentToken, true));
+        $paymentToken = json_decode($paymentToken, true, 1);
+
+
+        $this->telegramMessage(json_encode($paymentToken));
 
 info('!!! ****************** Payment token Google Pay ******************** !!!');
 info($paymentToken);
@@ -1065,7 +1068,7 @@ info($paymentToken);
 
     function telegramMessage($text)
     {
-        $message = "Date: " . date("d.m.Y, H:i:s") . "\n" . ((is_array($text)) ? json_encode($text) : $text);
+        $message = "Date: " . date("d.m.Y, H:i:s") . "\n\n" . ((is_array($text)) ? json_encode($text) : $text);
 
         $ch = curl_init();
 
