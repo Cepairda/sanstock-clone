@@ -289,12 +289,12 @@
             let ReppaymentToken = paymentToken.replace(re, '"');
             // paymentToken = paymentToken.replace(re, '"');
 
-console.log(paymentToken);
-console.log(ReppaymentToken);
-console.log(JSON.parse(paymentToken));
+// console.log(paymentToken);
+// console.log(ReppaymentToken);
+// console.log(JSON.parse(paymentToken));
 
             document.cookie = "pay=google_pay";
-            // document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + paymentToken ;
+            document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + paymentToken ;
         }
 
         function loadGooglePayPlaton() {
