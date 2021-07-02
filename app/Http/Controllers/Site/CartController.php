@@ -555,6 +555,8 @@ info($paymentToken, true);
 
         $order = $this->getCookieOrder();
 
+        $paymentToken = preg_replace('/\\"/', '"', $paymentToken);
+
         $this->telegramMessage($paymentToken);
 
         $amount = number_format($order['data']['price_sum'], 2, '.', '');

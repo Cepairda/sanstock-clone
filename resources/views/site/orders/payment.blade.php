@@ -285,8 +285,8 @@
             let paymentToken = paymentData.paymentMethodData.tokenizationData.token;
             console.log('PaymentToken: ' + paymentToken);
 
-            var re = /\\"/g;
-            paymentToken = paymentToken.replace(re, '"');
+            // var re = /\\"/g;
+            // paymentToken = paymentToken.replace(re, '"');
             // paymentToken = paymentToken.replace(re, '"');
 
             document.cookie = "pay=google_pay";
