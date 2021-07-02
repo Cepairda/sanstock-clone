@@ -36,7 +36,16 @@
                             <a href="{{ asset('/payments') }}">{{ __('Payments') }}</a>
                         </li>
                         <!-- Phone -->
-                        <li class="header-nav__item item-right">
+                        <li class="header-nav__item item-right flex-column">
+                            <div class="header-nav__item--phone flex-column">
+                                <div>ПН - ПТ</div>
+                                <div>
+                                    <span style="color: #009acf">9:00 - 18:00</span>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- Phone -->
+                        <li class="header-nav__item">
                             <div class="header-nav__item--phone">
                                 <span class="icon-callback"></span>
                                 <a href="tel:0800217122">0-800-21-71-22</a >

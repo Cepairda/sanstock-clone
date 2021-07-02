@@ -140,5 +140,6 @@
     "Online payment on the site": "Онлайн-оплата на сайте",
     "Importantly": "Важно",
     "Schedule": "График работы",
-    "Schedule Time": "Понедельник - пятница с 9:00 до 18:00"
+    "Schedule Day": "Понедельник - пятница",
+    "Schedule Time": "с 9:00 до 18:00"
 }
