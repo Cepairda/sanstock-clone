@@ -12,6 +12,8 @@ window.$ = window.jQuery = require('jquery');
 //bootstrap
 require('bootstrap');
 
+// Scrollbar
+require('overlayscrollbars');
 
 //require('lazysizes');
 // import a plugin

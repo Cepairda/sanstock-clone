@@ -16,6 +16,8 @@
 @import 'plugins/bootstrap-slider.min.css',
         'plugins/swipe-gallery',
         'plugins/characteristics-lists';
+@import '~overlayscrollbars/css/OverlayScrollbars.min.css';
+
 
 //old template
 //'template/fontawesome', 'template/stylesheet',
@@ -34,6 +36,7 @@
         'components/card',
         'components/buttons',
         'components/language';
+
 
 //page
 @import 'page/home',
