@@ -551,7 +551,7 @@ class CartController
         $paymentToken = request()->get('paymentToken');
         if(empty($paymentToken)) return redirect()->route('site.cart');
 
-        $this->telegramMessage($paymentToken);
+        $this->telegramMessage(json_decode($paymentToken, true));
 
 info('!!! ****************** Payment token Google Pay ******************** !!!');
 info($paymentToken);
