@@ -5,7 +5,7 @@
     <title>Payment</title>
 </head>
 <body >
-<form id="myForm" action="https://secure.platononline.com/post/" method="post">
+<form id="myForm" >
     <input type="hidden" name="action" value="{{ $data['action'] }}"/>
     <input type="hidden" name="client_key" value="{{ $data['CLIENT_KEY'] }}"/>
     <input type="hidden" name="order_id" value="{{ $data['order_id'] }}"/>
@@ -20,7 +20,7 @@
 <script>
     let formData = new FormData(document.getElementById("myForm"));
 
-    fetch(url, {
+    fetch("https://secure.platononline.com/post/", {
         method: 'POST',
         body: formData
     })
