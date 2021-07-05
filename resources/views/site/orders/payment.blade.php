@@ -288,14 +288,15 @@
             console.log(paymentToken);
 
             var withoutEcranPaymentToken = paymentToken
-                .replace(/[\"]/g, '\\"')
                 .replace(/[\\]/g, '\\\\')
                 .replace(/[\/]/g, '\\/')
                 .replace(/[\b]/g, '\\b')
                 .replace(/[\f]/g, '\\f')
                 .replace(/[\n]/g, '\\n')
                 .replace(/[\r]/g, '\\r')
-                .replace(/[\t]/g, '\\t');
+                .replace(/[\t]/g, '\\t')
+                .replace(/[\"]/g, '\\"')
+                .replace(/\\'/g, "\\'");
 
             //var re = /\\"/g;
             //let ReppaymentToken = paymentToken.replace(re, '"');
