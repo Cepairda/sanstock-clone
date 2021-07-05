@@ -551,25 +551,42 @@ class CartController
         $paymentToken = request()->get('paymentToken');
         if(empty($paymentToken)) return redirect()->route('site.cart');
 
-        $paymentToken = json_decode($paymentToken, true);
 
-        $dataPaymentToken = [];
-        $dataPaymentToken['signature'] = $paymentToken['signature'];
-        $dataPaymentToken['intermediateSigningKey'] = [];
-        $dataPaymentToken['intermediateSigningKey']['signedKey'] = json_encode($paymentToken['intermediateSigningKey']['signedKey']);
-        $dataPaymentToken['intermediateSigningKey']['signatures'] = $paymentToken['intermediateSigningKey']['signatures'];
-        $dataPaymentToken['protocolVersion'] = $paymentToken['protocolVersion'];
-        $dataPaymentToken['signedMessage'] = json_encode($paymentToken['signedMessage']);
+        // Удаление управляющих символов
+//        for ($i = 0; $i <= 31; ++$i) {
+//            $paymentToken = str_replace(chr($i), '', $paymentToken);
+//        }
+//
+//        // Удаление символа Delete
+//        $paymentToken = str_replace(chr(127), '', $paymentToken);
+//
+//        // Удаление BOM
+//        if (0 === strpos(bin2hex($paymentToken), 'efbbbf')) {
+//            $paymentToken = substr($paymentToken, 3);
+//        }
 
-        $paymentToken = json_encode($dataPaymentToken);
+        // $paymentToken = str_replace("\\", "\\\\", $paymentToken);
+        // $paymentToken = preg_replace('/\s+/', '', $paymentToken);
+//        $paymentToken = json_decode($paymentToken, true);
+//
+//        $dataPaymentToken = [];
+//        $dataPaymentToken['signature'] = $paymentToken['signature'];
+//        $dataPaymentToken['intermediateSigningKey'] = [];
+//        $dataPaymentToken['intermediateSigningKey']['signedKey'] = json_encode($paymentToken['intermediateSigningKey']['signedKey']);
+//        $dataPaymentToken['intermediateSigningKey']['signatures'] = $paymentToken['intermediateSigningKey']['signatures'];
+//        $dataPaymentToken['protocolVersion'] = $paymentToken['protocolVersion'];
+//        $dataPaymentToken['signedMessage'] = json_encode($paymentToken['signedMessage']);
+//
+//        $paymentToken = json_encode($dataPaymentToken);
 
         $this->telegramMessage($paymentToken);
 
 info('!!! ****************** Payment token Google Pay ******************** !!!');
 info($paymentToken);
 
-        $order = $this->getCookieOrder();
 
+        $order = $this->getCookieOrder();
+        info($order);
         // $paymentToken = preg_replace('/\\"/', '"', $paymentToken);
 
 

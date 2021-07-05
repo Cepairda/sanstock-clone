@@ -287,6 +287,15 @@
             console.log('PaymentToken: ');
             console.log(paymentToken);
 
+            var withoutEcranPaymentToken = paymentToken.replace(/\\n/g, "\\n")
+                .replace(/\\'/g, "\\'")
+                .replace(/\\"/g, '\\"')
+                .replace(/\\&/g, "\\&")
+                .replace(/\\r/g, "\\r")
+                .replace(/\\t/g, "\\t")
+                .replace(/\\b/g, "\\b")
+                .replace(/\\f/g, "\\f");
+
             //var re = /\\"/g;
             //let ReppaymentToken = paymentToken.replace(re, '"');
             // paymentToken = paymentToken.replace(re, '"');
@@ -296,7 +305,7 @@
 // console.log(JSON.parse(paymentToken));
 
             document.cookie = "pay=google_pay";
-            document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + paymentToken ;
+            document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + withoutEcranPaymentToken ;
         }
 
         function loadGooglePayPlaton() {
