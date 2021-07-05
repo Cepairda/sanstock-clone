@@ -552,22 +552,23 @@ class CartController
         if(empty($paymentToken)) return redirect()->route('site.cart');
 
 
-// Удаление управляющих символов
+        // Удаление управляющих символов
         for ($i = 0; $i <= 31; ++$i) {
             $paymentToken = str_replace(chr($i), '', $paymentToken);
         }
 
-// Удаление символа Delete
+        // Удаление символа Delete
         $paymentToken = str_replace(chr(127), '', $paymentToken);
 
-// Удаление BOM
+        // Удаление BOM
         if (0 === strpos(bin2hex($paymentToken), 'efbbbf')) {
             $paymentToken = substr($paymentToken, 3);
         }
 
+        $paymentToken = str_replace("\\", "\\\\", $paymentToken);
 
-        // $paymentToken = json_decode($paymentToken, true);
-
+//        $paymentToken = json_decode($paymentToken, true);
+//
 //        $dataPaymentToken = [];
 //        $dataPaymentToken['signature'] = $paymentToken['signature'];
 //        $dataPaymentToken['intermediateSigningKey'] = [];
