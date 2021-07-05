@@ -561,7 +561,7 @@ class CartController
         $dataPaymentToken['protocolVersion'] = $paymentToken['protocolVersion'];
         $dataPaymentToken['signedMessage'] = json_encode($paymentToken['signedMessage']);
 
-        $paymentToken = json_encode($dataPaymentToken, 0, 1);
+        $paymentToken = json_encode($dataPaymentToken);
 
         $this->telegramMessage($paymentToken);
 
