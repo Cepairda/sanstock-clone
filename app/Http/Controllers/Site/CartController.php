@@ -553,17 +553,17 @@ class CartController
 
 
         // Удаление управляющих символов
-        for ($i = 0; $i <= 31; ++$i) {
-            $paymentToken = str_replace(chr($i), '', $paymentToken);
-        }
-
-        // Удаление символа Delete
-        $paymentToken = str_replace(chr(127), '', $paymentToken);
-
-        // Удаление BOM
-        if (0 === strpos(bin2hex($paymentToken), 'efbbbf')) {
-            $paymentToken = substr($paymentToken, 3);
-        }
+//        for ($i = 0; $i <= 31; ++$i) {
+//            $paymentToken = str_replace(chr($i), '', $paymentToken);
+//        }
+//
+//        // Удаление символа Delete
+//        $paymentToken = str_replace(chr(127), '', $paymentToken);
+//
+//        // Удаление BOM
+//        if (0 === strpos(bin2hex($paymentToken), 'efbbbf')) {
+//            $paymentToken = substr($paymentToken, 3);
+//        }
 
         $paymentToken = str_replace("\\", "\\\\", $paymentToken);
         $paymentToken = preg_replace('/\s+/', '', $paymentToken);
@@ -584,8 +584,9 @@ class CartController
 info('!!! ****************** Payment token Google Pay ******************** !!!');
 info($paymentToken);
 
-        $order = $this->getCookieOrder();
 
+        $order = $this->getCookieOrder();
+        info($order);
         // $paymentToken = preg_replace('/\\"/', '"', $paymentToken);
 
 
