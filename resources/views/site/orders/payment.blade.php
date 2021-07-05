@@ -287,16 +287,16 @@
             console.log('PaymentToken: ');
             console.log(paymentToken);
 
-            var withoutEcranPaymentToken = paymentToken
-                .replace(/[\\]/g, '\\\\')
-                .replace(/[\/]/g, '\\/')
-                .replace(/[\b]/g, '\\b')
-                .replace(/[\f]/g, '\\f')
-                .replace(/[\n]/g, '\\n')
-                .replace(/[\r]/g, '\\r')
-                .replace(/[\t]/g, '\\t')
-                .replace(/[\"]/g, '\\"')
-                .replace(/\\'/g, "\\'");
+            // var withoutEcranPaymentToken = paymentToken
+            //     .replace(/[\\]/g, '\\\\')
+            //     .replace(/[\/]/g, '\\/')
+            //     .replace(/[\b]/g, '\\b')
+            //     .replace(/[\f]/g, '\\f')
+            //     .replace(/[\n]/g, '\\n')
+            //     .replace(/[\r]/g, '\\r')
+            //     .replace(/[\t]/g, '\\t')
+            //     .replace(/[\"]/g, '\\"')
+            //     .replace(/\\'/g, "\\'");
 
             //var re = /\\"/g;
             //let ReppaymentToken = paymentToken.replace(re, '"');
@@ -307,7 +307,7 @@
 // console.log(JSON.parse(paymentToken));
 
             document.cookie = "pay=google_pay";
-            document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + window.btoa(withoutEcranPaymentToken) ;
+            document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + window.btoa(paymentToken) ;
         }
 
         function loadGooglePayPlaton() {
