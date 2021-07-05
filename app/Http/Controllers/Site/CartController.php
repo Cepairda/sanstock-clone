@@ -565,8 +565,8 @@ class CartController
 //            $paymentToken = substr($paymentToken, 3);
 //        }
 
-        $paymentToken = str_replace("\\", "\\\\", $paymentToken);
-        $paymentToken = preg_replace('/\s+/', '', $paymentToken);
+        // $paymentToken = str_replace("\\", "\\\\", $paymentToken);
+        // $paymentToken = preg_replace('/\s+/', '', $paymentToken);
 //        $paymentToken = json_decode($paymentToken, true);
 //
 //        $dataPaymentToken = [];
