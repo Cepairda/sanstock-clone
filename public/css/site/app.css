@@ -15027,6 +15027,10 @@ p.text--hide.active {
     display: none;
   }
 }
+.header-nav__item.item-right {
+  display: flex;
+  flex-direction: row;
+}
 @media (min-width: 992px) {
   .header-nav__item {
     border-bottom: none !important;
@@ -15065,16 +15069,22 @@ p.text--hide.active {
     background-color: transparent;
   }
 }
-.header-nav__item--phone {
+.header-nav__item--phone, .header-nav__item--schedule {
   display: flex;
   align-items: center;
 }
-.header-nav__item--phone span {
+.header-nav__item--phone span, .header-nav__item--schedule span {
   margin-right: 4px;
 }
-.header-nav__item--phone a {
+.header-nav__item--phone a, .header-nav__item--schedule a {
   font-size: 16px;
   color: #000;
+}
+@media (max-width: 992px) {
+  .header-nav__item--schedule {
+    align-items: start;
+    padding-right: unset;
+  }
 }
 .header__inner {
   display: flex;
