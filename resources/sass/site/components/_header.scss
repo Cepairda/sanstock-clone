@@ -107,6 +107,11 @@
 				}
 			}
 
+			&.item-right {
+				display: flex;
+				flex-direction: row;
+			}
+
 			@media (min-width: 992px) {
 				border-bottom: none !important;
 				&:not(:nth-child(1)) {
@@ -148,7 +153,7 @@
 				}
 			}
 
-			&--phone {
+			&--phone, &--schedule {
 				display: flex;
 				align-items: center;
 
@@ -159,6 +164,13 @@
 				a {
 					font-size: 16px;
 					color: #000;
+				}
+			}
+
+			&--schedule {
+				@media (max-width: 992px) {
+					align-items: start;
+					padding-right: unset;
 				}
 			}
 		}
