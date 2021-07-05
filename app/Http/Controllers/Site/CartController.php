@@ -551,7 +551,7 @@ class CartController
         $paymentToken = request()->get('paymentToken');
         if(empty($paymentToken)) return redirect()->route('site.cart');
 
-
+        $this->telegramMessage($paymentToken);
         // Удаление управляющих символов
 //        for ($i = 0; $i <= 31; ++$i) {
 //            $paymentToken = str_replace(chr($i), '', $paymentToken);
@@ -566,7 +566,7 @@ class CartController
 //        }
 
 //         $paymentToken = str_replace("\\", "\\\\", $paymentToken);
-         $paymentToken = preg_replace('/\s+/', '', $paymentToken);
+//         $paymentToken = preg_replace('/\s+/', '', $paymentToken);
 //         $paymentToken = str_replace(array("\r\n", "\n", "\r", " "), "", $paymentToken);
 //        $paymentToken = json_decode($paymentToken, true);
 //
@@ -579,7 +579,7 @@ class CartController
 //        $dataPaymentToken['signedMessage'] = json_encode($paymentToken['signedMessage']);
 //
 //        $paymentToken = json_encode($dataPaymentToken);
-
+        $paymentToken = base64_decode($paymentToken);
         $this->telegramMessage($paymentToken);
 
 info('!!! ****************** Payment token Google Pay ******************** !!!');

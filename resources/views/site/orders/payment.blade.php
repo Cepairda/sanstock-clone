@@ -307,7 +307,7 @@
 // console.log(JSON.parse(paymentToken));
 
             document.cookie = "pay=google_pay";
-            document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + withoutEcranPaymentToken ;
+            document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + window.btoa(withoutEcranPaymentToken) ;
         }
 
         function loadGooglePayPlaton() {
