@@ -38,7 +38,7 @@
         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}"/>
     </form>
 
-    @php($descendants = $category->descendants)
+    @php($descendants = $category->children)
 
     <div class="main-container bgc-gray">
 
@@ -48,22 +48,48 @@
             @if($descendants->isNotEmpty())
                 <div class="row">
                     @foreach($descendants as $descendant)
-                        <div class="col-3">
-                            <div class="py-3 mb-3 bg-white">
-                                <a href="{{ route('site.resource', $descendant->slug) }}"
-                                   title="{{ $descendant->name }}">
-                                    <img src="{{ asset('images/no_img.jpg') }}"
-                                         data-src="{{ asset('storage/category/' . $descendant->ref . '.jpg')  }}"
-                                         class="img-data-path w-100 lazy"
-                                         alt="{{ $descendant->name }}">
-                                    <div class="pt-3 text-center">
-                                        {{ $descendant->name }}
-                                    </div>
-                                </a>
+                        @if($descendant->children->isEmpty())
+                            <div class="col-3">
+                                <div class="py-3 mb-3 bg-white">
+                                    <a href="{{ route('site.resource', $descendant->slug) }}"
+                                       title="{{ $descendant->name }}">
+                                        <img src="{{ asset('images/no_img.jpg') }}"
+                                             data-src="{{ asset('storage/category/' . $descendant->ref . '.jpg')  }}"
+                                             class="img-data-path w-100 lazy"
+                                             alt="{{ $descendant->name }}">
+                                        <div class="pt-3 text-center">
+                                            {{ $descendant->name }}
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     @endforeach
                 </div>
+
+                    @foreach($descendants as $descendant)
+                        @if($descendant->children->isNotEmpty())
+                            <p class="category-title">{{ $descendant->name }}</p>
+                            <div class="row">
+                            @foreach($descendant->children()->joinLocalization()->get() as $subChildren)
+                                <div class="col-3">
+                                    <div class="py-3 mb-3 bg-white">
+                                        <a href="{{ route('site.resource', $subChildren->slug) }}"
+                                           title="{{ $subChildren->name }}">
+                                            <img src="{{ asset('images/no_img.jpg') }}"
+                                                 data-src="{{ asset('storage/category/' . $subChildren->ref . '.jpg')  }}"
+                                                 class="img-data-path w-100 lazy"
+                                                 alt="{{ $subChildren->name }}">
+                                            <div class="pt-3 text-center">
+                                                {{ $subChildren->name }}
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            @endforeach
+                            </div>
+                        @endif
+                    @endforeach
             @else
                 @isset($category->parent_id)
                     <div class="row main__filter">

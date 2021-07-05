@@ -70,6 +70,13 @@ class Category extends Resource
         }]);
     }
 
+    public function scopeWithChildren($query)
+    {
+        return $query->with(['children' => function ($query) {
+            return $query->joinLocalization();
+        }]);
+    }
+
     public function product()
     {
         return $this->hasOne(Product::class, 'details->category_id', 'id')->where('details->published', 1);
