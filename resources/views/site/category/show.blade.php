@@ -49,7 +49,7 @@
                 <div class="row">
                     @foreach($descendants as $descendant)
                         @if($descendant->children->isEmpty())
-                            <div class="col-3">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="py-3 mb-3 bg-white">
                                     <a href="{{ route('site.resource', $descendant->slug) }}"
                                        title="{{ $descendant->name }}">
@@ -72,7 +72,7 @@
                             <p class="category-title">{{ $descendant->name }}</p>
                             <div class="row">
                             @foreach($descendant->children()->joinLocalization()->get() as $subChildren)
-                                <div class="col-3">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="py-3 mb-3 bg-white">
                                         <a href="{{ route('site.resource', $subChildren->slug) }}"
                                            title="{{ $subChildren->name }}">
