@@ -102,7 +102,7 @@
         // GOOGLE PAY API
         // Google version
         const baseRequest = {
-            environment : 'PRODUCTION',
+            environment : 'TEST',
             apiVersion: 2,
             apiVersionMinor: 0
         };
@@ -182,7 +182,7 @@
          */
         function getGooglePaymentsClient() {
             if ( paymentsClient === null ) {
-                paymentsClient = new google.payments.api.PaymentsClient({ environment: 'PRODUCTION' });
+                paymentsClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
             }
             return paymentsClient;
         }

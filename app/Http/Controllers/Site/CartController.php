@@ -354,7 +354,7 @@ class CartController
             // $orderData['price_sum'] += (int)$product['price'];
 
             // !!! TEST PAYMENT !!!
-            $orderData['price_sum'] = 1;
+            $orderData['price_sum'] = "1.00";
 
             Product::where('details->sku', $product['sku'])->update([
                 //'details->price' => $price,
