@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Orders;
+use App\OrderShipping;
+use App\PaymentOrder;
 use Illuminate\Console\Command;
 
 class SentOrders extends Command
@@ -103,7 +105,11 @@ class SentOrders extends Command
 //
 //            $order->save();
 
-            \App\Jobs\sentOrder::dispatch($order->id)->onQueue('checkout');
+            $orderShipping = OrderShipping::where('order_id', $order->id)->limit(1)->first();
+
+            if(!empty($orderShipping->payments_form)) $payment = PaymentOrder::where('order_id', $order->id)->where('status', 1)->limit(1)->first();
+
+            if(empty($orderShipping->payments_form) || !empty($payment)) \App\Jobs\sentOrder::dispatch($order->id)->onQueue('checkout');
 
         endforeach;
 

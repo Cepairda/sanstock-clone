@@ -361,6 +361,25 @@ class CartController
 
         endforeach;
 
+        if(!empty($orderData['payments_form'])) {
+
+            $this->createOrderPaymentMethodeRecord($newOrder->id, $orderData['payments_form']);
+//            $payment = new PaymentOrder;
+//
+//            $payment->order_id = $newOrder->id;
+//
+//            $payment->payment_method = $orderData['payments_form'];
+//
+//            $payment->attempts = 0;
+//
+//            $payment->details = json_encode([]);
+//
+//            $payment->status = 0;
+//
+//            $payment->save();
+        }
+
+
         //dd($products);
 
         $orderData['order_id'] = $newOrder->id;
@@ -637,13 +656,14 @@ info($paymentToken);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Access-Control-Allow-Origin: *'));
 
-        if($response = curl_exec($ch))
+        if(!($response = curl_exec($ch)))
         {
 //            info("*** Error *** : ApplePay Platon");
 //            info(curl_error($ch));
             $this->telegramMessage('PLATON CURL REQUEST ERROR', $order_id);
             $this->telegramMessage($ch, $order_id);
             $this->telegramMessage(curl_error($ch), $order_id);
+            $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, curl_error($ch));
             dd('{"GooglePay Platon error":"' . curl_error($ch) . '"}');
         }
 
@@ -653,7 +673,7 @@ info($paymentToken);
         $this->telegramMessage('PLATON CURL REQUEST SUCCESS', $order_id);
         $this->telegramMessage($response, $order_id);
 
-dd($response);
+dd(json_decode($response));
         return view('site.orders.googlePayFrame',
             $request
         );
@@ -790,21 +810,44 @@ dd($response);
      * @param bool $paid
      * @return RedirectResponse
      */
-    public function moveToSuccessCheckoutPage($order_id, $payment_method, $paid = true)
+    public function moveToSuccessCheckoutPage($order_id, $payment_method, $paid = true): RedirectResponse
     {
         if($paid) {
             // dd(session()->all());
             // $order = session('order');
+            $response = 'success';
 
-            $payment = new PaymentOrder;
+            $this->updatePaymentOrder($order_id, $payment_method, $response);
 
-            $payment->order_id = $order_id;
+//            $payment = PaymentOrder::where('order_id', $order_id)->where('payment_method', $payment_method)->limit(1)->first();
+//
+//            // $payment->order_id = $order_id;
+//            if(!empty($payment)) {
+//
+//                $details = json_decode($payment->details, true);
+//
+//                $payment->attempts = $payment->attempts + 1;
+//
+//                $details[$payment->attempts + 1] = $response;
+//
+//                $payment->details = json_encode($details);
+//
+//                $payment->status = 1;
+//
+//                $payment->save();
+//            }
+//            else {
+//
+//                $attempts = 1;
+//
+//                $paymentStatus = 1;
+//
+//                $details = [ 1 => $response ];
+//
+//                $this->createOrderPaymentMethodeRecord($order_id, $payment_method, $attempts, $details, $paymentStatus);
+//            }
 
-            $payment->payment_method = $payment_method;
-
-            $payment->status = 1;
-
-            $payment->save();
+            // $payment->payment_method = $payment_method;
 
             // session()->forget('order');
         }
@@ -814,6 +857,71 @@ dd($response);
         Cookie::queue(Cookie::forget('products_cart'));
 
         return Redirect::route('site.success-checkout')->with(['order_id' => $order_id, 'payment_method' => $payment_method ]);
+    }
+
+    /**
+     * Create record of payment attempt for order
+     * @param $order_id
+     * @param $payment_form
+     * @param int $attempts
+     * @param array $details
+     * @param int $status
+     * @return PaymentOrder
+     */
+    public function createOrderPaymentMethodeRecord($order_id, $payment_form, $attempts = 0, $details = [], $status = 0): PaymentOrder
+    {
+        $payment = new PaymentOrder;
+
+        $payment->order_id = $order_id;
+
+        $payment->payment_method = $payment_form;
+
+        $payment->attempts = $attempts;
+
+        $payment->details = json_encode($details);
+
+        $payment->status = $status;
+
+        $payment->save();
+
+        return $payment;
+    }
+
+    /**
+     * Create or update payment order attempt
+     * @param $order_id
+     * @param $payment_method
+     * @param string $response
+     */
+    public function updatePaymentOrder($order_id, $payment_method, $response = 'success') {
+
+        $payment = PaymentOrder::where('order_id', $order_id)->where('payment_method', $payment_method)->limit(1)->first();
+
+        // $payment->order_id = $order_id;
+        if(!empty($payment)) {
+
+            $details = json_decode($payment->details, true);
+
+            $payment->attempts = $payment->attempts + 1;
+
+            $details[$payment->attempts + 1] = $response;
+
+            $payment->details = json_encode($details);
+
+            $payment->status = 1;
+
+            $payment->save();
+        }
+        else {
+
+            $attempts = 1;
+
+            $paymentStatus = 1;
+
+            $details = [ 1 => $response ];
+
+            $this->createOrderPaymentMethodeRecord($order_id, $payment_method, $attempts, $details, $paymentStatus);
+        }
     }
 
     /**

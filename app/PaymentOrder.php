@@ -12,6 +12,8 @@ class PaymentOrder extends Model
         'order_id',
         'payment_method',
         'status',
+        'attempts',
+        'details'
     ];
 
     public $timestamps = true;
