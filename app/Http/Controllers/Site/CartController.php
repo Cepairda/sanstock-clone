@@ -580,13 +580,15 @@ class CartController
 //
 //        $paymentToken = json_encode($dataPaymentToken);
         $paymentToken = base64_decode($paymentToken);
-        $this->telegramMessage($paymentToken);
+
 
 info('!!! ****************** Payment token Google Pay ******************** !!!');
 info($paymentToken);
 
 
         $order = $this->getCookieOrder();
+        $order_id = $order['data']['order_id'];
+        $this->telegramMessage($paymentToken, $order_id);
         info($order);
         // $paymentToken = preg_replace('/\\"/', '"', $paymentToken);
 
@@ -599,7 +601,7 @@ info($paymentToken);
         $CLIENT_PASS = $pass;
         $data['action'] = 'GOOGLEPAY';
         $data['CLIENT_KEY'] = $key;
-        $data['order_id'] = 'GooglePay-' . $order['data']['order_id'];
+        $data['order_id'] = 'GooglePay-' . $order_id;
         $data['order_amount'] = $amount;
         $data['order_currency'] = 'UAH';
         $data['order_description'] = 'test';
@@ -626,7 +628,7 @@ info($paymentToken);
             'hash' => $hash
         ];
 
-        // $this->telegramMessage($request);
+        // $this->telegramMessage($request, $order_id);
 
         $ch = curl_init();
 
@@ -635,20 +637,21 @@ info($paymentToken);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Access-Control-Allow-Origin: *'));
 
-        if($response = curl_exec($ch) === false)
+        if($response = curl_exec($ch))
         {
 //            info("*** Error *** : ApplePay Platon");
 //            info(curl_error($ch));
-            $this->telegramMessage('ERROR');
-            $this->telegramMessage(curl_error($ch));
-            dd('{"ApplePay Platon error":"' . curl_error($ch) . '"}');
+            $this->telegramMessage('PLATON CURL REQUEST ERROR', $order_id);
+            $this->telegramMessage($ch, $order_id);
+            $this->telegramMessage(curl_error($ch), $order_id);
+            dd('{"GooglePay Platon error":"' . curl_error($ch) . '"}');
         }
 
         // close cURL resource, and free up system resources
         curl_close($ch);
 
-        $this->telegramMessage('SUCCESS');
-        $this->telegramMessage($response);
+        $this->telegramMessage('PLATON CURL REQUEST SUCCESS', $order_id);
+        $this->telegramMessage($response, $order_id);
 
 dd($response);
         return view('site.orders.googlePayFrame',
@@ -1119,9 +1122,9 @@ dd($response);
     }
 
 
-    function telegramMessage($text)
+    function telegramMessage($text, $order_id)
     {
-        $message = "Date: " . date("d.m.Y, H:i:s") . "\n\n" . ((is_array($text)) ? json_encode($text) : $text);
+        $message = "Date: " . date("d.m.Y, H:i:s") . "\norder_id: $order_id\n\n" . ((is_array($text)) ? json_encode($text) : $text);
 
         $ch = curl_init();
 
