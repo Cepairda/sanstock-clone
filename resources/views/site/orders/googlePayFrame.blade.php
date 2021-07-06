@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Payment</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    @php(header('Access-Control-Allow-Origin: *'))
 </head>
 <body >
 <form id="myForm" action="https://secure.platononline.com/post/" method="post">
