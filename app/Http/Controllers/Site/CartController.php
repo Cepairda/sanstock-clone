@@ -351,7 +351,10 @@ class CartController
 
             $products[$product['sku']] = $product['quantity'];
 
-            $orderData['price_sum'] += (int)$product['price'];
+            // $orderData['price_sum'] += (int)$product['price'];
+
+            // !!! TEST PAYMENT !!!
+            $orderData['price_sum'] = 1;
 
             Product::where('details->sku', $product['sku'])->update([
                 //'details->price' => $price,
@@ -360,6 +363,25 @@ class CartController
             ]);
 
         endforeach;
+
+        if(!empty($orderData['payments_form'])) {
+
+            $this->createOrderPaymentMethodeRecord($newOrder->id, $orderData['payments_form'], 0, $orderData['payments_form']);
+//            $payment = new PaymentOrder;
+//
+//            $payment->order_id = $newOrder->id;
+//
+//            $payment->payment_method = $orderData['payments_form'];
+//
+//            $payment->attempts = 0;
+//
+//            $payment->details = json_encode([]);
+//
+//            $payment->status = 0;
+//
+//            $payment->save();
+        }
+
 
         //dd($products);
 
@@ -528,7 +550,7 @@ class CartController
             'sign' => $sign
         ];
 
-        $this->telegramMessage($request);
+        $this->telegramMessage($request, $order_id, "PLATON REQUEST BANK CARD");
 
         return $request;
     }
@@ -542,8 +564,6 @@ class CartController
 
     /**
      * Create request for google pay
-     * @param $order_id
-     * @param $amount
      * @return array|Application|Factory|View
      */
     public function requestGooglePay()
@@ -551,45 +571,11 @@ class CartController
         $paymentToken = request()->get('paymentToken');
         if(empty($paymentToken)) return redirect()->route('site.cart');
 
-
-        // Удаление управляющих символов
-//        for ($i = 0; $i <= 31; ++$i) {
-//            $paymentToken = str_replace(chr($i), '', $paymentToken);
-//        }
-//
-//        // Удаление символа Delete
-//        $paymentToken = str_replace(chr(127), '', $paymentToken);
-//
-//        // Удаление BOM
-//        if (0 === strpos(bin2hex($paymentToken), 'efbbbf')) {
-//            $paymentToken = substr($paymentToken, 3);
-//        }
-
-//         $paymentToken = str_replace("\\", "\\\\", $paymentToken);
-         $paymentToken = preg_replace('/\s+/', '', $paymentToken);
-//         $paymentToken = str_replace(array("\r\n", "\n", "\r", " "), "", $paymentToken);
-//        $paymentToken = json_decode($paymentToken, true);
-//
-//        $dataPaymentToken = [];
-//        $dataPaymentToken['signature'] = $paymentToken['signature'];
-//        $dataPaymentToken['intermediateSigningKey'] = [];
-//        $dataPaymentToken['intermediateSigningKey']['signedKey'] = json_encode($paymentToken['intermediateSigningKey']['signedKey']);
-//        $dataPaymentToken['intermediateSigningKey']['signatures'] = $paymentToken['intermediateSigningKey']['signatures'];
-//        $dataPaymentToken['protocolVersion'] = $paymentToken['protocolVersion'];
-//        $dataPaymentToken['signedMessage'] = json_encode($paymentToken['signedMessage']);
-//
-//        $paymentToken = json_encode($dataPaymentToken);
-
-        $this->telegramMessage($paymentToken);
-
-info('!!! ****************** Payment token Google Pay ******************** !!!');
-info($paymentToken);
-
+        $paymentToken = base64_decode($paymentToken);
 
         $order = $this->getCookieOrder();
-        info($order);
-        // $paymentToken = preg_replace('/\\"/', '"', $paymentToken);
-
+        $order_id = $order['data']['order_id'];
+        $this->telegramMessage($paymentToken, $order_id, 'GOOGLE PAY TOKEN');
 
         $amount = number_format($order['data']['price_sum'], 2, '.', '');
 
@@ -599,7 +585,7 @@ info($paymentToken);
         $CLIENT_PASS = $pass;
         $data['action'] = 'GOOGLEPAY';
         $data['CLIENT_KEY'] = $key;
-        $data['order_id'] = 'GooglePay-' . $order['data']['order_id'];
+        $data['order_id'] = 'GooglePay-' . $order_id;
         $data['order_amount'] = $amount;
         $data['order_currency'] = 'UAH';
         $data['order_description'] = 'test';
@@ -617,17 +603,54 @@ info($paymentToken);
                 )
             )
         );
-        info($data);
+        // info($data);
+        $data['client_key'] = $data['CLIENT_KEY'];
+        $data['hash'] = $hash;
+
         $request = [
             'data' => $data,
             'hash' => $hash
         ];
 
-        // $this->telegramMessage($request);
+        $ch = curl_init();
 
-        return view('site.orders.googlePayFrame',
-            $request
-        );
+        curl_setopt($ch, CURLOPT_URL, "https://secure.platononline.com/post/");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Access-Control-Allow-Origin: *'));
+
+        if(!($response = curl_exec($ch)))
+        {
+            $this->telegramMessage(curl_error($ch), $order_id, 'PLATON CURL REQUEST ERROR');
+            $this->telegramMessage($ch, $order_id);
+
+            $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, curl_error($ch));
+            return Redirect::route('site.order-checkout')->withErrors([
+                'error'=>'Во время инициализации платежа произошла ошибка! Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
+        }
+
+        curl_close($ch);
+
+        $this->telegramMessage($response, $order_id, 'PLATON CURL REQUEST SUCCESS');
+
+        $responseArr = json_decode($response, true);
+
+        if(isset($responseArr["result"]) && $responseArr["result"] === "SUCCESS") {
+            // успешный платеж
+            $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, $response);
+
+            return $this->moveToSuccessCheckoutPage($order_id, self::GOOGLE_PAY, false);
+
+        } else {
+
+            $this->telegramMessage($response, $order_id, 'PLATON CURL REQUEST DECLINED');
+            // неудачный платеж
+            $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, $response, 0);
+
+            return Redirect::route('site.order-checkout')->withErrors([
+                'error'=>'Не удалось выполнить транзакцию платежа. Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
+        }
     }
 
     /**
@@ -761,23 +784,13 @@ info($paymentToken);
      * @param bool $paid
      * @return RedirectResponse
      */
-    public function moveToSuccessCheckoutPage($order_id, $payment_method, $paid = true)
+    public function moveToSuccessCheckoutPage($order_id, $payment_method, $paid = true): RedirectResponse
     {
         if($paid) {
-            // dd(session()->all());
-            // $order = session('order');
 
-            $payment = new PaymentOrder;
+            $response = 'success';
 
-            $payment->order_id = $order_id;
-
-            $payment->payment_method = $payment_method;
-
-            $payment->status = 1;
-
-            $payment->save();
-
-            // session()->forget('order');
+            $this->updatePaymentOrder($order_id, $payment_method, $response);
         }
 
         \App\Jobs\sentOrder::dispatch($order_id)->onQueue('checkout');
@@ -785,6 +798,73 @@ info($paymentToken);
         Cookie::queue(Cookie::forget('products_cart'));
 
         return Redirect::route('site.success-checkout')->with(['order_id' => $order_id, 'payment_method' => $payment_method ]);
+    }
+
+    /**
+     * Create record of payment attempt for order
+     * @param $order_id
+     * @param $payment_form
+     * @param int $attempts
+     * @param array $details
+     * @param int $status
+     * @return PaymentOrder
+     */
+    public function createOrderPaymentMethodeRecord($order_id, $payment_form, $attempts = 0, $details = [], $status = 0): PaymentOrder
+    {
+        $payment = new PaymentOrder;
+
+        $payment->order_id = $order_id;
+
+        $payment->payment_method = $payment_form;
+
+        $payment->attempts = $attempts;
+
+        $payment->details = $details;
+
+        $payment->status = $status;
+
+        $payment->save();
+
+        return $payment;
+    }
+
+    /**
+     * Create or update payment order attempt
+     * @param $order_id
+     * @param $payment_method
+     * @param string $response
+     * @param int $status
+     */
+    public function updatePaymentOrder($order_id, $payment_method, $response = 'success', $status = 1) {
+
+        $payment = PaymentOrder::where('order_id', $order_id)->where('payment_method', $payment_method)->limit(1)->first();
+
+        // $payment->order_id = $order_id;
+        if(!empty($payment)) {
+
+            if($payment->status !== 1) {
+
+                $details = json_decode($payment->details, true);
+
+                $payment->attempts = $payment->attempts + 1;
+
+                $details[$payment->attempts + 1] = $response;
+
+                $payment->details = $details;
+
+                $payment->status = $status;
+
+                $payment->save();
+            }
+        }
+        else {
+
+            $attempts = 1;
+
+            $details = [ 1 => $response ];
+
+            $this->createOrderPaymentMethodeRecord($order_id, $payment_method, $attempts, $details, $status);
+        }
     }
 
     /**
@@ -1093,9 +1173,11 @@ info($paymentToken);
     }
 
 
-    function telegramMessage($text)
+    function telegramMessage($text, $order_id, $title = '')
     {
-        $message = "Date: " . date("d.m.Y, H:i:s") . "\n\n" . ((is_array($text)) ? json_encode($text) : $text);
+        if(!empty($title)) $title = "$title\n\n";
+
+        $message = "Date: " . date("d.m.Y, H:i:s") . "\norder_id: $order_id\n\n$title" . ((is_array($text)) ? json_encode($text) : $text);
 
         $ch = curl_init();
 
