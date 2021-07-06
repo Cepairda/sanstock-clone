@@ -42,6 +42,13 @@
 
                     <div class="main__contacts-form">
 
+
+                        @if($errors->has('error'))
+
+                            <div class="text-danger">{{ $errors->first('error') }}</div>
+
+                        @endif
+
                         <form action="{{ route('site.checkout') }}" method="POST">
 
                             {{ csrf_field() }}
