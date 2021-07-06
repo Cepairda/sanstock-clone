@@ -652,6 +652,7 @@ info($paymentToken);
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, "https://secure.platononline.com/post/");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Access-Control-Allow-Origin: *'));
@@ -672,7 +673,7 @@ info($paymentToken);
 
         $this->telegramMessage('PLATON CURL REQUEST SUCCESS', $order_id);
         $this->telegramMessage($response, $order_id);
-
+        // $response->getContent()
 dd(json_decode($response));
         return view('site.orders.googlePayFrame',
             $request
