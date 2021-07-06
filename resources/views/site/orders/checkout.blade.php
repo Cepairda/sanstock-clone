@@ -45,7 +45,7 @@
 
                         @if($errors->has('error'))
 
-                            <div class="text-danger">{{ $errors->first('error') }}</div>
+                            <div class="text-danger text-center">{{ $errors->first('error') }}</div>
 
                         @endif
 

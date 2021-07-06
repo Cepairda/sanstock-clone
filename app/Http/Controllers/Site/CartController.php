@@ -351,7 +351,10 @@ class CartController
 
             $products[$product['sku']] = $product['quantity'];
 
-            $orderData['price_sum'] += (int)$product['price'];
+            // $orderData['price_sum'] += (int)$product['price'];
+
+            // !!! TEST PAYMENT !!!
+            $orderData['price_sum'] = 1;
 
             Product::where('details->sku', $product['sku'])->update([
                 //'details->price' => $price,
@@ -547,7 +550,7 @@ class CartController
             'sign' => $sign
         ];
 
-        $this->telegramMessage($request);
+        $this->telegramMessage($request, $order_id, "PLATON REQUEST BANK CARD");
 
         return $request;
     }
@@ -625,7 +628,6 @@ class CartController
             $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, curl_error($ch));
             return Redirect::route('site.order-checkout')->withErrors([
                 'error'=>'Во время инициализации платежа произошла ошибка! Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
-            // dd('{"GooglePay Platon error":"' . curl_error($ch) . '"}');
         }
 
         curl_close($ch);
@@ -649,12 +651,6 @@ class CartController
             return Redirect::route('site.order-checkout')->withErrors([
                 'error'=>'Не удалось выполнить транзакцию платежа. Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
         }
-
-//        dd(json_decode($response, true));
-//
-//        return view('site.orders.googlePayFrame',
-//            $request
-//        );
     }
 
     /**
@@ -823,7 +819,7 @@ class CartController
 
         $payment->attempts = $attempts;
 
-        $payment->details = json_encode($details);
+        $payment->details = $details;
 
         $payment->status = $status;
 
@@ -854,7 +850,7 @@ class CartController
 
                 $details[$payment->attempts + 1] = $response;
 
-                $payment->details = json_encode($details);
+                $payment->details = $details;
 
                 $payment->status = $status;
 

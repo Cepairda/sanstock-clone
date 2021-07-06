@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="col-8">
-                    <div class="main__contacts-form">
+                    <div class="main__contacts-form mb-2">
 
                         @foreach($paymentMethods as $key => $paymentMethod)
 
@@ -67,7 +67,7 @@
                         @endforeach
                     </div>
 
-                    <div id="frame-container" class="main__contacts-form @if($payment_method !== 'bank_card') d-none @endif" style="height: 980px">
+                    <div id="frame-container" class="main__contacts-form @if($payment_method !== 'bank_card') d-none @endif" style="height: 1040px">
 
                         <div style="width:100%; height:100%; margin:0 auto;">
                             <iframe src="" seamless name="frame" id="frame" width="100%" height="100%" frameborder="0" scrolling="no" style="overflow: hidden;"></iframe>
@@ -102,7 +102,7 @@
         // GOOGLE PAY API
         // Google version
         const baseRequest = {
-            environment : 'TEST',
+            environment : 'PRODUCTION',
             apiVersion: 2,
             apiVersionMinor: 0
         };
@@ -182,7 +182,7 @@
          */
         function getGooglePaymentsClient() {
             if ( paymentsClient === null ) {
-                paymentsClient = new google.payments.api.PaymentsClient({environment: 'TEST'});
+                paymentsClient = new google.payments.api.PaymentsClient({ environment: 'PRODUCTION' });
             }
             return paymentsClient;
         }
