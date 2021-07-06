@@ -551,7 +551,7 @@ class CartController
         $paymentToken = request()->get('paymentToken');
         if(empty($paymentToken)) return redirect()->route('site.cart');
 
-        $this->telegramMessage($paymentToken);
+
         // Удаление управляющих символов
 //        for ($i = 0; $i <= 31; ++$i) {
 //            $paymentToken = str_replace(chr($i), '', $paymentToken);
@@ -617,7 +617,10 @@ info($paymentToken);
                 )
             )
         );
-        info($data);
+        // info($data);
+        $data['client_key'] = $data['CLIENT_KEY'];
+        $data['hash'] = $hash;
+
         $request = [
             'data' => $data,
             'hash' => $hash
@@ -625,6 +628,29 @@ info($paymentToken);
 
         // $this->telegramMessage($request);
 
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, "https://secure.platononline.com/post/");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Access-Control-Allow-Origin: *'));
+
+        if($response = curl_exec($ch) === false)
+        {
+//            info("*** Error *** : ApplePay Platon");
+//            info(curl_error($ch));
+            $this->telegramMessage('ERROR');
+            $this->telegramMessage(curl_error($ch));
+            dd('{"ApplePay Platon error":"' . curl_error($ch) . '"}');
+        }
+
+        // close cURL resource, and free up system resources
+        curl_close($ch);
+
+        $this->telegramMessage('SUCCESS');
+        $this->telegramMessage($response);
+
+dd($response);
         return view('site.orders.googlePayFrame',
             $request
         );
