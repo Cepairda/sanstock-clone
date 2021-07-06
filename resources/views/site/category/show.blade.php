@@ -134,6 +134,11 @@
                                 <div class="col-sm-12 nav-pages">
                                     <nav aria-label="Page navigation">
                                         {{--{!! $productsSort->links('site.components.pagination') !!}--}}
+                                        <!-- Pagination-->
+                                            <section class="section-sm">
+                                                <!-- Classic Pagination-->
+                                                {!! $productsSort->links() !!}
+                                            </section>
                                     </nav>
                                 </div>
                             </main>

@@ -15,6 +15,7 @@ class PriceImport
     public const DEFAULT_API_URL = 'https://b2b-sandi.com.ua/api/products?token=368dbc0bf4008db706576eb624e14abf&only_defectives=1';
 
     /**
+     * @param TelegramBot $bot
      * @param int|null $ids
      *
      * @return void
@@ -54,7 +55,6 @@ class PriceImport
      */
     public static function import(array $jsonData, array $skuArray = null) : void
     {
-        //try {
             $skuExistsAPI = [];
 
             foreach ($jsonData['data'] as $sku => [
@@ -80,11 +80,6 @@ class PriceImport
             foreach ($missingSkuInApi as $sku) {
                 self::updateBalance($sku, 0);
             }
-
-
-        //} catch (\Exception $e) {
-
-        //}
     }
 
     protected static function updateBalance($sku, $balance)

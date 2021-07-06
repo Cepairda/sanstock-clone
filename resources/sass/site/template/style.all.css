@@ -994,13 +994,14 @@ body .container-gap-sm {
     font-family: Open Sans Bold, sans-serif;
     font-size: 15px;
     color: #000000;
-    border: none;
+    border: 1px solid #dee2e6;
     background-color: transparent;
 }
 
 .page-item.active .page-link {
     background-color: transparent;
     color: #9d9d9c;
+    border-color: #b9b9b9;
 }
 
 .page-link:focus {

@@ -59,7 +59,7 @@ class ResourceController extends Controller
 
                 break;
             case 'category':
-                $category = $resource->type::joinLocalization()->withAncestors()->withDescendants()->withChildren()->whereId($resource->id)->firstOrFail();
+                $category = $resource->type::joinLocalization()->withAncestors()->withChildren()->whereId($resource->id)->firstOrFail();
                 $productGroupBase = ProductGroup::where('details->category_id', $category->getDetails('ref'))->get();
                 $productGroup = $productGroupBase->keyBy('details->sd_code')->keys();
                 $productGroupKeys = $productGroupBase->keyBy('id')->keys();
@@ -92,10 +92,6 @@ class ResourceController extends Controller
                 $valuesForView = [];
 
                 foreach ($characteristicsValue as $value) {
-                    /*if (!isset($valuesForView[$value->getDetails('characteristic_id')])) {
-                        $valuesForView[$value->attribute_id] = [];
-                        $a = $value->attribute_id;
-                    }*/
                     if (!empty($value->value)) {
                         $valuesForView[$value->getDetails('characteristic_id')][] = $value;
                     }
@@ -105,7 +101,6 @@ class ResourceController extends Controller
                  * Sorting Characteristics Values
                  */
                 foreach ($valuesForView as $cId => &$cValues) {
-                    //sort($cValues);
                     usort($cValues, function ($a, $b) {
                         $first = str_replace(',', '.', $a->value);
                         $second = str_replace(',', '.', $b->value);
@@ -123,8 +118,6 @@ class ResourceController extends Controller
                 $productsSort = $productsSort->joinLocalization()
                     ->withProductGroup()
                     ->withNotShowProductsBalanceZero();
-                    //->withIcons()
-                    //->withCategory();
 
                 $productsTotal = $productsSort->count();
 
@@ -190,8 +183,6 @@ class ResourceController extends Controller
                         'slug' => $slug,
                         'page' => ($pageNumber + 1)
                     ];
-
-                    //dd($showMore);
                 }
 
                 if (isset($parameters['showMore'])) {

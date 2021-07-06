@@ -109,8 +109,6 @@ class CategoryB2BImport
             $category = new Category();
         }
 
-        //$sort = Category::max('details->sort');
-
         /**
          * If this is the root category, we must trim the numbers
          * otherwise no change
