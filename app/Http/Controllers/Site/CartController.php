@@ -517,7 +517,7 @@ class CartController
         $data['order_description'] = "Google Pay order payment. Order ID: $order_id";
         $data['payment_token'] = $paymentToken;
         $data['payer_email'] = '';
-        $data['term_url_3ds'] = 'http://google.com';
+        $data['term_url_3ds'] = route('site.google-pay-success');
         $hash = md5(
             strtoupper(
                 strrev(
@@ -628,6 +628,21 @@ class CartController
 //            return Redirect::route('site.order-checkout')->withErrors([
 //                'error'=>'Не удалось выполнить транзакцию платежа. Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
         }
+    }
+
+    public function googlePayTransactionSuccess(Request $request) {
+
+        $response = $request->all();
+
+        $order = $this->getCookieOrder();
+
+        $order_id = $order['data']['order_id'];
+        // успешный платеж
+        $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, $response);
+
+        $this->telegramMessage($response, $order_id, 'PLATON GOOGLE PAY SALE SUCCESS');
+
+        return $this->moveToSuccessCheckoutPage($order_id, self::GOOGLE_PAY, false);
     }
 
     /**
