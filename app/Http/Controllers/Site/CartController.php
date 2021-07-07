@@ -625,8 +625,8 @@ class CartController
             // неудачный платеж
             $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, $response, 0);
 
-            return Redirect::route('site.order-checkout')->withErrors([
-                'error'=>'Не удалось выполнить транзакцию платежа. Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
+//            return Redirect::route('site.order-checkout')->withErrors([
+//                'error'=>'Не удалось выполнить транзакцию платежа. Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
         }
     }
 
