@@ -303,8 +303,6 @@ class CartController
 
         if(!empty($orderData['payments_form'])) {
 
-            $this->telegramMessage($orderData, $newOrder->id, "NEW ORDER WITHOUT PAYMENT");
-
             $this->createOrderPaymentMethodeRecord($newOrder->id, $orderData['payments_form'], 0, $orderData['payments_form']);
         }
 
@@ -324,8 +322,11 @@ class CartController
         // $this->sentOrderToB2B($order);
         // dd($order);
         if(!empty($shipping['payments_form'])) {
+
             return Redirect::route('site.payment');
         }
+
+        $this->telegramMessage($order, $newOrder->id, "NEW ORDER WITHOUT PAYMENT");
 
         return $this->moveToSuccessCheckoutPage($orderData['order_id'], $shipping['payments_form'], false);
     }
@@ -550,7 +551,7 @@ class CartController
             $this->telegramMessage(curl_error($ch), $order_id, 'PLATON CURL REQUEST ERROR');
             $this->telegramMessage($ch, $order_id);
 
-            $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, curl_error($ch));
+            $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, curl_error($ch), 0);
             return Redirect::route('site.order-checkout')->withErrors([
                 'error'=>'Во время инициализации платежа произошла ошибка! Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
         }
@@ -559,17 +560,60 @@ class CartController
 
         $responseArr = json_decode($response, true);
 
-        if(isset($responseArr["result"]) && $responseArr["result"] === "SUCCESS") {
+        if(isset($responseArr["result"]) && $responseArr["result"] === "REDIRECT" && $responseArr["result"] === "3DS") {
+
+            $this->telegramMessage($response, $order_id, 'PLATON GET 3DS REDIRECT');
+
+            return $this->googlePayRedirect3DS($responseArr['redirect_url'], $responseArr['redirect_params'], $order_id);
+        }
+        else {
+
+            $this->telegramMessage($response, $order_id, 'PLATON CURL GOOGLE PAY REQUEST DECLINED');
+            // неудачный платеж
+            $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, $response, 0);
+
+            return Redirect::route('site.order-checkout')->withErrors([
+                'error'=>'Не удалось выполнить транзакцию платежа. Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
+        }
+    }
+
+    public function googlePayRedirect3DS($url, $params, $order_id) {
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Access-Control-Allow-Origin: *'));
+
+        if(!($response = curl_exec($ch)))
+        {
+            $this->telegramMessage(curl_error($ch), $order_id, 'GOOGLE PAY REDIRECT 3DS CURL ERROR');
+            $this->telegramMessage($ch, $order_id);
+
+            $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, curl_error($ch), 0);
+
+            return Redirect::route('site.order-checkout')->withErrors([
+                'error'=>'Во время инициализации платежа произошла ошибка! Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
+        }
+
+        curl_close($ch);
+
+        $responseArr = json_decode($response, true);
+
+        if(isset($responseArr["result"]) && $responseArr["result"] === "SUCCESS" && isset($responseArr["action"]) && $responseArr["action"] === "SALE") {
             // успешный платеж
             $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, $response);
 
-            $this->telegramMessage($response, $order_id, 'PLATON CURL REQUEST SUCCESS');
+            $this->telegramMessage($response, $order_id, 'PLATON GOOGLE PAY SALE SUCCESS');
 
             return $this->moveToSuccessCheckoutPage($order_id, self::GOOGLE_PAY, false);
 
-        } else {
+        }
+        else {
 
-            $this->telegramMessage($response, $order_id, 'PLATON CURL REQUEST DECLINED');
+            $this->telegramMessage($response, $order_id, 'GOOGLE PAY REDIRECT 3DS SALE DECLINED');
             // неудачный платеж
             $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, $response, 0);
 
