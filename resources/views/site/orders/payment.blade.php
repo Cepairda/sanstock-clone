@@ -621,13 +621,16 @@
         }
 
        //let oldDoc = document.getElementById('frame').contentDocument;
-
+        let oldDoc = {};
         // каждый 100 мс проверяем, не изменился ли документ
         let timer = setInterval(() => {
             let iframe = document.getElementById('frame');
             if(iframe !== null) {
                 let newDoc = iframe.contentDocument;
-                console.log(newDoc);
+                if(oldDoc !== newDoc) {
+                    console.log(newDoc);
+                    oldDoc = newDoc;
+                }
                 //if (newDoc == oldDoc) return;
 
                 // alert("New document is here!");
