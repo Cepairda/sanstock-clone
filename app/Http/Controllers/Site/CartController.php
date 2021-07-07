@@ -564,7 +564,15 @@ class CartController
 
             $this->telegramMessage($response, $order_id, 'PLATON GET 3DS REDIRECT');
 
-            return $this->googlePayRedirect3DS($responseArr['redirect_url'], $responseArr['redirect_params'], $order_id);
+            return view('site.orders.googlePay3DSredirect', [
+                'data' => [
+                    'PaReq' => $responseArr['redirect_params']['PaReq'],
+                    'TermUrl' => $responseArr['redirect_params']['TermUrl'],
+                ],
+                'redirect_url' => $responseArr['redirect_url']
+            ]);
+
+            // return $this->googlePayRedirect3DS($responseArr['redirect_url'], $responseArr['redirect_params'], $order_id);
         }
         else {
 
