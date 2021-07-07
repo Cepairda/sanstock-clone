@@ -560,7 +560,7 @@ class CartController
 
         $responseArr = json_decode($response, true);
 
-        if(isset($responseArr["result"]) && $responseArr["result"] === "REDIRECT" && $responseArr["result"] === "3DS") {
+        if(isset($responseArr["result"]) && $responseArr["result"] === "REDIRECT" && $responseArr["status"] === "3DS") {
 
             $this->telegramMessage($response, $order_id, 'PLATON GET 3DS REDIRECT');
 
