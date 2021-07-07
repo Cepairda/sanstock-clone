@@ -102,7 +102,7 @@
         // GOOGLE PAY API
         // Google version
         const baseRequest = {
-            environment : 'TEST',
+            environment : 'PRODUCTION',
             apiVersion: 2,
             apiVersionMinor: 0
         };
@@ -182,7 +182,7 @@
          */
         function getGooglePaymentsClient() {
             if ( paymentsClient === null ) {
-                paymentsClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
+                paymentsClient = new google.payments.api.PaymentsClient({ environment: 'PRODUCTION' });
             }
             return paymentsClient;
         }
@@ -619,6 +619,23 @@
                 }
             }, false);
         }
+
+       //let oldDoc = document.getElementById('frame').contentDocument;
+
+        // каждый 100 мс проверяем, не изменился ли документ
+        let timer = setInterval(() => {
+            let iframe = document.getElementById('frame');
+            if(iframe !== null) {
+                let newDoc = iframe.contentDocument;
+                console.log(newDoc);
+                //if (newDoc == oldDoc) return;
+
+                // alert("New document is here!");
+
+                // clearInterval(timer); // отключим setInterval, он нам больше не нужен
+            }
+
+        }, 100);
 
     </script>
 

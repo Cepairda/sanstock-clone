@@ -148,41 +148,8 @@ class CartController
             $rules['new_mail_city'] = 'required|size:36';
         }
 
-        //dd($this->is_employee);
-
-
-//        if($request->input['new_mail_non_cash_payment'] === 1) {
-//
-//            $rules['new_mail_company_name'] = 'required';
-//
-//            $rules['new_mail_company_email'] = 'required|regex:/.+@.+\..+/i';
-//
-//            $rules['new_mail_company_user_surname'] = 'required';
-//
-//            $rules['new_mail_company_user_name'] = 'required';
-//
-//            $rules['new_mail_company_user_patronymic'] = 'required';
-//
-//            $rules['new_mail_company_phone'] = 'required|regex:/\d+\+\-/i';
-//
-//            $rules['new_mail_company_address'] = 'required|regex:/.+@.+\..+/i';
-//
-//        } else {
-//
-//            if($request->input['new_mail_payment_type'] === 'yes') {
-//
-//                $rules['new_mail_payment_sum'] = 'required|numeric';
-//            }
-//        }
-
-//        if($request->input['new_mail_delivery_type'] === 'storage_door') {
-//
-//            $rules['new_mail_house'] = 'required';
-//        }
-        //dd('************');
-
         $shipping = [];
-//dd($request->new_mail_surname);
+
         $shipping['new_mail_surname'] = $request->new_mail_surname ?? '';
 
         $shipping['new_mail_name'] = $request->new_mail_name ?? '';
@@ -215,29 +182,7 @@ class CartController
         $shipping['employee_region'] = (!empty($this->is_employee) && !empty($request->employee_region) && isset(config('regions')[$request->employee_region]))
             ? config('regions')[$request->employee_region] : '' ;
 
-        //$orderData = [];
-
-//        $orderData['new_mail_surname'] = $shipping['new_mail_surname'];
-//
-//        $orderData['new_mail_name'] = $shipping['new_mail_name'];
-//
-//        $orderData['new_mail_patronymic'] = $shipping['new_mail_patronymic'];
-//
-//        $orderData['new_mail_phone'] = $shipping['new_mail_phone'];
-//
-//        $orderData['new_mail_region'] = $shipping['new_mail_region'];
-//
-//        $orderData['new_mail_city'] = $shipping['new_mail_city'];
-//
-//        $orderData['new_mail_comment'] = $shipping['new_mail_comment'];
-//
-//        $orderData['new_mail_delivery_type'] = $shipping['new_mail_delivery_type'];
-//
-//        $orderData['payments_form'] = $shipping['payments_form'];
-
         if($shipping['new_mail_delivery_type'] === 'storage_storage') {
-
-//            $orderData['new_mail_warehouse'] = $shipping['new_mail_warehouse'];
 
             $shipping['new_mail_street'] = '';
 
@@ -248,12 +193,6 @@ class CartController
             if(empty($this->is_employee)) $rules['new_mail_warehouse'] = 'required|size:36';
 
         } else {
-
-//            $orderData['new_mail_street'] = $shipping['new_mail_street'];
-//
-//            $orderData['new_mail_house'] = $shipping['new_mail_house'];
-//
-//            $orderData['new_mail_apartment'] = $shipping['new_mail_apartment'];
 
             $shipping['new_mail_warehouse'] = '';
 
@@ -357,8 +296,6 @@ class CartController
             $orderData['price_sum'] = "1.00";
 
             Product::where('details->sku', $product['sku'])->update([
-                //'details->price' => $price,
-                //'details->old_price' => $oldPrice,
                 'details->balance' => 0
             ]);
 
@@ -366,24 +303,10 @@ class CartController
 
         if(!empty($orderData['payments_form'])) {
 
+            $this->telegramMessage($orderData, $newOrder->id, "NEW ORDER WITHOUT PAYMENT");
+
             $this->createOrderPaymentMethodeRecord($newOrder->id, $orderData['payments_form'], 0, $orderData['payments_form']);
-//            $payment = new PaymentOrder;
-//
-//            $payment->order_id = $newOrder->id;
-//
-//            $payment->payment_method = $orderData['payments_form'];
-//
-//            $payment->attempts = 0;
-//
-//            $payment->details = json_encode([]);
-//
-//            $payment->status = 0;
-//
-//            $payment->save();
         }
-
-
-        //dd($products);
 
         $orderData['order_id'] = $newOrder->id;
 
@@ -391,6 +314,8 @@ class CartController
             'order' => $products,
             'data' => $orderData,
         ];
+
+        $this->telegramMessage($order, $newOrder->id, "NEW ORDER WITH PAYMENT");
 
         //Cookie::queue('order', $order, 60);
         session(['order' => $order]);
@@ -521,7 +446,7 @@ class CartController
             json_encode(
                 array(
                     'amount' => $amount,
-                    'description' => 'Оплата заказа #' . $order_id,
+                    'description' => "Bank card order payment. Order ID: $order_id" ,
                     'currency' => 'UAH',
                     'recurring' => 'Y'
                 )
@@ -579,16 +504,16 @@ class CartController
 
         $amount = number_format($order['data']['price_sum'], 2, '.', '');
 
-        $key = config('app.PLATON_PAYMENT_KEY');
-        $pass = config('app.PLATON_PAYMENT_PASSWORD');
+        $key = config('app.PLATON_GOOGLE_AND_APPLE_PAYMENT_KEY');
+        $pass = config('app.PLATON_GOOGLE_AND_APPLE_PAYMENT_PASSWORD');
 
         $CLIENT_PASS = $pass;
         $data['action'] = 'GOOGLEPAY';
         $data['CLIENT_KEY'] = $key;
-        $data['order_id'] = 'GooglePay-' . $order_id;
+        $data['order_id'] = $order_id;
         $data['order_amount'] = $amount;
         $data['order_currency'] = 'UAH';
-        $data['order_description'] = 'test';
+        $data['order_description'] = "Google Pay order payment. Order ID: $order_id";
         $data['payment_token'] = $paymentToken;
         $data['payer_email'] = '';
         $data['term_url_3ds'] = 'http://google.com';
@@ -607,10 +532,10 @@ class CartController
         $data['client_key'] = $data['CLIENT_KEY'];
         $data['hash'] = $hash;
 
-        $request = [
-            'data' => $data,
-            'hash' => $hash
-        ];
+//        $request = [
+//            'data' => $data,
+//            'hash' => $hash
+//        ];
 
         $ch = curl_init();
 
@@ -632,13 +557,13 @@ class CartController
 
         curl_close($ch);
 
-        $this->telegramMessage($response, $order_id, 'PLATON CURL REQUEST SUCCESS');
-
         $responseArr = json_decode($response, true);
 
         if(isset($responseArr["result"]) && $responseArr["result"] === "SUCCESS") {
             // успешный платеж
             $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, $response);
+
+            $this->telegramMessage($response, $order_id, 'PLATON CURL REQUEST SUCCESS');
 
             return $this->moveToSuccessCheckoutPage($order_id, self::GOOGLE_PAY, false);
 
@@ -704,8 +629,8 @@ class CartController
 
         $order = $this->getCookieOrder();
 
-        $key = config('app.PLATON_PAYMENT_KEY');
-        $pass = config('app.PLATON_PAYMENT_PASSWORD');
+        $key = config('app.PLATON_GOOGLE_AND_APPLE_PAYMENT_KEY');
+        $pass = config('app.PLATON_GOOGLE_AND_APPLE_PAYMENT_PASSWORD');
 
         $amount = number_format($order['data']['price_sum'], 2, '.', '');
 
@@ -720,7 +645,7 @@ class CartController
         $data = [
             'action' => 'APPLEPAY',
             'client_key' => $key,
-            'order_id' => 'Order id(Apple Pay)#' . $order['data']['order_id'],
+            'order_id' => 'ApplePay-' . $order['data']['order_id'],
             'order_amount' => $amount,
             'order_currency' => 'UAH',
             'order_description' => '',
@@ -1177,7 +1102,7 @@ class CartController
     {
         if(!empty($title)) $title = "$title\n\n";
 
-        $message = "Date: " . date("d.m.Y, H:i:s") . "\norder_id: $order_id\n\n$title" . ((is_array($text)) ? json_encode($text) : $text);
+        $message = "Date: " . date("d.m.Y, H:i:s") . "\norder_id: $order_id\n\n$title" . ((is_array($text) || is_object($text)) ? json_encode($text) : $text);
 
         $ch = curl_init();
 
