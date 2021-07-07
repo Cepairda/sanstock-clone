@@ -2,11 +2,11 @@
 <html lang="{{ LaravelLocalization::getCurrentLocale() }}-UA">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Payment</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    @php(header('Access-Control-Allow-Origin: *'))
+    <title>Bank 3DS</title>
+{{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>--}}
+{{--    @php(header('Access-Control-Allow-Origin: *'))--}}
 </head>
-<body >
+<body onload="javascript:document.forms[0].submit()">
 <form id="myForm" action="{{ $redirect_url }}" method="post">
     <input type="hidden" name="PaReq" value="{{ $data['PaReq'] }}"/>
     <input type="hidden" name="TermUrl" value="{{ $data['TermUrl'] }}"/>
@@ -22,20 +22,20 @@
 
 <script>
 
-    $.ajax({
-        url: '{{ $redirect_url }}',                                                             // url страницы (action_ajax_form.php)
-        type:     "POST",                                                                       // метод отправки
-        dataType: "html",                                                                       // формат данных
-        data: $("#myForm").serialize(),                                                         // Сеарилизуем объект
-        success: function(response) {
-            console.log('Success');                                                             // Данные отправлены успешно
-            console.log(response);
-        },
-        error: function(response) {                                                             // Данные не отправлены
-            console.log('Error');
-            console.log(response);
-        }
-    });
+    {{--$.ajax({--}}
+    {{--    url: '{{ $redirect_url }}',                                                             // url страницы (action_ajax_form.php)--}}
+    {{--    type:     "POST",                                                                       // метод отправки--}}
+    {{--    dataType: "html",                                                                       // формат данных--}}
+    {{--    data: $("#myForm").serialize(),                                                         // Сеарилизуем объект--}}
+    {{--    success: function(response) {--}}
+    {{--        console.log('Success');                                                             // Данные отправлены успешно--}}
+    {{--        console.log(response);--}}
+    {{--    },--}}
+    {{--    error: function(response) {                                                             // Данные не отправлены--}}
+    {{--        console.log('Error');--}}
+    {{--        console.log(response);--}}
+    {{--    }--}}
+    {{--});--}}
 
 
 
