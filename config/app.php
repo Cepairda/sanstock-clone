@@ -143,6 +143,8 @@ return [
 
     'APPLE_MERCHANT_NAME' => env('APPLE_MERCHANT_NAME'),
 
+    'APPLE_PAY_PRODUCTION_CERTIFICATE_KEY_PASS' => env('APPLE_PAY_PRODUCTION_CERTIFICATE_KEY_PASS'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

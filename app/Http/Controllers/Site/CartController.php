@@ -619,27 +619,35 @@ class CartController
             // create a new cURL resource
             $ch = curl_init();
 
+            $cert_path = storage_path('apple_cert/ApplePay.crt.pem');
+            $cert_key = storage_path('apple_cert/ApplePay.key.pem');
+            $cert_pass = config('app.PRODUCTION_CERTIFICATE_KEY_PASS');
+
             $data = '{"merchantIdentifier":"'. config('app.APPLE_MERCHANT_ID') .'", "domainName":"' . $_SERVER["HTTP_HOST"] . '", "displayName":"'. config('app.APPLE_MERCHANT_NAME') .'"}';
 
             curl_setopt($ch, CURLOPT_URL, $validation_url);
-            curl_setopt($ch, CURLOPT_SSLCERT, PRODUCTION_CERTIFICATE_PATH);            // <= !!!!!!!!!!!!!!!
-            curl_setopt($ch, CURLOPT_SSLKEY, PRODUCTION_CERTIFICATE_KEY);              // <= !!!!!!!!!!!!!!!
-            curl_setopt($ch, CURLOPT_SSLKEYPASSWD, PRODUCTION_CERTIFICATE_KEY_PASS);   // <= !!!!!!!!!!!!!!!
+//            curl_setopt($ch, CURLOPT_SSLCERT, PRODUCTION_CERTIFICATE_PATH);            // <= !!!!!!!!!!!!!!!
+//            curl_setopt($ch, CURLOPT_SSLKEY, PRODUCTION_CERTIFICATE_KEY);              // <= !!!!!!!!!!!!!!!
+//            curl_setopt($ch, CURLOPT_SSLKEYPASSWD, PRODUCTION_CERTIFICATE_KEY_PASS);   // <= !!!!!!!!!!!!!!!
+            curl_setopt($ch, CURLOPT_SSLCERT, $cert_path);            // <= !!!!!!!!!!!!!!!
+            curl_setopt($ch, CURLOPT_SSLKEY, $cert_key);              // <= !!!!!!!!!!!!!!!
+            curl_setopt($ch, CURLOPT_SSLKEYPASSWD, $cert_pass);   // <= !!!!!!!!!!!!!!!
             //curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
             //curl_setopt($ch, CURLOPT_SSLVERSION, 'CURL_SSLVERSION_TLSv1_2');
             //curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, 'rsa_aes_128_gcm_sha_256,ecdhe_rsa_aes_128_gcm_sha_256');
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
-            if(curl_exec($ch) === false)
+            if(!($response = curl_exec($ch)))
             {
-                info("Error: ApplePay validation ############ " . curl_error($ch) . " ##########");
+                $this->telegramMessage("Error: ApplePay validation. CURL_ERROR" . curl_error($ch) , $order['data']['order_id'], "PLATON APPLE PAY ERROR CURL REQUEST VALIDATION");
+                // info("Error: ApplePay validation ############ " . curl_error($ch) . " ##########");
                 echo '{"curlError":"' . curl_error($ch) . '"}';
             }
 
             // close cURL resource, and free up system resources
             curl_close($ch);
-
+            $this->telegramMessage($response , $order['data']['order_id'], "PLATON APPLE PAY  VALIDATION CURL SUCCESS");
         } else {
             info('Failed get Apple url:' . $validation_url);
         }
