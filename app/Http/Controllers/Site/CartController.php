@@ -684,7 +684,7 @@ class CartController
 //
 //        if(filter_var($client, FILTER_VALIDATE_IP)) $ip_address = $client;
 //        elseif(filter_var($forward, FILTER_VALIDATE_IP)) $ip_address = $forward;
-        else $ip_address = $_SERVER['REMOTE_ADDR'];
+        $ip_address = $_SERVER['REMOTE_ADDR'];
 
         $data = [
             'action' => 'APPLEPAY',
