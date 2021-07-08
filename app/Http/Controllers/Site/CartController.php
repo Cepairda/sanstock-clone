@@ -560,7 +560,7 @@ class CartController
 
         $responseArr = json_decode($response, true);
 
-        if(isset($responseArr["result"]) && $responseArr["result"] === "REDIRECT" && $responseArr["status"] === "3DS") {
+        if(isset($responseArr["result"]) && $responseArr["result"] === "REDIRECT" && $responseArr["status"] === "3DS" && $responseArr["hash"] === $hash) {
 
             $this->telegramMessage($response, $order_id, 'PLATON GET 3DS REDIRECT');
 
@@ -571,8 +571,6 @@ class CartController
                 ],
                 'redirect_url' => $responseArr['redirect_url']
             ]);
-
-            // return $this->googlePayRedirect3DS($responseArr['redirect_url'], $responseArr['redirect_params'], $order_id);
         }
         else {
 
@@ -585,59 +583,18 @@ class CartController
         }
     }
 
-    public function googlePayRedirect3DS($url, $params, $order_id) {
-
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Access-Control-Allow-Origin: *'));
-
-        if(!($response = curl_exec($ch)))
-        {
-            $this->telegramMessage(curl_error($ch), $order_id, 'GOOGLE PAY REDIRECT 3DS CURL ERROR');
-            $this->telegramMessage($ch, $order_id);
-
-            $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, curl_error($ch), 0);
-
-            return Redirect::route('site.order-checkout')->withErrors([
-                'error'=>'Во время инициализации платежа произошла ошибка! Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
-        }
-
-        curl_close($ch);
-
-        $responseArr = json_decode($response, true);
-
-        if(isset($responseArr["result"]) && $responseArr["result"] === "SUCCESS" && isset($responseArr["action"]) && $responseArr["action"] === "SALE") {
-            // успешный платеж
-            $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, $response);
-
-            $this->telegramMessage($response, $order_id, 'PLATON GOOGLE PAY SALE SUCCESS');
-
-            return $this->moveToSuccessCheckoutPage($order_id, self::GOOGLE_PAY, false);
-
-        }
-        else {
-
-            $this->telegramMessage($response, $order_id, 'GOOGLE PAY REDIRECT 3DS SALE DECLINED');
-            // неудачный платеж
-            $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, $response, 0);
-
-//            return Redirect::route('site.order-checkout')->withErrors([
-//                'error'=>'Не удалось выполнить транзакцию платежа. Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
-        }
-    }
-
-    public function googlePayTransactionSuccess(Request $request) {
-
-        $response = $request->all();
+    /**
+     * If GooglePay order payment success
+     * @return RedirectResponse
+     */
+    public function googlePayTransactionSuccess() {
+        // успешный платеж
+        $response = ["action" => "SALE", 'result' => 'SUCCESS'];
 
         $order = $this->getCookieOrder();
 
         $order_id = $order['data']['order_id'];
-        // успешный платеж
+
         $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, $response);
 
         $this->telegramMessage($response, $order_id, 'PLATON GOOGLE PAY SALE SUCCESS');
@@ -654,8 +611,11 @@ class CartController
 
         if( "https" == parse_url($validation_url, PHP_URL_SCHEME) && substr( parse_url($validation_url, PHP_URL_HOST), -10 )  == ".apple.com" ){
 
+            $order = $this->getCookieOrder();
+
+            $this->telegramMessage($validation_url, $order['data']['order_id'], "PLATON APPLE PAY CURL REQUEST VALIDATION");
             // require_once ('/your/path/to/applepay_includes/apple_pay_conf.php');
-            info("ApplePay validation ############ $validation_url ##########");
+            // info("ApplePay validation ############ $validation_url ##########");
             // create a new cURL resource
             $ch = curl_init();
 

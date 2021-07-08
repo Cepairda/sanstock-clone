@@ -384,7 +384,7 @@
                 document.getElementById("notgot").style.display = "block";
             }
 
-            document.getElementById("applePay").onclick = function(evt) {
+            document.getElementById("ApplePay").onclick = function(evt) {
 
                 var runningAmount 	= '{{ $total }}';
                 var runningPP		= 0; getShippingCosts('domestic_std', true);
