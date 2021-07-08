@@ -388,7 +388,7 @@
 
                 var runningAmount 	= '{{ $total }}';
                 var runningPP		= 0; getShippingCosts('domestic_std', true);
-                var runningTotal	= function() { return runningAmount + runningPP; }
+                var runningTotal	= function() { return runningAmount; }
                 var shippingOption = "";
 
                 var subTotalDescr	= "Test Sandistock";
