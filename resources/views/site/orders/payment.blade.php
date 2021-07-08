@@ -549,7 +549,7 @@
                         logit("defaulting to resolve(true) here, just to show what a successfully completed transaction flow looks like");
 
                         document.cookie = "pay=apple_pay";
-                        document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + window.btoa(JSON.stringify(paymentToken)) ;
+                        document.location.href = '{{ route('site.apple-pay-request-to-platon') }}' + '?paymentToken=' + window.btoa(JSON.stringify(paymentToken)) ;
 
                         if ( debug == true )
                             resolve(true);
