@@ -148,41 +148,8 @@ class CartController
             $rules['new_mail_city'] = 'required|size:36';
         }
 
-        //dd($this->is_employee);
-
-
-//        if($request->input['new_mail_non_cash_payment'] === 1) {
-//
-//            $rules['new_mail_company_name'] = 'required';
-//
-//            $rules['new_mail_company_email'] = 'required|regex:/.+@.+\..+/i';
-//
-//            $rules['new_mail_company_user_surname'] = 'required';
-//
-//            $rules['new_mail_company_user_name'] = 'required';
-//
-//            $rules['new_mail_company_user_patronymic'] = 'required';
-//
-//            $rules['new_mail_company_phone'] = 'required|regex:/\d+\+\-/i';
-//
-//            $rules['new_mail_company_address'] = 'required|regex:/.+@.+\..+/i';
-//
-//        } else {
-//
-//            if($request->input['new_mail_payment_type'] === 'yes') {
-//
-//                $rules['new_mail_payment_sum'] = 'required|numeric';
-//            }
-//        }
-
-//        if($request->input['new_mail_delivery_type'] === 'storage_door') {
-//
-//            $rules['new_mail_house'] = 'required';
-//        }
-        //dd('************');
-
         $shipping = [];
-//dd($request->new_mail_surname);
+
         $shipping['new_mail_surname'] = $request->new_mail_surname ?? '';
 
         $shipping['new_mail_name'] = $request->new_mail_name ?? '';
@@ -215,29 +182,7 @@ class CartController
         $shipping['employee_region'] = (!empty($this->is_employee) && !empty($request->employee_region) && isset(config('regions')[$request->employee_region]))
             ? config('regions')[$request->employee_region] : '' ;
 
-        //$orderData = [];
-
-//        $orderData['new_mail_surname'] = $shipping['new_mail_surname'];
-//
-//        $orderData['new_mail_name'] = $shipping['new_mail_name'];
-//
-//        $orderData['new_mail_patronymic'] = $shipping['new_mail_patronymic'];
-//
-//        $orderData['new_mail_phone'] = $shipping['new_mail_phone'];
-//
-//        $orderData['new_mail_region'] = $shipping['new_mail_region'];
-//
-//        $orderData['new_mail_city'] = $shipping['new_mail_city'];
-//
-//        $orderData['new_mail_comment'] = $shipping['new_mail_comment'];
-//
-//        $orderData['new_mail_delivery_type'] = $shipping['new_mail_delivery_type'];
-//
-//        $orderData['payments_form'] = $shipping['payments_form'];
-
         if($shipping['new_mail_delivery_type'] === 'storage_storage') {
-
-//            $orderData['new_mail_warehouse'] = $shipping['new_mail_warehouse'];
 
             $shipping['new_mail_street'] = '';
 
@@ -248,12 +193,6 @@ class CartController
             if(empty($this->is_employee)) $rules['new_mail_warehouse'] = 'required|size:36';
 
         } else {
-
-//            $orderData['new_mail_street'] = $shipping['new_mail_street'];
-//
-//            $orderData['new_mail_house'] = $shipping['new_mail_house'];
-//
-//            $orderData['new_mail_apartment'] = $shipping['new_mail_apartment'];
 
             $shipping['new_mail_warehouse'] = '';
 
@@ -354,11 +293,9 @@ class CartController
             // $orderData['price_sum'] += (int)$product['price'];
 
             // !!! TEST PAYMENT !!!
-            $orderData['price_sum'] = 1;
+            $orderData['price_sum'] = "1.00";
 
             Product::where('details->sku', $product['sku'])->update([
-                //'details->price' => $price,
-                //'details->old_price' => $oldPrice,
                 'details->balance' => 0
             ]);
 
@@ -367,23 +304,7 @@ class CartController
         if(!empty($orderData['payments_form'])) {
 
             $this->createOrderPaymentMethodeRecord($newOrder->id, $orderData['payments_form'], 0, $orderData['payments_form']);
-//            $payment = new PaymentOrder;
-//
-//            $payment->order_id = $newOrder->id;
-//
-//            $payment->payment_method = $orderData['payments_form'];
-//
-//            $payment->attempts = 0;
-//
-//            $payment->details = json_encode([]);
-//
-//            $payment->status = 0;
-//
-//            $payment->save();
         }
-
-
-        //dd($products);
 
         $orderData['order_id'] = $newOrder->id;
 
@@ -392,6 +313,8 @@ class CartController
             'data' => $orderData,
         ];
 
+        $this->telegramMessage($order, $newOrder->id, "NEW ORDER WITH PAYMENT");
+
         //Cookie::queue('order', $order, 60);
         session(['order' => $order]);
         // dd(Cookie::get('order'));
@@ -399,8 +322,11 @@ class CartController
         // $this->sentOrderToB2B($order);
         // dd($order);
         if(!empty($shipping['payments_form'])) {
+
             return Redirect::route('site.payment');
         }
+
+        $this->telegramMessage($order, $newOrder->id, "NEW ORDER WITHOUT PAYMENT");
 
         return $this->moveToSuccessCheckoutPage($orderData['order_id'], $shipping['payments_form'], false);
     }
@@ -467,7 +393,7 @@ class CartController
             'paymentMethods' => $this->paymentMethods(),
             'order' => base64_encode(json_encode($order)),
             'total' => $order['data']['price_sum'],
-            'platonPaymentKey' => config('app.PLATON_PAYMENT_KEY'),
+            'platonPaymentKey' => config('app.PLATON_GOOGLE_AND_APPLE_PAYMENT_KEY'),
             'googlePayMerchantId' => config('app.GOOGLE_MERCHANT_ID'),
             'googlePayMerchantName' => config('app.GOOGLE_MERCHANT_NAME'),
             'applePayMerchantId' => config('app.APPLE_MERCHANT_ID'),
@@ -521,7 +447,7 @@ class CartController
             json_encode(
                 array(
                     'amount' => $amount,
-                    'description' => 'Оплата заказа #' . $order_id,
+                    'description' => "Bank card order payment. Order ID: $order_id" ,
                     'currency' => 'UAH',
                     'recurring' => 'Y'
                 )
@@ -579,19 +505,19 @@ class CartController
 
         $amount = number_format($order['data']['price_sum'], 2, '.', '');
 
-        $key = config('app.PLATON_PAYMENT_KEY');
-        $pass = config('app.PLATON_PAYMENT_PASSWORD');
+        $key = config('app.PLATON_GOOGLE_AND_APPLE_PAYMENT_KEY');
+        $pass = config('app.PLATON_GOOGLE_AND_APPLE_PAYMENT_PASSWORD');
 
         $CLIENT_PASS = $pass;
         $data['action'] = 'GOOGLEPAY';
         $data['CLIENT_KEY'] = $key;
-        $data['order_id'] = 'GooglePay-' . $order_id;
+        $data['order_id'] = $order_id;
         $data['order_amount'] = $amount;
         $data['order_currency'] = 'UAH';
-        $data['order_description'] = 'test';
+        $data['order_description'] = "Google Pay order payment. Order ID: $order_id";
         $data['payment_token'] = $paymentToken;
         $data['payer_email'] = '';
-        $data['term_url_3ds'] = 'http://google.com';
+        $data['term_url_3ds'] = route('site.google-pay-success');
         $hash = md5(
             strtoupper(
                 strrev(
@@ -607,11 +533,6 @@ class CartController
         $data['client_key'] = $data['CLIENT_KEY'];
         $data['hash'] = $hash;
 
-        $request = [
-            'data' => $data,
-            'hash' => $hash
-        ];
-
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, "https://secure.platononline.com/post/");
@@ -622,35 +543,58 @@ class CartController
 
         if(!($response = curl_exec($ch)))
         {
-            $this->telegramMessage(curl_error($ch), $order_id, 'PLATON CURL REQUEST ERROR');
+            $this->telegramMessage(curl_error($ch), $order_id, 'PLATON GOOGLE PAY CURL REQUEST ERROR');
             $this->telegramMessage($ch, $order_id);
 
-            $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, curl_error($ch));
+            $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, curl_error($ch), 0);
             return Redirect::route('site.order-checkout')->withErrors([
                 'error'=>'Во время инициализации платежа произошла ошибка! Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
         }
 
         curl_close($ch);
 
-        $this->telegramMessage($response, $order_id, 'PLATON CURL REQUEST SUCCESS');
-
         $responseArr = json_decode($response, true);
 
-        if(isset($responseArr["result"]) && $responseArr["result"] === "SUCCESS") {
-            // успешный платеж
-            $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, $response);
+        if(isset($responseArr["result"]) && $responseArr["result"] === "REDIRECT" && $responseArr["status"] === "3DS" && $responseArr["hash"] === $hash) {
 
-            return $this->moveToSuccessCheckoutPage($order_id, self::GOOGLE_PAY, false);
+            $this->telegramMessage($response, $order_id, 'PLATON GET 3DS REDIRECT');
 
-        } else {
+            return view('site.orders.googlePay3DSredirect', [
+                'data' => [
+                    'PaReq' => $responseArr['redirect_params']['PaReq'],
+                    'TermUrl' => $responseArr['redirect_params']['TermUrl'],
+                ],
+                'redirect_url' => $responseArr['redirect_url']
+            ]);
+        }
+        else {
 
-            $this->telegramMessage($response, $order_id, 'PLATON CURL REQUEST DECLINED');
+            $this->telegramMessage($response, $order_id, 'PLATON CURL GOOGLE PAY REQUEST DECLINED');
             // неудачный платеж
             $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, $response, 0);
 
             return Redirect::route('site.order-checkout')->withErrors([
                 'error'=>'Не удалось выполнить транзакцию платежа. Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
         }
+    }
+
+    /**
+     * If GooglePay order payment success
+     * @return RedirectResponse
+     */
+    public function googlePayTransactionSuccess() {
+        // успешный платеж
+        $response = ["action" => "SALE", 'result' => 'SUCCESS'];
+
+        $order = $this->getCookieOrder();
+
+        $order_id = $order['data']['order_id'];
+
+        $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, $response);
+
+        $this->telegramMessage($response, $order_id, 'PLATON GOOGLE PAY SALE SUCCESS');
+
+        return $this->moveToSuccessCheckoutPage($order_id, self::GOOGLE_PAY, false);
     }
 
     /**
@@ -662,32 +606,41 @@ class CartController
 
         if( "https" == parse_url($validation_url, PHP_URL_SCHEME) && substr( parse_url($validation_url, PHP_URL_HOST), -10 )  == ".apple.com" ){
 
-            // require_once ('/your/path/to/applepay_includes/apple_pay_conf.php');
-            info("ApplePay validation ############ $validation_url ##########");
-            // create a new cURL resource
-            $ch = curl_init();
+            $order = $this->getCookieOrder();
+
+            $this->telegramMessage($validation_url, $order['data']['order_id'], "PLATON APPLE PAY CURL REQUEST VALIDATION");
+
+            $cert_path = storage_path('apple_cert/ApplePay.crt.pem');
+            $cert_key = storage_path('apple_cert/ApplePay.key.pem');
+            $cert_pass = config('app.PRODUCTION_CERTIFICATE_KEY_PASS');
 
             $data = '{"merchantIdentifier":"'. config('app.APPLE_MERCHANT_ID') .'", "domainName":"' . $_SERVER["HTTP_HOST"] . '", "displayName":"'. config('app.APPLE_MERCHANT_NAME') .'"}';
 
+            $ch = curl_init();
+
             curl_setopt($ch, CURLOPT_URL, $validation_url);
-            curl_setopt($ch, CURLOPT_SSLCERT, PRODUCTION_CERTIFICATE_PATH);            // <= !!!!!!!!!!!!!!!
-            curl_setopt($ch, CURLOPT_SSLKEY, PRODUCTION_CERTIFICATE_KEY);              // <= !!!!!!!!!!!!!!!
-            curl_setopt($ch, CURLOPT_SSLKEYPASSWD, PRODUCTION_CERTIFICATE_KEY_PASS);   // <= !!!!!!!!!!!!!!!
+//            curl_setopt($ch, CURLOPT_SSLCERT, PRODUCTION_CERTIFICATE_PATH);            // <= !!!!!!!!!!!!!!!
+//            curl_setopt($ch, CURLOPT_SSLKEY, PRODUCTION_CERTIFICATE_KEY);              // <= !!!!!!!!!!!!!!!
+//            curl_setopt($ch, CURLOPT_SSLKEYPASSWD, PRODUCTION_CERTIFICATE_KEY_PASS);   // <= !!!!!!!!!!!!!!!
+            curl_setopt($ch, CURLOPT_SSLCERT, $cert_path);            // <= !!!!!!!!!!!!!!!
+            curl_setopt($ch, CURLOPT_SSLKEY, $cert_key);              // <= !!!!!!!!!!!!!!!
+            curl_setopt($ch, CURLOPT_SSLKEYPASSWD, $cert_pass);   // <= !!!!!!!!!!!!!!!
             //curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
             //curl_setopt($ch, CURLOPT_SSLVERSION, 'CURL_SSLVERSION_TLSv1_2');
             //curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, 'rsa_aes_128_gcm_sha_256,ecdhe_rsa_aes_128_gcm_sha_256');
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
-            if(curl_exec($ch) === false)
+            if(!($response = curl_exec($ch)))
             {
-                info("Error: ApplePay validation ############ " . curl_error($ch) . " ##########");
+                $this->telegramMessage("Error: ApplePay validation. CURL_ERROR" . curl_error($ch) , $order['data']['order_id'], "PLATON APPLE PAY ERROR CURL REQUEST VALIDATION");
+                // info("Error: ApplePay validation ############ " . curl_error($ch) . " ##########");
                 echo '{"curlError":"' . curl_error($ch) . '"}';
             }
 
             // close cURL resource, and free up system resources
             curl_close($ch);
-
+            $this->telegramMessage($response , $order['data']['order_id'], "PLATON APPLE PAY VALIDATION CURL SUCCESS");
         } else {
             info('Failed get Apple url:' . $validation_url);
         }
@@ -698,14 +651,22 @@ class CartController
      */
     public function requestApplePayPlaton()
     {
-        // $validation_url = request()->get('u');
-        $payment_token = '';
-        $email = '';
+        $paymentToken = request()->get('paymentToken');
+
+        if(empty($paymentToken)) return redirect()->route('site.cart');
+
+        $paymentToken = base64_decode($paymentToken);
 
         $order = $this->getCookieOrder();
 
-        $key = config('app.PLATON_PAYMENT_KEY');
-        $pass = config('app.PLATON_PAYMENT_PASSWORD');
+        $order_id = $order['data']['order_id'];
+
+        $this->telegramMessage($paymentToken, $order_id, 'APPLE PAY TOKEN');
+
+        $email = '';
+
+        $key = config('app.PLATON_GOOGLE_AND_APPLE_PAYMENT_KEY');
+        $pass = config('app.PLATON_GOOGLE_AND_APPLE_PAYMENT_PASSWORD');
 
         $amount = number_format($order['data']['price_sum'], 2, '.', '');
 
@@ -713,58 +674,101 @@ class CartController
             strtoupper(
                 strrev($email).
                 $pass.
-                strrev($payment_token)
+                strrev($paymentToken)
             )
         );
+
+//        $client  = $_SERVER['HTTP_CLIENT_IP'];
+//        $forward = $_SERVER['HTTP_X_FORWARDED_FOR'];
+//        $remote  = $_SERVER['REMOTE_ADDR'];
+//
+//        if(filter_var($client, FILTER_VALIDATE_IP)) $ip_address = $client;
+//        elseif(filter_var($forward, FILTER_VALIDATE_IP)) $ip_address = $forward;
+        $ip_address = $_SERVER['REMOTE_ADDR'];
 
         $data = [
             'action' => 'APPLEPAY',
             'client_key' => $key,
-            'order_id' => 'Order id(Apple Pay)#' . $order['data']['order_id'],
+            'order_id' => 'TEST ApplePay-' . $order_id,
             'order_amount' => $amount,
             'order_currency' => 'UAH',
-            'order_description' => '',
-
-
-            'payment_token' => '',
-            'payer_first_name' => '',
-            'payer_last_name' => '',
-            'payer_middle_name' => '',
-            'payer_birth_date' => '',
-            'payer_address' => '',
-            'payer_address2' => '',
-            'payer_country' => '',
-            'payer_state' => '',
-            'payer_city' => '',
-            'payer_zip' => '',
-            'payer_email' => '',
-            'payer_phone' => '',
-            'payer_ip' => '',
-            'term_url_3ds' => '',
+            'order_description' => "Apple Pay order payment. Order ID: $order_id",
+            'payment_token' => $paymentToken,
+            'payer_ip' => $ip_address,
+            'term_url_3ds' => route('site.apple-pay-success'),
             'hash' => $hash
         ];
 
-        info("sent ApplePay to Platon @@@ ");
-        info(json_encode($data));
+        //info(json_encode($data));
         // create a new cURL resource
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, 'https://secure.platononline.com/post/');
+        curl_setopt($ch, CURLOPT_URL, "https://secure.platononline.com/post/");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Access-Control-Allow-Origin: *'));
 
-        if($response = curl_exec($ch) === false)
+
+//        curl_setopt($ch, CURLOPT_URL, 'https://secure.platononline.com/post/');
+//        curl_setopt($ch, CURLOPT_POST, 1);
+//        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+        if(!($response = curl_exec($ch)))
         {
-            info("*** Error *** : ApplePay Platon");
-            info(curl_error($ch));
-            echo '{"ApplePay Platon error":"' . curl_error($ch) . '"}';
+            $this->telegramMessage(curl_error($ch), $order_id, 'PLATON APPLE PAY CURL REQUEST ERROR');
+            $this->telegramMessage($ch, $order_id);
+
+            $this->updatePaymentOrder($order_id, self::APPLE_PAY, curl_error($ch), 0);
+            return Redirect::route('site.order-checkout')->withErrors([
+                'error'=>'Во время инициализации платежа произошла ошибка! Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
         }
 
-        info('------------- Platon response after ApplePay ------------------');
-        info($response);
-
-        // close cURL resource, and free up system resources
         curl_close($ch);
+
+        $responseArr = json_decode($response, true);
+
+        if(isset($responseArr["result"]) && $responseArr["result"] === "REDIRECT" && $responseArr["status"] === "3DS") {
+
+            $this->telegramMessage($response, $order_id, 'PLATON GET 3DS REDIRECT');
+
+            return view('site.orders.applePay3DSredirect', [
+                'data' => [
+                    'PaReq' => $responseArr['redirect_params']['PaReq'],
+                    'TermUrl' => $responseArr['redirect_params']['TermUrl'],
+                    // 'MD' => $responseArr['redirect_params']['MD'],
+                ],
+                'redirect_url' => $responseArr['redirect_url']
+            ]);
+        }
+        else {
+
+            $this->telegramMessage($response, $order_id, 'PLATON CURL APPLE PAY REQUEST DECLINED');
+            // неудачный платеж
+            $this->updatePaymentOrder($order_id, self::APPLE_PAY, $response, 0);
+
+            return Redirect::route('site.order-checkout')->withErrors([
+                'error'=>'Не удалось выполнить транзакцию платежа. Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
+        }
+    }
+
+    /**
+     * If GooglePay order payment success
+     * @return RedirectResponse
+     */
+    public function applePayTransactionSuccess() {
+        // успешный платеж
+        $response = ["action" => "SALE", 'result' => 'SUCCESS'];
+
+        $order = $this->getCookieOrder();
+
+        $order_id = $order['data']['order_id'];
+
+        $this->updatePaymentOrder($order_id, self::APPLE_PAY, $response);
+
+        $this->telegramMessage($response, $order_id, 'PLATON APPLE PAY SALE SUCCESS');
+
+        return $this->moveToSuccessCheckoutPage($order_id, self::APPLE_PAY, false);
     }
 
     /**
@@ -1177,7 +1181,7 @@ class CartController
     {
         if(!empty($title)) $title = "$title\n\n";
 
-        $message = "Date: " . date("d.m.Y, H:i:s") . "\norder_id: $order_id\n\n$title" . ((is_array($text)) ? json_encode($text) : $text);
+        $message = "Date: " . date("d.m.Y, H:i:s") . "\norder_id: $order_id\n\n$title" . ((is_array($text) || is_object($text)) ? json_encode($text) : $text);
 
         $ch = curl_init();
 

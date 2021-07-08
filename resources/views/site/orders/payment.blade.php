@@ -50,9 +50,9 @@
                                 @if($key === 'apple_pay')
                                     <div>
                                         <button type="button" id="ApplePay" style="width: 150px; height: 50px; display: none; border-radius: 5px; margin-left: auto; margin-right: auto; margin-top: 20px; background-image: -webkit-named-image(apple-pay-logo-white); background-position: 50% 50%; background-color: black; background-size: 60%; background-repeat: no-repeat;"></button>
-{{--                                        <p style="display:none" id="got_notactive">ApplePay is possible on this browser, but not currently activated.</p>--}}
-{{--                                        <p style="display:none" id="notgot">Ваш браузер не поддерживает работу с ApplePay</p>--}}
-{{--                                        <p style="display:none" id="success">Test transaction completed, thanks. <a href="<?=$_SERVER["SCRIPT_URL"]?>">reset</a></p>--}}
+                                        <p style="display:none" id="got_notactive">ApplePay is possible on this browser, but not currently activated.</p>
+                                        <p style="display:none" id="notgot">Ваш браузер не поддерживает работу с ApplePay</p>
+                                        <p style="display:none" id="success">Трансакция прошла успешно. Идет завершение оформления заказа ...</p>
                                     </div>
 
 {{--                                    <div id="ApplePay" class="apple-pay-button-with-text apple-pay-button-white-with-text @if($payment_method !== 'apple_pay')d-none @endif"--}}
@@ -384,14 +384,14 @@
                 document.getElementById("notgot").style.display = "block";
             }
 
-            document.getElementById("applePay").onclick = function(evt) {
+            document.getElementById("ApplePay").onclick = function(evt) {
 
                 var runningAmount 	= '{{ $total }}';
                 var runningPP		= 0; getShippingCosts('domestic_std', true);
-                var runningTotal	= function() { return runningAmount + runningPP; }
+                var runningTotal	= function() { return runningAmount; }
                 var shippingOption = "";
 
-                var subTotalDescr	= "Test Sandistock";
+                var subTotalDescr	= "Тестовая оплата заказа #{{ $order_id }}";
 
                 function getShippingOptions(shippingCountry) {
                     logit('getShippingOptions: ' + shippingCountry );
@@ -408,7 +408,7 @@
 
                     switch(shippingIdentifier) {
                         case 'domestic_std':
-                            shippingCost = 3;
+                            shippingCost = 0;
                             break;
                         case 'domestic_exp':
                             shippingCost = 6;
@@ -436,7 +436,8 @@
                     requiredShippingContactFields: ['postalAddress'],
                     //requiredShippingContactFields: ['postalAddress','email', 'name', 'phone'],
                     //requiredBillingContactFields: ['postalAddress','email', 'name', 'phone'],
-                    lineItems: [{label: subTotalDescr, amount: runningAmount }, {label: 'P&P', amount: runningPP }],
+                    // lineItems: [{label: subTotalDescr, amount: runningAmount }, {label: 'P&P', amount: runningPP }],
+                    lineItems: [{label: subTotalDescr, amount: runningAmount }],
                     total: {
                         label: '{{ $applePayMerchantName }}',
                         amount: runningTotal()
@@ -462,6 +463,7 @@
                         var xhr = new XMLHttpRequest();
                         xhr.onload = function() {
                             var data = JSON.parse(this.responseText);
+                            logit('Apple Pay validation session');
                             logit(data);
                             resolve(data);
                         };
@@ -481,7 +483,8 @@
                     var status = ApplePaySession.STATUS_SUCCESS;
                     var newShippingMethods = shippingOption;
                     var newTotal = { type: 'final', label: '{{ $applePayMerchantName }}', amount: runningTotal() };
-                    var newLineItems =[{type: 'final',label: subTotalDescr, amount: runningAmount }, {type: 'final',label: 'P&P', amount: runningPP }];
+                    // var newLineItems =[{type: 'final',label: subTotalDescr, amount: runningAmount }, {type: 'final',label: 'P&P', amount: runningPP }];
+                    var newLineItems =[{type: 'final',label: subTotalDescr, amount: runningAmount }];
 
                     session.completeShippingContactSelection(status, newShippingMethods, newTotal, newLineItems );
 
@@ -496,11 +499,10 @@
 
                     var status = ApplePaySession.STATUS_SUCCESS;
                     var newTotal = { type: 'final', label: '{{ $applePayMerchantName }}', amount: runningTotal() };
-                    var newLineItems =[{type: 'final',label: subTotalDescr, amount: runningAmount }, {type: 'final',label: 'P&P', amount: runningPP }];
+                    // var newLineItems =[{type: 'final',label: subTotalDescr, amount: runningAmount }, {type: 'final',label: 'P&P', amount: runningPP }];
+                    var newLineItems =[{type: 'final',label: subTotalDescr, amount: runningAmount }];
 
                     session.completeShippingMethodSelection(status, newTotal, newLineItems );
-
-
                 }
 
                 session.onpaymentmethodselected = function(event) {
@@ -508,11 +510,10 @@
                     logit(event);
 
                     var newTotal = { type: 'final', label: '{{ $applePayMerchantName }}', amount: runningTotal() };
-                    var newLineItems =[{type: 'final',label: subTotalDescr, amount: runningAmount }, {type: 'final',label: 'P&P', amount: runningPP }];
+                    // var newLineItems =[{type: 'final',label: subTotalDescr, amount: runningAmount }, {type: 'final',label: 'P&P', amount: runningPP }];
+                    var newLineItems =[{type: 'final',label: subTotalDescr, amount: runningAmount }];
 
                     session.completePaymentMethodSelection( newTotal, newLineItems );
-
-
                 }
 
                 session.onpaymentauthorized = function (event) {
@@ -546,6 +547,10 @@
 
                         logit("this is where you would pass the payment token to your third-party payment provider to use the token to charge the card. Only if your provider tells you the payment was successful should you return a resolve(true) here. Otherwise reject;");
                         logit("defaulting to resolve(true) here, just to show what a successfully completed transaction flow looks like");
+
+                        document.cookie = "pay=apple_pay";
+                        document.location.href = '{{ route('site.apple-pay-request-to-platon') }}' + '?paymentToken=' + window.btoa(JSON.stringify(paymentToken)) ;
+
                         if ( debug == true )
                             resolve(true);
                         else
@@ -619,6 +624,26 @@
                 }
             }, false);
         }
+
+       //let oldDoc = document.getElementById('frame').contentDocument;
+        let oldDoc = {};
+        // каждый 100 мс проверяем, не изменился ли документ
+        let timer = setInterval(() => {
+            let iframe = document.getElementById('frame');
+            if(iframe !== null) {
+                let newDoc = iframe.contentDocument;
+                if(oldDoc !== newDoc) {
+                    console.log(newDoc);
+                    oldDoc = newDoc;
+                }
+                //if (newDoc == oldDoc) return;
+
+                // alert("New document is here!");
+
+                // clearInterval(timer); // отключим setInterval, он нам больше не нужен
+            }
+
+        }, 100);
 
     </script>
 
