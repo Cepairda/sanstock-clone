@@ -699,7 +699,7 @@ class CartController
             'hash' => $hash
         ];
 
-        info(json_encode($data));
+        //info(json_encode($data));
         // create a new cURL resource
         $ch = curl_init();
 
@@ -736,7 +736,7 @@ class CartController
                 'data' => [
                     'PaReq' => $responseArr['redirect_params']['PaReq'],
                     'TermUrl' => $responseArr['redirect_params']['TermUrl'],
-                    'MD' => $responseArr['redirect_params']['MD'],
+                    // 'MD' => $responseArr['redirect_params']['MD'],
                 ],
                 'redirect_url' => $responseArr['redirect_url']
             ]);
