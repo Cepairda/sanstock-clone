@@ -137,7 +137,7 @@
                     <div  class="col-md-9 col-6 align-self-center" data-price="{{ $price }}" data-oldprice="{{ $normalPrice }}">
                         @if($product->getData('defective_attributes'))
                             @foreach($product->getData('defective_attributes') as $defective_attribute)
-                                {{ '- ' . $defective_attribute }}
+                                {{ '- ' . $defective_attribute }} <br>
                             @endforeach
                         @endif
                     </div>
