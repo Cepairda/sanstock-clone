@@ -10276,7 +10276,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.6);
   background-image: url("/images/site/icons/zoom-in.svg");
-  background-size: 35%;
+  background-size: 25%;
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -16026,6 +16026,25 @@ li.footer__element--item-tel {
   .tabs-products__add-to-cart {
     margin-top: 15px;
   }
+}
+.tabs-products__preview-zoom::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.6);
+  background-image: url("/images/site/icons/zoom-in.svg");
+  background-size: 20%;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.tabs-products__preview-zoom:hover::before {
+  opacity: 1;
 }
 
 .form-group {
