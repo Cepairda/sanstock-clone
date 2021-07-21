@@ -32,6 +32,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('import:b2b')->everyFourHours();
         $schedule->command('queue:work --queue=high,b2bImport  --stop-when-empty --timeout=600')->name('b2bImport')->withoutOverlapping();
 
+        $schedule->command('create-search-string:product-sort')->everyFourHours();
+
         $schedule->command('import:category')->everyThirtyMinutes();
         $schedule->command('import:image-category')->everyThirtyMinutes();
         $schedule->command('queue:work --queue=high,imageCategoryImport  --stop-when-empty --timeout=600')->name('imageCategoryImport')->withoutOverlapping();
