@@ -258,6 +258,9 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::get('/apple-pay', 'CartController@requestApplePayPlaton')->name('apple-pay-request-to-platon');
         Route::get('/apple-pay-success', 'CartController@applePayTransactionSuccess')->name('apple-pay-success');
 
+        // export Prom.ua
+        Route::get('/export-prom/{token}','ExportController@export')->name('export-prom');
+
         Route::get('search', 'SearchController@search')->name('products.search');
         Route::post('products/update-price', 'ProductController@updatePrice')->name('products.update-price');
         Route::post('products/get-first-additional', 'ProductController@getFirstAdditional')->name('products.get-first-additional');

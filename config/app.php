@@ -145,6 +145,8 @@ return [
 
     'APPLE_PAY_PRODUCTION_CERTIFICATE_KEY_PASS' => env('APPLE_PAY_PRODUCTION_CERTIFICATE_KEY_PASS'),
 
+    'EXPORT_TOKEN' => env('EXPORT_TOKEN'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

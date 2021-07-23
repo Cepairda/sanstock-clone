@@ -6,6 +6,7 @@ use App\Classes\TelegramBot;
 use Exception;
 
 use App\Jobs\ProcessImportPrice;
+use App\Jobs\GeneratePromFeeder;
 use App\Product;
 use App\ProductSort;
 use GuzzleHttp\Client;
@@ -39,6 +40,9 @@ class PriceImport
 
                 ProcessImportPrice::dispatch($skuArray)->onQueue('priceImport');
             }
+
+            // Add creation Prom xml-feeder
+            GeneratePromFeeder::dispatch()->onQueue('priceImport');
 
             $message = "Добавлено в очередь обновление цен и остатков для {$productsCount} товаров";
         } catch (Exception $e) {
