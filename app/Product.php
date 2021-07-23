@@ -14,6 +14,16 @@ class Product extends Resource
         return $this->getData('name');
     }
 
+    public function getDescriptionAttribute()
+    {
+        return $this->getData('description');
+    }
+
+    public function getCategoryIdAttribute()
+    {
+        return $this->getDetails('category_id');
+    }
+
     public function getSkuAttribute()
     {
         return $this->getDetails('sku');
@@ -22,6 +32,11 @@ class Product extends Resource
     public function getSdCodeAttribute()
     {
         return $this->getDetails('sd_code');
+    }
+
+    public function getBalanceAttribute()
+    {
+        return $this->getDetails('balance');
     }
 
     public function getGradeAttribute()
@@ -50,12 +65,19 @@ class Product extends Resource
         return $this->hasOne(ProductSort::class,  ['details->sd_code', 'details->grade'], ['details->sd_code', 'details->grade']);
     }
 
+//    public function scopeWithProductsSort($query)
+//    {
+//        return $query->with(['productSort' => function($query) {
+//            return $query->whereHas('products', function ($query) {
+//                $query->where('details->balance', '>', 0);
+//            })->withProducts();
+//        }]);
+//    }
+
     public function scopeWithProductsSort($query)
     {
-        return $query->with(['productsSort' => function($query) {
-            return $query->whereHas('products', function ($query) {
-                $query->where('details->balance', '>', 0);
-            })->withProducts();
+        return $query->with(['productSort' => function($query) {
+            return $query->withProductGroup();
         }]);
     }
 }
