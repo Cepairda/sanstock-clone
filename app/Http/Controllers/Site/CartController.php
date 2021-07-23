@@ -29,6 +29,10 @@ class CartController
 
     public $is_employee = 0;
 
+    private $telegramMessage = true;
+
+    private $mode = 'TEST';
+    // private $mode = 'ENVIRONMENT';
 
     function __construct() {
 
@@ -66,8 +70,6 @@ class CartController
             $orderItem['grade'] = $product->getDetails('grade');
 
             $orderItem['defective_attributes'] = $product->data['defective_attributes'];
-// dd($orderItem['defective_attributes']);
-            // $orderItem['max_quantity'] = $product->getDetails('quantity');
 
             $orderItem['max_quantity'] = 1;
 
@@ -168,7 +170,6 @@ class CartController
 
         $shipping['new_mail_comment'] = $request->new_mail_comment ?? null ;
 
-
         $shipping['new_mail_street'] = $request->new_mail_street ?? '' ;
 
         $shipping['new_mail_house'] = $request->new_mail_house ?? '' ;
@@ -223,7 +224,8 @@ class CartController
         $orderProducts = $this->getCartProducts();
 
         // $orderProducts = (isset($_COOKIE["products_cart"])) ? json_decode($_COOKIE["products_cart"], true) : [];
-        if(count($orderProducts) === 0) return Redirect::back()->withErrors('Для оформления заказа необходимо выбрать хотя бы один товар!');
+        if(count($orderProducts) === 0)
+            return Redirect::back()->withErrors('Для оформления заказа необходимо выбрать хотя бы один товар!');
         // order
         $newOrder = new Orders;
 
@@ -290,10 +292,8 @@ class CartController
 
             $products[$product['sku']] = $product['quantity'];
 
-            // $orderData['price_sum'] += (int)$product['price'];
-
-            // !!! TEST PAYMENT !!!
-            $orderData['price_sum'] = "1.00";
+            if($this->mode === 'TEST') $orderData['price_sum'] = "1.00"; // !!! TEST PAYMENT !!!
+            else $orderData['price_sum'] += (int)$product['price'];
 
             Product::where('details->sku', $product['sku'])->update([
                 'details->balance' => 0
@@ -333,9 +333,11 @@ class CartController
 
     /**
      * Create data order for request
+     * @param $data
+     * @return array
      */
-    public function createDataOrder($data) {
-
+    public function createDataOrder($data): array
+    {
         $result = [];
 
         $result['new_mail_surname'] = $data['new_mail_surname'];
@@ -379,13 +381,18 @@ class CartController
 
     /**
      * Payment page
-     * @param Request $request
      * @return RedirectResponse
      */
-    public function payment(Request $request) {
+    public function payment() {
+
+        $order = [];
 
         if(session()->has('order')) $order = session('order');
+
         if(!session()->has('order') && !($order = $this->getCookieOrder())) return redirect()->route('site.cart');
+
+        if(empty($order)) Redirect::route('site.order-checkout')->withErrors([
+            'error'=>'Для оформления заказа необходимо выбрать хотя бы один товар!']);
 
         return view('site.orders.payment', [
             'order_id' => $order['data']['order_id'],
@@ -398,6 +405,7 @@ class CartController
             'googlePayMerchantName' => config('app.GOOGLE_MERCHANT_NAME'),
             'applePayMerchantId' => config('app.APPLE_MERCHANT_ID'),
             'applePayMerchantName' => config('app.APPLE_MERCHANT_NAME'),
+            'mode' => $this->mode,
         ]);
     }
 
@@ -407,20 +415,13 @@ class CartController
      */
     public function orderPayment() {
 
-        // $order = session('order');
-
-        //session()->keep(['order']);
         $order = $this->getCookieOrder();
-
-        info($order);
-        info('------------------------------');
 
         $order_id = $order['data']['order_id'];
 
-        $amount = number_format($order['data']['price_sum'], 2, '.', '');
+        $this->telegramMessage($order, $order_id, 'PLATON BANK CARD LOAD PAYMENT FORM');
 
-        // $order_id = $order['data']['order_id'];
-        // $order_id = 118;
+        $amount = number_format($order['data']['price_sum'], 2, '.', '');
 
         $dataPayment = $this->requestBankCardPayment($order_id, $amount);
 
@@ -437,8 +438,10 @@ class CartController
      */
     public function requestBankCardPayment($order_id, $amount): array
     {
-        // $order = session()->get('data');
         $order = $this->getCookieOrder();
+
+        if($this->mode === 'TEST') $data_description = "Bank card order payment. Order ID: $order_id" ;
+        else $data_description = 'ORDER_ID #'  . $order_id;
 
         $key = config('app.PLATON_PAYMENT_KEY');
         $pass = config('app.PLATON_PAYMENT_PASSWORD');
@@ -447,7 +450,7 @@ class CartController
             json_encode(
                 array(
                     'amount' => $amount,
-                    'description' => "Bank card order payment. Order ID: $order_id" ,
+                    'description' => $data_description ,
                     'currency' => 'UAH',
                     'recurring' => 'Y'
                 )
@@ -466,8 +469,12 @@ class CartController
             )
         );
 
+
+        if($this->mode === 'TEST') $order['data']['order_id'] = 'TEST BANK CARD PAYMENT -' . $order['data']['order_id'] ;
+        else $order['data']['order_id'] = 'ORDER_ID #'  . $order_id;
+
         $request = [
-            'order' => $order['data'],
+            'order' => $order['data']['order_id'],
             'payment' => $payment,
             'key' => $key,
             'url' => $url,
@@ -495,12 +502,15 @@ class CartController
     public function requestGooglePay()
     {
         $paymentToken = request()->get('paymentToken');
+
         if(empty($paymentToken)) return redirect()->route('site.cart');
 
         $paymentToken = base64_decode($paymentToken);
 
         $order = $this->getCookieOrder();
+
         $order_id = $order['data']['order_id'];
+
         $this->telegramMessage($paymentToken, $order_id, 'GOOGLE PAY TOKEN');
 
         $amount = number_format($order['data']['price_sum'], 2, '.', '');
@@ -508,10 +518,13 @@ class CartController
         $key = config('app.PLATON_GOOGLE_AND_APPLE_PAYMENT_KEY');
         $pass = config('app.PLATON_GOOGLE_AND_APPLE_PAYMENT_PASSWORD');
 
+        if($this->mode === 'TEST') $data_order_id = 'TEST GooglePay-' . $order_id ;
+        else $data_order_id = 'ORDER_ID #'  . $order_id;
+
         $CLIENT_PASS = $pass;
         $data['action'] = 'GOOGLEPAY';
         $data['CLIENT_KEY'] = $key;
-        $data['order_id'] = $order_id;
+        $data['order_id'] = $data_order_id;
         $data['order_amount'] = $amount;
         $data['order_currency'] = 'UAH';
         $data['order_description'] = "Google Pay order payment. Order ID: $order_id";
@@ -547,6 +560,7 @@ class CartController
             $this->telegramMessage($ch, $order_id);
 
             $this->updatePaymentOrder($order_id, self::GOOGLE_PAY, curl_error($ch), 0);
+
             return Redirect::route('site.order-checkout')->withErrors([
                 'error'=>'Во время инициализации платежа произошла ошибка! Выберите другой способ оплаты или свяжитесь с поддержкой сайта для завершения оформления заказа!']);
         }
@@ -619,22 +633,16 @@ class CartController
             $ch = curl_init();
 
             curl_setopt($ch, CURLOPT_URL, $validation_url);
-//            curl_setopt($ch, CURLOPT_SSLCERT, PRODUCTION_CERTIFICATE_PATH);            // <= !!!!!!!!!!!!!!!
-//            curl_setopt($ch, CURLOPT_SSLKEY, PRODUCTION_CERTIFICATE_KEY);              // <= !!!!!!!!!!!!!!!
-//            curl_setopt($ch, CURLOPT_SSLKEYPASSWD, PRODUCTION_CERTIFICATE_KEY_PASS);   // <= !!!!!!!!!!!!!!!
-            curl_setopt($ch, CURLOPT_SSLCERT, $cert_path);            // <= !!!!!!!!!!!!!!!
-            curl_setopt($ch, CURLOPT_SSLKEY, $cert_key);              // <= !!!!!!!!!!!!!!!
-            curl_setopt($ch, CURLOPT_SSLKEYPASSWD, $cert_pass);   // <= !!!!!!!!!!!!!!!
-            //curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
-            //curl_setopt($ch, CURLOPT_SSLVERSION, 'CURL_SSLVERSION_TLSv1_2');
-            //curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, 'rsa_aes_128_gcm_sha_256,ecdhe_rsa_aes_128_gcm_sha_256');
+            curl_setopt($ch, CURLOPT_SSLCERT, $cert_path);
+            curl_setopt($ch, CURLOPT_SSLKEY, $cert_key);
+            curl_setopt($ch, CURLOPT_SSLKEYPASSWD, $cert_pass);
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
             if(!($response = curl_exec($ch)))
             {
                 $this->telegramMessage("Error: ApplePay validation. CURL_ERROR" . curl_error($ch) , $order['data']['order_id'], "PLATON APPLE PAY ERROR CURL REQUEST VALIDATION");
-                // info("Error: ApplePay validation ############ " . curl_error($ch) . " ##########");
+
                 echo '{"curlError":"' . curl_error($ch) . '"}';
             }
 
@@ -678,18 +686,15 @@ class CartController
             )
         );
 
-//        $client  = $_SERVER['HTTP_CLIENT_IP'];
-//        $forward = $_SERVER['HTTP_X_FORWARDED_FOR'];
-//        $remote  = $_SERVER['REMOTE_ADDR'];
-//
-//        if(filter_var($client, FILTER_VALIDATE_IP)) $ip_address = $client;
-//        elseif(filter_var($forward, FILTER_VALIDATE_IP)) $ip_address = $forward;
         $ip_address = $_SERVER['REMOTE_ADDR'];
+
+        if($this->mode === 'TEST') $data_order_id = 'TEST ApplePay-' . $order_id ;
+        else $data_order_id = 'ORDER_ID #'  . $order_id;
 
         $data = [
             'action' => 'APPLEPAY',
             'client_key' => $key,
-            'order_id' => 'TEST ApplePay-' . $order_id,
+            'order_id' => $data_order_id,
             'order_amount' => $amount,
             'order_currency' => 'UAH',
             'order_description' => "Apple Pay order payment. Order ID: $order_id",
@@ -699,7 +704,6 @@ class CartController
             'hash' => $hash
         ];
 
-        //info(json_encode($data));
         // create a new cURL resource
         $ch = curl_init();
 
@@ -708,11 +712,6 @@ class CartController
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Access-Control-Allow-Origin: *'));
-
-
-//        curl_setopt($ch, CURLOPT_URL, 'https://secure.platononline.com/post/');
-//        curl_setopt($ch, CURLOPT_POST, 1);
-//        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
         if(!($response = curl_exec($ch)))
         {
@@ -736,7 +735,6 @@ class CartController
                 'data' => [
                     'PaReq' => $responseArr['redirect_params']['PaReq'],
                     'TermUrl' => $responseArr['redirect_params']['TermUrl'],
-                    // 'MD' => $responseArr['redirect_params']['MD'],
                 ],
                 'redirect_url' => $responseArr['redirect_url']
             ]);
@@ -920,7 +918,7 @@ class CartController
      * Save new order in data
      * @param $data
      * @param $orderProducts
-     * @return false
+     * @return bool|int
      */
     public function saveNewOrder($data, $orderProducts)
     {
@@ -1028,18 +1026,14 @@ class CartController
     /**
      * Get data resources of New Post from b2b
      * @param $data
-     * @return false|mixed
+     * @return bool|string
      */
     public function sentOrderToB2B($data)
     {
-        // $start = time();
-        // $url = 'http://94.131.241.126/api/nova-poshta/cities';
-        info($data);
- //       if(empty($data['data']['is_employee'])) return;
-//return;
         if(isset($data['order_id'])) unset($data['order_id']);
 
         $curl = curl_init();
+
         curl_setopt_array($curl,
             array(
                 CURLOPT_URL => "https://b2b-sandi.com.ua/api/orders/checkout?token=" . config('app.ORDER_TOKEN_FOR_B2B'),
@@ -1055,36 +1049,28 @@ class CartController
         );
 
         $response = curl_exec($curl);
+
         $err = curl_error($curl);
+
         $info = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
         curl_close($curl);
 
-        //        var_dump('Время получения ответа: ' . (time() - $start));
-        //        var_dump('Код ответа: ' . $info);
-        //        var_dump('Ответ:');
-
-
         if($err || $info !== 200 ) {
+
             info("Ошибка! Не удалось получить ответ от сервера. Код ошибки: $info!");
+
             info($response);
+
+            $this->telegramMessage($info, $data['data']['order_id'], 'SENT ORDER TO 1C FAILED');
+
             return false;
         }
 
-        //$result = json_decode($response, true);
-
-        //echo "Код ответа: $info" . PHP_EOL;
-        //echo "Страница " . $response . PHP_EOL;
+        $this->telegramMessage($response, $data['data']['order_id'], 'SENT ORDER TO 1C');
 
         return $response;
     }
-
-//    private function memorizeOrder($order) {
-//        cookie('order', json_encode($order), 15);
-//    }
-//
-//    private function getOrder() {
-//        json_decode(cookie('order'));
-//    }
 
     /**
      * Get order
@@ -1093,7 +1079,6 @@ class CartController
      */
     public function getOrder($order_id): array
     {
-
         $order = Orders::where('id', $order_id)->limit(1)->first();
 
         $restoreOrder = [];
@@ -1176,9 +1161,16 @@ class CartController
         return $restoreOrder;
     }
 
-
-    function telegramMessage($text, $order_id, $title = '')
+    /**
+     * Sent message to telegram bot
+     * @param $text
+     * @param $order_id
+     * @param string $title
+     */
+    public function telegramMessage($text, $order_id, $title = '')
     {
+        if(!$this->telegramMessage) return;
+
         if(!empty($title)) $title = "$title\n\n";
 
         $message = "Date: " . date("d.m.Y, H:i:s") . "\norder_id: $order_id\n\n$title" . ((is_array($text) || is_object($text)) ? json_encode($text) : $text);
@@ -1199,6 +1191,6 @@ class CartController
             )
         );
 
-        $response = curl_exec($ch);
+        curl_exec($ch);
     }
 }

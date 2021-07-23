@@ -267,7 +267,7 @@ class NewPostController
 
     /**
      * Get New Post Settlements
-     * @param Request $request
+     * @param $regionRef
      * @return array
      */
     public function getSettlements($regionRef): array
@@ -336,7 +336,7 @@ class NewPostController
 
     /**
      * Get New Post Warehouses
-     * @param Request $request
+     * @param $cityRef
      * @return array
      */
     public function getWarehouses($cityRef): array

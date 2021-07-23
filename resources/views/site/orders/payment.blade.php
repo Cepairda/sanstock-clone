@@ -55,11 +55,6 @@
                                         <p style="display:none" id="success">Трансакция прошла успешно. Идет завершение оформления заказа ...</p>
                                     </div>
 
-{{--                                    <div id="ApplePay" class="apple-pay-button-with-text apple-pay-button-white-with-text @if($payment_method !== 'apple_pay')d-none @endif"--}}
-{{--                                        style="--apple-pay-button-width: 150px; --apple-pay-button-height: 30px; --apple-pay-button-border-radius: 3px; --apple-pay-button-padding: 0px 0px; --apple-pay-button-box-sizing: border-box;">--}}
-{{--                                        <span class="text">Buy with</span>--}}
-{{--                                        <span class="logo"></span>--}}
-{{--                                    </div>--}}
                                 @endif
 
                             </div>
@@ -67,7 +62,7 @@
                         @endforeach
                     </div>
 
-                    <div id="frame-container" class="main__contacts-form @if($payment_method !== 'bank_card') d-none @endif" style="height: 1040px">
+                    <div id="frame-container" class="main__contacts-form @if($payment_method !== 'bank_card') d-none @endif" style="height: 1140px">
 
                         <div style="width:100%; height:100%; margin:0 auto;">
                             <iframe src="" seamless name="frame" id="frame" width="100%" height="100%" frameborder="0" scrolling="no" style="overflow: hidden;"></iframe>
@@ -81,6 +76,28 @@
     </main>
 
     <script>
+        let debug;
+        @if($mode === 'TEST')
+            debug = true;
+        @else
+            debug = false;
+        @endif
+
+        function logit(data) {
+            if( debug == true ){
+                console.log(data);
+            }
+        }
+
+        function logitError(data) {
+            if( debug == true ){
+                console.error(data);
+            }
+        }
+
+        let googlePayJsLoaded = false;
+
+        document.cookie = "pay={{ $payment_method }}";
 
         let is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
@@ -99,7 +116,10 @@
             }
         };
 
-        // GOOGLE PAY API
+    </script>
+
+    <!-- GOOGLE PAY API -->
+    <script>
         // Google version
         const baseRequest = {
             environment : 'PRODUCTION',
@@ -170,7 +190,7 @@
                 merchantId: '{{ $googlePayMerchantId }}',
                 merchantName: '{{ $googlePayMerchantName }}'
             };
-            console.log(paymentDataRequest);
+            logit(paymentDataRequest);
             return paymentDataRequest;
         }
 
@@ -194,6 +214,9 @@
          * ability to pay.
          */
         function onGooglePayLoaded() {
+
+            if(document.cookie !== 'google_pay' || !googlePayJsLoaded) return;
+
             const paymentsClient = getGooglePaymentsClient();
             paymentsClient.isReadyToPay(getGoogleIsReadyToPayRequest())
                 .then(function(response) {
@@ -205,7 +228,8 @@
                 })
                 .catch(function(err) {
                     // show error in developer console for debugging
-                    console.error(err);
+                    logitError(err);
+                    // console.error(err);
                 });
         }
 
@@ -269,7 +293,8 @@
                 })
                 .catch(function(err) {
                     // show error in developer console for debugging
-                    console.error(err);
+                    logitError(err);
+                    // console.error(err);
                 });
         }
         /**
@@ -280,31 +305,12 @@
          */
         function processPayment(paymentData) {
             // show returned data in developer console for debugging
-            console.log(paymentData);
+            logit(paymentData);
             // @todo pass payment token to your gateway to process payment
             let paymentToken = paymentData.paymentMethodData.tokenizationData.token;
 
-            console.log('PaymentToken: ');
-            console.log(paymentToken);
-
-            // var withoutEcranPaymentToken = paymentToken
-            //     .replace(/[\\]/g, '\\\\')
-            //     .replace(/[\/]/g, '\\/')
-            //     .replace(/[\b]/g, '\\b')
-            //     .replace(/[\f]/g, '\\f')
-            //     .replace(/[\n]/g, '\\n')
-            //     .replace(/[\r]/g, '\\r')
-            //     .replace(/[\t]/g, '\\t')
-            //     .replace(/[\"]/g, '\\"')
-            //     .replace(/\\'/g, "\\'");
-
-            //var re = /\\"/g;
-            //let ReppaymentToken = paymentToken.replace(re, '"');
-            // paymentToken = paymentToken.replace(re, '"');
-
-// console.log(paymentToken);
-// console.log(ReppaymentToken);
-// console.log(JSON.parse(paymentToken));
+            logit('PaymentToken: ');
+            logit(paymentToken);
 
             document.cookie = "pay=google_pay";
             document.location.href = '{{ route('site.google-pay-request-to-platon') }}' + '?paymentToken=' + window.btoa(paymentToken) ;
@@ -319,53 +325,13 @@
     <script
         async
         src="https://pay.google.com/gp/p/js/pay.js"
-        onload="onGooglePayLoaded(); console.log('TODO: add onload function')">
+        onload="googlePayJsLoaded = true; onGooglePayLoaded();">
     </script>
 
     <!-- Apple Pay -->
     <script>
+
         if(is_safari) {
- //           if (window.ApplePaySession) {
-                // The Apple Pay JS API is available.
-
-            {{--    var request = {--}}
-            {{--        countryCode: 'UA',--}}
-            {{--        currencyCode: 'UAH',--}}
-            {{--        supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],--}}
-            {{--        merchantCapabilities: ['supports3DS'],--}}
-            {{--        total: { label: 'Test order#{{ $order_id }}', amount: '{{ $total }}' },--}}
-            {{--    }--}}
-            {{--    var session = new ApplePaySession(3, request);--}}
-
-            {{--    var promise = ApplePaySession.canMakePaymentsWithActiveCard(merchantIdentifier);--}}
-            {{--    promise.then(function (canMakePayments) {--}}
-            {{--        if (canMakePayments) {--}}
-            {{--            document.getElementById('apple-pay').show(); //кнопка Apple Pay--}}
-            {{--        }--}}
-            {{--    });--}}
-            {{--}--}}
-
-            {{--let merchIdentityCert;--}}
-
-            {{--const options = {--}}
-            {{--    url: "https://apple-pay-gateway.apple.com/paymentservices/paymentSession",--}}
-            {{--    cert: merchIdentityCert,--}}
-            {{--    key: merchIdentityCert,--}}
-            {{--    method: 'post',--}}
-            {{--    body: {--}}
-            {{--        merchantIdentifier: '{{ $applePayMerchantId }}',--}}
-            {{--        displayName: '{{ $applePayMerchantName }}',--}}
-            {{--        initiative: "web",--}}
-            {{--        initiativeContext: "sandistock.com.ua"--}}
-            {{--    },--}}
-            {{--    json: true,--}}
-            {{--}--}}
-
-
-
-
-
-            var debug = true;
 
             if (window.ApplePaySession) {
                 var merchantIdentifier = '{{ $applePayMerchantId }}';
@@ -457,7 +423,6 @@
                     });
                 }
 
-
                 function performValidation(valURL) {
                     return new Promise(function(resolve, reject) {
                         var xhr = new XMLHttpRequest();
@@ -487,8 +452,6 @@
                     var newLineItems =[{type: 'final',label: subTotalDescr, amount: runningAmount }];
 
                     session.completeShippingContactSelection(status, newShippingMethods, newTotal, newLineItems );
-
-
                 }
 
                 session.onshippingmethodselected = function(event) {
@@ -564,18 +527,9 @@
                 }
 
                 session.begin();
-
             };
-
-            function logit( data ){
-
-                if( debug == true ){
-                    console.log(data);
-                }
-
-            };
-
         }
+
     </script>
 
     <script>
@@ -592,9 +546,6 @@
         @endif
         // document.getElementById('frame').contentWindow.location.reload(true);
 
-
-        document.cookie = "pay={{ $payment_method }}";
-
         let radios = document.querySelectorAll('[name="paymentType"]')
 
         for(let i = radios.length; i--;) {
@@ -604,6 +555,7 @@
                 let googlePayButton = document.getElementById('GooglePay');
 
                 document.cookie = "pay=" + e.target.value;
+
                 if(e.target.value === 'bank_card') {
                     if(frame.classList.contains('d-none')) frame.classList.remove('d-none');
                     if(is_safari && !applePayButton.classList.contains('d-none')) applePayButton.classList.add('d-none');
@@ -613,6 +565,7 @@
                 else {
                     if(!frame.classList.contains('d-none')) frame.classList.add('d-none');
                     if(e.target.value === 'google_pay') {
+                        onGooglePayLoaded();
                         if(is_safari && !applePayButton.classList.contains('d-none')) applePayButton.classList.add('d-none');
                         if(googlePayButton.classList.contains('d-none')) googlePayButton.classList.remove('d-none');
                     }
@@ -633,7 +586,9 @@
             if(iframe !== null) {
                 let newDoc = iframe.contentDocument;
                 if(oldDoc !== newDoc) {
-                    console.log(newDoc);
+                    logit(newDoc);
+                    logit(iframe.contentDocument);
+                    // logit(iframe.contentWindow.document.body.offsetHeight);
                     oldDoc = newDoc;
                 }
                 //if (newDoc == oldDoc) return;
@@ -646,10 +601,5 @@
         }, 100);
 
     </script>
-
-
-{{--    @section('javascript')--}}
-{{--        <script type="text/javascript" src="{{ mix('js/site/page/checkout.js') }}"></script>--}}
-{{--    @endsection--}}
 
 @endsection

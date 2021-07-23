@@ -8,7 +8,6 @@
 <form id="myForm" action="{{ $redirect_url }}" method="post">
     <input type="hidden" name="PaReq" value="{{ $data['PaReq'] }}"/>
     <input type="hidden" name="TermUrl" value="{{ $data['TermUrl'] }}"/>
-{{--    <input type="hidden" name="MD" value="{{ $data['MD'] }}"/>--}}
 </form>
 
 </body>
