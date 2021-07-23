@@ -53,7 +53,7 @@ class PriceImport
      * @param array|null $skuArray SKU products from DB
      * @return void
      */
-    public static function import(array $jsonData, array $skuArray = null) : void
+    public static function import(array $jsonData, array $skuArray = []) : void
     {
             $skuExistsAPI = [];
 

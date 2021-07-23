@@ -279,6 +279,9 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::get('/payments', function(){
             return view('site.page.payments');
         })->name('payments');
+        Route::get('/guarantee', function(){
+            return view('site.page.guarantee');
+        })->name('guarantee');
 
         Route::get('/documentation', function () {return view('site.page.documentation');})->name('documentations');
         Route::get('/documents/certificates', function () {return view('site.page.certificates');})->name('certificates');

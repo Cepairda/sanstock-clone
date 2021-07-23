@@ -117,10 +117,10 @@
                                          src="{{ asset('images/white_fone_150x150.jpg' )}}" alt="">
                                 </div>
                             @else
-                                <div class="_bl-g th-gallery">
+                                <div class="_bl-g th-gallery tabs-products__preview-zoom">
 
                                     @foreach($defectiveImages as $key => $value)
-                                        <a href="/storage/product/{{ $productGroup->sdCode }}/{{ $product->sku }}/{{ $product->sku }}_{{ $key }}.jpg">
+                                        <a class="tabs-products__preview-zoom" href="/storage/product/{{ $productGroup->sdCode }}/{{ $product->sku }}/{{ $product->sku }}_{{ $key }}.jpg">
                                             <img class="_bl-g--img lazy img-data-path" width="75"
                                                  data-src="/storage/product/{{ $productGroup->sdCode }}/{{ $product->sku }}/{{ $product->sku }}_{{ $key }}.jpg"
                                                  src="{{ asset('images/white_fone_150x150.jpg' )}}" alt="">
@@ -137,7 +137,7 @@
                     <div  class="col-md-9 col-6 align-self-center" data-price="{{ $price }}" data-oldprice="{{ $normalPrice }}">
                         @if($product->getData('defective_attributes'))
                             @foreach($product->getData('defective_attributes') as $defective_attribute)
-                                {{ '- ' . $defective_attribute }}
+                                {{ '- ' . $defective_attribute }} <br>
                             @endforeach
                         @endif
                     </div>

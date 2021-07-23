@@ -20,6 +20,7 @@
                     <li><a class="footer__element--item" href="{{ asset('/contacts') }}">{{ __('Contacts') }}</a></li>
                     <li><a class="footer__element--item" href="{{ asset('/delivery') }}">{{ __('Delivery') }}</a></li>
                     <li><a class="footer__element--item" href="{{ asset('/payments') }}">{{ __('Payments') }}</a></li>
+                    <li><a class="footer__element--item" href="{{ asset('/guarantee') }}">{{ __('Warranty and Returns') }}</a></li>
                     <li><a class="footer__element--item disabled" href="#" style="color: #656565">{{ __('FAQ') }}</a></li>
                 </ul>
             </div>

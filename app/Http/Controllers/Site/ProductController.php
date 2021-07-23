@@ -106,15 +106,15 @@ class ProductController extends Controller
             }
         } elseif ($pageType == 'product') {
             foreach ($pricesWithBalances['data'] as $sku => [
-                     'main' => [
-                     'sku' => $sdCode,
-                     'price' => $price,
-                     'old_price' => $oldPrice,
-                     'balance' => $balance,
-                     'defective_attributes' => [
-                     'grade' => $grade,
-            ],
-            ]
+                'main' => [
+                    'sku' => $sdCode,
+                    'price' => $price,
+                    'old_price' => $oldPrice,
+                    'balance' => $balance,
+                    'defective_attributes' => [
+                        'grade' => $grade,
+                    ],
+                ]
             ]) {
                 $forUpdate[] = [
                     'sku' => $sku,

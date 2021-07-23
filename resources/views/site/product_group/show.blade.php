@@ -165,6 +165,8 @@
                                     @for ($_sort = 0; $_sort < 4; $_sort++)
                                         <a id="sort-tab-{{ $_sort }}"
                                            class="nav-link w-25 text-center{{ isset($productsSort[$_sort]) ? '' : ' nav-link-gray' }}{{ $_sort == $sort ? ' active' : '' }}"
+                                           data-product-sort-sd-code="{{ $productGroup->sdCode }}"
+                                           data-product-sort-grade="{{ $_sort }}"
                                            data-sort="{{ $_sort }}"
                                            data-price="{!!  isset($productsSort[$_sort]) ? number_format(ceil($productsSort[$_sort]->price),0,'',' ')  : ''  !!}"
                                            data-normal="{!! isset($productsSort[$_sort]->normalPrice) ? number_format(ceil($productsSort[$_sort]->normalPrice),0,'',' ') : '' !!}"
