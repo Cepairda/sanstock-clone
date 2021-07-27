@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Product;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use XMLWriter;
 
 class XMLController extends Controller
@@ -25,49 +28,60 @@ class XMLController extends Controller
 
         $time_start = time();
 
-        $products = [];
-
-        for($i = 1; $i <= 10; $i++):
-
-            $product = [
-                'sku' => "SKU$i",
-                'name' => "Товар $i",
-                'description' => "Описание товара $i",
-                'category_id' => "1",
-                'price' => "77.9",
-                'oldprice' => "80",
-                'vendor' => "Lidz",
-                'vendor_code' => "Lidz/$i",
-                'quantity_in_stock' => "1",
-                'picture' => [
-                    "https://sanstock.com.ua/img-1.jpg",
-                    "https://sanstock.com.ua/img-2.jpg",
-                    "https://sanstock.com.ua/img-3.jpg"
-                ],
-                'attributes' => [
-                    'Цвет' => 'Белый',
-                    'Материал' => 'Керамика',
-                    'Производитель' => 'Китай',
-                ]
-            ];
-
-            $products[] = $product;
-
-        endfor;
+        LaravelLocalization::setLocale('ru');
 
         $categories = [];
 
         $categoriesList = Category::joinLocalization('ru')->get();
 
-        foreach ($categoriesList as $category) {
+        foreach ($categoriesList as $dataCategory) {
 
             $category = [
-                'name' => $category->name,
-                'id' => $category->id,
-                'parent_id' => $category->parent_id,
+                'name' => $dataCategory->name,
+                'id' => $dataCategory->id,
+                'parent_id' => $dataCategory->parent_id??0,
             ];
 
-            $categories[] = $category;
+            $categories[$dataCategory->ref] = $category;
+        }
+
+        $products = [];
+
+        $dataProducts = Product::joinLocalization('ru')->with(['productSort.productGroup', 'defectiveImages'])->withProductsSort()->get();
+
+        foreach ($dataProducts as $dataProduct) {
+
+            $product = [
+                'sku' => $dataProduct->sku,
+                'name' => $dataProduct->name,
+                'description' => $dataProduct->description,
+                'category_id' => $categories[$dataProduct->category_id]['id']??'',
+                'price' => $dataProduct->productSort->price,
+                'oldprice' => $dataProduct->productSort->old_price,
+                //'vendor' => "Lidz",
+                //'vendor_code' => "Lidz/ZXC",
+                'quantity_in_stock' => "1",
+            ];
+
+            $picture = [];
+
+            foreach ($dataProduct->allDefectiveImages as $key => $value) {
+                $picture[] = URL::to('/') . "/storage/product/{$dataProduct->productSort->productGroup->sdCode}/{$dataProduct->sku}/{$dataProduct->sku}_{$key}.jpg?access=true";
+            }
+
+            $product['picture'] = $picture;
+
+            $attributes = [];
+
+            $characteristics = $dataProduct->productSort->productGroup->characteristics;
+
+            foreach ($characteristics as $value) {
+                $attributes[$value->name] = $value->value ;
+            }
+
+            $product['attributes'] = $attributes;
+
+            $products[] = $product;
         }
 
         $xml = new XMLController;
@@ -155,7 +169,11 @@ class XMLController extends Controller
         $this->xw->startElement('categories');
 
         foreach($categories as $category):
-
+//if(is_array($category['name'])) {
+////    print_r($category);
+////    dd($category['name']);
+//
+//}
             $this->createTag('category', $category['name'], ['id' => $category['id'],'parentId' => $category['parent_id']]);
 
         endforeach;
@@ -169,6 +187,13 @@ class XMLController extends Controller
      */
     public function createOffer($data) {
 
+        if(empty($data['name']) || empty($data['category_id'])) {
+
+            $this->telegramMessage($data, $data['sku'], $title = 'EMPTY NAME OR CATEGORY');
+
+            return;
+        }
+
         $this->xw->startElement('offer');
 
         $this->xw->startAttribute('id');
@@ -181,7 +206,8 @@ class XMLController extends Controller
 
         $this->createTag('name', $data['name']);
 
-        $this->createTag('description', $data['description']);
+        if(empty($data['description'])) $this->createTag('description', $data['name']);
+        else $this->createTag('description', $data['description']);
 
         $this->createTag('categoryId', $data['category_id']);
 
@@ -195,11 +221,11 @@ class XMLController extends Controller
 
         $this->createTag('currencyId', 'UAH');
 
-        $this->createTag('vendor', $data['vendor']);
+        //$this->createTag('vendor', $data['vendor']);
 
-        $this->createTag('vendorCode', $data['vendor_code']);
+        //$this->createTag('vendorCode', $data['vendor_code']);
 
-        $this->createTag('available', 'true');
+        // $this->createTag('available', 'true');
 
         // $this->createTag('country', $data['country']);
 
@@ -236,7 +262,10 @@ class XMLController extends Controller
             $this->xw->endAttribute();
 
         endforeach;
-
+        if(is_array($value)) {
+            print_r($name);
+            dd($value);
+        }
         $this->xw->text($value);
 
         $this->xw->endElement();
@@ -271,5 +300,36 @@ class XMLController extends Controller
         $this->xw->endElement();
 
         $this->xw->endDocument();
+    }
+
+    /**
+     * Sent message to telegram bot
+     * @param $text
+     * @param $order_id
+     * @param string $title
+     */
+    public function telegramMessage($text, $order_id, $title = '')
+    {
+        if(!empty($title)) $title = "$title\n\n";
+
+        $message = "SANDISTOCK\n\nDate: " . date("d.m.Y, H:i:s") . "\nitem: $order_id\n\n$title" . ((is_array($text) || is_object($text)) ? json_encode($text) : $text);
+
+        $ch = curl_init();
+
+        curl_setopt_array(
+            $ch,
+            array(
+                CURLOPT_URL => 'https://api.telegram.org/bot1932081629:AAHtkIkpdksXRWpkJW3pwWD_EdmfAN7pVzA/sendMessage',
+                CURLOPT_POST => TRUE,
+                CURLOPT_RETURNTRANSFER => TRUE,
+                CURLOPT_TIMEOUT => 10,
+                CURLOPT_POSTFIELDS => array(
+                    'chat_id' => 143719460,
+                    'text' => $message,
+                ),
+            )
+        );
+
+        curl_exec($ch);
     }
 }

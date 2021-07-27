@@ -16,7 +16,7 @@ class ExportController extends Controller
 //        ini_set('max_execution_time', 10000);
 //        set_time_limit(0);
     }
-// http://sanstock/export-prom/U2FuZGlzdG9jaw
+// http://sanstock/export-prom/U2FuZGlzdG9jaw?access=true
     public function export($token) {
         if($token !== config('app.EXPORT_TOKEN')) return '';
 
