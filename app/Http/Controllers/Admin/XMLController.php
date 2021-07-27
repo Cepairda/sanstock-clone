@@ -66,7 +66,7 @@ class XMLController extends Controller
             $picture = [];
 
             foreach ($dataProduct->allDefectiveImages as $key => $value) {
-                $picture[] = URL::to('/') . "/storage/product/{$dataProduct->productSort->productGroup->sdCode}/{$dataProduct->sku}/{$dataProduct->sku}_{$key}.jpg?access=true";
+                $picture[] = url('/') . "/storage/product/{$dataProduct->productSort->productGroup->sdCode}/{$dataProduct->sku}/{$dataProduct->sku}_{$key}.jpg?access=true";
             }
 
             $product['picture'] = $picture;
