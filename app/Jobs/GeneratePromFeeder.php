@@ -29,6 +29,6 @@ class GeneratePromFeeder implements ShouldQueue
      */
     public function handle()
     {
-        (new \App\Http\Controllers\Admin\Export\ExportController())->createPromXMLFeeder();
+        (new \App\Http\Controllers\Admin\XMLController())->createPromXMLFeeder();
     }
 }

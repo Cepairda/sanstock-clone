@@ -66,7 +66,7 @@ class XMLController extends Controller
             $picture = [];
 
             foreach ($dataProduct->allDefectiveImages as $key => $value) {
-                $picture[] = url('/') . "/storage/product/{$dataProduct->productSort->productGroup->sdCode}/{$dataProduct->sku}/{$dataProduct->sku}_{$key}.jpg?access=true";
+                $picture[] = "https://" . request()->getHttpHost() . "/storage/product/{$dataProduct->productSort->productGroup->sdCode}/{$dataProduct->sku}/{$dataProduct->sku}_{$key}.jpg?access=true";
             }
 
             $product['picture'] = $picture;
