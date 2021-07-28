@@ -31,8 +31,8 @@ class CartController
 
     private $telegramMessage = true;
 
-    private $mode = 'TEST';
-    // private $mode = 'ENVIRONMENT';
+    // private $mode = 'TEST';
+    private $mode = 'ENVIRONMENT';
 
     function __construct() {
 
