@@ -66,7 +66,7 @@ class XMLController extends Controller
             $picture = [];
 
             foreach ($dataProduct->allDefectiveImages as $key => $value) {
-                $picture[] = "https://" . request()->getHttpHost() . "/storage/product/{$dataProduct->productSort->productGroup->sdCode}/{$dataProduct->sku}/{$dataProduct->sku}_{$key}.jpg?access=true";
+                $picture[] = "https://sandistock.com.ua/storage/product/{$dataProduct->productSort->productGroup->sdCode}/{$dataProduct->sku}/{$dataProduct->sku}_{$key}.jpg?access=true";
             }
 
             $product['picture'] = $picture;
@@ -155,6 +155,11 @@ class XMLController extends Controller
 
         foreach($products as $product):
 
+            if(empty($product['name']) || empty($product['category_id'])) {
+                // $this->telegramMessage($product, $product['sku'], $title = 'EMPTY NAME OR CATEGORY');
+                continue;
+            }
+
             $this->createOffer($product);
 
         endforeach;
@@ -169,11 +174,7 @@ class XMLController extends Controller
         $this->xw->startElement('categories');
 
         foreach($categories as $category):
-//if(is_array($category['name'])) {
-////    print_r($category);
-////    dd($category['name']);
-//
-//}
+
             $this->createTag('category', $category['name'], ['id' => $category['id'],'parentId' => $category['parent_id']]);
 
         endforeach;
@@ -187,13 +188,6 @@ class XMLController extends Controller
      */
     public function createOffer($data) {
 
-        if(empty($data['name']) || empty($data['category_id'])) {
-
-            $this->telegramMessage($data, $data['sku'], $title = 'EMPTY NAME OR CATEGORY');
-
-            return;
-        }
-
         $this->xw->startElement('offer');
 
         $this->xw->startAttribute('id');
@@ -204,9 +198,11 @@ class XMLController extends Controller
         $this->xw->text('true');
         $this->xw->endAttribute();
 
-        $this->createTag('name', $data['name']);
+        $name = 'Уцененный товар (СОРТ-1) - ' . $data['name'] . ' (' . $data['sku'] . ')';
 
-        if(empty($data['description'])) $this->createTag('description', $data['name']);
+        $this->createTag('name', $name);
+
+        if(empty($data['description'])) $this->createTag('description', $name);
         else $this->createTag('description', $data['description']);
 
         $this->createTag('categoryId', $data['category_id']);
@@ -262,10 +258,7 @@ class XMLController extends Controller
             $this->xw->endAttribute();
 
         endforeach;
-        if(is_array($value)) {
-            print_r($name);
-            dd($value);
-        }
+
         $this->xw->text($value);
 
         $this->xw->endElement();

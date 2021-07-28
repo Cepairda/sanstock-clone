@@ -18,6 +18,7 @@ class ExportController extends Controller
 //        set_time_limit(0);
     }
 // https://sandistock.com.ua/export-prom/U2FuZGlzdG9jaw?access=true
+// http://sanstock/export-prom/U2FuZGlzdG9jaw?access=true
     public function export($token) {
         if($token !== config('app.EXPORT_TOKEN')) return '';
 
