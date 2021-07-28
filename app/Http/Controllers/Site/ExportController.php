@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\XMLController;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Response;
 
 class ExportController extends Controller
 {
@@ -26,6 +27,10 @@ class ExportController extends Controller
         //header("Content-Disposition: attachment; filename=yml_prom_feeder.xml");
 //        header('Content-Type: text/xml');
 //        header('Content-Type: application/xml');
-        return Storage::disk('local')->get('yml_prom_feeder.xml');
+        $file = Storage::disk('local')->get('yml_prom_feeder.xml');
+        return new Response($file, 200, [
+            'Content-Type' => 'application/xml',
+            'Content-Disposition' =>  'attachment; filename="yml_prom_feeder.xml"'
+        ]);
     }
 }
