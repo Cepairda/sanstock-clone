@@ -330,15 +330,10 @@ class XMLController extends Controller
 
         $characteristicsValuesMap = $this->characteristicValuesMap($characteristicValuesData, $localizations, $characteristicsMap);
 
- //       dd($characteristicsValuesMap);
-
-
         $resourcesRelationships = DB::table('resource_resource')->get()->toArray();
-// dd($defectPhotos);
-        $relationships = [];
 
         $productGroup_CharacteristicValue = $this->createMap($resourcesRelationships, 'App\ProductGroup', 'App\CharacteristicValue');
-// dd($productGroup_CharacteristicValue['App\ProductGroup-9602']);
+
         $result = [];
 
         foreach($products as $item):
@@ -401,7 +396,7 @@ class XMLController extends Controller
 
                 foreach($localizationData->defective_attributes as $defect):
 
-                    $product['description'] .= "<br>&bull;$defect";
+                    $product['description'] .= "<br>&nbsp;&bull;&nbsp;$defect";
 
                 endforeach;
             }
