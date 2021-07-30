@@ -394,6 +394,8 @@ class XMLController extends Controller
 
                 $defects = implode(', ', $localizationData->defective_attributes);
 
+                $defects = str_replace(', , ', ', ', $defects);
+
                 foreach($localizationData->defective_attributes as $defect):
 
                     $product['description'] .= "<br>&nbsp;&bull;&nbsp;$defect";
