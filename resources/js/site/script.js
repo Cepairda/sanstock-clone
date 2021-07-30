@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+
 $(document).ready(function () {
     var priceRangeSlider = $('#priceRangeSlider');
     if (priceRangeSlider.length) {

@@ -134,7 +134,7 @@ footer {
 }
 
 .main-container {
-	//padding-bottom: $gap;
+	padding-bottom: 85px;
 
 	&__title {
 
@@ -212,14 +212,28 @@ footer {
 	background-color: inherit;
 }
 
+//tab-content
+
+.tab-content{
+    padding-bottom: 0;
+}
 //nav tabs
 .nav-tabs {
 	border-color: $color-base;
+
+    @media screen and (max-width: 768px){
+        margin-top: 30px;
+        flex-direction: column;
+    }
 }
 .nav-tabs .nav-link {
 	font-size: 18px;
 	font-weight: 700;
 	border-radius: 0;
+
+    @media screen and (max-width: 768px){
+        width: 100% !important;
+    }
 }
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
 	border-image-slice: 1;

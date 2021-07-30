@@ -104,9 +104,9 @@
 
     @foreach($products as $sku => $product)
         <div class="row flex table-products__row">
-            <div class="col-6 col-md-4">
+            <div class="col-md-4">
                 <div class="row text-center">
-                    <div class="col-md-6 col-12 align-self-center">{{ $product["sku"] }}</div>
+                    <div class="col-md-6 col-12 align-self-center my-3">{{ $product["sku"] }}</div>
                     <div class="col-md-6 col-12 align-self-center">
                         <div class="_bl">
                             @php($defectiveImages = $product->allDefectiveImages)
@@ -132,16 +132,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-md-6">
+            <div class="col-md-6">
                 <div class="row table-products__row-reverse">
-                    <div  class="col-md-9 col-6 align-self-center" data-price="{{ $price }}" data-oldprice="{{ $normalPrice }}">
+                    <div  class="col-md-9 align-self-center my-3 text-center" data-price="{{ $price }}" data-oldprice="{{ $normalPrice }}">
                         @if($product->getData('defective_attributes'))
                             @foreach($product->getData('defective_attributes') as $defective_attribute)
                                 {{ '- ' . $defective_attribute }} <br>
                             @endforeach
                         @endif
                     </div>
-                    <div  class="col-md-3 col-6 align-self-center text-center">
+                    <div  class="col-md-3 align-self-center text-center">
                         @if ($normalPrice ?? null)
                             <p><span class="text-nowrap"><s>{{ number_format(ceil($normalPrice),0,'',' ') }} грн.</s></span></p>
                         @endif
