@@ -334,6 +334,10 @@ class XMLController extends Controller
 
         $productGroup_CharacteristicValue = $this->createMap($resourcesRelationships, 'App\ProductGroup', 'App\CharacteristicValue');
 
+        $productsSort = DB::table('resources')->select('id','type','details')->where('type', 'App\ProductSort')->get();
+
+        $productsSortMap = $this->createProductSortsMap($productsSort);
+
         $result = [];
 
         foreach($products as $item):
@@ -360,15 +364,15 @@ class XMLController extends Controller
 
             $product['vendor_code'] = $product['sku'];
 
-            $product['price'] = $product_details->price??0;
+            if(!isset($productsSortMap[$product['sd_code']])) continue;
 
-            $product['oldprice'] = $product_details->old_price??0;
+            $product['price'] = $productsSortMap[$product['sd_code']]->price??0;
 
-            if(empty($product['brand_id']) || empty($product['category_id']) || empty($product['price'])) continue;
+            $product['oldprice'] = $productsSortMap[$product['sd_code']]->old_price??0;
 
-            $product['sort'] = $product_details->grade;
+            $product['sort'] = $productsSortMap[$product['sd_code']]->grade;
 
-            if(!isset($localizations[$product_id])) continue;
+            if(empty($product['brand_id']) || empty($product['category_id']) || empty($product['price']) || !isset($localizations[$product_id])) continue;
 
             $localization = $localizations[$product_id][0];
 
@@ -392,9 +396,9 @@ class XMLController extends Controller
                 if($locale === 'ru') $product['description'] .= "<br><br>Дефекты:";
                 else $product['description'] .= "<br><br>Дефекти:";
 
-                $defects = implode(', ', $localizationData->defective_attributes);
+                $defects = implode(' ', $localizationData->defective_attributes);
 
-                $defects = str_replace(', , ', ', ', $defects);
+                // $defects = str_replace(', , ', ', ', $defects);
 
                 foreach($localizationData->defective_attributes as $defect):
 
@@ -617,6 +621,22 @@ class XMLController extends Controller
 
         return $result;
     }
+
+    private function createProductSortsMap($data) {
+
+        $result = [];
+
+        foreach($data as $item):
+
+            $details = json_decode($item->details);
+
+            if(isset($details->sd_code)) $result[$details->sd_code] = $details;
+
+        endforeach;
+
+        return $result;
+    }
+
 
     /**
      * Sent message to telegram bot
