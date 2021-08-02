@@ -286,6 +286,11 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             return view('site.page.guarantee');
         })->name('guarantee');
 
+//        test
+        Route::get('/test', function () {
+            return view('site.page.404');
+        });
+
         Route::get('/documentation', function () {return view('site.page.documentation');})->name('documentations');
         Route::get('/documents/certificates', function () {return view('site.page.certificates');})->name('certificates');
 

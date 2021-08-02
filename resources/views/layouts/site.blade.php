@@ -59,9 +59,7 @@
                     </li>
                 </ul>
             </div>
-
         </div>
-
         @include('site.components.footer')
     </div>
     <script type="text/javascript" src="{{ mix('js/site/app.js') }}"></script>

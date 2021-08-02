@@ -1,0 +1,22 @@
+.not-found {
+    padding-top: 50px;
+    & > *{
+        text-align: center;
+    }
+    &--title {
+        font-weight: bold;
+        font-size: 125px;
+        color: #0095f3;
+    }
+    &--subtitle {
+        color: #8a8a8a;
+        font-size: 30px;
+        margin-bottom: 15px;
+    }
+    &--desc {
+        color: #8a8a8a;
+        margin-bottom: 25px;
+    }
+}
+
+

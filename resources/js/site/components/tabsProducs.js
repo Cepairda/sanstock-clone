@@ -20,8 +20,8 @@
             });
             btn.classList.add('active');
             containerActive.classList.add('active');
-
         }
     }, false)
 
 }());
+

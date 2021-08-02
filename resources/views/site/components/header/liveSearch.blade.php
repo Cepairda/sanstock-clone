@@ -28,7 +28,6 @@
                         <p class="m-t">{{ $product->productGroup->name }}</p>
                     </div>
                 </a>
-
             </li>
         @endforeach
     @else
